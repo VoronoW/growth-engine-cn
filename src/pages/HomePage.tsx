@@ -67,9 +67,9 @@ export function HomePage() {
           <a href="#architecture">解决方案架构</a>
           <a href="#roadmap">90天执行路径</a>
           <a href="#deliverables">交付库</a>
-          <Link to="/onboarding" className="nav-cta">
-            客户入舱表单
-          </Link>
+          <a href="/growth-forms.html" className="nav-cta">
+            数据表单
+          </a>
         </nav>
       </header>
 
@@ -87,9 +87,9 @@ export function HomePage() {
               <a href="#value" className="btn-primary">
                 查看价值框架
               </a>
-              <Link to="/onboarding" className="btn-ghost">
-                启动签约入舱
-              </Link>
+              <a href="/growth-forms.html" className="btn-ghost">
+                进入客户工作台
+              </a>
             </div>
           </div>
           <div className="metric-panel">
@@ -205,10 +205,10 @@ export function HomePage() {
 
         <section className="section final-cta">
           <h2>如果你希望在下一个季度完成系统级跃迁，现在进入增长指挥舱。</h2>
-          <p>签约后将进入多步入舱流程，确保战略目标、执行条件与权限清单一次对齐。</p>
-          <Link to="/onboarding" className="btn-primary">
-            进入客户入舱页面
-          </Link>
+          <p>登录飞书账号后进入数据表单，完成数据填报与多维表格对接。</p>
+          <a href="/growth-forms.html" className="btn-primary">
+            进入客户工作台
+          </a>
         </section>
       </main>
 

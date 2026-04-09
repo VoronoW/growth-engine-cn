@@ -1,12 +1,13 @@
+/* Light-first — dark mode disabled */
 :root {
-  --bg: #080b12;
-  --panel: #0f1523;
-  --panel-strong: #141f31;
-  --text: #edf2ff;
-  --muted: #9eaaca;
-  --line: #23324f;
-  --accent: #7ca6ff;
-  --accent-soft: rgba(124, 166, 255, 0.14);
+  --bg: #F4F6FA;
+  --panel: #FFFFFF;
+  --panel-strong: #F7F8FA;
+  --text: #1A1D23;
+  --muted: #5C6170;
+  --line: #E4E7EE;
+  --accent: #1C6EF2;
+  --accent-soft: rgba(28, 110, 242, 0.08);
 }
 
 * {
@@ -17,7 +18,7 @@ body {
   margin: 0;
   font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
   color: var(--text);
-  background: radial-gradient(circle at top right, #172745 0%, var(--bg) 35%);
+  background: var(--bg);
   line-height: 1.6;
 }
 
@@ -37,7 +38,7 @@ a {
   top: 0;
   z-index: 10;
   backdrop-filter: blur(12px);
-  background: rgba(8, 11, 18, 0.72);
+  background: rgba(244, 246, 250, 0.92);
   border: 1px solid var(--line);
   border-radius: 16px;
   padding: 14px 18px;
@@ -72,7 +73,7 @@ nav {
   padding: 22px;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: rgba(12, 18, 30, 0.74);
+  background: var(--panel);
 }
 
 .hero {
@@ -85,7 +86,7 @@ nav {
 .card-grid {
   border: 1px solid var(--line);
   border-radius: 20px;
-  background: linear-gradient(140deg, rgba(19, 28, 44, 0.9), rgba(10, 16, 27, 0.9));
+  background: var(--panel);
 }
 
 .kicker {
@@ -125,8 +126,8 @@ button {
 }
 
 .btn-primary {
-  color: #081120;
-  background: linear-gradient(125deg, #7ca6ff, #95c5ff);
+  color: #ffffff;
+  background: var(--accent);
 }
 
 .btn-ghost {
@@ -293,7 +294,7 @@ textarea {
   width: 100%;
   resize: vertical;
   min-height: 84px;
-  background: #0b1220;
+  background: var(--panel-strong);
   border: 1px solid var(--line);
   border-radius: 10px;
   color: var(--text);
