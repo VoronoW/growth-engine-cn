@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据表单 · 增长引擎验证舱</title>
+  <style>
+    /* Light-first — 不跟随系统 dark mode */
+    :root {
+      --brand-primary:       #1C6EF2;
+      --brand-primary-hover: #1557C7;
+      --brand-primary-light: #EBF2FF;
+      --bg-base:      #F8F9FB;
+      --bg-elevated:  #FFFFFF;
+      --bg-secondary: #F7F8FA;
+      --border-light:  #E8EBF0;
+      --border-default:#D1D6E0;
+      --text-primary:   #0F1419;
+      --text-secondary: #3C4257;
+      --text-tertiary:  #8B92A8;
+      --accent-success: #10B981;
+      --accent-danger:  #EF4444;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.05);
+      --font: 'PingFang SC','Noto Sans SC',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      --transition: 150ms cubic-bezier(0.4,0,0.2,1);
+    }
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-size: 14px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Login Screen ── */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #F0F5FF 0%, #E8EFFE 100%);
+    }
+    .login-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
+    .login-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .login-card p  { color: var(--text-secondary); font-size: 14px; margin-bottom: 28px; }
+    .login-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      background: var(--brand-primary);
+      color: #fff;
+      border: none;
+      padding: 11px 20px;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: background var(--transition);
+    }
+    .login-btn:hover { background: var(--brand-primary-hover); }
+
+    /* ── Msg Box (error / success) ── */
+    .msg-box {
+      padding: 11px 14px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 16px;
+      font-size: 13px;
+      display: none;
+      text-align: left;
+    }
+    .msg-box.visible { display: block; }
+    .msg-box.error   { background: #FFF0F0; border: 1px solid #FECACA; color: #7F1D1D; }
+    .msg-box.success { background: #F0FDF4; border: 1px solid #A7F3D0; color: #065F46; }
+    .msg-box .code   { font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 3px; opacity: 0.75; }
+
+    /* ── App Shell ── */
+    #app-shell { display: none; height: 100vh; flex-direction: column; }
+    #app-shell.visible { display: flex; }
+
+    /* ── Top Bar ── */
+    .topbar {
+      height: 52px;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      flex-shrink: 0;
+    }
+    .topbar .logo { font-size: 14px; font-weight: 700; }
+    .topbar .user-info { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--text-secondary); }
+    .logout-btn {
+      font-size: 13px; padding: 6px 12px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      cursor: pointer; font-family: var(--font); color: var(--text-secondary);
+      transition: all var(--transition);
+    }
+    .logout-btn:hover { background: #fff0f0; border-color: var(--accent-danger); color: var(--accent-danger); }
+
+    /* ── Layout ── */
+    .body-wrap { display: flex; flex: 1; overflow: hidden; }
+    .sidebar {
+      width: 220px; flex-shrink: 0;
+      background: var(--bg-elevated);
+      border-right: 1px solid var(--border-light);
+      overflow-y: auto; padding: 12px 0;
+    }
+    .sidebar-group {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--text-tertiary);
+      padding: 14px 16px 6px;
+    }
+    .sidebar-item {
+      display: block; padding: 9px 16px;
+      font-size: 13px; font-weight: 500; color: var(--text-secondary);
+      cursor: pointer; border-left: 3px solid transparent;
+      transition: all var(--transition);
+    }
+    .sidebar-item:hover { background: var(--bg-base); color: var(--text-primary); }
+    .sidebar-item.active {
+      background: var(--brand-primary-light);
+      color: var(--brand-primary);
+      border-left-color: var(--brand-primary);
+    }
+
+    /* ── Content ── */
+    .content { flex: 1; overflow-y: auto; padding: 24px 28px; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .panel-title { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+
+    /* ── Form ── */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: grid; gap: 6px; }
+    .field label { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .field input,
+    .field select {
+      width: 100%; padding: 9px 12px;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      font: inherit; font-size: 14px;
+      background: var(--bg-secondary); color: var(--text-primary);
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .field input:focus,
+    .field select:focus {
+      outline: none;
+      border-color: var(--brand-primary);
+      box-shadow: 0 0 0 3px rgba(28,110,242,0.10);
+      background: #fff;
+    }
+    .field input::placeholder { color: var(--text-tertiary); }
+
+    .form-actions { margin-top: 24px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      padding: 9px 20px; border-radius: var(--radius-sm); border: none;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      font-family: var(--font); transition: all var(--transition);
+    }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-submit { background: var(--brand-primary); color: #fff; }
+    .btn-submit:hover:not(:disabled) {
+      background: var(--brand-primary-hover);
+      box-shadow: 0 4px 12px rgba(28,110,242,0.20);
+    }
+    .btn-ghost {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      color: var(--text-secondary);
+    }
+    .btn-ghost:hover { background: var(--bg-elevated); }
+
+    .scaffold-note {
+      background: var(--brand-primary-light);
+      border: 1px solid #C3D9FF;
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-size: 13px; color: var(--brand-primary);
+    }
+
+    @media (max-width: 768px) {
+      .body-wrap { flex-direction: column; }
+      .sidebar {
+        width: 100%; border-right: none;
+        border-bottom: 1px solid var(--border-light);
+        display: flex; overflow-x: auto; padding: 6px 0;
+      }
+      .sidebar-group { display: none; }
+      .sidebar-item {
+        white-space: nowrap; border-left: none;
+        border-bottom: 3px solid transparent;
+      }
+      .sidebar-item.active { border-left: none; border-bottom-color: var(--brand-primary); }
+      .form-grid { grid-template-columns: 1fr; }
+      .content { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Login Screen ── -->
+<div id="login-screen">
+  <div class="login-card">
+    <h2>数据表单</h2>
+    <p>使用飞书账号登录，提交和管理品牌增长数据</p>
+    <button class="login-btn" onclick="startLogin()">使用飞书账号登录</button>
+    <!-- 登录失败明确显示，不静默 -->
+    <div id="login-error" class="msg-box error" style="margin-top:16px;"></div>
+  </div>
+</div>
+
+<!-- ── App Shell ── -->
+<div id="app-shell">
+  <div class="topbar">
+    <div class="logo">增长引擎验证舱 · 数据表单</div>
+    <div class="user-info">
+      <span id="user-name-display"></span>
+      <button class="logout-btn" onclick="doLogout()">退出登录</button>
+    </div>
+  </div>
+
+  <div class="body-wrap">
+    <nav class="sidebar">
+      <div class="sidebar-group">基础数据</div>
+      <div class="sidebar-item active" onclick="switchPanel('a1',this)">A1 · 核心指标</div>
+      <div class="sidebar-item" onclick="switchPanel('a2',this)">A2 · UTM/命名</div>
+      <div class="sidebar-item" onclick="switchPanel('a3',this)">A3 · 观测/QA</div>
+      <div class="sidebar-item" onclick="switchPanel('a4',this)">A4 · 运营</div>
+      <div class="sidebar-group">扩展数据</div>
+      <div class="sidebar-item" onclick="switchPanel('b2',this)">B2 · 基础/钩子</div>
+      <div class="sidebar-item" onclick="switchPanel('b3',this)">B3 · SKU/脚本</div>
+      <div class="sidebar-item" onclick="switchPanel('b4',this)">B4 · 核心/赢家</div>
+      <div class="sidebar-item" onclick="switchPanel('b5',this)">B5 · 漏斗/规则</div>
+      <div class="sidebar-item" onclick="switchPanel('b6',this)">B6 · 分析/种子</div>
+    </nav>
+
+    <div class="content">
+
+      <!-- A1：字段 key 严格对齐 feishu-field-map.mjs 中 a1.main 的前端键 -->
+      <div id="panel-a1" class="panel active">
+        <div class="panel-title">A1 · 核心指标</div>
+        <div id="a1-msg" class="msg-box"></div>
+        <form id="form-a1" onsubmit="submitA1(event)">
+          <div class="form-grid">
+            <div class="field">
+              <label>序号</label>
+              <!-- 前端 key: '序号' → 飞书字段: '序号' -->
+              <input type="text" name="序号" placeholder="e.g. 001" required>
+            </div>
+            <div class="field">
+              <label>SKU 名称</label>
+              <!-- 前端 key: 'SKU 名称'（含空格）→ 飞书字段: 'SKU名称' -->
+              <input type="text" name="SKU 名称" placeholder="e.g. 蓝牙音箱 Pro" required>
+            </div>
+            <div class="field">
+              <label>投放平台</label>
+              <!-- 前端 key: '投放平台' → 飞书字段: '投放平台' -->
+              <select name="投放平台" required>
+                <option value="">请选择</option>
+                <option>Amazon</option>
+                <option>eBay</option>
+                <option>速卖通</option>
+                <option>Wish</option>
+                <option>其他</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>近30天销量</label>
+              <!-- 前端 key: '近30天销量' → 飞书字段: '近30天销量' -->
+              <input type="number" name="近30天销量" placeholder="e.g. 150" min="0" required>
+            </div>
+            <div class="field">
+              <label>广告花费(RMB)</label>
+              <!-- 前端 key: '广告花费(RMB)' → 飞书字段: '广告花费RMB' -->
+              <input type="number" name="广告花费(RMB)" placeholder="e.g. 3200" step="0.01" min="0" required>
+            </div>
+            <div class="field">
+              <label>平台ROAS</label>
+              <!-- 前端 key: '平台ROAS' → 飞书字段: '平台ROAS' -->
+              <input type="number" name="平台ROAS" placeholder="e.g. 3.5" step="0.01" min="0" required>
+            </div>
+            <div class="field">
+              <label>实际利润(RMB)</label>
+              <!-- 前端 key: '实际利润(RMB)' → 飞书字段: '实际利润RMB' -->
+              <input type="number" name="实际利润(RMB)" placeholder="e.g. 1200" step="0.01" required>
+            </div>
+            <div class="field">
+              <label>毛利率%</label>
+              <!-- 前端 key: '毛利率%' → 飞书字段: '毛利率' -->
+              <input type="number" name="毛利率%" placeholder="e.g. 35" step="0.01" min="0" max="100" required>
+            </div>
+            <div class="field">
+              <label>数据状态</label>
+              <!-- 前端 key: '数据状态' → 飞书字段: '数据状态' -->
+              <select name="数据状态" required>
+                <option value="">请选择</option>
+                <option>有效</option>
+                <option>待审核</option>
+                <option>异常</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-submit" id="a1-btn">提交到飞书</button>
+            <button type="reset" class="btn btn-ghost">重置</button>
+            <button type="button" class="btn btn-ghost" onclick="exportCSV('a1')">导出 CSV</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- A2 -->
+      <div id="panel-a2" class="panel">
+        <div class="panel-title">A2 · UTM/命名</div>
+        <div id="a2-msg" class="msg-box"></div>
+        <div class="scaffold-note">此面板字段待配置，补充 feishu-field-map.mjs 中 a2 映射后即可启用。</div>
+      </div>
+
+      <!-- A3 -->
+      <div id="panel-a3" class="panel">
+        <div class="panel-title">A3 · 观测/QA</div>
+        <div id="a3-msg" class="msg-box"></div>
+        <div class="scaffold-note">此面板字段待配置，补充 feishu-field-map.mjs 中 a3 映射后即可启用。</div>
+      </div>
+
+      <!-- A4 -->
+      <div id="panel-a4" class="panel">
+        <div class="panel-title">A4 · 运营</div>
+        <div id="a4-msg" class="msg-box"></div>
+        <div class="scaffold-note">此面板字段待配置，补充 feishu-field-map.mjs 中 a4 映射后即可启用。</div>
+      </div>
+
+      <!-- B2 -->
+      <div id="panel-b2" class="panel">
+        <div class="panel-title">B2 · 基础/钩子</div>
+        <div id="b2-msg" class="msg-box"></div>
+        <div class="scaffold-note">此面板字段待配置，补充 feishu-field-map.mjs 中 b2 映射后即可启用。</div>
+      </div>
+
+      <!-- B3 -->
+      <div id="panel-b3" class="panel">
+        <div class="panel-title">B3 · SKU/脚本</div>
+        <div id="b3-msg" class="msg-box"></div>
+        <div class="scaffold-note">此面板字段待配置，补充 feishu-field-map.mjs 中 b3 映射后即可启用。</div>
+      </div>
+
+      <!-- B4 -->
+      <div id="panel-b4" class="panel">
+        <div class="panel-title">B4 · 核心/赢家</div>
+        <div id="b4-msg" class="msg-box"></div>
+        <div class="scaffold-note">此面板字段待配置，补充 feishu-field-map.mjs 中 b4 映射后即可启用。</div>
+      </div>
+
+      <!-- B5 -->
+      <div id="panel-b5" class="panel">
+        <div class="panel-title">B5 · 漏斗/规则</div>
+        <div id="b5-msg" class="msg-box"></div>
+        <div class="scaffold-note">此面板字段待配置，补充 feishu-field-map.mjs 中 b5 映射后即可启用。</div>
+      </div>
+
+      <!-- B6 -->
+      <div id="panel-b6" class="panel">
+        <div class="panel-title">B6 · 分析/种子</div>
+        <div id="b6-msg" class="msg-box"></div>
+        <div class="scaffold-note">此面板字段待配置，补充 feishu-field-map.mjs 中 b6 映射后即可启用。</div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /body-wrap -->
+</div><!-- /app-shell -->
+
+<script>
+// ── Session 检查 ──────────────────────────────────────────────────
+async function checkSession() {
+  let data;
+  try {
+    const res = await fetch('/.netlify/functions/feishu-session', { credentials: 'include' });
+    data = await res.json();
+  } catch (err) {
+    showLoginError('NETWORK_ERROR', '无法连接服务器：' + err.message);
+    return;
+  }
+
+  if (!data.loggedIn) {
+    const reason = data.reason || '会话无效';
+    showLoginError('NOT_LOGGED_IN', '当前未登录（' + reason + '）。请使用飞书账号授权。');
+    return;
+  }
+
+  showApp(data.user);
+}
+
+function showLoginError(code, message) {
+  const el = document.getElementById('login-error');
+  el.innerHTML = '<div class="code">' + code + '</div>' + message;
+  el.classList.add('visible');
+}
+
+function showApp(user) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app-shell').classList.add('visible');
+  if (user && user.name) {
+    document.getElementById('user-name-display').textContent = '欢迎，' + user.name;
+  }
+}
+
+function startLogin() {
+  window.location.href = '/.netlify/functions/feishu-auth-start';
+}
+
+function doLogout() {
+  document.cookie = 'feishu_session=; Path=/; Max-Age=0';
+  location.reload();
+}
+
+// ── Panel 切换 ───────────────────────────────────────────────────
+function switchPanel(panelId, el) {
+  document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.sidebar-item').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('panel-' + panelId).classList.add('active');
+  el.classList.add('active');
+}
+
+// ── 消息显示 ─────────────────────────────────────────────────────
+function showMsg(panelId, type, code, message) {
+  var el = document.getElementById(panelId + '-msg');
+  if (!el) return;
+  el.className = 'msg-box ' + type + ' visible';
+  el.innerHTML = '<div class="code">' + code + '</div>' + message;
+  if (type === 'success') {
+    setTimeout(function() { el.classList.remove('visible'); }, 4000);
+  }
+}
+
+// ── A1 提交 ──────────────────────────────────────────────────────
+// 对应 feishu-submit.mjs: body { panelId, subKey, records }
+// subKey:'main' 对应 feishu-field-map.mjs MAPS.a1.main
+async function submitA1(event) {
+  event.preventDefault();
+  var form = document.getElementById('form-a1');
+  var btn  = document.getElementById('a1-btn');
+  var fd   = new FormData(form);
+  var record = {};
+  fd.forEach(function(val, key) { record[key] = val; });
+
+  btn.disabled = true;
+  btn.textContent = '提交中…';
+
+  try {
+    var res = await fetch('/.netlify/functions/feishu-submit', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        panelId: 'a1',
+        subKey: 'main',
+        records: [record]
+      })
+    });
+    var data = await res.json();
+    if (!res.ok) {
+      showMsg('a1', 'error', res.status, data.error || '提交失败');
+    } else {
+      showMsg('a1', 'success', 'OK', '✓ 已写入飞书（' + data.created + ' 条），提交者：' + data.submittedBy);
+      form.reset();
+    }
+  } catch (err) {
+    showMsg('a1', 'error', 'NETWORK_ERROR', '网络错误：' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '提交到飞书';
+  }
+}
+
+// ── CSV 导出 ─────────────────────────────────────────────────────
+function exportCSV(panelId) {
+  var form = document.getElementById('form-' + panelId);
+  if (!form) return;
+  var fd = new FormData(form);
+  var entries = [];
+  fd.forEach(function(val, key) { entries.push([key, val]); });
+  if (!entries.length) { alert('表单为空'); return; }
+  var headers = entries.map(function(e) { return '"' + e[0] + '"'; }).join(',');
+  var values  = entries.map(function(e) { return '"' + e[1] + '"'; }).join(',');
+  var blob = new Blob([headers + '\n' + values], { type: 'text/csv;charset=utf-8;' });
+  var url  = URL.createObjectURL(blob);
+  var a    = document.createElement('a');
+  a.href = url;
+  a.download = panelId + '-' + Date.now() + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ── Init ─────────────────────────────────────────────────────────
+checkSession();
+</script>
+</body>
+</html>
