@@ -4,28 +4,31 @@
  * → 生成 state → 302 跳转飞书 OAuth 授权页
  */
 
-import { generateState, makeStateCookie, redirectResponse } from './_shared/feishu-utils.mjs';
+const FEISHU_APP_ID = process.env.FEISHU_APP_ID;
+const REDIRECT_URI = process.env.FEISHU_REDIRECT_URI || 'https://growth-engine-cn.netlify.app/.netlify/functions/feishu-callback';
 
 export const handler = async () => {
-  const appId       = process.env.FEISHU_APP_ID;
-  const redirectUri = process.env.FEISHU_REDIRECT_URI;
-
-  if (!appId || !redirectUri) {
+  if (!FEISHU_APP_ID) {
     return {
       statusCode: 500,
-      headers: { 'Content-Type': 'text/html; charset=utf-8' },
-      body: `<h2>配置错误</h2><p>请在 Netlify 控制台设置 FEISHU_APP_ID 和 FEISHU_REDIRECT_URI 环境变量。</p>`
+      body: 'FEISHU_APP_ID not configured',
     };
   }
 
-  const state = generateState();
-  const authUrl = new URL('https://open.feishu.cn/open-apis/authen/v1/authorize');
-  authUrl.searchParams.set('app_id', appId);
-  authUrl.searchParams.set('redirect_uri', redirectUri);
-  authUrl.searchParams.set('scope', 'contact:user.base:readonly');
-  authUrl.searchParams.set('state', state);
+  const state =
+    Math.random().toString(36).substring(2) + Date.now().toString(36);
 
-  return redirectResponse(authUrl.toString(), {
-    'Set-Cookie': makeStateCookie(state)
-  });
+  const authUrl =
+    `https://open.feishu.cn/open-apis/authen/v1/index` +
+    `?app_id=${encodeURIComponent(FEISHU_APP_ID)}` +
+    `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}` +
+    `&state=${encodeURIComponent(state)}`;
+
+  return {
+    statusCode: 302,
+    headers: {
+      Location: authUrl,
+      'Set-Cookie': `feishu_state=${state}; Path=/; HttpOnly; SameSite=Lax; Max-Age=600`,
+    },
+  };
 };
