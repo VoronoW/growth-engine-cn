@@ -5,88 +5,144 @@
  *
  * 修复：Set-Cookie 必须用 multiValueHeaders 发多个值，不能在 headers 里传数组
  */
+import crypto from 'crypto';
 
+const FEISHU_APP_ID = process.env.FEISHU_APP_ID;
+const FEISHU_APP_SECRET = process.env.FEISHU_APP_SECRET;
+const SESSION_SECRET = process.env.FEISHU_SESSION_SECRET || process.env.SESSION_SECRET || 'growth-engine-default-secret';
 
-import {
-  getAppAccessToken,
-  parseCookies,
-  makeSessionCookie,
-} from './_shared/feishu-utils.mjs';
+function parseCookies(cookieHeader) {
+  const result = {};
+  if (!cookieHeader) return result;
+  for (const pair of cookieHeader.split(';')) {
+    const idx = pair.indexOf('=');
+    if (idx < 0) continue;
+    const key = pair.slice(0, idx).trim();
+    const val = pair.slice(idx + 1).trim();
+    if (key) result[key] = val;
+  }
+  return result;
+}
+
+function createSession(user) {
+  const payload = JSON.stringify({
+    user,
+    exp: Date.now() + 24 * 60 * 60 * 1000,
+  });
+  const encoded = Buffer.from(payload, 'utf8').toString('base64url');
+  const sig = crypto
+    .createHmac('sha256', SESSION_SECRET)
+    .update(encoded)
+    .digest('base64url');
+  return `${encoded}.${sig}`;
+}
 
 export const handler = async (event) => {
-  const { code, state } = event.queryStringParameters || {};
-  const cookies = parseCookies(event.headers?.cookie || event.headers?.Cookie || '');
-  const savedState = cookies['feishu_oauth_state'];
+  const params = event.queryStringParameters || {};
+  const { code, state } = params;
 
-  // State 校验
-  if (!state || state !== savedState) {
-    return {
-      statusCode: 400,
-      headers: { 'Content-Type': 'text/html; charset=utf-8' },
-      body: `<h2>登录失败</h2><p>OAuth state 不匹配，请重新登录。</p><a href="/growth-forms.html">返回</a>`
-    };
-  }
+  const cookies = parseCookies(
+    event.headers?.cookie || event.headers?.Cookie || ''
+  );
+  const savedState = cookies.feishu_state;
+
+  const clearStateCookie = 'feishu_state=; Path=/; HttpOnly; Max-Age=0';
 
   if (!code) {
     return {
-      statusCode: 400,
-      headers: { 'Content-Type': 'text/html; charset=utf-8' },
-      body: `<h2>登录取消</h2><p>未获取到授权码。</p><a href="/growth-forms.html">返回</a>`
+      statusCode: 302,
+      headers: { Location: '/growth-forms.html?error=no_code' },
+      multiValueHeaders: { 'Set-Cookie': [clearStateCookie] },
+    };
+  }
+
+  if (!state || !savedState || state !== savedState) {
+    return {
+      statusCode: 302,
+      headers: { Location: '/growth-forms.html?error=state_mismatch' },
+      multiValueHeaders: { 'Set-Cookie': [clearStateCookie] },
     };
   }
 
   try {
-    const appToken = await getAppAccessToken();
+    // 1. Get app_access_token
+    const appTokenRes = await fetch(
+      'https://open.feishu.cn/open-apis/auth/v3/app_access_token/internal',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          app_id: FEISHU_APP_ID,
+          app_secret: FEISHU_APP_SECRET,
+        }),
+      }
+    );
+    const appTokenData = await appTokenRes.json();
+    const appAccessToken = appTokenData.app_access_token;
 
-    // 用 code 换 user_access_token
-    const tokenRes = await fetch('https://open.feishu.cn/open-apis/authen/v1/oidc/access_token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${appToken}`
-      },
-      body: JSON.stringify({ grant_type: 'authorization_code', code })
-    });
-    const tokenData = await tokenRes.json();
-    if (tokenData.code !== 0) throw new Error(`换 token 失败: ${tokenData.msg}`);
+    if (!appAccessToken) {
+      console.error('app_access_token error:', JSON.stringify(appTokenData));
+      return {
+        statusCode: 302,
+        headers: { Location: '/growth-forms.html?error=app_token_failed' },
+        multiValueHeaders: { 'Set-Cookie': [clearStateCookie] },
+      };
+    }
 
-    const userAccessToken = tokenData.data?.access_token;
+    // 2. Exchange code for user_access_token
+    const userTokenRes = await fetch(
+      'https://open.feishu.cn/open-apis/authen/v1/oidc/access_token',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${appAccessToken}`,
+        },
+        body: JSON.stringify({ grant_type: 'authorization_code', code }),
+      }
+    );
+    const userTokenData = await userTokenRes.json();
+    const userAccessToken = userTokenData.data?.access_token;
 
-    // 获取用户信息
-    const userRes = await fetch('https://open.feishu.cn/open-apis/authen/v1/user_info', {
-      headers: { 'Authorization': `Bearer ${userAccessToken}` }
-    });
-    const userData = await userRes.json();
-    if (userData.code !== 0) throw new Error(`获取用户信息失败: ${userData.msg}`);
+    if (!userAccessToken) {
+      console.error('user_access_token error:', JSON.stringify(userTokenData));
+      return {
+        statusCode: 302,
+        headers: { Location: '/growth-forms.html?error=user_token_failed' },
+        multiValueHeaders: { 'Set-Cookie': [clearStateCookie] },
+      };
+    }
 
+    // 3. Get user info
+    const userInfoRes = await fetch(
+      'https://open.feishu.cn/open-apis/authen/v1/user_info',
+      { headers: { Authorization: `Bearer ${userAccessToken}` } }
+    );
+    const userInfoData = await userInfoRes.json();
     const user = {
-      openId:  userData.data?.open_id,
-      unionId: userData.data?.union_id,
-      name:    userData.data?.name,
-      avatar:  userData.data?.avatar_url,
-      email:   userData.data?.enterprise_email || userData.data?.email
+      name: userInfoData.data?.name || userInfoData.data?.en_name || 'User',
+      openId: userInfoData.data?.open_id || '',
+      avatar: userInfoData.data?.avatar_url || '',
     };
 
-    // 写 session cookie，清除 state cookie
-    // 修复：使用 multiValueHeaders 而非 headers 传数组，Netlify Lambda 才能正确写多个 Set-Cookie
-    const sessionCookie = makeSessionCookie({ user, loginAt: Date.now() });
-    const clearState    = 'feishu_oauth_state=; HttpOnly; SameSite=Lax; Path=/; Max-Age=0';
+    const sessionValue = createSession(user);
 
     return {
       statusCode: 302,
       headers: { Location: '/growth-forms.html' },
       multiValueHeaders: {
-        'Set-Cookie': [sessionCookie, clearState]
+        'Set-Cookie': [
+          `feishu_session=${sessionValue}; Path=/; HttpOnly; SameSite=Lax; Max-Age=86400`,
+          clearStateCookie,
+        ],
       },
-      body: ''
     };
-
   } catch (err) {
-    console.error('[feishu-callback]', err);
+    console.error('Callback error:', err);
     return {
-      statusCode: 500,
-      headers: { 'Content-Type': 'text/html; charset=utf-8' },
-      body: `<h2>登录失败</h2><p>${err.message}</p><a href="/growth-forms.html">返回</a>`
+      statusCode: 302,
+      headers: { Location: '/growth-forms.html?error=callback_error' },
+      multiValueHeaders: { 'Set-Cookie': [clearStateCookie] },
     };
   }
 };
