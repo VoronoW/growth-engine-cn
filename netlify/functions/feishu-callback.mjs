@@ -2,7 +2,7 @@ import crypto from 'crypto';
 
 const FEISHU_APP_ID = process.env.FEISHU_APP_ID;
 const FEISHU_APP_SECRET = process.env.FEISHU_APP_SECRET;
-const SESSION_SECRET = process.env.SESSION_SECRET || 'growth-engine-default-secret';
+const SESSION_SECRET = process.env.FEISHU_SESSION_SECRET || process.env.SESSION_SECRET || 'growth-engine-default-secret';
 
 function parseCookies(cookieHeader) {
   const result = {};

@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 const pains = [
   {
     title: '投放增长与利润脱节',

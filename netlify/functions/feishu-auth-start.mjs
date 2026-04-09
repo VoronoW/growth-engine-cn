@@ -1,5 +1,5 @@
 const FEISHU_APP_ID = process.env.FEISHU_APP_ID;
-const REDIRECT_URI = 'https://growth-engine-cn.netlify.app/.netlify/functions/feishu-callback';
+const REDIRECT_URI = process.env.FEISHU_REDIRECT_URI || 'https://growth-engine-cn.netlify.app/.netlify/functions/feishu-callback';
 
 export const handler = async () => {
   if (!FEISHU_APP_ID) {

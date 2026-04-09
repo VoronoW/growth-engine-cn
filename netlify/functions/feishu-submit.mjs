@@ -2,8 +2,8 @@ import crypto from 'crypto';
 
 const FEISHU_APP_ID = process.env.FEISHU_APP_ID;
 const FEISHU_APP_SECRET = process.env.FEISHU_APP_SECRET;
-const FEISHU_BITABLE_APP_TOKEN = process.env.FEISHU_BITABLE_APP_TOKEN;
-const SESSION_SECRET = process.env.SESSION_SECRET || 'growth-engine-default-secret';
+const FEISHU_BITABLE_APP_TOKEN = process.env.FEISHU_BITABLE_APP_TOKEN || process.env.FEISHU_TABLE_A;
+const SESSION_SECRET = process.env.FEISHU_SESSION_SECRET || process.env.SESSION_SECRET || 'growth-engine-default-secret';
 
 // Table IDs per panel — set in Netlify env vars
 const TABLE_IDS = {

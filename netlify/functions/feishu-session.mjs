@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-const SESSION_SECRET = process.env.SESSION_SECRET || 'growth-engine-default-secret';
+const SESSION_SECRET = process.env.FEISHU_SESSION_SECRET || process.env.SESSION_SECRET || 'growth-engine-default-secret';
 
 function parseCookies(cookieHeader) {
   const result = {};
