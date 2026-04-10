@@ -1,17 +1,19 @@
-/**
- * feishu-auth-start.mjs
- * GET /.netlify/functions/feishu-auth-start
- * → 生成 state → 302 跳转飞书 OAuth 授权页
- */
-
 const FEISHU_APP_ID = process.env.FEISHU_APP_ID;
-const REDIRECT_URI = process.env.FEISHU_REDIRECT_URI || 'https://growth-engine-cn.netlify.app/.netlify/functions/feishu-callback';
+const REDIRECT_URI =
+  process.env.FEISHU_REDIRECT_URI ||
+  'https://growth-engine-cn.netlify.app/.netlify/functions/feishu-callback';
 
 export const handler = async () => {
   if (!FEISHU_APP_ID) {
+    console.error(
+      'FEISHU_APP_ID is not set. Available env keys:',
+      Object.keys(process.env).filter((k) => k.startsWith('FEISHU')).join(', ')
+    );
     return {
-      statusCode: 500,
-      body: 'FEISHU_APP_ID not configured',
+      statusCode: 302,
+      headers: {
+        Location: '/growth-forms.html?error=app_not_configured',
+      },
     };
   }
 
