@@ -833,16 +833,14 @@
 
       <hr class="divider">
       <div class="section">
-        <div class="section-title" style="margin-bottom:10px">获胜素材特征拆解（Winner Insights）</div>
+        <div class="section-header">
+          <div class="section-title">获胜素材归因分析与后续行动方案</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-b4-winner',rowTpl.b4winner)">+ 新增行</button>
+        </div>
         <div class="table-wrap">
           <table class="data-table" id="tbl-b4-winner">
-            <thead><tr><th style="width:22%">维度</th><th style="width:78%">观察记录</th></tr></thead>
-            <tbody>
-              <tr><td class="cell-lbl">视觉钩子(前1.5秒)</td><td><input type="text" placeholder="描述吸引注意的视觉元素..."></td></tr>
-              <tr><td class="cell-lbl">音频选择</td><td><input type="text" placeholder="背景音乐/音效风格..."></td></tr>
-              <tr><td class="cell-lbl">痛点呈现时间点</td><td><input type="text" placeholder="第几秒出现核心痛点解决方案..."></td></tr>
-              <tr><td class="cell-lbl">CTA 形式</td><td><input type="text" placeholder="文字/字幕/口播..."></td></tr>
-            </tbody>
+            <thead><tr><th style="width:22%">维度</th><th style="width:38%">观察记录</th><th style="width:40%">后续行动方案</th></tr></thead>
+            <tbody id="tbody-b4-winner"></tbody>
           </table>
         </div>
       </div>
@@ -1301,6 +1299,13 @@ var rowTpl = {
       '<td><select><option>待评估</option><option>放量 Winner</option><option>优化后重测</option><option>弃用</option></select></td>' +
       '</tr>';
   },
+  b4winner: function(i) {
+    return '<tr>' +
+      '<td><input type="text" placeholder="分析维度"></td>' +
+      '<td><input type="text" placeholder="观察记录"></td>' +
+      '<td><input type="text" placeholder="后续行动方案"></td>' +
+      '</tr>';
+  },
   b6: function(i) {
     return '<tr>' +
       '<td><select><option>——</option><option>性别/年龄</option><option>地理位置</option><option>购买时点</option><option>设备环境</option><option>复购行为</option></select></td>' +
@@ -1325,6 +1330,7 @@ function initRows() {
     ['tbody-b3-sku', rowTpl.b3sku, 3],
     ['tbody-b3-script', rowTpl.b3script, 5],
     ['tbody-b4', rowTpl.b4, 4],
+    ['tbody-b4-winner', rowTpl.b4winner, 1],
     ['tbody-b6', rowTpl.b6, 4]
   ];
   inits.forEach(function(cfg) {
@@ -1495,7 +1501,11 @@ async function submitToFeishu(panelId) {
       { subKey: 'obs', tableId: 'tbl-a3' },
       { subKey: 'qa', tableId: 'tbl-a3-qa' }
     ],
-    b3: [{ subKey: 'script', tableId: 'tbl-b3-script' }]
+    b3: [{ subKey: 'script', tableId: 'tbl-b3-script' }],
+    b4: [
+      { subKey: 'core', tableId: 'tbl-b4' },
+      { subKey: 'winner', tableId: 'tbl-b4-winner' }
+    ]
   };
   var targets = submitConfig[panelId];
   if (!targets) {

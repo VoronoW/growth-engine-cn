@@ -42,7 +42,25 @@ const MAPS = {
   a4: { main: {} },
   b2: { base: {}, hooks: {} },
   b3: { sku: {}, script: {} },
-  b4: { core: {}, winner: {} },
+  b4: {
+    core: {
+      '素材ID': '素材ID',
+      '脚本框架': '脚本框架',
+      '3s停留率TS%': '三秒停留率',
+      '15s完播率Hold%': '完播率',
+      '链接CTR%': 'CTR',
+      'CVR%': 'CVR',
+      'CPM($)': 'CPM',
+      'CPC($)': 'CPC',
+      '曝光量': '曝光量',
+      '结论Action': '结论'
+    },
+    winner: {
+      '维度': '分析维度',
+      '观察记录': '观察记录',
+      '后续行动方案': '后续行动方案'
+    }
+  },
   b5: { funnel: {}, rules: {} },
   b6: { analysis: {}, seeds: {} }
 };
