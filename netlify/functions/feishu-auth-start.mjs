@@ -1,12 +1,10 @@
 const FEISHU_APP_ID = process.env.FEISHU_APP_ID;
-const REDIRECT_URI =
-  process.env.FEISHU_REDIRECT_URI ||
-  'https://growth-engine-cn.netlify.app/.netlify/functions/feishu-callback';
+const REDIRECT_URI = process.env.FEISHU_REDIRECT_URI;
 
 export const handler = async () => {
-  if (!FEISHU_APP_ID) {
+  if (!FEISHU_APP_ID || !REDIRECT_URI) {
     console.error(
-      'FEISHU_APP_ID is not set. Available env keys:',
+      'FEISHU_APP_ID or FEISHU_REDIRECT_URI not set. Available env keys:',
       Object.keys(process.env).filter((k) => k.startsWith('FEISHU')).join(', ')
     );
     return {
