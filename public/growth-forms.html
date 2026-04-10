@@ -1553,7 +1553,8 @@ async function checkSession() {
       'no_code': '飞书未返回授权码，请重试',
       'app_token_failed': '应用认证失败，请联系管理员',
       'user_token_failed': '用户认证失败，请重试',
-      'callback_error': '登录回调出错，请重试'
+      'callback_error': '登录回调出错，请重试',
+      'app_not_configured': '飞书应用未配置（FEISHU_APP_ID），请联系管理员'
     };
     var errEl = document.getElementById('login-error');
     if (errEl) {

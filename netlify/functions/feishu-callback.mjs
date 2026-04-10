@@ -2,7 +2,10 @@ import crypto from 'crypto';
 
 const FEISHU_APP_ID = process.env.FEISHU_APP_ID;
 const FEISHU_APP_SECRET = process.env.FEISHU_APP_SECRET;
-const SESSION_SECRET = process.env.FEISHU_SESSION_SECRET || process.env.SESSION_SECRET || 'growth-engine-default-secret';
+const SESSION_SECRET =
+  process.env.FEISHU_SESSION_SECRET ||
+  process.env.SESSION_SECRET ||
+  'growth-engine-default-secret';
 
 function parseCookies(cookieHeader) {
   const result = {};
@@ -20,7 +23,7 @@ function parseCookies(cookieHeader) {
 function createSession(user) {
   const payload = JSON.stringify({
     user,
-    exp: Date.now() + 24 * 60 * 60 * 1000, // 24h
+    exp: Date.now() + 24 * 60 * 60 * 1000,
   });
   const encoded = Buffer.from(payload, 'utf8').toString('base64url');
   const sig = crypto
@@ -28,10 +31,6 @@ function createSession(user) {
     .update(encoded)
     .digest('base64url');
   return `${encoded}.${sig}`;
-}
-
-function redirect(location) {
-  return { statusCode: 302, headers: { Location: location } };
 }
 
 export const handler = async (event) => {
@@ -43,7 +42,6 @@ export const handler = async (event) => {
   );
   const savedState = cookies.feishu_state;
 
-  // Clear state cookie regardless of outcome
   const clearStateCookie = 'feishu_state=; Path=/; HttpOnly; Max-Age=0';
 
   if (!code) {

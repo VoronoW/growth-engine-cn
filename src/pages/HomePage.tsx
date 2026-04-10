@@ -1,218 +1,148 @@
-const pains = [
-  {
-    title: '投放增长与利润脱节',
-    detail: '平台报表看似健康，但真实贡献利润持续下滑，预算扩张无法沉淀长期资产。'
-  },
-  {
-    title: '归因链路不完整',
-    detail: '点击、加购、支付与复购数据分散在多个系统，管理层无法建立统一决策口径。'
-  },
-  {
-    title: '内容与广告协同失效',
-    detail: '素材生产节奏依赖个人经验，缺少实验机制，增长曲线高度波动。'
-  },
-  {
-    title: '团队能力不可复制',
-    detail: '关键岗位一旦离岗即触发业绩回撤，缺乏可传递、可复用的增长SOP。'
-  }
-];
-
-const architecture = [
-  ['增长战略层', '完成市场优先级、SKU角色与渠道职责划分，明确90天执行路径。'],
-  ['数据底盘层', '部署GTM/UTM/S2S归因结构，建立真实ROI口径与增长诊断模型。'],
-  ['投放引擎层', '重构账户架构、预算分配与素材测试，形成稳定扩量机制。'],
-  ['内容系统层', '搭建脚本库、素材库与产能节奏，提升高质量创意供给稳定性。'],
-  ['实验决策层', '建立A/B测试看板与周度复盘机制，让每次预算投入可验证、可迭代。']
-];
-
-const roadmap = [
-  {
-    phase: '第1阶段｜增长诊断与基线校准（第1-3周）',
-    tasks: ['完成全链路增长诊断', '定位核心风险指标', '输出系统重构优先级地图']
-  },
-  {
-    phase: '第2阶段｜系统重构与执行路径部署（第4-8周）',
-    tasks: ['落地数据归因与BI指挥舱', '建立广告与内容双周实验机制', '同步组织协同节奏与会议机制']
-  },
-  {
-    phase: '第3阶段｜放大验证与SOP交付（第9-13周）',
-    tasks: ['聚焦高ROI路径放量', '形成岗位化SOP与监控阈值', '完成管理层决策驾驶舱交接']
-  }
-];
-
 const deliverables = [
-  '企业级增长诊断报告（含风险分级与修复优先级）',
-  '增长指挥舱指标体系与BI看板结构设计',
-  '广告账户结构重构方案与预算模型',
-  '素材测试矩阵、脚本库与复盘模板',
-  '90天执行路径甘特图与周度作战机制',
-  '跨部门增长SOP手册与交接标准'
+  { icon: '🎯', title: '明确的品牌战略方向', desc: '品牌定位战略文档、品牌切入点 & 差异化价值主张、核心价值提炼设计' },
+  { icon: '📋', title: '可落地的营销4P方案', desc: '包含定价/渠道/推广/产品组合方案、渠道合作方案、推广策略地图' },
+  { icon: '🚀', title: '跑通的增长引擎', desc: '投放模型验证与优化、全链路数据追踪 (GTM/UTM)、增长出投回报看板' },
+  { icon: '👥', title: '用户资产管理系统', desc: '用户标签体系 & 分群、用户生命周期管理、首1000用户深度画像' },
+  { icon: '📊', title: '品牌数据化管理系统', desc: '品牌健康度追踪看板、15个关键指标核心、BI数据看板 & 月对比报告' },
+  { icon: '🔧', title: '完整SOP & 工具包', desc: '10套标准化SOP、20+可直接使用模板、广告投放与内容制作入库流程' },
+  { icon: '🏆', title: '会做品牌的团队（最重要）', desc: '掌握品牌战略方法论、掌握增长引擎运营能力、不再依赖外部，增长能力永久属于企业' },
 ];
 
-const audience = [
-  '年营收已过验证期、但增长效率开始失速的品牌出海团队',
-  '高度依赖单一平台流量、存在渠道风险暴露的业务单元',
-  '需要构建CEO可读增长指挥舱的创始人与经营团队',
-  '希望将增长能力从“人治”升级为“系统治理”的企业'
+const phases = [
+  {
+    step: '01',
+    label: '免费诊断',
+    title: '30分钟品牌现状诊断',
+    sub: '无论品牌是否合作，这30分钟对你都有很大价值',
+    tasks: ['诊断品牌现状和卡点', '给出下一步方向'],
+  },
+  {
+    step: '02',
+    label: '启动落地',
+    title: '2周项目启动，认知对齐',
+    sub: '对齐认知，统一团队方向，打好基础',
+    tasks: ['核心团队深度咨询', '培训认知对齐'],
+  },
+  {
+    step: '03',
+    label: '项目陪跑',
+    title: '6-12个月深度陪跑',
+    sub: '分阶段交付，每个里程碑都能验证成果',
+    tasks: [
+      'ZAPEX品牌战略模块™ 定方向',
+      'ZAPEX增长引擎™ 跑增长模型',
+      'ZAPEX品牌增长引擎™ 规模化复制',
+    ],
+  },
 ];
 
 export function HomePage() {
   return (
     <div className="site-shell">
+      {/* ── Banner ── */}
+      <div className="banner">
+        <div className="banner-inner">
+          <h1 className="banner-title">峥锐 ZAPEX｜品牌出海加速器</h1>
+          <p className="banner-sub">品牌战略 + 增长引擎 双驱动</p>
+          <p className="banner-tagline">
+            用12个月，建立企业用几年才能跑出来的<strong>品牌增长系统</strong>
+          </p>
+        </div>
+      </div>
+
+      {/* ── 导航 ── */}
       <header className="top-bar">
-        <div className="logo">增长引擎验证舱</div>
+        <div className="logo">ZAPEX</div>
         <nav>
-          <a href="#architecture">解决方案架构</a>
-          <a href="#roadmap">90天执行路径</a>
-          <a href="#deliverables">交付库</a>
-          <a href="/growth-forms.html" className="nav-cta">
-            数据表单
-          </a>
+          <a href="#deliverables">核心交付</a>
+          <a href="#roadmap">合作流程</a>
+          <a href="/growth-forms.html" className="nav-cta">数据表单</a>
+          <a href="/.netlify/functions/feishu-auth-start" className="nav-cta nav-feishu">飞书登录</a>
         </nav>
       </header>
 
       <main>
-        <section className="hero card-grid">
-          <div>
-            <p className="kicker">品牌出海加速器｜增长引擎验证舱（90天）</p>
-            <h1>用增长系统重构，替代碎片化投放执行</h1>
-            <p>
-              这不是代运营外包，而是一套面向经营层的增长操作系统建设。
-              我们在90天内完成增长诊断、归因校准、实验部署与SOP交付，
-              让企业获得可复制、可扩展、可审计的增长能力。
-            </p>
-            <div className="hero-actions">
-              <a href="#value" className="btn-primary">
-                查看价值框架
-              </a>
-              <a href="/growth-forms.html" className="btn-ghost">
-                进入客户工作台
-              </a>
-            </div>
-          </div>
-          <div className="metric-panel">
-            <h3>增长指挥舱快照</h3>
-            <ul>
-              <li>
-                <span>真实ROI口径</span>
-                <strong>已对齐利润模型</strong>
-              </li>
-              <li>
-                <span>实验节奏</span>
-                <strong>双周迭代机制</strong>
-              </li>
-              <li>
-                <span>关键指标可视化</span>
-                <strong>CEO级驾驶舱</strong>
-              </li>
-            </ul>
+        {/* ── Hero ── */}
+        <section className="hero-simple">
+          <p className="kicker">不是代运营，不是单次咨询</p>
+          <h2>我们交付的是一套完整的品牌增长系统</h2>
+          <p className="hero-desc">
+            从品牌战略到增长引擎，从数据体系到团队能力，
+            用12个月帮企业建立可复制、可放大的品牌增长能力。
+          </p>
+          <div className="hero-actions">
+            <a href="/growth-forms.html" className="btn-primary">进入客户工作台</a>
+            <a href="/.netlify/functions/feishu-auth-start" className="btn-ghost">使用飞书账号登录</a>
           </div>
         </section>
 
-        <section className="section" id="pain">
-          <h2>核心风险诊断：增长为何失真</h2>
+        {/* ── 两大模块（简化版） ── */}
+        <section className="section" id="modules">
           <div className="grid-2">
-            {pains.map((item) => (
-              <article key={item.title} className="card">
-                <h3>{item.title}</h3>
-                <p>{item.detail}</p>
+            <article className="module-card">
+              <span className="module-tag">MODULE 01</span>
+              <h3>ZAPEX 品牌战略模块™</h3>
+              <p className="module-keys">定方向 · 建体系 · 落执行</p>
+              <p>帮助企业明确品牌定位、构建差异化价值体系，输出可落地的战略执行路径。</p>
+            </article>
+            <article className="module-card">
+              <span className="module-tag">MODULE 02</span>
+              <h3>ZAPEX 品牌增长引擎™</h3>
+              <p className="module-keys">验证 · 放大 · 复制</p>
+              <p>建立数据驱动的增长验证体系，跑通增长模型后规模化复制，让增长能力属于企业自身。</p>
+            </article>
+          </div>
+        </section>
+
+        {/* ── 7大核心交付 ── */}
+        <section className="section" id="deliverables">
+          <h2>7大核心交付，全链路覆盖</h2>
+          <p className="section-sub">战略 → 落地 → 数据 → 能力，每一个交付都是可验证的成果</p>
+          <div className="grid-7">
+            {deliverables.map((d) => (
+              <article key={d.title} className="deliver-card">
+                <div className="deliver-icon">{d.icon}</div>
+                <h4>{d.title}</h4>
+                <p>{d.desc}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="section" id="architecture">
-          <h2>解决方案架构：从战术执行到系统治理</h2>
-          <div className="stack">
-            {architecture.map(([title, detail]) => (
-              <div key={title} className="rail-item">
-                <h3>{title}</h3>
-                <p>{detail}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
+        {/* ── 合作流程 ── */}
         <section className="section" id="roadmap">
-          <h2>交互式90天执行路径</h2>
-          <div className="timeline">
-            {roadmap.map((phase) => (
-              <details key={phase.phase} open>
-                <summary>{phase.phase}</summary>
+          <h2>合作流程</h2>
+          <div className="phase-row">
+            {phases.map((p) => (
+              <article key={p.step} className="phase-card">
+                <div className="phase-step">{p.step}</div>
+                <span className="phase-label">{p.label}</span>
+                <h4>{p.title}</h4>
+                <p className="phase-sub">{p.sub}</p>
                 <ul>
-                  {phase.tasks.map((task) => (
-                    <li key={task}>{task}</li>
+                  {p.tasks.map((t) => (
+                    <li key={t}>{t}</li>
                   ))}
                 </ul>
-              </details>
-            ))}
-          </div>
-        </section>
-
-        <section className="section" id="deliverables">
-          <h2>交付库：每一项都服务于经营决策</h2>
-          <div className="card-grid-sm">
-            {deliverables.map((item) => (
-              <article key={item} className="card">
-                <p>{item}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="section">
-          <h2>适配客户画像</h2>
-          <ul className="bullet-list">
-            {audience.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="section">
-          <h2>运营模型对比</h2>
-          <div className="comparison">
-            <article className="card">
-              <h3>传统代投模式</h3>
-              <ul>
-                <li>以广告执行为中心</li>
-                <li>依赖平台数据口径</li>
-                <li>结果归因模糊、可复制性弱</li>
-              </ul>
-            </article>
-            <article className="card accent">
-              <h3>增长引擎验证舱</h3>
-              <ul>
-                <li>以增长系统重构为中心</li>
-                <li>统一经营数据与归因标准</li>
-                <li>输出可放大的执行路径与SOP</li>
-              </ul>
-            </article>
-          </div>
-        </section>
-
-        <section className="section" id="value">
-          <h2>价值框架：购买确定性，而非购买人力</h2>
-          <div className="value-strip">
-            <p>缩短试错周期</p>
-            <p>提升预算有效性</p>
-            <p>建立可复制增长机制</p>
-            <p>沉淀企业自有数据资产</p>
-          </div>
-        </section>
-
+        {/* ── CTA ── */}
         <section className="section final-cta">
-          <h2>如果你希望在下一个季度完成系统级跃迁，现在进入增长指挥舱。</h2>
-          <p>登录飞书账号后进入数据表单，完成数据填报与多维表格对接。</p>
-          <a href="/growth-forms.html" className="btn-primary">
-            进入客户工作台
-          </a>
+          <h2>开始你的品牌增长之旅</h2>
+          <p>登录飞书账号，进入数据工作台，开始品牌增长第一步。</p>
+          <div className="hero-actions" style={{ justifyContent: 'center' }}>
+            <a href="/growth-forms.html" className="btn-primary">进入客户工作台</a>
+            <a href="/.netlify/functions/feishu-auth-start" className="btn-ghost">使用飞书账号登录</a>
+          </div>
         </section>
       </main>
 
       <footer className="footer">
-        <p>品牌出海加速器｜增长引擎验证舱（90天）</p>
-        <p>面向跨境品牌的增长诊断、系统重构与执行路径交付</p>
+        <p>峥锐 ZAPEX｜品牌出海加速器</p>
+        <p>品牌战略 + 增长引擎 双驱动</p>
       </footer>
     </div>
   );

@@ -1,6 +1,9 @@
 import crypto from 'crypto';
 
-const SESSION_SECRET = process.env.FEISHU_SESSION_SECRET || process.env.SESSION_SECRET || 'growth-engine-default-secret';
+const SESSION_SECRET =
+  process.env.FEISHU_SESSION_SECRET ||
+  process.env.SESSION_SECRET ||
+  'growth-engine-default-secret';
 
 function parseCookies(cookieHeader) {
   const result = {};
@@ -26,7 +29,9 @@ function verifySession(token) {
       .update(encoded)
       .digest('base64url');
     if (sig !== expected) return null;
-    const payload = JSON.parse(Buffer.from(encoded, 'base64url').toString('utf8'));
+    const payload = JSON.parse(
+      Buffer.from(encoded, 'base64url').toString('utf8')
+    );
     if (!payload.exp || payload.exp < Date.now()) return null;
     return payload.user;
   } catch {
@@ -35,7 +40,9 @@ function verifySession(token) {
 }
 
 export const handler = async (event) => {
-  const cookies = parseCookies(event.headers?.cookie || event.headers?.Cookie || '');
+  const cookies = parseCookies(
+    event.headers?.cookie || event.headers?.Cookie || ''
+  );
   const token = cookies.feishu_session;
   if (!token) {
     return {
