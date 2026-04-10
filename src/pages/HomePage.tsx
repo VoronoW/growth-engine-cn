@@ -1,11 +1,11 @@
 const deliverables = [
-  { icon: '🎯', title: '明确的品牌战略方向', desc: '品牌定位战略文档、品牌切入点 & 差异化价值主张、核心价值提炼设计' },
-  { icon: '📋', title: '可落地的营销4P方案', desc: '包含定价/渠道/推广/产品组合方案、渠道合作方案、推广策略地图' },
-  { icon: '🚀', title: '跑通的增长引擎', desc: '投放模型验证与优化、全链路数据追踪 (GTM/UTM)、增长出投回报看板' },
-  { icon: '👥', title: '用户资产管理系统', desc: '用户标签体系 & 分群、用户生命周期管理、首1000用户深度画像' },
-  { icon: '📊', title: '品牌数据化管理系统', desc: '品牌健康度追踪看板、15个关键指标核心、BI数据看板 & 月对比报告' },
-  { icon: '🔧', title: '完整SOP & 工具包', desc: '10套标准化SOP、20+可直接使用模板、广告投放与内容制作入库流程' },
-  { icon: '🏆', title: '会做品牌的团队（最重要）', desc: '掌握品牌战略方法论、掌握增长引擎运营能力、不再依赖外部，增长能力永久属于企业' },
+  { num: '01', title: '定品牌战略', desc: '明确品牌定位与差异化方向，让每一步都有战略依据' },
+  { num: '02', title: '全球化品牌落地打法', desc: '从市场选择到渠道组合，输出可执行的全球化路径' },
+  { num: '03', title: '可落地、可复制的增长模型', desc: '验证增长引擎并形成可规模化复制的投放与转化体系' },
+  { num: '04', title: '企业自己的品牌体系和团队能力', desc: '将品牌能力沉淀为组织能力，不再依赖外部' },
+  { num: '05', title: '品牌增长飞轮', desc: '构建"内容—流量—转化—复购"自驱循环' },
+  { num: '06', title: '品牌工具、SOP、模型库', desc: '标准化流程与模板，确保团队可独立运转' },
+  { num: '07', title: '数据化的品牌资产管理', desc: '用户资产与内容资产全量追踪，用数据驱动品牌决策' },
 ];
 
 const phases = [
@@ -67,8 +67,7 @@ export function HomePage() {
           <p className="kicker">不是代运营，不是单次咨询</p>
           <h2>我们交付的是一套完整的品牌增长系统</h2>
           <p className="hero-desc">
-            从品牌战略到增长引擎，从数据体系到团队能力，
-            用12个月帮企业建立可复制、可放大的品牌增长能力。
+            战略定方向，引擎跑增长。12个月，让品牌增长能力真正属于你的团队。
           </p>
           <div className="hero-actions">
             <a href="/growth-forms.html" className="btn-primary">进入客户工作台</a>
@@ -83,13 +82,13 @@ export function HomePage() {
               <span className="module-tag">MODULE 01</span>
               <h3>ZAPEX 品牌战略模块™</h3>
               <p className="module-keys">定方向 · 建体系 · 落执行</p>
-              <p>帮助企业明确品牌定位、构建差异化价值体系，输出可落地的战略执行路径。</p>
+              <p>明确定位，构建差异化价值体系，输出战略执行路径。</p>
             </article>
             <article className="module-card">
               <span className="module-tag">MODULE 02</span>
               <h3>ZAPEX 品牌增长引擎™</h3>
               <p className="module-keys">验证 · 放大 · 复制</p>
-              <p>建立数据驱动的增长验证体系，跑通增长模型后规模化复制，让增长能力属于企业自身。</p>
+              <p>跑通增长模型，验证后规模化复制，让增长能力属于企业。</p>
             </article>
           </div>
         </section>
@@ -101,7 +100,7 @@ export function HomePage() {
           <div className="grid-7">
             {deliverables.map((d) => (
               <article key={d.title} className="deliver-card">
-                <div className="deliver-icon">{d.icon}</div>
+                <div className="deliver-num">{d.num}</div>
                 <h4>{d.title}</h4>
                 <p>{d.desc}</p>
               </article>

@@ -156,7 +156,14 @@ nav { display: flex; gap: 16px; align-items: center; font-size: 14px; color: var
   padding: 18px;
   background: var(--panel-strong);
 }
-.deliver-icon { font-size: 24px; margin-bottom: 8px; }
+.deliver-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+  font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+}
 .deliver-card h4 { font-size: 14px; margin: 0 0 6px; }
 .deliver-card p { font-size: 12px; color: var(--muted); margin: 0; line-height: 1.5; }
 
