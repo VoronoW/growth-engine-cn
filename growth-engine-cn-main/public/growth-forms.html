@@ -930,30 +930,14 @@
 
       <hr class="divider">
       <div class="section">
-        <div class="section-title" style="margin-bottom:10px">种子标签包定义（可直接导入广告后台）</div>
+        <div class="section-header">
+          <div class="section-title">种子标签包定义（可直接导入广告后台）</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-b6-seeds',rowTpl.b6seed)">+ 新增行</button>
+        </div>
         <div class="table-wrap">
           <table class="data-table" id="tbl-b6-seeds">
             <thead><tr><th style="width:13%">标签包</th><th style="width:36%">用户定义</th><th style="width:22%">数量（人）</th><th style="width:29%">导入状态</th></tr></thead>
-            <tbody>
-              <tr>
-                <td class="cell-lbl" style="font-weight:600">Seed_01</td>
-                <td><input type="text" value="Top 20% LTV 用户（Email 包）"></td>
-                <td><input type="number" placeholder="填写人数"></td>
-                <td><select><option>未导入</option><option>已导入 Meta</option><option>已导入 Google</option><option>已导入 TikTok</option><option>全部已导入</option></select></td>
-              </tr>
-              <tr>
-                <td class="cell-lbl" style="font-weight:600">Seed_02</td>
-                <td><input type="text" value="重复购买 2 次以上用户"></td>
-                <td><input type="number" placeholder="填写人数"></td>
-                <td><select><option>未导入</option><option>已导入 Meta</option><option>已导入 Google</option><option>已导入 TikTok</option><option>全部已导入</option></select></td>
-              </tr>
-              <tr>
-                <td class="cell-lbl" style="font-weight:600">Seed_03</td>
-                <td><input type="text" value="购物车价值 > $150 高客单用户"></td>
-                <td><input type="number" placeholder="填写人数"></td>
-                <td><select><option>未导入</option><option>已导入 Meta</option><option>已导入 Google</option><option>已导入 TikTok</option><option>全部已导入</option></select></td>
-              </tr>
-            </tbody>
+            <tbody id="tbody-b6-seeds"></tbody>
           </table>
         </div>
       </div>
@@ -1282,6 +1266,14 @@ var rowTpl = {
       '<td><input type="number" placeholder="%" step="0.1"></td>' +
       '<td><input type="text" placeholder="对应投放建议..."></td>' +
       '</tr>';
+  },
+  b6seed: function(i) {
+    return '<tr>' +
+      '<td><select><option>——</option><option>Seed_01</option><option>Seed_02</option><option>Seed_03</option></select></td>' +
+      '<td><input type="text" placeholder="用户定义"></td>' +
+      '<td><input type="number" placeholder="人数"></td>' +
+      '<td><select><option>未导入</option><option>已导入 Meta</option><option>已导入 Google</option><option>已导入 TikTok</option><option>全部已导入</option></select></td>' +
+      '</tr>';
   }
 };
 
@@ -1302,7 +1294,8 @@ function initRows() {
     ['tbody-b4-winner', rowTpl.b4winner, 1],
     ['tbody-b5-funnel', rowTpl.b5funnel, 1],
     ['tbody-b5-rules', rowTpl.b5rules, 1],
-    ['tbody-b6', rowTpl.b6, 4]
+    ['tbody-b6', rowTpl.b6, 1],
+    ['tbody-b6-seeds', rowTpl.b6seed, 1]
   ];
   inits.forEach(function(cfg) {
     rowCounts[cfg[0]] = 0;
@@ -1326,27 +1319,6 @@ function initRows() {
     qaTbody.appendChild(tr);
   });
 
-  // B6 预置示例数据
-  var b6Data = [
-    ['性别/年龄', '女性 / 28-35 岁', '65', '广告素材增加职场女性生活场景'],
-    ['地理位置', '北美东部 (NY, NJ, MA)', '40', 'B5 增加该时区黄金时段预算'],
-    ['购买时点', '周末 20:00–23:00', '55', '周末进行 Scaling 提价操作'],
-    ['设备环境', 'iOS (iPhone 13以上)', '80', '确保移动端 Checkout 零卡顿']
-  ];
-  var b6Tbody = document.getElementById('tbody-b6');
-  b6Tbody.innerHTML = '';
-  rowCounts['tbody-b6'] = 0;
-  b6Data.forEach(function(d) {
-    var tr = document.createElement('tr');
-    tr.innerHTML = '<td><select><option>性别/年龄</option><option>地理位置</option><option>购买时点</option><option>设备环境</option><option>复购行为</option></select></td>' +
-      '<td><input type="text" value="' + d[1] + '"></td>' +
-      '<td><input type="number" value="' + d[2] + '"></td>' +
-      '<td><input type="text" value="' + d[3] + '"></td>';
-    // Set the select value
-    tr.querySelector('select').value = d[0];
-    b6Tbody.appendChild(tr);
-    rowCounts['tbody-b6']++;
-  });
 }
 
 function addRow(tbodyId, tpl) {
@@ -1479,6 +1451,10 @@ async function submitToFeishu(panelId) {
     ],
     b5: [
       { subKey: 'rules', tableId: 'tbl-b5-rules' }
+    ],
+    b6: [
+      { subKey: 'analysis', tableId: 'tbl-b6' },
+      { subKey: 'seeds', tableId: 'tbl-b6-seeds' }
     ]
   };
   var targets = submitConfig[panelId];
