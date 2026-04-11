@@ -1,10 +1,10 @@
 import crypto from 'crypto';
 import { getFieldMap, applyFieldMap } from './_shared/feishu-field-map.mjs';
 import { getTableId } from './_shared/feishu-table-map.mjs';
+import { getBitableAppToken } from './_shared/feishu-utils.mjs';
 
 const FEISHU_APP_ID = process.env.FEISHU_APP_ID;
 const FEISHU_APP_SECRET = process.env.FEISHU_APP_SECRET;
-const FEISHU_BITABLE_APP_TOKEN = process.env.FEISHU_BITABLE_APP_TOKEN || process.env.FEISHU_TABLE_A;
 const SESSION_SECRET = process.env.FEISHU_SESSION_SECRET || process.env.SESSION_SECRET || 'growth-engine-default-secret';
 
 function parseCookies(cookieHeader) {
@@ -100,8 +100,11 @@ export const handler = async (event) => {
     return json(400, { error: error.message });
   }
 
-  if (!FEISHU_BITABLE_APP_TOKEN) {
-    return json(500, { error: 'FEISHU_BITABLE_APP_TOKEN not configured' });
+  let bitableAppToken;
+  try {
+    bitableAppToken = await getBitableAppToken();
+  } catch (error) {
+    return json(500, { error: error.message });
   }
 
   // Get app token
@@ -113,7 +116,7 @@ export const handler = async (event) => {
   const mappedRecords = fieldMap ? applyFieldMap(records, fieldMap) : records;
 
   // Write records to Bitable
-  const url = `https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_BITABLE_APP_TOKEN}/tables/${tableId}/records/batch_create`;
+  const url = `https://open.feishu.cn/open-apis/bitable/v1/apps/${bitableAppToken}/tables/${tableId}/records/batch_create`;
   const res = await fetch(url, {
     method: 'POST',
     headers: {
