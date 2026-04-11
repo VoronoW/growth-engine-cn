@@ -861,7 +861,10 @@
       </div>
 
       <div class="section">
-        <div class="section-title" style="margin-bottom:10px">漏斗分层投放策略配置表</div>
+        <div class="section-header">
+          <div class="section-title">账户预算分配模型（70/20/10）</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-b5-funnel',rowTpl.b5funnel)">+ 新增行</button>
+        </div>
         <div class="table-wrap">
           <table class="data-table" id="tbl-b5">
             <thead><tr>
@@ -873,74 +876,21 @@
               <th style="width:13%">日预算(RMB)</th>
               <th style="width:18%">核心监控指标</th>
             </tr></thead>
-            <tbody>
-              <tr>
-                <td class="cell-lbl" style="font-weight:600">TOF 拉新</td>
-                <td><input type="text" value="获取新客"></td>
-                <td><input type="text" value="Broad / LAL 1-5%"></td>
-                <td><input type="text" value="B4 Winner 视频"></td>
-                <td><input type="number" value="70"></td>
-                <td><input type="number" placeholder="填写..."></td>
-                <td><input type="text" value="CPM / CPA / ROAS"></td>
-              </tr>
-              <tr>
-                <td class="cell-lbl" style="font-weight:600">MOF 再温</td>
-                <td><input type="text" value="强化兴趣"></td>
-                <td><input type="text" value="互动人群 / 视频观看"></td>
-                <td><input type="text" value="产品细节 / 拆箱"></td>
-                <td><input type="number" value="15"></td>
-                <td><input type="number" placeholder="填写..."></td>
-                <td><input type="text" value="CTR / CVR"></td>
-              </tr>
-              <tr>
-                <td class="cell-lbl" style="font-weight:600">BOF 收割</td>
-                <td><input type="text" value="促成下单"></td>
-                <td><input type="text" value="加购/放弃结账者"></td>
-                <td><input type="text" value="折扣码 / 稀缺提醒"></td>
-                <td><input type="number" value="10"></td>
-                <td><input type="number" placeholder="填写..."></td>
-                <td><input type="text" value="转化次数 / ROAS"></td>
-              </tr>
-              <tr>
-                <td class="cell-lbl" style="font-weight:600">Sandbox 测试</td>
-                <td><input type="text" value="寻找下个爆款"></td>
-                <td><input type="text" value="Broad 随机受众"></td>
-                <td><input type="text" value="B3 待测新素材"></td>
-                <td><input type="number" value="5"></td>
-                <td><input type="number" placeholder="填写..."></td>
-                <td><input type="text" value="Thumb-stop Rate"></td>
-              </tr>
-            </tbody>
+            <tbody id="tbody-b5-funnel"></tbody>
           </table>
         </div>
       </div>
 
       <hr class="divider">
       <div class="section">
-        <div class="section-title" style="margin-bottom:10px">自动化止损 / 护航规则配置</div>
+        <div class="section-header">
+          <div class="section-title">自动化优化规则集（Automated Rules）</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-b5-rules',rowTpl.b5rules)">+ 新增行</button>
+        </div>
         <div class="table-wrap">
           <table class="data-table" id="tbl-b5-rules">
             <thead><tr><th style="width:18%">规则类型</th><th style="width:35%">触发条件</th><th style="width:27%">执行动作</th><th style="width:20%">适用账户</th></tr></thead>
-            <tbody>
-              <tr>
-                <td class="cell-lbl">止损规则</td>
-                <td><input type="text" value="今日花费 > 1.5x CPA 且成交 = 0"></td>
-                <td><input type="text" value="暂停该广告组"></td>
-                <td><input type="text" placeholder="账户名称"></td>
-              </tr>
-              <tr>
-                <td class="cell-lbl">护航规则</td>
-                <td><input type="text" value="昨日 ROAS < 盈亏点"></td>
-                <td><input type="text" value="今日预算降低 30%"></td>
-                <td><input type="text" placeholder="账户名称"></td>
-              </tr>
-              <tr>
-                <td class="cell-lbl">扩量规则</td>
-                <td><input type="text" value="ROAS > 标杆值连续 2 日"></td>
-                <td><input type="text" value="每 24h 增加 20% 预算"></td>
-                <td><input type="text" placeholder="账户名称"></td>
-              </tr>
-            </tbody>
+            <tbody id="tbody-b5-rules"></tbody>
           </table>
         </div>
       </div>
@@ -1306,6 +1256,25 @@ var rowTpl = {
       '<td><input type="text" placeholder="后续行动方案"></td>' +
       '</tr>';
   },
+  b5funnel: function(i) {
+    return '<tr>' +
+      '<td><select><option>——</option><option>TOF 拉新</option><option>MOF 再温</option><option>BOF 收割</option><option>Sandbox 测试</option></select></td>' +
+      '<td><input type="text" placeholder="战术目标"></td>' +
+      '<td><input type="text" placeholder="受众选择"></td>' +
+      '<td><input type="text" placeholder="素材应用"></td>' +
+      '<td><input type="number" placeholder="%" step="0.1"></td>' +
+      '<td><input type="number" placeholder="金额" step="0.01"></td>' +
+      '<td><input type="text" placeholder="核心监控指标"></td>' +
+      '</tr>';
+  },
+  b5rules: function(i) {
+    return '<tr>' +
+      '<td><select><option>——</option><option>止损规则</option><option>护航规则</option><option>扩量规则</option></select></td>' +
+      '<td><input type="text" placeholder="触发条件"></td>' +
+      '<td><input type="text" placeholder="执行动作"></td>' +
+      '<td><input type="text" placeholder="适用账户"></td>' +
+      '</tr>';
+  },
   b6: function(i) {
     return '<tr>' +
       '<td><select><option>——</option><option>性别/年龄</option><option>地理位置</option><option>购买时点</option><option>设备环境</option><option>复购行为</option></select></td>' +
@@ -1331,6 +1300,8 @@ function initRows() {
     ['tbody-b3-script', rowTpl.b3script, 5],
     ['tbody-b4', rowTpl.b4, 4],
     ['tbody-b4-winner', rowTpl.b4winner, 1],
+    ['tbody-b5-funnel', rowTpl.b5funnel, 1],
+    ['tbody-b5-rules', rowTpl.b5rules, 1],
     ['tbody-b6', rowTpl.b6, 4]
   ];
   inits.forEach(function(cfg) {
@@ -1505,6 +1476,9 @@ async function submitToFeishu(panelId) {
     b4: [
       { subKey: 'core', tableId: 'tbl-b4' },
       { subKey: 'winner', tableId: 'tbl-b4-winner' }
+    ],
+    b5: [
+      { subKey: 'rules', tableId: 'tbl-b5-rules' }
     ]
   };
   var targets = submitConfig[panelId];
