@@ -1497,10 +1497,92 @@ function collectTableData(tableId) {
   return records;
 }
 
+function collectA3ObsData() {
+  var tbl = document.getElementById('tbl-a3');
+  if (!tbl) return [];
+  var records = [];
+  tbl.querySelectorAll('tbody tr').forEach(function(tr) {
+    var cells = tr.querySelectorAll('td');
+    if (cells.length < 8) return;
+    var record = {
+      '日期': cells[0].querySelector('input') ? cells[0].querySelector('input').value : '',
+      '平台': cells[1].querySelector('select') ? cells[1].querySelector('select').value : '',
+      'Pixel接收量(A)': cells[2].querySelector('input') ? cells[2].querySelector('input').value : '',
+      'S2S接收量(B)': cells[3].querySelector('input') ? cells[3].querySelector('input').value : '',
+      '去重后总量(C)': cells[4].querySelector('input') ? cells[4].querySelector('input').value : '',
+      '真实订单数': cells[5].querySelector('input') ? cells[5].querySelector('input').value : '',
+      '补足率(C/A-1)%': cells[6].querySelector('input') ? cells[6].querySelector('input').value : '',
+      '备注': cells[7].querySelector('input') ? cells[7].querySelector('input').value : ''
+    };
+    if (Object.values(record).some(function(val) { return val && val !== '——'; })) {
+      records.push(record);
+    }
+  });
+  return records;
+}
+
+function collectA3QaData() {
+  var tbl = document.getElementById('tbl-a3-qa');
+  if (!tbl) return [];
+  var records = [];
+  tbl.querySelectorAll('tbody tr').forEach(function(tr) {
+    var cells = tr.querySelectorAll('td');
+    if (cells.length < 3) return;
+    var itemInput = cells[0].querySelector('input,textarea');
+    var statusSelect = cells[1].querySelector('select');
+    var noteInput = cells[2].querySelector('input,textarea');
+    var record = {
+      '验收项': itemInput ? itemInput.value : cells[0].textContent.trim(),
+      '状态': statusSelect ? statusSelect.value : cells[1].textContent.trim(),
+      'EMQ分数/备注': noteInput ? noteInput.value : cells[2].textContent.trim()
+    };
+    if (Object.values(record).some(function(val) { return val && val !== '——'; })) {
+      records.push(record);
+    }
+  });
+  return records;
+}
+
 async function submitToFeishu(panelId) {
   if (!window.__session) {
     document.getElementById('login-overlay').style.display = 'flex';
     showToast('请先登录飞书账号');
+    return;
+  }
+
+  if (panelId === 'a3') {
+    var a3Payloads = [
+      { subKey: 'obs', records: collectA3ObsData() },
+      { subKey: 'qa', records: collectA3QaData() }
+    ].filter(function(target) {
+      return target.records.length > 0;
+    });
+
+    if (a3Payloads.length === 0) { showToast('请先填写数据再提交'); return; }
+
+    showToast('提交中...');
+    try {
+      var a3TotalCount = 0;
+      for (var i = 0; i < a3Payloads.length; i++) {
+        var payload = a3Payloads[i];
+        var resp = await fetch('/.netlify/functions/feishu-submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ panelId: 'a3', subKey: payload.subKey, records: payload.records })
+        });
+        var data = await resp.json();
+        if (!data.ok) {
+          showToast('提交失败：' + (data.error || '未知错误'));
+          console.error('Submit error:', data);
+          return;
+        }
+        a3TotalCount += data.count || payload.records.length;
+      }
+      showToast('✓ ' + a3TotalCount + ' 条数据已提交到飞书多维表格');
+    } catch (e) {
+      showToast('提交失败，请检查网络连接');
+      console.error(e);
+    }
     return;
   }
 
