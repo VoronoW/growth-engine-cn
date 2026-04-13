@@ -27,31 +27,19 @@ export async function getAppAccessToken() {
   return _cachedAppToken;
 }
 
-/* ── Bitable App Token 解析 ────────────────────────── */
+/* ── 正式 Bitable App Token ────────────────────────── */
 let _resolvedAppToken = null;
 
 export async function getBitableAppToken() {
   if (_resolvedAppToken) return _resolvedAppToken;
 
-  const direct = process.env.FEISHU_BITABLE_APP_TOKEN;
-  if (direct) {
-    _resolvedAppToken = direct;
-    return direct;
+  const direct = process.env.FEISHU_APP_TOKEN;
+  if (!direct) {
+    throw new Error('缺少 FEISHU_APP_TOKEN 环境变量');
   }
 
-  const wikiToken = process.env.FEISHU_WIKI_NODE_TOKEN;
-  if (wikiToken) {
-    const appToken = await getAppAccessToken();
-    const res = await fetch(`https://open.feishu.cn/open-apis/wiki/v2/spaces/get_node?token=${wikiToken}`, {
-      headers: { 'Authorization': `Bearer ${appToken}` }
-    });
-    const data = await res.json();
-    if (data.code !== 0) throw new Error(`解析 wiki node 失败: ${data.msg}`);
-    _resolvedAppToken = data.data.node.obj_token;
-    return _resolvedAppToken;
-  }
-
-  throw new Error('缺少 FEISHU_BITABLE_APP_TOKEN 或 FEISHU_WIKI_NODE_TOKEN 环境变量');
+  _resolvedAppToken = direct;
+  return direct;
 }
 
 /* ── Session Cookie ────────────────────────────────── */

@@ -7,17 +7,6 @@ const FEISHU_APP_ID = process.env.FEISHU_APP_ID;
 const FEISHU_APP_SECRET = process.env.FEISHU_APP_SECRET;
 const SESSION_SECRET = process.env.FEISHU_SESSION_SECRET || process.env.SESSION_SECRET || 'growth-engine-default-secret';
 
-const LEGACY_TABLE_IDS = {
-  a1: process.env.FEISHU_TABLE_A1,
-  a2: process.env.FEISHU_TABLE_A2,
-  a4: process.env.FEISHU_TABLE_A4,
-  b2: process.env.FEISHU_TABLE_B2,
-  b3: process.env.FEISHU_TABLE_B3,
-  b4: process.env.FEISHU_TABLE_B4,
-  b5: process.env.FEISHU_TABLE_B5,
-  b6: process.env.FEISHU_TABLE_B6,
-};
-
 function parseCookies(cookieHeader) {
   const result = {};
   if (!cookieHeader) return result;
@@ -74,21 +63,8 @@ function json(statusCode, body) {
   };
 }
 
-function resolveTableId(panelId, subKey) {
-  if (panelId === 'a3') {
-    return getTableId(panelId, subKey);
-  }
-  return LEGACY_TABLE_IDS[panelId];
-}
-
 function resolveFieldMap(panelId, subKey) {
-  if (panelId === 'a3') {
-    return getFieldMap(panelId, subKey);
-  }
-  if (panelId === 'a1') {
-    return getFieldMap(panelId, 'main');
-  }
-  return null;
+  return getFieldMap(panelId, subKey);
 }
 
 export const handler = async (event) => {
@@ -116,7 +92,7 @@ export const handler = async (event) => {
 
   let tableId;
   try {
-    tableId = resolveTableId(panelId, subKey);
+    tableId = getTableId(panelId, subKey);
   } catch (error) {
     return json(400, { error: error.message });
   }
@@ -138,7 +114,10 @@ export const handler = async (event) => {
   }
 
   const fieldMap = resolveFieldMap(panelId, subKey);
-  const mappedRecords = fieldMap ? applyFieldMap(records, fieldMap) : records;
+  if (!fieldMap) {
+    return json(400, { error: `No field mapping configured for panel: ${panelId}, subKey: ${subKey}` });
+  }
+  const mappedRecords = applyFieldMap(records, fieldMap);
 
   const url = `https://open.feishu.cn/open-apis/bitable/v1/apps/${bitableAppToken}/tables/${tableId}/records/batch_create`;
   const res = await fetch(url, {

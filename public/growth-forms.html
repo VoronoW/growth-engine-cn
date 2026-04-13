@@ -1115,7 +1115,7 @@ app.post('/api/feishu/auth', async (req, res) => {
  * @param {object} fields  - 字段键值对（参照下方字段映射表）
  */
 async function submitRecord(tableId, fields) {
-  const APP_TOKEN = 'YOUR_BITABLE_APP_TOKEN'; // 从多维表格 URL /base/ 后获取
+  const APP_TOKEN = 'process.env.FEISHU_APP_TOKEN'; // 正式环境中的 Bitable App Token
   const token = window.__feishuToken || await getTenantToken(); // 非登录态降级用 tenant_token
 
   const res = await fetch(
@@ -1129,8 +1129,8 @@ async function submitRecord(tableId, fields) {
   return res.json();
 }
 
-// 示例：提交 B4 素材测试一条记录
-submitRecord('TBL_B4_ID', {
+// 示例：提交 B4 素材测试矩阵一条记录
+submitRecord(process.env.FEISHU_TABLE_B4_CORE, {
   creative_id:       document.getElementById('cr-id').value,
   script_type:       document.getElementById('script-type').value,
   thumb_stop_rate:   parseFloat(document.getElementById('ts-rate').value),
@@ -1460,25 +1460,6 @@ function exportTable(tableIdOrPanelId, filename) {
   showToast('✓ CSV 已下载：' + filename);
 }
 
-/* ═══════════════════════════════════════════════
-   飞书提交（需配合后端代理）
-   TODO: 替换 BITABLE_CONFIG 中的 app_token 和各 table_id
-═══════════════════════════════════════════════ */
-var BITABLE_CONFIG = {
-  app_token: 'YOUR_BITABLE_APP_TOKEN',  // 替换为你的多维表格 App Token
-  tables: {
-    a1: 'TBL_A1_SKU_CHECKLIST',         // 替换为实际 table_id
-    a2: 'TBL_A2_UTM_PARAMS',
-    a3: 'TBL_A3_PIXEL_S2S',
-    a4: 'TBL_A4_ATTRIBUTION',
-    b2: 'TBL_B2_COPY_MATRIX',
-    b3: 'TBL_B3_SCRIPT_MATRIX',
-    b4: 'TBL_B4_SANDBOX_TEST',
-    b5: 'TBL_B5_AD_STRATEGY',
-    b6: 'TBL_B6_USER_PROFILE'
-  }
-};
-
 function collectTableData(tableId) {
   var tbl = document.getElementById(tableId);
   if (!tbl) return [];
@@ -1495,6 +1476,14 @@ function collectTableData(tableId) {
     if (Object.keys(rec).length > 0) records.push(rec);
   });
   return records;
+}
+
+function collectB5RulesData() {
+  return collectTableData('tbl-b5-rules');
+}
+
+function collectB6SeedsData() {
+  return collectTableData('tbl-b6-seeds');
 }
 
 function collectA3ObsData() {
@@ -1586,27 +1575,48 @@ async function submitToFeishu(panelId) {
     return;
   }
 
-  var tableMap = { a1:'tbl-a1', a2:'tbl-a2', a3:'tbl-a3', b2:'tbl-b2', b3:'tbl-b3-script', b4:'tbl-b4', b6:'tbl-b6' };
-  var tableId = tableMap[panelId];
-  if (!tableId) { showToast('本面板暂不支持直接提交，请使用导出CSV'); return; }
+  var submitConfig = {
+    b4: [
+      { subKey: 'core', records: collectTableData('tbl-b4') },
+      { subKey: 'winner', records: collectTableData('tbl-b4-winner') }
+    ],
+    b5: [
+      { subKey: 'rules', records: collectB5RulesData() }
+    ],
+    b6: [
+      { subKey: 'analysis', records: collectTableData('tbl-b6') },
+      { subKey: 'seeds', records: collectB6SeedsData() }
+    ]
+  };
 
-  var records = collectTableData(tableId);
-  if (records.length === 0) { showToast('请先填写数据再提交'); return; }
+  var payloads = submitConfig[panelId];
+  if (!payloads) { showToast('本面板暂不支持直接提交，请使用导出CSV'); return; }
+
+  payloads = payloads.filter(function(target) {
+    return target.records.length > 0;
+  });
+
+  if (payloads.length === 0) { showToast('请先填写数据再提交'); return; }
 
   showToast('提交中...');
   try {
-    var r = await fetch('/.netlify/functions/feishu-submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ panelId: panelId, subKey: 'main', records: records })
-    });
-    var data = await r.json();
-    if (data.ok) {
-      showToast('✓ ' + (data.count || records.length) + ' 条数据已提交到飞书多维表格');
-    } else {
-      showToast('提交失败：' + (data.error || '未知错误'));
-      console.error('Submit error:', data);
+    var totalCount = 0;
+    for (var k = 0; k < payloads.length; k++) {
+      var payload = payloads[k];
+      var r = await fetch('/.netlify/functions/feishu-submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ panelId: panelId, subKey: payload.subKey, records: payload.records })
+      });
+      var data = await r.json();
+      if (!data.ok) {
+        showToast('提交失败：' + (data.error || '未知错误'));
+        console.error('Submit error:', data);
+        return;
+      }
+      totalCount += data.count || payload.records.length;
     }
+    showToast('✓ ' + totalCount + ' 条数据已提交到飞书多维表格');
   } catch (e) {
     showToast('提交失败，请检查网络连接');
     console.error(e);
