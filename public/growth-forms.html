@@ -385,16 +385,16 @@
     <button class="nav-item active" onclick="showPanel('a1',this)">
       <span class="nav-dot dot-m1"></span> A1・SKU档案盘点表
     </button>
-    <button class="nav-item" onclick="showPanel('a2',this)">
+    <button class="nav-item" onclick="showPanel('a2-utm',this)">
       <span class="nav-dot dot-m1"></span> A2 UTM 参数标准化表
     </button>
-    <button class="nav-item" onclick="showPanel('a2',this)">
+    <button class="nav-item" onclick="showPanel('a2-naming',this)">
       <span class="nav-dot dot-m1"></span> A2 命名规范对照
     </button>
-    <button class="nav-item" onclick="showPanel('a3',this)">
+    <button class="nav-item" onclick="showPanel('a3-obs',this)">
       <span class="nav-dot dot-m1"></span> A3 Pixel vs S2S 观测矩阵
     </button>
-    <button class="nav-item" onclick="showPanel('a3',this)">
+    <button class="nav-item" onclick="showPanel('a3-qa',this)">
       <span class="nav-dot dot-m1"></span> A3 QA 清单
     </button>
     <button class="nav-item" onclick="showPanel('a4',this)">
@@ -505,16 +505,16 @@
       </div>
     </div>
 
-    <!-- ═══════════ A2 ═══════════ -->
-    <div class="panel" id="panel-a2">
+    <!-- ═══════════ A2 UTM ═══════════ -->
+    <div class="panel" id="panel-a2-utm">
       <div class="panel-header">
         <div class="panel-title-group">
           <div class="phase-badge badge-m1">Month 1 · Week 2 交付</div>
-          <div class="panel-title">A2 UTM 参数标准化表 / A2 命名规范对照</div>
+          <div class="panel-title">A2 UTM 参数标准化表</div>
           <div class="panel-meta">Owner: 流量负责人 / 数据分析师 &nbsp;·&nbsp; 适用范围: FB / Google / TikTok / EDM / KOL</div>
         </div>
         <div class="panel-actions">
-          <button class="btn btn-secondary" onclick="exportTable('panel-a2','A2_UTM参数标准化表_命名规范对照')">↓ 导出CSV</button>
+          <button class="btn btn-secondary" onclick="exportTable('tbl-a2','A2_UTM参数标准化表')">↓ 导出CSV</button>
           <button class="btn btn-primary" onclick="submitToFeishu('a2')">→ 提交飞书</button>
         </div>
       </div>
@@ -541,7 +541,22 @@
         <p class="hint">按正式 UTM 标准维护平台、来源、活动目标与生成结果，统一作为后续投放与归因口径的唯一来源。</p>
       </div>
 
-      <hr class="divider">
+    </div>
+
+    <!-- ═══════════ A2 命名规范 ═══════════ -->
+    <div class="panel" id="panel-a2-naming">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m1">Month 1 · Week 2 交付</div>
+          <div class="panel-title">A2 命名规范对照</div>
+          <div class="panel-meta">Owner: 流量负责人 / 数据分析师 &nbsp;·&nbsp; 用于统一素材、广告账户与投放对象的命名口径</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('tbl-a2-naming','A2_命名规范对照')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('a2')">→ 提交飞书</button>
+        </div>
+      </div>
+
       <div class="section">
         <div class="section-title" style="margin-bottom:10px">A2 命名规范对照</div>
         <div class="table-wrap">
@@ -575,19 +590,20 @@
             </tbody>
           </table>
         </div>
+        <p class="hint">本页仅维护命名规范对照，不再混入 UTM 参数标准化表的字段、说明与示例内容。</p>
       </div>
     </div>
 
-    <!-- ═══════════ A3 ═══════════ -->
-    <div class="panel" id="panel-a3">
+    <!-- ═══════════ A3 OBS ═══════════ -->
+    <div class="panel" id="panel-a3-obs">
       <div class="panel-header">
         <div class="panel-title-group">
           <div class="phase-badge badge-m1">Month 1 · Week 3 交付</div>
-          <div class="panel-title">A3 Pixel vs S2S 观测矩阵 / A3 QA 清单</div>
+          <div class="panel-title">A3 Pixel vs S2S 观测矩阵</div>
           <div class="panel-meta">Owner: 技术负责人 / 数据分析师 &nbsp;·&nbsp; 适用范围: Meta CAPI / Google GTM Server / TikTok Events API</div>
         </div>
         <div class="panel-actions">
-          <button class="btn btn-secondary" onclick="exportTable('panel-a3','A3_Pixel_vs_S2S_观测矩阵_QA清单')">↓ 导出CSV</button>
+          <button class="btn btn-secondary" onclick="exportTable('tbl-a3','A3_Pixel_vs_S2S_观测矩阵')">↓ 导出CSV</button>
           <button class="btn btn-primary" onclick="submitToFeishu('a3')">→ 提交飞书</button>
         </div>
       </div>
@@ -621,7 +637,22 @@
         <p class="hint">按正式观测矩阵记录平台、事件、观测区间与差异原因，作为归因口径校准与数据可信度评估的统一底表。</p>
       </div>
 
-      <hr class="divider">
+    </div>
+
+    <!-- ═══════════ A3 QA ═══════════ -->
+    <div class="panel" id="panel-a3-qa">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m1">Month 1 · Week 3 交付</div>
+          <div class="panel-title">A3 QA 清单</div>
+          <div class="panel-meta">Owner: 技术负责人 / 数据分析师 &nbsp;·&nbsp; 用于跟踪检查批次、修复责任人与复查结果</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('tbl-a3-qa','A3_QA清单')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('a3')">→ 提交飞书</button>
+        </div>
+      </div>
+
       <div class="section">
         <div class="section-header">
           <div class="section-title">A3 QA 清单</div>
@@ -633,6 +664,7 @@
             <tbody id="tbody-a3-qa"></tbody>
           </table>
         </div>
+        <p class="hint">本页仅维护 A3 QA 清单，不再与观测矩阵共用同一页面骨架。</p>
       </div>
     </div>
 
@@ -666,49 +698,54 @@
             </tr></thead>
             <tbody>
               <tr>
-                <td class="cell-lbl" style="text-align:center">P-01</td>
-                <td><input type="text" placeholder="FB发现 → Google搜索品牌词 → 下单"></td>
-                <td><input type="text" placeholder="Google 100%"></td>
-                <td><input type="text" placeholder="FB 40% / GG 60%"></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="number" placeholder="填写..."></td>
-                <td><select><option>待确认</option><option>以 Last Click</option><option>以 DDA</option><option>以 GA4</option></select></td>
+                <td class="cell-lbl" style="text-align:center">1</td>
+                <td><input type="text" placeholder="例：Batch-01"></td>
+                <td><input type="date"></td>
+                <td><input type="text" placeholder="填写用户触点路径"></td>
+                <td><input type="text" placeholder="填写归因模型"></td>
+                <td><input type="text" placeholder="填写归因结果"></td>
+                <td><input type="text" placeholder="填写偏差说明"></td>
+                <td><input type="text" placeholder="填写结论建议"></td>
               </tr>
               <tr>
-                <td class="cell-lbl" style="text-align:center">P-02</td>
-                <td><input type="text" placeholder="TikTok视频 → 直接访问 → 下单"></td>
-                <td><input type="text" placeholder="Direct 100%"></td>
-                <td><input type="text" placeholder="TT 70% / Direct 30%"></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="number" placeholder="填写..."></td>
-                <td><select><option>待确认</option><option>以 Last Click</option><option>以 DDA</option><option>以 GA4</option></select></td>
+                <td class="cell-lbl" style="text-align:center">2</td>
+                <td><input type="text" placeholder="例：Batch-02"></td>
+                <td><input type="date"></td>
+                <td><input type="text" placeholder="填写用户触点路径"></td>
+                <td><input type="text" placeholder="填写归因模型"></td>
+                <td><input type="text" placeholder="填写归因结果"></td>
+                <td><input type="text" placeholder="填写偏差说明"></td>
+                <td><input type="text" placeholder="填写结论建议"></td>
               </tr>
               <tr>
-                <td class="cell-lbl" style="text-align:center">P-03</td>
-                <td><input type="text" placeholder="EDM邮件 → 加购 → 下单"></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="number" placeholder="填写..."></td>
-                <td><select><option>待确认</option><option>以 Last Click</option><option>以 DDA</option><option>以 GA4</option></select></td>
+                <td class="cell-lbl" style="text-align:center">3</td>
+                <td><input type="text" placeholder="例：Batch-03"></td>
+                <td><input type="date"></td>
+                <td><input type="text" placeholder="填写用户触点路径"></td>
+                <td><input type="text" placeholder="填写归因模型"></td>
+                <td><input type="text" placeholder="填写归因结果"></td>
+                <td><input type="text" placeholder="填写偏差说明"></td>
+                <td><input type="text" placeholder="填写结论建议"></td>
               </tr>
               <tr>
-                <td class="cell-lbl" style="text-align:center">P-04</td>
-                <td><input type="text" placeholder="跨设备（手机看广告 → 桌面下单）"></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="number" placeholder="填写..."></td>
-                <td><select><option>待确认</option><option>以 Last Click</option><option>以 DDA</option><option>以 GA4</option></select></td>
+                <td class="cell-lbl" style="text-align:center">4</td>
+                <td><input type="text" placeholder="例：Batch-04"></td>
+                <td><input type="date"></td>
+                <td><input type="text" placeholder="填写用户触点路径"></td>
+                <td><input type="text" placeholder="填写归因模型"></td>
+                <td><input type="text" placeholder="填写归因结果"></td>
+                <td><input type="text" placeholder="填写偏差说明"></td>
+                <td><input type="text" placeholder="填写结论建议"></td>
               </tr>
               <tr>
-                <td class="cell-lbl" style="text-align:center">P-05</td>
-                <td><input type="text" placeholder="折扣码归因 vs UTM归因优先级测试"></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="number" placeholder="填写..."></td>
-                <td><select><option>待确认</option><option>折扣码优先</option><option>UTM优先</option></select></td>
+                <td class="cell-lbl" style="text-align:center">5</td>
+                <td><input type="text" placeholder="例：Batch-05"></td>
+                <td><input type="date"></td>
+                <td><input type="text" placeholder="填写用户触点路径"></td>
+                <td><input type="text" placeholder="填写归因模型"></td>
+                <td><input type="text" placeholder="填写归因结果"></td>
+                <td><input type="text" placeholder="填写偏差说明"></td>
+                <td><input type="text" placeholder="填写结论建议"></td>
               </tr>
             </tbody>
           </table>
@@ -737,10 +774,10 @@
           <table class="data-table" id="tbl-b2-base">
             <thead><tr><th style="width:20%">品牌维度</th><th style="width:20%">当前定义</th><th style="width:20%">目标定义</th><th style="width:20%">差距说明</th><th style="width:20%">修正建议</th></tr></thead>
             <tbody>
-              <tr><td class="cell-lbl">核心产品卖点</td><td><textarea rows="2" placeholder="列出3个最核心的产品特性与优势..."></textarea></td></tr>
-              <tr><td class="cell-lbl">目标受众画像</td><td><input type="text" placeholder="例：北美 25-35岁职场女性，关注效率与品质"></td></tr>
-              <tr><td class="cell-lbl">品牌语气 (TOV)</td><td><select><option>——</option><option>专业权威</option><option>幽默轻松</option><option>极简高级</option><option>温暖亲和</option><option>大胆挑衅</option></select></td></tr>
-              <tr><td class="cell-lbl">品牌金句 (Slogan)</td><td><input type="text" placeholder="填写品牌核心价值主张..."></td></tr>
+              <tr><td class="cell-lbl">核心产品卖点</td><td><textarea rows="2" placeholder="填写当前定义"></textarea></td><td><textarea rows="2" placeholder="填写目标定义"></textarea></td><td><textarea rows="2" placeholder="填写差距说明"></textarea></td><td><textarea rows="2" placeholder="填写修正建议"></textarea></td></tr>
+              <tr><td class="cell-lbl">目标受众画像</td><td><input type="text" placeholder="填写当前定义"></td><td><input type="text" placeholder="填写目标定义"></td><td><input type="text" placeholder="填写差距说明"></td><td><input type="text" placeholder="填写修正建议"></td></tr>
+              <tr><td class="cell-lbl">品牌语气 (TOV)</td><td><input type="text" placeholder="填写当前定义"></td><td><input type="text" placeholder="填写目标定义"></td><td><input type="text" placeholder="填写差距说明"></td><td><input type="text" placeholder="填写修正建议"></td></tr>
+              <tr><td class="cell-lbl">品牌金句 (Slogan)</td><td><input type="text" placeholder="填写当前定义"></td><td><input type="text" placeholder="填写目标定义"></td><td><input type="text" placeholder="填写差距说明"></td><td><input type="text" placeholder="填写修正建议"></td></tr>
             </tbody>
           </table>
         </div>
@@ -1192,44 +1229,59 @@ var rowTpl = {
   a1: function(i) {
     return '<tr>' +
       '<td class="cell-lbl" style="text-align:center">' + (i+1) + '</td>' +
-      '<td><input type="text" placeholder="SKU名称"></td>' +
-      '<td><select><option>——</option><option>Meta</option><option>Amazon</option><option>TikTok</option><option>Google</option><option>Shopee</option></select></td>' +
+      '<td><input type="date"></td>' +
+      '<td><input type="date"></td>' +
+      '<td><input type="number" placeholder="评分" step="0.1"></td>' +
+      '<td><input type="url" placeholder="https://..."></td>' +
+      '<td><input type="number" placeholder="USD" step="0.01"></td>' +
       '<td><input type="number" placeholder="数量"></td>' +
-      '<td><input type="number" placeholder="金额" step="0.01"></td>' +
-      '<td><input type="number" placeholder="ROAS" step="0.01"></td>' +
-      '<td><input type="number" placeholder="利润" step="0.01"></td>' +
-      '<td><input type="number" placeholder="%" step="0.1"></td>' +
-      '<td><select><option>待填</option><option>✅ 完整</option><option>⚠️ 部分缺失</option><option>❌ 缺失</option></select></td>' +
+      '<td><input type="text" placeholder="填写角色定位"></td>' +
+      '<td><input type="text" placeholder="填写操盘建议"></td>' +
       '</tr>';
   },
   a2: function(i) {
     return '<tr>' +
       '<td class="cell-lbl" style="text-align:center">' + (i+1) + '</td>' +
-      '<td><input type="text" placeholder="https://..."></td>' +
-      '<td><select><option>——</option><option>facebook</option><option>google</option><option>tiktok</option><option>klaviyo</option><option>influencer</option><option>affiliate</option></select></td>' +
-      '<td><select><option>——</option><option>cpc</option><option>paid_social</option><option>email</option><option>bio</option><option>kol</option><option>sms</option></select></td>' +
-      '<td><input type="text" placeholder="us_sku01_blackfriday"></td>' +
-      '<td><input type="text" placeholder="vid01_xxx"></td>' +
-      '<td><input type="text" placeholder="自动生成后粘贴此处"></td>' +
+      '<td><input type="text" placeholder="例：V1.0"></td>' +
+      '<td><input type="date"></td>' +
+      '<td><input type="text" placeholder="填写投放平台"></td>' +
+      '<td><input type="text" placeholder="填写渠道来源"></td>' +
+      '<td><input type="text" placeholder="填写活动目标"></td>' +
+      '<td><input type="text" placeholder="填写 UTM 生成结果"></td>' +
       '</tr>';
   },
   a3: function(i) {
     return '<tr>' +
+      '<td class="cell-lbl" style="text-align:center">' + (i+1) + '</td>' +
+      '<td><input type="text" placeholder="记录周期"></td>' +
       '<td><input type="date"></td>' +
-      '<td><select><option>Meta</option><option>Google</option><option>TikTok</option></select></td>' +
-      '<td><input type="number" placeholder="数量"></td>' +
-      '<td><input type="number" placeholder="数量"></td>' +
-      '<td><input type="number" placeholder="数量"></td>' +
-      '<td><input type="number" placeholder="数量"></td>' +
       '<td><input type="number" placeholder="%" step="0.1"></td>' +
-      '<td><input type="text" placeholder="备注..."></td>' +
+      '<td><input type="text" placeholder="平台"></td>' +
+      '<td><input type="text" placeholder="事件名称"></td>' +
+      '<td><input type="number" placeholder="数值"></td>' +
+      '<td><input type="text" placeholder="观测时间段"></td>' +
+      '<td><input type="number" placeholder="数值"></td>' +
+      '<td><input type="text" placeholder="差异原因分析"></td>' +
+      '<td><input type="text" placeholder="可信度评级"></td>' +
+      '<td><input type="text" placeholder="建议使用口径"></td>' +
+      '<td><input type="text" placeholder="优先级"></td>' +
+      '<td><input type="text" placeholder="备注"></td>' +
       '</tr>';
   },
   a3qa: function(i) {
     return '<tr>' +
-      '<td><input type="text" placeholder="填写验收项"></td>' +
-      '<td><select><option>——</option><option>✅ 通过</option><option>❌ 失败</option><option>⏳ 进行中</option></select></td>' +
-      '<td><input type="text" placeholder="EMQ分数或备注"></td>' +
+      '<td class="cell-lbl" style="text-align:center">' + (i+1) + '</td>' +
+      '<td><input type="date"></td>' +
+      '<td><input type="number" placeholder="%" step="0.1"></td>' +
+      '<td><input type="text" placeholder="检查项目描述"></td>' +
+      '<td><input type="text" placeholder="对应平台"></td>' +
+      '<td><input type="date"></td>' +
+      '<td><input type="text" placeholder="检查结果"></td>' +
+      '<td><input type="text" placeholder="问题说明"></td>' +
+      '<td><input type="text" placeholder="负责人"></td>' +
+      '<td><input type="date"></td>' +
+      '<td><input type="text" placeholder="复查结果"></td>' +
+      '<td><input type="text" placeholder="备注"></td>' +
       '</tr>';
   },
   gap: function(i) {
@@ -1242,12 +1294,13 @@ var rowTpl = {
   },
   b2: function(i) {
     return '<tr>' +
-      '<td class="cell-lbl" style="text-align:center">H-0' + (i+1) + '</td>' +
-      '<td><input type="text" placeholder="用户痛点场景"></td>' +
-      '<td><select><option>——</option><option>AIDA</option><option>PAS</option><option>社会认同</option><option>害怕错过</option><option>权威背书</option></select></td>' +
-      '<td><textarea rows="2" placeholder="文案内容（含Hook+展开+CTA）"></textarea></td>' +
-      '<td><input type="text" placeholder="CTA文字"></td>' +
-      '<td><select><option>——</option><option>恐惧诉求</option><option>欲望诉求</option><option>好奇诉求</option><option>社群认同</option></select></td>' +
+      '<td class="cell-lbl" style="text-align:center">' + (i+1) + '</td>' +
+      '<td><input type="text" placeholder="受众细分"></td>' +
+      '<td><input type="text" placeholder="核心钩子"></td>' +
+      '<td><input type="text" placeholder="价值主张"></td>' +
+      '<td><textarea rows="2" placeholder="文案矩阵正文"></textarea></td>' +
+      '<td><input type="text" placeholder="行动号召"></td>' +
+      '<td><input type="text" placeholder="适用场景"></td>' +
       '</tr>';
   },
   b3sku: function(i) {
@@ -1276,58 +1329,110 @@ var rowTpl = {
   },
   b4: function(i) {
     return '<tr>' +
-      '<td><input type="text" placeholder="CR-0' + (i+1) + '"></td>' +
-      '<td><select><option>——</option><option>痛点对比</option><option>使用场景</option><option>UGC证言</option><option>极限测试</option><option>悬念揭秘</option></select></td>' +
+      '<td class="cell-lbl" style="text-align:center">' + (i+1) + '</td>' +
+      '<td><input type="text" placeholder="测试周期"></td>' +
+      '<td><input type="date"></td>' +
+      '<td><input type="text" placeholder="素材名称/ID"></td>' +
+      '<td><input type="text" placeholder="素材类型"></td>' +
+      '<td><input type="text" placeholder="投放平台"></td>' +
+      '<td><input type="number" placeholder="USD" step="0.01"></td>' +
+      '<td><input type="number" placeholder="曝光量"></td>' +
+      '<td><input type="number" placeholder="点击量"></td>' +
+      '<td><input type="number" placeholder="转化量"></td>' +
       '<td><input type="number" placeholder="%" step="0.1"></td>' +
       '<td><input type="number" placeholder="%" step="0.1"></td>' +
-      '<td><input type="number" placeholder="%" step="0.1"></td>' +
-      '<td><input type="number" placeholder="%" step="0.1"></td>' +
-      '<td><input type="number" placeholder="$" step="0.01"></td>' +
-      '<td><input type="number" placeholder="$" step="0.01"></td>' +
-      '<td><input type="number" placeholder="次数"></td>' +
-      '<td><select><option>待评估</option><option>放量 Winner</option><option>优化后重测</option><option>弃用</option></select></td>' +
+      '<td><input type="number" placeholder="USD" step="0.01"></td>' +
+      '<td><input type="number" placeholder="ROAS" step="0.01"></td>' +
+      '<td><input type="text" placeholder="测试结论"></td>' +
       '</tr>';
   },
   b4winner: function(i) {
     return '<tr>' +
-      '<td><input type="text" placeholder="分析维度"></td>' +
-      '<td><input type="text" placeholder="观察记录"></td>' +
-      '<td><input type="text" placeholder="后续行动方案"></td>' +
+      '<td class="cell-lbl" style="text-align:center">' + (i+1) + '</td>' +
+      '<td><input type="date"></td>' +
+      '<td><input type="text" placeholder="洞察版本"></td>' +
+      '<td><input type="text" placeholder="赢家素材名称/ID"></td>' +
+      '<td><input type="text" placeholder="投放平台"></td>' +
+      '<td><input type="text" placeholder="投放周期"></td>' +
+      '<td><input type="number" placeholder="USD" step="0.01"></td>' +
+      '<td><input type="number" placeholder="ROAS" step="0.01"></td>' +
+      '<td><input type="text" placeholder="钩子类型分析"></td>' +
+      '<td><input type="text" placeholder="画面/视觉元素"></td>' +
+      '<td><input type="text" placeholder="文案结构"></td>' +
+      '<td><input type="text" placeholder="受众匹配度分析"></td>' +
+      '<td><input type="text" placeholder="可复用核心元素"></td>' +
+      '<td><input type="text" placeholder="放量建议"></td>' +
+      '<td><input type="text" placeholder="关联SKU"></td>' +
+      '<td><input type="text" placeholder="归档标签"></td>' +
       '</tr>';
   },
   b5funnel: function(i) {
     return '<tr>' +
-      '<td><select><option>——</option><option>TOF 拉新</option><option>MOF 再温</option><option>BOF 收割</option><option>Sandbox 测试</option></select></td>' +
-      '<td><input type="text" placeholder="战术目标"></td>' +
-      '<td><input type="text" placeholder="受众选择"></td>' +
-      '<td><input type="text" placeholder="素材应用"></td>' +
+      '<td class="cell-lbl" style="text-align:center">' + (i+1) + '</td>' +
+      '<td><input type="text" placeholder="漏斗层级"></td>' +
+      '<td><input type="text" placeholder="投放目标"></td>' +
+      '<td><input type="text" placeholder="核心受众"></td>' +
+      '<td><input type="text" placeholder="素材策略"></td>' +
       '<td><input type="number" placeholder="%" step="0.1"></td>' +
-      '<td><input type="number" placeholder="金额" step="0.01"></td>' +
-      '<td><input type="text" placeholder="核心监控指标"></td>' +
+      '<td><input type="text" placeholder="关键优化动作"></td>' +
+      '<td><input type="text" placeholder="复盘口径"></td>' +
       '</tr>';
   },
   b5rules: function(i) {
     return '<tr>' +
-      '<td><select><option>——</option><option>止损规则</option><option>护航规则</option><option>扩量规则</option></select></td>' +
-      '<td><input type="text" placeholder="触发条件"></td>' +
-      '<td><input type="text" placeholder="执行动作"></td>' +
-      '<td><input type="text" placeholder="适用账户"></td>' +
+      '<td class="cell-lbl" style="text-align:center">' + (i+1) + '</td>' +
+      '<td><input type="text" placeholder="规则版本"></td>' +
+      '<td><input type="date"></td>' +
+      '<td><input type="text" placeholder="平台"></td>' +
+      '<td><input type="number" placeholder="日均花费" step="0.01"></td>' +
+      '<td><input type="number" placeholder="ROAS" step="0.01"></td>' +
+      '<td><input type="number" placeholder="CPA" step="0.01"></td>' +
+      '<td><input type="text" placeholder="止损触发条件"></td>' +
+      '<td><input type="number" placeholder="阈值" step="0.01"></td>' +
+      '<td><input type="number" placeholder="阈值" step="0.01"></td>' +
+      '<td><input type="text" placeholder="触发动作"></td>' +
+      '<td><input type="text" placeholder="执行负责人"></td>' +
+      '<td><input type="text" placeholder="例外情形说明"></td>' +
+      '<td><input type="text" placeholder="规则优先级"></td>' +
+      '<td><input type="text" placeholder="复盘频率"></td>' +
       '</tr>';
   },
   b6: function(i) {
     return '<tr>' +
-      '<td><select><option>——</option><option>性别/年龄</option><option>地理位置</option><option>购买时点</option><option>设备环境</option><option>复购行为</option></select></td>' +
-      '<td><input type="text" placeholder="核心特征描述"></td>' +
+      '<td class="cell-lbl" style="text-align:center">' + (i+1) + '</td>' +
+      '<td><input type="text" placeholder="分析周期"></td>' +
+      '<td><input type="date"></td>' +
+      '<td><input type="text" placeholder="数据来源平台"></td>' +
+      '<td><input type="text" placeholder="分析时间区间"></td>' +
+      '<td><input type="number" placeholder="样本订单量"></td>' +
       '<td><input type="number" placeholder="%" step="0.1"></td>' +
-      '<td><input type="text" placeholder="对应投放建议..."></td>' +
+      '<td><input type="number" placeholder="%" step="0.1"></td>' +
+      '<td><input type="text" placeholder="RFM分层结果"></td>' +
+      '<td><input type="text" placeholder="高价值用户特征"></td>' +
+      '<td><input type="number" placeholder="USD" step="0.01"></td>' +
+      '<td><input type="text" placeholder="核心流失节点"></td>' +
+      '<td><input type="text" placeholder="增长机会洞察"></td>' +
+      '<td><input type="text" placeholder="策略建议"></td>' +
+      '<td><input type="text" placeholder="下一步动作"></td>' +
       '</tr>';
   },
   b6seed: function(i) {
     return '<tr>' +
-      '<td><select><option>——</option><option>Seed_01</option><option>Seed_02</option><option>Seed_03</option></select></td>' +
-      '<td><input type="text" placeholder="用户定义"></td>' +
-      '<td><input type="number" placeholder="人数"></td>' +
-      '<td><select><option>未导入</option><option>已导入 Meta</option><option>已导入 Google</option><option>已导入 TikTok</option><option>全部已导入</option></select></td>' +
+      '<td class="cell-lbl" style="text-align:center">' + (i+1) + '</td>' +
+      '<td><input type="text" placeholder="标签包版本"></td>' +
+      '<td><input type="date"></td>' +
+      '<td><input type="text" placeholder="对应SKU/产品类目"></td>' +
+      '<td><input type="text" placeholder="目标平台"></td>' +
+      '<td><input type="text" placeholder="已知高转化受众描述"></td>' +
+      '<td><input type="text" placeholder="兴趣标签(列表)"></td>' +
+      '<td><input type="text" placeholder="行为标签(列表)"></td>' +
+      '<td><input type="text" placeholder="人口属性"></td>' +
+      '<td><input type="text" placeholder="自定义受众规则"></td>' +
+      '<td><input type="text" placeholder="相似受众来源"></td>' +
+      '<td><input type="text" placeholder="排除人群条件"></td>' +
+      '<td><input type="text" placeholder="适用场景"></td>' +
+      '<td><input type="text" placeholder="测试优先级"></td>' +
+      '<td><input type="text" placeholder="备注"></td>' +
       '</tr>';
   }
 };
@@ -1487,48 +1592,11 @@ function collectTableData(tableId) {
 }
 
 function collectA3ObsData() {
-  var tbl = document.getElementById('tbl-a3');
-  if (!tbl) return [];
-  var records = [];
-  tbl.querySelectorAll('tbody tr').forEach(function(tr) {
-    var cells = tr.querySelectorAll('td');
-    if (cells.length < 8) return;
-    var record = {
-      '日期': cells[0].querySelector('input')?.value || '',
-      '平台': cells[1].querySelector('select')?.value || '',
-      'Pixel接收量(A)': cells[2].querySelector('input')?.value || '',
-      'S2S接收量(B)': cells[3].querySelector('input')?.value || '',
-      '去重后总量(C)': cells[4].querySelector('input')?.value || '',
-      '真实订单数': cells[5].querySelector('input')?.value || '',
-      '补足率(C/A-1)%': cells[6].querySelector('input')?.value || '',
-      '备注': cells[7].querySelector('input')?.value || ''
-    };
-    var hasAnyValue = Object.values(record).some(function(val) {
-      return val !== '' && val !== '——';
-    });
-    if (hasAnyValue) records.push(record);
-  });
-  return records;
+  return collectTableData('tbl-a3');
 }
 
 function collectA3QaData() {
-  var tbl = document.getElementById('tbl-a3-qa');
-  if (!tbl) return [];
-  var records = [];
-  tbl.querySelectorAll('tbody tr').forEach(function(tr) {
-    var cells = tr.querySelectorAll('td');
-    if (cells.length < 3) return;
-    var record = {
-      '验收项': cells[0].querySelector('input')?.value || '',
-      '状态': cells[1].querySelector('select')?.value || '',
-      'EMQ分数/备注': cells[2].querySelector('input')?.value || ''
-    };
-    var hasAnyValue = Object.values(record).some(function(val) {
-      return val !== '' && val !== '——';
-    });
-    if (hasAnyValue) records.push(record);
-  });
-  return records;
+  return collectTableData('tbl-a3-qa');
 }
 
 async function submitToFeishu(panelId) {
