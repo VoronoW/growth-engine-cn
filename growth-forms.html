@@ -385,16 +385,16 @@
     <button class="nav-item active" onclick="showPanel('a1',this)">
       <span class="nav-dot dot-m1"></span> A1・SKU档案盘点表
     </button>
-    <button class="nav-item" onclick="showPanel('a2',this)">
+    <button class="nav-item" onclick="showPanel('a2-utm',this)">
       <span class="nav-dot dot-m1"></span> A2 UTM 参数标准化表
     </button>
-    <button class="nav-item" onclick="showPanel('a2',this)">
+    <button class="nav-item" onclick="showPanel('a2-naming',this)">
       <span class="nav-dot dot-m1"></span> A2 命名规范对照
     </button>
-    <button class="nav-item" onclick="showPanel('a3',this)">
+    <button class="nav-item" onclick="showPanel('a3-obs',this)">
       <span class="nav-dot dot-m1"></span> A3 Pixel vs S2S 观测矩阵
     </button>
-    <button class="nav-item" onclick="showPanel('a3',this)">
+    <button class="nav-item" onclick="showPanel('a3-qa',this)">
       <span class="nav-dot dot-m1"></span> A3 QA 清单
     </button>
     <button class="nav-item" onclick="showPanel('a4',this)">
@@ -505,16 +505,16 @@
       </div>
     </div>
 
-    <!-- ═══════════ A2 ═══════════ -->
-    <div class="panel" id="panel-a2">
+    <!-- ═══════════ A2 UTM ═══════════ -->
+    <div class="panel" id="panel-a2-utm">
       <div class="panel-header">
         <div class="panel-title-group">
           <div class="phase-badge badge-m1">Month 1 · Week 2 交付</div>
-          <div class="panel-title">A2 UTM 参数标准化表 / A2 命名规范对照</div>
+          <div class="panel-title">A2 UTM 参数标准化表</div>
           <div class="panel-meta">Owner: 流量负责人 / 数据分析师 &nbsp;·&nbsp; 适用范围: FB / Google / TikTok / EDM / KOL</div>
         </div>
         <div class="panel-actions">
-          <button class="btn btn-secondary" onclick="exportTable('panel-a2','A2_UTM参数标准化表_命名规范对照')">↓ 导出CSV</button>
+          <button class="btn btn-secondary" onclick="exportTable('tbl-a2','A2_UTM参数标准化表')">↓ 导出CSV</button>
           <button class="btn btn-primary" onclick="submitToFeishu('a2')">→ 提交飞书</button>
         </div>
       </div>
@@ -541,7 +541,22 @@
         <p class="hint">按正式 UTM 标准维护平台、来源、活动目标与生成结果，统一作为后续投放与归因口径的唯一来源。</p>
       </div>
 
-      <hr class="divider">
+    </div>
+
+    <!-- ═══════════ A2 命名规范 ═══════════ -->
+    <div class="panel" id="panel-a2-naming">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m1">Month 1 · Week 2 交付</div>
+          <div class="panel-title">A2 命名规范对照</div>
+          <div class="panel-meta">Owner: 流量负责人 / 数据分析师 &nbsp;·&nbsp; 用于统一素材、广告账户与投放对象的命名口径</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('tbl-a2-naming','A2_命名规范对照')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('a2')">→ 提交飞书</button>
+        </div>
+      </div>
+
       <div class="section">
         <div class="section-title" style="margin-bottom:10px">A2 命名规范对照</div>
         <div class="table-wrap">
@@ -575,19 +590,20 @@
             </tbody>
           </table>
         </div>
+        <p class="hint">本页仅维护命名规范对照，不再混入 UTM 参数标准化表的字段、说明与示例内容。</p>
       </div>
     </div>
 
-    <!-- ═══════════ A3 ═══════════ -->
-    <div class="panel" id="panel-a3">
+    <!-- ═══════════ A3 OBS ═══════════ -->
+    <div class="panel" id="panel-a3-obs">
       <div class="panel-header">
         <div class="panel-title-group">
           <div class="phase-badge badge-m1">Month 1 · Week 3 交付</div>
-          <div class="panel-title">A3 Pixel vs S2S 观测矩阵 / A3 QA 清单</div>
+          <div class="panel-title">A3 Pixel vs S2S 观测矩阵</div>
           <div class="panel-meta">Owner: 技术负责人 / 数据分析师 &nbsp;·&nbsp; 适用范围: Meta CAPI / Google GTM Server / TikTok Events API</div>
         </div>
         <div class="panel-actions">
-          <button class="btn btn-secondary" onclick="exportTable('panel-a3','A3_Pixel_vs_S2S_观测矩阵_QA清单')">↓ 导出CSV</button>
+          <button class="btn btn-secondary" onclick="exportTable('tbl-a3','A3_Pixel_vs_S2S_观测矩阵')">↓ 导出CSV</button>
           <button class="btn btn-primary" onclick="submitToFeishu('a3')">→ 提交飞书</button>
         </div>
       </div>
@@ -621,7 +637,22 @@
         <p class="hint">按正式观测矩阵记录平台、事件、观测区间与差异原因，作为归因口径校准与数据可信度评估的统一底表。</p>
       </div>
 
-      <hr class="divider">
+    </div>
+
+    <!-- ═══════════ A3 QA ═══════════ -->
+    <div class="panel" id="panel-a3-qa">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m1">Month 1 · Week 3 交付</div>
+          <div class="panel-title">A3 QA 清单</div>
+          <div class="panel-meta">Owner: 技术负责人 / 数据分析师 &nbsp;·&nbsp; 用于跟踪检查批次、修复责任人与复查结果</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('tbl-a3-qa','A3_QA清单')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('a3')">→ 提交飞书</button>
+        </div>
+      </div>
+
       <div class="section">
         <div class="section-header">
           <div class="section-title">A3 QA 清单</div>
@@ -633,6 +664,7 @@
             <tbody id="tbody-a3-qa"></tbody>
           </table>
         </div>
+        <p class="hint">本页仅维护 A3 QA 清单，不再与观测矩阵共用同一页面骨架。</p>
       </div>
     </div>
 
@@ -666,49 +698,54 @@
             </tr></thead>
             <tbody>
               <tr>
-                <td class="cell-lbl" style="text-align:center">P-01</td>
-                <td><input type="text" placeholder="FB发现 → Google搜索品牌词 → 下单"></td>
-                <td><input type="text" placeholder="Google 100%"></td>
-                <td><input type="text" placeholder="FB 40% / GG 60%"></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="number" placeholder="填写..."></td>
-                <td><select><option>待确认</option><option>以 Last Click</option><option>以 DDA</option><option>以 GA4</option></select></td>
+                <td class="cell-lbl" style="text-align:center">1</td>
+                <td><input type="text" placeholder="例：Batch-01"></td>
+                <td><input type="date"></td>
+                <td><input type="text" placeholder="填写用户触点路径"></td>
+                <td><input type="text" placeholder="填写归因模型"></td>
+                <td><input type="text" placeholder="填写归因结果"></td>
+                <td><input type="text" placeholder="填写偏差说明"></td>
+                <td><input type="text" placeholder="填写结论建议"></td>
               </tr>
               <tr>
-                <td class="cell-lbl" style="text-align:center">P-02</td>
-                <td><input type="text" placeholder="TikTok视频 → 直接访问 → 下单"></td>
-                <td><input type="text" placeholder="Direct 100%"></td>
-                <td><input type="text" placeholder="TT 70% / Direct 30%"></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="number" placeholder="填写..."></td>
-                <td><select><option>待确认</option><option>以 Last Click</option><option>以 DDA</option><option>以 GA4</option></select></td>
+                <td class="cell-lbl" style="text-align:center">2</td>
+                <td><input type="text" placeholder="例：Batch-02"></td>
+                <td><input type="date"></td>
+                <td><input type="text" placeholder="填写用户触点路径"></td>
+                <td><input type="text" placeholder="填写归因模型"></td>
+                <td><input type="text" placeholder="填写归因结果"></td>
+                <td><input type="text" placeholder="填写偏差说明"></td>
+                <td><input type="text" placeholder="填写结论建议"></td>
               </tr>
               <tr>
-                <td class="cell-lbl" style="text-align:center">P-03</td>
-                <td><input type="text" placeholder="EDM邮件 → 加购 → 下单"></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="number" placeholder="填写..."></td>
-                <td><select><option>待确认</option><option>以 Last Click</option><option>以 DDA</option><option>以 GA4</option></select></td>
+                <td class="cell-lbl" style="text-align:center">3</td>
+                <td><input type="text" placeholder="例：Batch-03"></td>
+                <td><input type="date"></td>
+                <td><input type="text" placeholder="填写用户触点路径"></td>
+                <td><input type="text" placeholder="填写归因模型"></td>
+                <td><input type="text" placeholder="填写归因结果"></td>
+                <td><input type="text" placeholder="填写偏差说明"></td>
+                <td><input type="text" placeholder="填写结论建议"></td>
               </tr>
               <tr>
-                <td class="cell-lbl" style="text-align:center">P-04</td>
-                <td><input type="text" placeholder="跨设备（手机看广告 → 桌面下单）"></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="number" placeholder="填写..."></td>
-                <td><select><option>待确认</option><option>以 Last Click</option><option>以 DDA</option><option>以 GA4</option></select></td>
+                <td class="cell-lbl" style="text-align:center">4</td>
+                <td><input type="text" placeholder="例：Batch-04"></td>
+                <td><input type="date"></td>
+                <td><input type="text" placeholder="填写用户触点路径"></td>
+                <td><input type="text" placeholder="填写归因模型"></td>
+                <td><input type="text" placeholder="填写归因结果"></td>
+                <td><input type="text" placeholder="填写偏差说明"></td>
+                <td><input type="text" placeholder="填写结论建议"></td>
               </tr>
               <tr>
-                <td class="cell-lbl" style="text-align:center">P-05</td>
-                <td><input type="text" placeholder="折扣码归因 vs UTM归因优先级测试"></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="text" placeholder="填写..."></td>
-                <td><input type="number" placeholder="填写..."></td>
-                <td><select><option>待确认</option><option>折扣码优先</option><option>UTM优先</option></select></td>
+                <td class="cell-lbl" style="text-align:center">5</td>
+                <td><input type="text" placeholder="例：Batch-05"></td>
+                <td><input type="date"></td>
+                <td><input type="text" placeholder="填写用户触点路径"></td>
+                <td><input type="text" placeholder="填写归因模型"></td>
+                <td><input type="text" placeholder="填写归因结果"></td>
+                <td><input type="text" placeholder="填写偏差说明"></td>
+                <td><input type="text" placeholder="填写结论建议"></td>
               </tr>
             </tbody>
           </table>
@@ -737,10 +774,10 @@
           <table class="data-table" id="tbl-b2-base">
             <thead><tr><th style="width:20%">品牌维度</th><th style="width:20%">当前定义</th><th style="width:20%">目标定义</th><th style="width:20%">差距说明</th><th style="width:20%">修正建议</th></tr></thead>
             <tbody>
-              <tr><td class="cell-lbl">核心产品卖点</td><td><textarea rows="2" placeholder="列出3个最核心的产品特性与优势..."></textarea></td></tr>
-              <tr><td class="cell-lbl">目标受众画像</td><td><input type="text" placeholder="例：北美 25-35岁职场女性，关注效率与品质"></td></tr>
-              <tr><td class="cell-lbl">品牌语气 (TOV)</td><td><select><option>——</option><option>专业权威</option><option>幽默轻松</option><option>极简高级</option><option>温暖亲和</option><option>大胆挑衅</option></select></td></tr>
-              <tr><td class="cell-lbl">品牌金句 (Slogan)</td><td><input type="text" placeholder="填写品牌核心价值主张..."></td></tr>
+              <tr><td class="cell-lbl">核心产品卖点</td><td><textarea rows="2" placeholder="填写当前定义"></textarea></td><td><textarea rows="2" placeholder="填写目标定义"></textarea></td><td><textarea rows="2" placeholder="填写差距说明"></textarea></td><td><textarea rows="2" placeholder="填写修正建议"></textarea></td></tr>
+              <tr><td class="cell-lbl">目标受众画像</td><td><input type="text" placeholder="填写当前定义"></td><td><input type="text" placeholder="填写目标定义"></td><td><input type="text" placeholder="填写差距说明"></td><td><input type="text" placeholder="填写修正建议"></td></tr>
+              <tr><td class="cell-lbl">品牌语气 (TOV)</td><td><input type="text" placeholder="填写当前定义"></td><td><input type="text" placeholder="填写目标定义"></td><td><input type="text" placeholder="填写差距说明"></td><td><input type="text" placeholder="填写修正建议"></td></tr>
+              <tr><td class="cell-lbl">品牌金句 (Slogan)</td><td><input type="text" placeholder="填写当前定义"></td><td><input type="text" placeholder="填写目标定义"></td><td><input type="text" placeholder="填写差距说明"></td><td><input type="text" placeholder="填写修正建议"></td></tr>
             </tbody>
           </table>
         </div>
