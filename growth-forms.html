@@ -402,34 +402,34 @@
     </button>
 
     <div class="sidebar-section">Month 2 — 创意工业化</div>
-    <button class="nav-item" onclick="showPanel('b2',this)">
+    <button class="nav-item" onclick="showPanel('b2-base',this)">
       <span class="nav-dot dot-m2"></span> B2 品牌基础设定
     </button>
-    <button class="nav-item" onclick="showPanel('b2',this)">
+    <button class="nav-item" onclick="showPanel('b2-hooks',this)">
       <span class="nav-dot dot-m2"></span> B2 广告文案矩阵
     </button>
-    <button class="nav-item" onclick="showPanel('b3',this)">
+    <button class="nav-item" onclick="showPanel('b3-sku',this)">
       <span class="nav-dot dot-m2"></span> B3 SKU 阵营划分表
     </button>
-    <button class="nav-item" onclick="showPanel('b3',this)">
+    <button class="nav-item" onclick="showPanel('b3-script',this)">
       <span class="nav-dot dot-m2"></span> B3 SKU 脚本矩阵
     </button>
-    <button class="nav-item" onclick="showPanel('b4',this)">
+    <button class="nav-item" onclick="showPanel('b4-core',this)">
       <span class="nav-dot dot-m2"></span> B4 素材沙盒测试矩阵
     </button>
-    <button class="nav-item" onclick="showPanel('b4',this)">
+    <button class="nav-item" onclick="showPanel('b4-winner',this)">
       <span class="nav-dot dot-m2"></span> B4 Winner Insights
     </button>
-    <button class="nav-item" onclick="showPanel('b5',this)">
+    <button class="nav-item" onclick="showPanel('b5-funnel',this)">
       <span class="nav-dot dot-m2"></span> B5 漏斗分层投放策略
     </button>
-    <button class="nav-item" onclick="showPanel('b5',this)">
+    <button class="nav-item" onclick="showPanel('b5-rules',this)">
       <span class="nav-dot dot-m2"></span> B5 止损护航规则
     </button>
-    <button class="nav-item" onclick="showPanel('b6',this)">
+    <button class="nav-item" onclick="showPanel('b6-analysis',this)">
       <span class="nav-dot dot-m2"></span> B6 用户多维分析
     </button>
-    <button class="nav-item" onclick="showPanel('b6',this)">
+    <button class="nav-item" onclick="showPanel('b6-seeds',this)">
       <span class="nav-dot dot-m2"></span> B6 种子标签包
     </button>
 
@@ -754,16 +754,16 @@
       </div>
     </div>
 
-    <!-- ═══════════ B2 ═══════════ -->
-    <div class="panel" id="panel-b2">
+    <!-- ═══════════ B2 BASE ═══════════ -->
+    <div class="panel" id="panel-b2-base">
       <div class="panel-header">
         <div class="panel-title-group">
           <div class="phase-badge badge-m2">Month 2 · Day 50 交付</div>
-          <div class="panel-title">B2 品牌基础设定 / B2 广告文案矩阵</div>
+          <div class="panel-title">B2 品牌基础设定</div>
           <div class="panel-meta">Owner: 内容策略师 / 文案负责人 &nbsp;·&nbsp; 适用范围: 落地页 / 广告文案 / EDM / 社群简介</div>
         </div>
         <div class="panel-actions">
-          <button class="btn btn-secondary" onclick="exportTable('panel-b2','B2_品牌基础设定_广告文案矩阵')">↓ 导出CSV</button>
+          <button class="btn btn-secondary" onclick="exportTable('tbl-b2-base','B2_品牌基础设定')">↓ 导出CSV</button>
           <button class="btn btn-primary" onclick="submitToFeishu('b2')">→ 提交飞书</button>
         </div>
       </div>
@@ -783,7 +783,22 @@
         </div>
       </div>
 
-      <hr class="divider">
+    </div>
+
+    <!-- ═══════════ B2 HOOKS ═══════════ -->
+    <div class="panel" id="panel-b2-hooks">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m2">Month 2 · Day 50 交付</div>
+          <div class="panel-title">B2 广告文案矩阵</div>
+          <div class="panel-meta">Owner: 内容策略师 / 文案负责人 &nbsp;·&nbsp; 用于维护不同受众、钩子与行动号召的文案组合</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('tbl-b2','B2_广告文案矩阵')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('b2')">→ 提交飞书</button>
+        </div>
+      </div>
+
       <div class="section">
         <div class="section-header">
           <div class="section-title">B2 广告文案矩阵</div>
@@ -806,16 +821,16 @@
       </div>
     </div>
 
-    <!-- ═══════════ B3 ═══════════ -->
-    <div class="panel" id="panel-b3">
+    <!-- ═══════════ B3 SKU ═══════════ -->
+    <div class="panel" id="panel-b3-sku">
       <div class="panel-header">
         <div class="panel-title-group">
           <div class="phase-badge badge-m2">Month 2 · Day 40 交付</div>
-          <div class="panel-title">B3 SKU 阵营划分表 / B3 SKU 脚本矩阵</div>
+          <div class="panel-title">B3 SKU 阵营划分表</div>
           <div class="panel-meta">Owner: 内容策划 / 创意团队 &nbsp;·&nbsp; 适用范围: TikTok / Instagram Reels / YouTube Shorts</div>
         </div>
         <div class="panel-actions">
-          <button class="btn btn-secondary" onclick="exportTable('panel-b3','B3_SKU阵营划分表_SKU脚本矩阵')">↓ 导出CSV</button>
+          <button class="btn btn-secondary" onclick="exportTable('tbl-b3-sku','B3_SKU阵营划分表')">↓ 导出CSV</button>
           <button class="btn btn-primary" onclick="submitToFeishu('b3')">→ 提交飞书</button>
         </div>
       </div>
@@ -842,7 +857,22 @@
         </div>
       </div>
 
-      <hr class="divider">
+    </div>
+
+    <!-- ═══════════ B3 SCRIPT ═══════════ -->
+    <div class="panel" id="panel-b3-script">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m2">Month 2 · Day 40 交付</div>
+          <div class="panel-title">B3 SKU 脚本矩阵</div>
+          <div class="panel-meta">Owner: 内容策划 / 创意团队 &nbsp;·&nbsp; 用于维护每个 SKU 的脚本框架、制作状态与投测优先级</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('tbl-b3-script','B3_SKU脚本矩阵')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('b3')">→ 提交飞书</button>
+        </div>
+      </div>
+
       <div class="section">
         <div class="section-header">
           <div class="section-title">B3 SKU 脚本矩阵</div>
@@ -867,16 +897,16 @@
       </div>
     </div>
 
-    <!-- ═══════════ B4 ═══════════ -->
-    <div class="panel" id="panel-b4">
+    <!-- ═══════════ B4 CORE ═══════════ -->
+    <div class="panel" id="panel-b4-core">
       <div class="panel-header">
         <div class="panel-title-group">
           <div class="phase-badge badge-m2">Month 2 · Day 50 交付</div>
-          <div class="panel-title">B4 素材沙盒测试矩阵 / B4 Winner Insights</div>
+          <div class="panel-title">B4 素材沙盒测试矩阵</div>
           <div class="panel-meta">Owner: 广告优化师 / 数据分析师 &nbsp;·&nbsp; 适用范围: Meta Ads / TikTok Ads / YouTube Shorts</div>
         </div>
         <div class="panel-actions">
-          <button class="btn btn-secondary" onclick="exportTable('panel-b4','B4_素材沙盒测试矩阵_WinnerInsights')">↓ 导出CSV</button>
+          <button class="btn btn-secondary" onclick="exportTable('tbl-b4','B4_素材沙盒测试矩阵')">↓ 导出CSV</button>
           <button class="btn btn-primary" onclick="submitToFeishu('b4')">→ 提交飞书</button>
         </div>
       </div>
@@ -911,7 +941,22 @@
         <p class="hint">按正式测试矩阵记录预算、曝光、点击、转化与结论，保留对比与复盘所需的完整测试上下文。</p>
       </div>
 
-      <hr class="divider">
+    </div>
+
+    <!-- ═══════════ B4 WINNER ═══════════ -->
+    <div class="panel" id="panel-b4-winner">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m2">Month 2 · Day 50 交付</div>
+          <div class="panel-title">B4 Winner Insights</div>
+          <div class="panel-meta">Owner: 广告优化师 / 数据分析师 &nbsp;·&nbsp; 用于归档赢家素材洞察与后续放量建议</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('tbl-b4-winner','B4_WinnerInsights')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('b4')">→ 提交飞书</button>
+        </div>
+      </div>
+
       <div class="section">
         <div class="section-header">
           <div class="section-title">B4 Winner Insights</div>
@@ -926,16 +971,16 @@
       </div>
     </div>
 
-    <!-- ═══════════ B5 ═══════════ -->
-    <div class="panel" id="panel-b5">
+    <!-- ═══════════ B5 FUNNEL ═══════════ -->
+    <div class="panel" id="panel-b5-funnel">
       <div class="panel-header">
         <div class="panel-title-group">
           <div class="phase-badge badge-m2">Month 2 · Day 60 交付</div>
-          <div class="panel-title">B5 漏斗分层投放策略 / B5 止损护航规则</div>
+          <div class="panel-title">B5 漏斗分层投放策略</div>
           <div class="panel-meta">Owner: 广告投放总监 / 优化师 &nbsp;·&nbsp; 适用范围: Meta / Google / TikTok Ads</div>
         </div>
         <div class="panel-actions">
-          <button class="btn btn-secondary" onclick="exportTable('panel-b5','B5_漏斗分层投放策略_止损护航规则')">↓ 导出CSV</button>
+          <button class="btn btn-secondary" onclick="exportTable('tbl-b5','B5_漏斗分层投放策略')">↓ 导出CSV</button>
           <button class="btn btn-primary" onclick="submitToFeishu('b5')">→ 提交飞书</button>
         </div>
       </div>
@@ -962,7 +1007,22 @@
         </div>
       </div>
 
-      <hr class="divider">
+    </div>
+
+    <!-- ═══════════ B5 RULES ═══════════ -->
+    <div class="panel" id="panel-b5-rules">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m2">Month 2 · Day 60 交付</div>
+          <div class="panel-title">B5 止损护航规则</div>
+          <div class="panel-meta">Owner: 广告投放总监 / 优化师 &nbsp;·&nbsp; 用于维护止损触发条件、红线阈值与执行动作</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('tbl-b5-rules','B5_止损护航规则')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('b5')">→ 提交飞书</button>
+        </div>
+      </div>
+
       <div class="section">
         <div class="section-header">
           <div class="section-title">B5 止损护航规则</div>
@@ -977,16 +1037,16 @@
       </div>
     </div>
 
-    <!-- ═══════════ B6 ═══════════ -->
-    <div class="panel" id="panel-b6">
+    <!-- ═══════════ B6 ANALYSIS ═══════════ -->
+    <div class="panel" id="panel-b6-analysis">
       <div class="panel-header">
         <div class="panel-title-group">
           <div class="phase-badge badge-m2">Month 2 · Day 60 交付</div>
-          <div class="panel-title">B6 用户多维分析 / B6 种子标签包</div>
+          <div class="panel-title">B6 用户多维分析</div>
           <div class="panel-meta">Owner: 数据分析师 / CRM 经理 &nbsp;·&nbsp; 适用范围: 广告受众扩张 / EDM / 产品开发</div>
         </div>
         <div class="panel-actions">
-          <button class="btn btn-secondary" onclick="exportTable('panel-b6','B6_用户多维分析_种子标签包')">↓ 导出CSV</button>
+          <button class="btn btn-secondary" onclick="exportTable('tbl-b6','B6_用户多维分析')">↓ 导出CSV</button>
           <button class="btn btn-primary" onclick="submitToFeishu('b6')">→ 提交飞书</button>
         </div>
       </div>
@@ -1020,7 +1080,22 @@
         </div>
       </div>
 
-      <hr class="divider">
+    </div>
+
+    <!-- ═══════════ B6 SEEDS ═══════════ -->
+    <div class="panel" id="panel-b6-seeds">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m2">Month 2 · Day 60 交付</div>
+          <div class="panel-title">B6 种子标签包</div>
+          <div class="panel-meta">Owner: 数据分析师 / CRM 经理 &nbsp;·&nbsp; 用于维护种子包版本、受众规则与测试优先级</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('tbl-b6-seeds','B6_种子标签包')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('b6')">→ 提交飞书</button>
+        </div>
+      </div>
+
       <div class="section">
         <div class="section-header">
           <div class="section-title">B6 种子标签包</div>
