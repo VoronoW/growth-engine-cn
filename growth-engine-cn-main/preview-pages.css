@@ -243,7 +243,7 @@ img {
 }
 
 .hero-sub {
-  margin-top: 30px;
+  margin-top: 44px;
   max-width: 560px;
   font-size: 1.0625rem;
   color: var(--ink-muted);
@@ -463,6 +463,10 @@ img {
   border-top: 0;
 }
 
+.module-anchor {
+  margin-bottom: 52px;
+}
+
 .module-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -597,7 +601,7 @@ img {
 }
 
 .cta-wrap {
-  padding: 160px 0 80px;
+  padding: 160px 0 120px;
   background: var(--s10);
   color: var(--od);
 }
