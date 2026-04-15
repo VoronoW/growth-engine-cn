@@ -573,7 +573,7 @@ img {
 }
 
 .cta-wrap {
-  padding: 144px 0 0;
+  padding: 160px 0 0;
   background: var(--s10);
   color: var(--od);
 }
@@ -581,7 +581,7 @@ img {
 .cta-frame {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
-  gap: 88px;
+  gap: 104px;
   align-items: start;
 }
 
@@ -599,18 +599,56 @@ img {
   color: var(--od-muted);
 }
 
+.cta-support {
+  margin-top: 44px;
+  max-width: 460px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ol-dark);
+  color: var(--od-quiet);
+  font-size: 0.875rem;
+}
+
 .contact-card {
   display: grid;
-  gap: 28px;
-  padding: 40px 36px;
+  gap: 36px;
+  padding: 44px 40px;
   border: 1px solid var(--ol-dark);
   border-radius: var(--r-xl);
   background: rgba(255, 255, 255, 0.04);
 }
 
+.contact-section {
+  display: grid;
+  gap: 18px;
+}
+
+.contact-divider {
+  height: 1px;
+  background: var(--ol-dark);
+}
+
 .qr-module {
   display: grid;
-  gap: 20px;
+  gap: 24px;
+}
+
+.qr-header {
+  display: grid;
+  gap: 12px;
+}
+
+.qr-kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--od-quiet);
+}
+
+.qr-body {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
 }
 
 .qr-frame {
@@ -628,10 +666,10 @@ img {
 }
 
 .qr-frame::before {
-  content: "业务联系二维码";
-  width: 132px;
-  height: 132px;
-  border-radius: 18px;
+  content: "业务联系\\A二维码";
+  width: 148px;
+  height: 148px;
+  border-radius: 16px;
   border: 1px dashed rgba(255,255,255,0.28);
   display: grid;
   place-items: center;
@@ -640,29 +678,106 @@ img {
   color: var(--od-muted);
   font-size: 0.8125rem;
   line-height: 1.5;
+  white-space: pre-line;
+}
+
+.qr-meta {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.qr-meta p {
+  margin: 0;
+  color: var(--od-muted);
+}
+
+.identity-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--od);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.identity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--p50);
+}
+
+.qr-note {
+  padding-top: 14px;
+  border-top: 1px solid var(--ol-dark);
+  color: var(--od-quiet);
+  font-size: 0.875rem;
+}
+
+.contact-info-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.contact-row {
+  display: grid;
+  gap: 6px;
+}
+
+.contact-key {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--od-quiet);
+}
+
+.contact-value {
+  color: var(--od);
 }
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 48px;
-  padding: 88px 0 40px;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 72px;
+  padding: 112px 0 44px;
   border-top: 1px solid var(--ol-dark);
-  margin-top: 96px;
+  margin-top: 128px;
 }
 
 .footer-copy {
   display: grid;
-  gap: 12px;
+  gap: 18px;
 }
 
-.footer-meta {
+.footer-columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.footer-block {
   display: grid;
   gap: 8px;
-  justify-items: end;
-  text-align: right;
+}
+
+.footer-block-title {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--od-quiet);
-  font-size: 0.8125rem;
+}
+
+.footer-block p,
+.footer-block span {
+  color: var(--od-muted);
+  font-size: 0.875rem;
+  line-height: 1.7;
 }
 
 .assessment-shell {
@@ -719,6 +834,8 @@ img {
   .metric-board,
   .cta-frame,
   .footer-grid,
+  .qr-body,
+  .footer-columns,
   .placeholder-grid {
     grid-template-columns: 1fr;
     gap: 32px;
