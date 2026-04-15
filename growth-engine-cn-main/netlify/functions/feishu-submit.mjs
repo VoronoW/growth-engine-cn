@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { getFieldMap, applyFieldMap } from './_shared/feishu-field-map.mjs';
-import { getTableId } from './_shared/feishu-table-map.mjs';
+import { getTableBinding } from './_shared/feishu-table-map.mjs';
 import { getBitableAppToken } from './_shared/feishu-utils.mjs';
 
 const FEISHU_APP_ID = process.env.FEISHU_APP_ID;
@@ -91,31 +91,46 @@ export const handler = async (event) => {
     return json(400, { error: 'panelId and non-empty records required' });
   }
 
+  const debug = {
+    panelId,
+    subKey: subKey ?? null,
+    resolvedEnvKey: null,
+    resolvedTableId: null,
+    appTokenSource: null,
+    writeStage: 'preflight',
+  };
+
   let tableId;
   let fieldMap;
   try {
-    tableId = getTableId(panelId, subKey);
+    const binding = getTableBinding(panelId, subKey);
+    tableId = binding.tableId;
+    debug.subKey = binding.subKey;
+    debug.resolvedEnvKey = binding.envVar;
+    debug.resolvedTableId = binding.tableId;
     fieldMap = getFieldMap(panelId, subKey);
   } catch (error) {
-    return json(400, { error: error.message });
+    return json(400, { error: error.message, debug });
   }
 
   let bitableAppToken;
   try {
+    debug.appTokenSource = process.env.FEISHU_APP_TOKEN ? 'FEISHU_APP_TOKEN' : null;
     bitableAppToken = await getBitableAppToken();
   } catch (error) {
-    return json(500, { error: error.message });
+    return json(500, { error: error.message, debug });
   }
 
   // Get app token
   const appToken = await getAppAccessToken();
   if (!appToken) {
-    return json(500, { error: 'Failed to obtain app_access_token' });
+    return json(500, { error: 'Failed to obtain app_access_token', debug });
   }
 
   const mappedRecords = fieldMap ? applyFieldMap(records, fieldMap) : records;
 
   // Write records to Bitable
+  debug.writeStage = 'request_sent_to_feishu';
   const url = `https://open.feishu.cn/open-apis/bitable/v1/apps/${bitableAppToken}/tables/${tableId}/records/batch_create`;
   const res = await fetch(url, {
     method: 'POST',
@@ -133,11 +148,14 @@ export const handler = async (event) => {
     console.error('Bitable write error:', JSON.stringify(result));
     return json(500, {
       error: `Feishu API error ${result.code}: ${result.msg}`,
+      debug,
     });
   }
 
+  debug.writeStage = 'feishu_write_succeeded';
   return json(200, {
     ok: true,
     count: result.data?.records?.length ?? mappedRecords.length,
+    debug,
   });
 };
