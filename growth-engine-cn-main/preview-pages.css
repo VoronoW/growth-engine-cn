@@ -901,6 +901,28 @@ img {
   font-size: 0.9375rem;
 }
 
+/* ── Compact hero (assessment page) ─────────── */
+.hero--compact {
+  padding: 80px 0 72px;
+}
+
+/* ── Feishu form frame ───────────────────────── */
+.feishu-frame {
+  border: 1px dashed var(--ol-strong);
+  border-radius: var(--r-xl);
+  padding: 56px 48px;
+  min-height: 480px;
+  display: grid;
+  align-content: start;
+  gap: 20px;
+}
+
+.feishu-frame-body {
+  min-height: 360px;
+  border-radius: var(--r-lg);
+  background: var(--sf-high);
+}
+
 /* ── Deliverable overrides in light panels ───── */
 .panel:not(.panel--dark) .deliverable {
   border-top-color: var(--ol-strong);
@@ -960,21 +982,18 @@ img {
   width: 72px;
   height: 72px;
   border-radius: var(--r-lg);
-  background:
-    repeating-linear-gradient(0deg, rgba(126,166,194,0.06), rgba(126,166,194,0.06) 10px, transparent 10px, transparent 20px),
-    repeating-linear-gradient(90deg, rgba(126,166,194,0.06), rgba(126,166,194,0.06) 10px, transparent 10px, transparent 20px);
-  border: 1px solid rgba(255,255,255,0.14);
-  display: grid;
-  place-items: center;
+  background: rgba(255,255,255,0.92);
+  padding: 5px;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
-.site-footer-qr::before {
-  content: "QR";
-  font-family: var(--ff-mono);
-  font-size: 0.6875rem;
-  color: var(--od-quiet);
-  letter-spacing: 0.1em;
+.site-footer-qr img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--r-lg) - 3px);
+  object-fit: cover;
 }
 
 .site-footer-qr-info {
