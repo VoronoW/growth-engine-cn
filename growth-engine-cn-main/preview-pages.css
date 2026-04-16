@@ -170,6 +170,35 @@ img {
   background: var(--od-faint);
 }
 
+.nav-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 15px;
+  border-radius: var(--r-md);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--od-quiet);
+  border: 1px solid var(--ol-dark);
+  transition: color 0.14s, border-color 0.14s, background 0.14s;
+  white-space: nowrap;
+}
+
+.nav-secondary:hover {
+  color: var(--od);
+  border-color: rgba(255, 255, 255, 0.22);
+  background: var(--od-faint);
+}
+
+.nav-secondary-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4aaa6f;
+  flex-shrink: 0;
+}
+
 .nav-cta {
   display: inline-flex;
   align-items: center;
