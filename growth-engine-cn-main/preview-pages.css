@@ -173,22 +173,27 @@ img {
 .nav-secondary {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: 38px;
-  padding: 0 15px;
+  gap: 7px;
+  height: 44px;
+  padding: 0 14px;
   border-radius: var(--r-md);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--od-quiet);
   border: 1px solid var(--ol-dark);
   transition: color 0.14s, border-color 0.14s, background 0.14s;
   white-space: nowrap;
+  line-height: 1;
 }
 
 .nav-secondary:hover {
-  color: var(--od);
   border-color: rgba(255, 255, 255, 0.22);
   background: var(--od-faint);
+}
+
+.nav-secondary:hover .nav-secondary-main {
+  color: var(--od);
+}
+
+.nav-secondary:hover .nav-secondary-sub {
+  color: var(--od-quiet);
 }
 
 .nav-secondary-dot {
@@ -197,6 +202,26 @@ img {
   border-radius: 50%;
   background: #4aaa6f;
   flex-shrink: 0;
+}
+
+.nav-secondary-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.nav-secondary-main {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--od);
+  letter-spacing: -0.01em;
+}
+
+.nav-secondary-sub {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--od-quiet);
+  letter-spacing: 0.01em;
 }
 
 .nav-cta {
