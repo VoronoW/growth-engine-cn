@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZAPEX · Design System — The Architectural Ledger</title>
+    <!--
+      ZAPEX / 峥锐 Design Manual — Growth OS
+      ================================================================
+      Creative North Star: "The Architectural Ledger"
+      Built from ~/Downloads/DESIGN.md + palette reference image.
+
+      Philosophy embedded in the manual itself:
+        · No 1px solid dividers — sections separated by surface shifts
+        · No pure black — ink sits at #1b1c1b
+        · No Web-2.0 shadows — depth comes from tonal layering
+        · 8px grid — spacing is structural, not decorative
+        · Manrope for display / data, Inter for body / labels
+
+      This manual is the single source of truth. All page content will be
+      interpreted against the tokens and rules defined here.
+    -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
+      /* =================================================================
+         TOKENS — The Architectural Ledger
+         ================================================================= */
+      :root {
+        /* ---------- PRIMARY — OS engine / navigation anchor ---------- */
+        --primary-0:   #071f30;
+        --primary-10:  #0c4e77;  /* primary */
+        --primary-20:  #175d8a;
+        --primary-30:  #2f6690;  /* primary-container · image anchor */
+        --primary-40:  #4a7fa5;
+        --primary-50:  #7ea6c2;
+        --primary-60:  #b0c8db;
+        --primary-70:  #d9e4ee;
+
+        /* ---------- SECONDARY — administrative / inverted surface ----- */
+        --secondary-0:  #0b0d14;
+        --secondary-10: #1a1e2a;
+        --secondary-20: #2d3142;  /* image anchor */
+        --secondary-30: #3e445a;
+        --secondary-40: #5a5d70;  /* DESIGN.md secondary utility */
+        --secondary-50: #7c7f8f;
+        --secondary-60: #a5a8b5;
+        --secondary-70: #cfd1d9;
+
+        /* ---------- TERTIARY — value indicator / milestone --------- */
+        --tertiary-0:   #2e2500;
+        --tertiary-10:  #4d3e00;
+        --tertiary-20:  #715d00;
+        --tertiary-30:  #9d8420;  /* image anchor */
+        --tertiary-40:  #b49d3f;
+        --tertiary-50:  #d1bc6f;
+        --tertiary-60:  #e3d59b;
+        --tertiary-70:  #f1e8c3;
+
+        /* ---------- NEUTRAL / SURFACE ladder ------------------------- */
+        --surface-lowest:  #ffffff;
+        --surface:         #fbf9f8;
+        --surface-low:     #f5f3f2;
+        --surface-high:    #efedec;
+        --surface-highest: #e4e2e1;
+        --surface-dim:     #dbdad9;
+        --surface-bright:  #fcfaf9;  /* image anchor */
+
+        /* ---------- INK / SEMANTIC ---------------------------------- */
+        --ink:         #1b1c1b;      /* on-surface — never #000 */
+        --ink-muted:   rgba(27, 28, 27, 0.64);
+        --ink-quiet:   rgba(27, 28, 27, 0.44);
+        --ink-faint:   rgba(27, 28, 27, 0.16);
+        --on-primary:  #ffffff;
+        --on-tertiary: #1b1c1b;
+
+        /* ---------- GHOST / OUTLINE — felt, not seen ---------------- */
+        --outline-variant: rgba(193, 199, 207, 0.15);
+        --outline-strong:  rgba(27, 28, 27, 0.10);
+
+        /* ---------- ELEVATION --------------------------------------- */
+        --ambient: 0 24px 48px -12px rgba(27, 28, 27, 0.04);
+        --ambient-lift: 0 32px 64px -16px rgba(27, 28, 27, 0.06);
+
+        /* ---------- RADIUS ------------------------------------------ */
+        --r-xs: 2px;
+        --r-sm: 4px;    /* DEFAULT */
+        --r-md: 6px;    /* BUTTONS */
+        --r-lg: 8px;
+        --r-xl: 12px;   /* MAX — anything larger erodes authority */
+
+        /* ---------- TYPOGRAPHY -------------------------------------- */
+        --font-display: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+        --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+        --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+        /* ---------- LAYOUT ------------------------------------------ */
+        --max: 1200px;
+        --gutter: 32px;
+
+        /* ---------- SIGNATURE GRADIENT ------------------------------ */
+        --hero-gradient: radial-gradient(
+          ellipse at 15deg 20% 30%,
+          var(--primary-30) 0%,
+          var(--primary-10) 60%,
+          var(--primary-0) 100%
+        );
+      }
+
+      /* =================================================================
+         RESET (surgical, not opinionated)
+         ================================================================= */
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+      body {
+        font-family: var(--font-body);
+        font-size: 0.875rem;       /* body-md */
+        line-height: 1.6;
+        color: var(--ink);
+        background: var(--surface);
+        font-feature-settings: "cv01", "ss03", "cv11";
+      }
+      a { color: inherit; text-decoration: none; }
+      code, .mono { font-family: var(--font-mono); }
+
+      /* =================================================================
+         LAYOUT SCAFFOLD
+         ================================================================= */
+      .shell { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+      .section {
+        padding: 112px 0;
+        /* No 1px dividers — boundaries created by surface shifts below. */
+      }
+      .section--low     { background: var(--surface-low); }
+      .section--surface { background: var(--surface); }
+      .section--high    { background: var(--surface-high); }
+      .section--dark    { background: var(--secondary-20); color: var(--surface-lowest); }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        gap: 56px;
+        align-items: baseline;
+        margin-bottom: 56px;
+      }
+      .section-num {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--ink-quiet);
+        letter-spacing: 0.12em;
+      }
+      .section-dark .section-num { color: rgba(255,255,255,0.5); }
+      .section-title {
+        font-family: var(--font-display);
+        font-size: 2.25rem;       /* headline-lg */
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+        margin-bottom: 12px;
+      }
+      .section-desc {
+        font-size: 0.9375rem;     /* body-lg */
+        color: var(--ink-muted);
+        max-width: 620px;
+        line-height: 1.7;
+      }
+      .section--dark .section-title { color: var(--surface-lowest); }
+      .section--dark .section-desc  { color: rgba(255,255,255,0.72); }
+
+      /* Classification label — consultancy-grade */
+      .class-label {
+        font-family: var(--font-body);
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-quiet);
+      }
+
+      /* =================================================================
+         COVER
+         ================================================================= */
+      .cover {
+        padding: 160px 0 120px;
+        background: var(--surface);
+        position: relative;
+        overflow: hidden;
+      }
+      .cover::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 85% 20%, rgba(47, 102, 144, 0.06), transparent 45%),
+          radial-gradient(circle at 12% 78%, rgba(157, 132, 32, 0.04), transparent 50%);
+        pointer-events: none;
+      }
+      .cover-inner { position: relative; z-index: 1; }
+      .cover-meta {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        margin-bottom: 48px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--ink-quiet);
+        letter-spacing: 0.04em;
+      }
+      .cover-meta .dot {
+        width: 5px; height: 5px; border-radius: 50%;
+        background: var(--tertiary-30);
+      }
+      .cover-title {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 4.5rem;        /* display-lg */
+        line-height: 1.02;
+        letter-spacing: -0.03em;
+        margin-bottom: 28px;
+      }
+      .cover-title em {
+        font-style: normal;
+        display: block;
+        color: var(--primary-30);
+        font-weight: 400;
+      }
+      .cover-lede {
+        font-size: 1.0625rem;
+        line-height: 1.7;
+        color: var(--ink-muted);
+        max-width: 680px;
+        margin-bottom: 72px;
+      }
+      .cover-specs {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
+        padding-top: 32px;
+        background-image: linear-gradient(var(--outline-strong), var(--outline-strong));
+        background-size: 64px 1px;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+      }
+      .cover-specs dt {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-quiet);
+        margin-bottom: 10px;
+      }
+      .cover-specs dd {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1rem;
+        color: var(--ink);
+      }
+
+      /* =================================================================
+         TOKEN GRID (reusable container)
+         ================================================================= */
+      .grid {
+        display: grid;
+        gap: 24px;
+      }
+      .grid-2 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+      .grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+      /* =================================================================
+         COLOR FAMILY CARD
+         ================================================================= */
+      .family {
+        background: var(--surface-lowest);
+        border-radius: var(--r-xl);
+        padding: 28px;
+        box-shadow: var(--ambient);
+      }
+      .family-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 24px;
+      }
+      .family-name {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.125rem;
+        letter-spacing: -0.01em;
+      }
+      .family-hex {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--ink-quiet);
+      }
+      .family-swatch {
+        border-radius: var(--r-md);
+        height: 120px;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: flex-end;
+        padding: 16px;
+      }
+      .family-swatch.on-dark { color: var(--surface-lowest); }
+      .family-swatch.on-dark .swatch-role { color: rgba(255,255,255,0.72); }
+      .family-swatch.on-light { color: var(--ink); }
+      .family-swatch.on-light .swatch-role { color: var(--ink-muted); }
+      .swatch-role {
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+      }
+      .tonal-ladder {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        height: 28px;
+        border-radius: var(--r-sm);
+        overflow: hidden;
+      }
+      .tonal-ladder > div {
+        position: relative;
+      }
+
+      /* =================================================================
+         NO-LINE DEMO
+         ================================================================= */
+      .noline-demo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-radius: var(--r-xl);
+        overflow: hidden;
+        min-height: 280px;
+      }
+      .noline-demo > div {
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .noline-demo .a { background: var(--surface); }
+      .noline-demo .b { background: var(--surface-low); }
+      .noline-demo p {
+        margin-top: 12px;
+        color: var(--ink-muted);
+        font-size: 0.8125rem;
+      }
+
+      /* =================================================================
+         TYPOGRAPHY SPECIMEN
+         ================================================================= */
+      .type-row {
+        display: grid;
+        grid-template-columns: 200px 1fr 120px;
+        align-items: baseline;
+        padding: 28px 0;
+        background-image: linear-gradient(var(--outline-strong), var(--outline-strong));
+        background-size: 100% 1px;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+      }
+      .type-row:first-child { background-image: none; padding-top: 8px; }
+      .type-meta {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        color: var(--ink-quiet);
+        letter-spacing: 0.04em;
+      }
+      .type-meta b {
+        display: block;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--ink);
+        letter-spacing: 0;
+        margin-bottom: 4px;
+      }
+      .type-sample { color: var(--ink); }
+      .type-use {
+        font-size: 12px;
+        color: var(--ink-quiet);
+        text-align: right;
+      }
+      .t-display-lg {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 3.5rem;
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+      .t-display-md {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 2.5rem;
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+      }
+      .t-headline {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.75rem;
+        letter-spacing: -0.015em;
+        line-height: 1.15;
+      }
+      .t-title-lg {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.25rem;
+        letter-spacing: -0.005em;
+      }
+      .t-title-sm {
+        font-family: var(--font-body);
+        font-weight: 600;
+        font-size: 1rem;
+      }
+      .t-body-lg {
+        font-family: var(--font-body);
+        font-weight: 400;
+        font-size: 0.9375rem;
+        line-height: 1.7;
+      }
+      .t-body-md {
+        font-family: var(--font-body);
+        font-weight: 400;
+        font-size: 0.875rem;
+        line-height: 1.6;
+      }
+      .t-label {
+        font-family: var(--font-body);
+        font-weight: 600;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .t-numeric {
+        font-family: var(--font-display);
+        font-variant-numeric: tabular-nums;
+        font-weight: 500;
+        font-size: 1.5rem;
+        letter-spacing: -0.01em;
+      }
+
+      /* =================================================================
+         ELEVATION DEMO
+         ================================================================= */
+      .elev-stack {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .elev-card {
+        background: var(--surface-lowest);
+        border-radius: var(--r-lg);
+        padding: 32px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .elev-card.recessed { background: var(--surface-highest); }
+      .elev-card.floating { background: var(--surface-lowest); box-shadow: var(--ambient); }
+      .elev-card .level {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--ink-quiet);
+        letter-spacing: 0.04em;
+      }
+      .elev-card .name {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.125rem;
+      }
+      .elev-card .note {
+        font-size: 0.8125rem;
+        color: var(--ink-muted);
+      }
+
+      .radius-row {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 24px;
+      }
+      .radius-tile {
+        aspect-ratio: 1.4 / 1;
+        background: var(--primary-30);
+        display: flex;
+        align-items: flex-end;
+        padding: 18px;
+      }
+      .radius-tile .class-label { color: rgba(255,255,255,0.7); }
+      .radius-tile .hex {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--surface-lowest);
+        margin-top: 2px;
+      }
+
+      /* =================================================================
+         BUTTONS
+         ================================================================= */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        height: 40px;
+        padding: 0 18px;
+        border-radius: var(--r-md);
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 500;
+        letter-spacing: 0.005em;
+        border: 1px solid transparent;
+        background-clip: padding-box;
+        transition: background-color 160ms ease, color 160ms ease,
+                    border-color 160ms ease, box-shadow 160ms ease,
+                    transform 80ms ease, opacity 160ms ease;
+        cursor: pointer;
+        user-select: none;
+      }
+      .btn:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(47, 102, 144, 0.32);
+      }
+      .btn:active:not([aria-haspopup]) { transform: translateY(1px); }
+      .btn:disabled { opacity: 0.42; pointer-events: none; }
+
+      .btn--primary   { background: var(--primary-10); color: var(--on-primary); }
+      .btn--primary:hover   { background: var(--primary-20); }
+
+      .btn--secondary { background: var(--surface-highest); color: var(--ink); }
+      .btn--secondary:hover { background: var(--surface-dim); }
+
+      .btn--inverted  { background: var(--secondary-20); color: var(--surface-lowest); }
+      .btn--inverted:hover  { background: var(--secondary-10); }
+
+      .btn--outlined  {
+        background: var(--surface-lowest);
+        color: var(--ink);
+        border-color: rgba(193, 199, 207, 0.8);
+      }
+      .btn--outlined:hover {
+        background: var(--surface-low);
+        border-color: var(--primary-30);
+        color: var(--primary-10);
+      }
+
+      .btn--ghost     { background: transparent; color: var(--primary-10); }
+      .btn--ghost:hover { text-decoration: underline; text-underline-offset: 5px; }
+
+      .btn--tertiary  { background: var(--tertiary-30); color: var(--ink); }
+      .btn--tertiary:hover { background: var(--tertiary-20); color: var(--surface-lowest); }
+
+      .btn--sm { height: 32px; padding: 0 12px; font-size: 0.8125rem; }
+      .btn--lg { height: 48px; padding: 0 22px; font-size: 0.9375rem; }
+
+      /* =================================================================
+         INPUT — ledger bottom-border style
+         ================================================================= */
+      .ledger-input {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .ledger-input label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+      }
+      .ledger-input .field {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 14px;
+        background: var(--surface-low);
+        border-radius: var(--r-sm) var(--r-sm) 0 0;
+        background-image: linear-gradient(rgba(193,199,207,0.5), rgba(193,199,207,0.5));
+        background-size: 100% 1px;
+        background-repeat: no-repeat;
+        background-position: 0 100%;
+        transition: background-size 160ms ease;
+      }
+      .ledger-input .field:focus-within {
+        background-image: linear-gradient(var(--primary-10), var(--primary-10));
+        background-size: 100% 2px;
+      }
+      .ledger-input input {
+        flex: 1;
+        border: 0;
+        background: transparent;
+        font: inherit;
+        color: var(--ink);
+        outline: none;
+      }
+      .ledger-input input::placeholder { color: var(--ink-quiet); }
+      .ledger-input svg { width: 16px; height: 16px; color: var(--ink-muted); }
+      .ledger-input .hint {
+        font-size: 0.75rem;
+        color: var(--ink-quiet);
+      }
+
+      .ledger-input--search .field {
+        background: var(--surface-highest);
+        background-image: none;
+        border-radius: var(--r-md);
+        padding: 10px 14px;
+      }
+
+      /* =================================================================
+         GROWTH CARD
+         ================================================================= */
+      .growth-card {
+        background: var(--surface-lowest);
+        border-radius: var(--r-lg);
+        padding: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .growth-card__head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+      .growth-card__title {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.25rem;
+        letter-spacing: -0.005em;
+      }
+      .growth-card__body {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .growth-card__body > div {
+        padding: 24px 0;
+      }
+      .growth-card__body > div + div {
+        padding-left: 28px;
+      }
+      .growth-card__body .k {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--ink-quiet);
+        margin-bottom: 12px;
+      }
+      .growth-card__body .v {
+        font-family: var(--font-display);
+        font-variant-numeric: tabular-nums;
+        font-weight: 600;
+        font-size: 1.75rem;
+        letter-spacing: -0.01em;
+      }
+      .growth-card__body .delta {
+        font-family: var(--font-display);
+        font-size: 0.8125rem;
+        margin-top: 4px;
+        color: var(--tertiary-20);
+      }
+
+      /* =================================================================
+         PROGRESS LEDGER
+         ================================================================= */
+      .ledger-progress {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .ledger-progress .step {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .ledger-progress .bar {
+        height: 3px;
+        background: var(--surface-highest);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      .ledger-progress .bar > span {
+        display: block;
+        height: 100%;
+        background: var(--tertiary-30);
+      }
+      .ledger-progress .step.done .bar > span { width: 100%; }
+      .ledger-progress .step.active .bar > span { width: 62%; }
+      .ledger-progress .step.upcoming .bar > span { width: 0; }
+      .ledger-progress .meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-size: 0.75rem;
+        color: var(--ink-muted);
+      }
+      .ledger-progress .meta b {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.8125rem;
+        color: var(--ink);
+      }
+      .ledger-progress .step.upcoming b { color: var(--ink-quiet); }
+
+      /* =================================================================
+         UTILITY RAIL
+         ================================================================= */
+      .rail-demo {
+        display: grid;
+        grid-template-columns: 64px 1fr;
+        min-height: 280px;
+        border-radius: var(--r-lg);
+        overflow: hidden;
+      }
+      .rail {
+        background: var(--surface-dim);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 18px 0;
+        gap: 6px;
+      }
+      .rail button {
+        width: 40px; height: 40px;
+        border-radius: var(--r-sm);
+        border: 0;
+        background: transparent;
+        color: var(--ink-muted);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 160ms, color 160ms;
+      }
+      .rail button:hover { background: var(--surface-high); color: var(--ink); }
+      .rail button.is-active {
+        background: var(--primary-10);
+        color: var(--on-primary);
+      }
+      .rail svg { width: 18px; height: 18px; }
+      .rail-workspace {
+        background: var(--surface-low);
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .rail-workspace h4 {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.125rem;
+      }
+      .rail-workspace p { font-size: 0.8125rem; color: var(--ink-muted); }
+
+      /* =================================================================
+         GLASS NAV
+         ================================================================= */
+      .glass-demo {
+        position: relative;
+        min-height: 320px;
+        border-radius: var(--r-xl);
+        overflow: hidden;
+        background: var(--hero-gradient);
+        background-color: var(--primary-10);
+        padding: 24px;
+      }
+      .glass-nav {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 18px;
+        background: rgba(251, 249, 248, 0.80);
+        backdrop-filter: saturate(180%) blur(24px);
+        -webkit-backdrop-filter: saturate(180%) blur(24px);
+        border-radius: var(--r-md);
+        font-size: 0.8125rem;
+      }
+      .glass-nav__brand {
+        font-family: var(--font-display);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+      .glass-nav__links {
+        display: flex;
+        gap: 24px;
+        color: var(--ink-muted);
+      }
+      .glass-nav__links span.active { color: var(--primary-10); font-weight: 600; }
+      .glass-copy {
+        position: absolute;
+        left: 48px;
+        bottom: 48px;
+        right: 48px;
+        color: var(--surface-lowest);
+      }
+      .glass-copy h3 {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 2rem;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+      .glass-copy p { color: rgba(255,255,255,0.72); font-size: 0.875rem; max-width: 420px; }
+
+      /* =================================================================
+         NESTED SURFACES
+         ================================================================= */
+      .nest-demo {
+        background: var(--surface-low);
+        border-radius: var(--r-xl);
+        padding: 36px;
+      }
+      .nest-demo .sheet {
+        background: var(--surface-lowest);
+        border-radius: var(--r-lg);
+        padding: 28px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .nest-demo .sheet-leaf {
+        background: var(--surface-low);
+        border-radius: var(--r-md);
+        padding: 20px;
+      }
+      .nest-demo h5 {
+        font-family: var(--font-display);
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 0.9375rem;
+      }
+      .nest-demo p { font-size: 0.8125rem; color: var(--ink-muted); }
+
+      /* =================================================================
+         DO / DON'T
+         ================================================================= */
+      .rules {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .rule {
+        padding: 32px;
+        border-radius: var(--r-lg);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        background: var(--surface-lowest);
+      }
+      .rule .tag {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 4px 10px;
+        border-radius: 999px;
+        align-self: flex-start;
+      }
+      .rule.do .tag    { background: rgba(47, 102, 144, 0.12); color: var(--primary-10); }
+      .rule.dont .tag  { background: rgba(157, 132, 32, 0.16); color: var(--tertiary-10); }
+      .rule .example { padding: 20px; border-radius: var(--r-md); background: var(--surface-low); }
+      .rule .copy { font-size: 0.8125rem; color: var(--ink-muted); line-height: 1.7; }
+      .rule h4 {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.0625rem;
+      }
+
+      /* Bad example visuals */
+      .bad-line {
+        border: 1px solid var(--ink-faint);
+        padding: 16px;
+        border-radius: var(--r-sm);
+        font-size: 0.8125rem;
+        color: var(--ink-muted);
+      }
+      .bad-shadow {
+        padding: 16px;
+        border-radius: var(--r-sm);
+        background: var(--surface-lowest);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        font-size: 0.8125rem;
+      }
+      .bad-round {
+        padding: 16px 22px;
+        border-radius: 999px;
+        background: var(--primary-10);
+        color: var(--on-primary);
+        font-size: 0.8125rem;
+        display: inline-block;
+      }
+      .bad-black {
+        padding: 16px;
+        background: #000;
+        color: #fff;
+        border-radius: var(--r-sm);
+        font-size: 0.8125rem;
+      }
+
+      /* =================================================================
+         FOOTER
+         ================================================================= */
+      footer.page {
+        padding: 72px 0 96px;
+        background: var(--secondary-10);
+        color: rgba(255,255,255,0.72);
+      }
+      footer.page .inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-size: 0.8125rem;
+      }
+      footer.page .brand {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: -0.02em;
+        color: var(--surface-lowest);
+      }
+      footer.page .ver {
+        font-family: var(--font-mono);
+        font-size: 12px;
+      }
+
+      /* =================================================================
+         RESPONSIVE
+         ================================================================= */
+      @media (max-width: 960px) {
+        .cover-title { font-size: 3rem; }
+        .section-head { grid-template-columns: 1fr; gap: 12px; }
+        .grid-4, .grid-3, .grid-2,
+        .elev-stack, .radius-row { grid-template-columns: 1fr 1fr; }
+        .cover-specs { grid-template-columns: 1fr 1fr; }
+        .noline-demo, .rules, .type-row, .growth-card__body { grid-template-columns: 1fr; }
+        .type-row { gap: 8px; padding: 20px 0; }
+        .rail-demo { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ========================== COVER ========================== -->
+    <section class="cover">
+      <div class="shell cover-inner">
+        <div class="cover-meta">
+          <span>ZAPEX · 峥锐</span><span class="dot"></span>
+          <span>Design System · v0.1</span><span class="dot"></span>
+          <span>The Architectural Ledger</span>
+        </div>
+        <h1 class="cover-title">
+          Growth OS
+          <em>— The Architectural Ledger</em>
+        </h1>
+        <p class="cover-lede">
+          这不是一套营销色板，而是一台高精度仪器的操作档案。在这里我们放弃 SaaS 的圆角与渐变套路，
+          转向 Bloomberg 终端的信息密度 + 瑞士编辑的克制排印。通过 <b>Intentional Asymmetry</b>
+          与 <b>Tonal Depth</b> 打破模板感，让界面服务于决策。
+        </p>
+
+        <dl class="cover-specs">
+          <div><dt>DISPLAY</dt><dd>Manrope · -0.02em</dd></div>
+          <div><dt>BODY</dt><dd>Inter · 1.6 leading</dd></div>
+          <div><dt>GRID</dt><dd>8px baseline</dd></div>
+          <div><dt>INK</dt><dd>#1B1C1B · never #000</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ========================== 01 · COLOR ========================== -->
+    <section class="section section--low">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">01 / COLOR</div>
+          <div>
+            <h2 class="section-title">四个结构色族</h2>
+            <p class="section-desc">
+              每一族颜色都对应 Growth OS 的一个结构角色 — 不是装饰，是承重。
+              每族给出主色 + 七档 tonal ladder，实际使用时只调用 token 名称，不碰十六进制。
+            </p>
+          </div>
+        </header>
+
+        <div class="grid grid-4">
+          <!-- PRIMARY -->
+          <div class="family">
+            <div class="family-head">
+              <div class="family-name">Primary</div>
+              <div class="family-hex">#2F6690</div>
+            </div>
+            <div class="family-swatch on-dark" style="background: var(--primary-30);">
+              <div class="swatch-role">OS engine · 主行动 · 导航锚</div>
+            </div>
+            <div class="tonal-ladder">
+              <div style="background: var(--primary-0);"></div>
+              <div style="background: var(--primary-10);"></div>
+              <div style="background: var(--primary-20);"></div>
+              <div style="background: var(--primary-30);"></div>
+              <div style="background: var(--primary-40);"></div>
+              <div style="background: var(--primary-50);"></div>
+              <div style="background: var(--primary-60);"></div>
+              <div style="background: var(--primary-70);"></div>
+            </div>
+          </div>
+
+          <!-- SECONDARY -->
+          <div class="family">
+            <div class="family-head">
+              <div class="family-name">Secondary</div>
+              <div class="family-hex">#2D3142</div>
+            </div>
+            <div class="family-swatch on-dark" style="background: var(--secondary-20);">
+              <div class="swatch-role">管理 · 反色表面 · ink surface</div>
+            </div>
+            <div class="tonal-ladder">
+              <div style="background: var(--secondary-0);"></div>
+              <div style="background: var(--secondary-10);"></div>
+              <div style="background: var(--secondary-20);"></div>
+              <div style="background: var(--secondary-30);"></div>
+              <div style="background: var(--secondary-40);"></div>
+              <div style="background: var(--secondary-50);"></div>
+              <div style="background: var(--secondary-60);"></div>
+              <div style="background: var(--secondary-70);"></div>
+            </div>
+          </div>
+
+          <!-- TERTIARY -->
+          <div class="family">
+            <div class="family-head">
+              <div class="family-name">Tertiary</div>
+              <div class="family-hex">#9D8420</div>
+            </div>
+            <div class="family-swatch on-light" style="background: var(--tertiary-30);">
+              <div class="swatch-role">Value Indicator · 里程碑 · 增长轨迹</div>
+            </div>
+            <div class="tonal-ladder">
+              <div style="background: var(--tertiary-0);"></div>
+              <div style="background: var(--tertiary-10);"></div>
+              <div style="background: var(--tertiary-20);"></div>
+              <div style="background: var(--tertiary-30);"></div>
+              <div style="background: var(--tertiary-40);"></div>
+              <div style="background: var(--tertiary-50);"></div>
+              <div style="background: var(--tertiary-60);"></div>
+              <div style="background: var(--tertiary-70);"></div>
+            </div>
+          </div>
+
+          <!-- NEUTRAL -->
+          <div class="family">
+            <div class="family-head">
+              <div class="family-name">Neutral</div>
+              <div class="family-hex">#FCFAF9</div>
+            </div>
+            <div class="family-swatch on-light" style="background: var(--surface-bright); background-image: linear-gradient(var(--outline-strong), var(--outline-strong)); background-size: 1px 100%; background-repeat: no-repeat;">
+              <div class="swatch-role">Surface ladder · 纸面节奏</div>
+            </div>
+            <div class="tonal-ladder">
+              <div style="background: var(--surface-lowest);"></div>
+              <div style="background: var(--surface-bright);"></div>
+              <div style="background: var(--surface);"></div>
+              <div style="background: var(--surface-low);"></div>
+              <div style="background: var(--surface-high);"></div>
+              <div style="background: var(--surface-highest);"></div>
+              <div style="background: var(--surface-dim);"></div>
+              <div style="background: var(--secondary-60);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 02 · NO-LINE ========================== -->
+    <section class="section section--surface">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">02 / NO-LINE</div>
+          <div>
+            <h2 class="section-title">No-Line Rule — 不用 1px 分割界面</h2>
+            <p class="section-desc">
+              把 UI 当作一叠细薄的纸。边界来自 <b>surface 之间的微弱色差</b>，
+              而不是黑色描边。整套文档本身就在执行这条规则 — 每一个 section
+              之间都是靠背景切换分开的，没有画过一条线。
+            </p>
+          </div>
+        </header>
+
+        <div class="noline-demo">
+          <div class="a">
+            <div class="class-label">SURFACE · #FBF9F8</div>
+            <h4 class="t-title-lg" style="margin-top:8px;">核心工作区</h4>
+            <p>主背景。放长文、仪表、档案内容。</p>
+          </div>
+          <div class="b">
+            <div class="class-label">SURFACE-LOW · #F5F3F2</div>
+            <h4 class="t-title-lg" style="margin-top:8px;">辅助区 / 侧栏</h4>
+            <p>更深一档。不需要线，色差已足够隔开视线。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 03 · TYPOGRAPHY ========================== -->
+    <section class="section section--low">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">03 / TYPE</div>
+          <div>
+            <h2 class="section-title">双字体策略</h2>
+            <p class="section-desc">
+              Manrope 几何精度 —— 标题、数据、编号；Inter 作为工作字 —— 长文、标签、表单。
+              数据一律走 Manrope 的 tabular-nums，让排比的数字肩并肩对齐。
+            </p>
+          </div>
+        </header>
+
+        <div>
+          <div class="type-row">
+            <div class="type-meta"><b>display-lg</b>Manrope · 700 · -0.02em</div>
+            <div class="type-sample t-display-lg">Execute with Precision</div>
+            <div class="type-use">Hero 主标题</div>
+          </div>
+          <div class="type-row">
+            <div class="type-meta"><b>display-md</b>Manrope · 600 · -0.02em</div>
+            <div class="type-sample t-display-md">系统定位 · Positioning</div>
+            <div class="type-use">Section 标题</div>
+          </div>
+          <div class="type-row">
+            <div class="type-meta"><b>headline</b>Manrope · 600</div>
+            <div class="type-sample t-headline">Growth Trajectory</div>
+            <div class="type-use">卡片标题</div>
+          </div>
+          <div class="type-row">
+            <div class="type-meta"><b>title-lg</b>Manrope · 600</div>
+            <div class="type-sample t-title-lg">90 Day Execution Plan</div>
+            <div class="type-use">模块内 Title</div>
+          </div>
+          <div class="type-row">
+            <div class="type-meta"><b>title-sm</b>Inter · 600 · 16px</div>
+            <div class="type-sample t-title-sm">Product-like UI anchor</div>
+            <div class="type-use">Card header 收束</div>
+          </div>
+          <div class="type-row">
+            <div class="type-meta"><b>body-lg</b>Inter · 400 · 15px</div>
+            <div class="type-sample t-body-lg">在这里我们放弃 SaaS 的圆角与渐变套路，转向 Bloomberg 终端的信息密度 + 瑞士编辑的克制排印。</div>
+            <div class="type-use">长文 / 咨询段落</div>
+          </div>
+          <div class="type-row">
+            <div class="type-meta"><b>body-md</b>Inter · 400 · 14px</div>
+            <div class="type-sample t-body-md">工作台默认正文。1.6 行高保证高密度场景下仍能久读不累。</div>
+            <div class="type-use">表单 / 仪表正文</div>
+          </div>
+          <div class="type-row">
+            <div class="type-meta"><b>label-md</b>Inter · 600 · 0.05em · UPPERCASE</div>
+            <div class="type-sample t-label">Classification / 诊断阶段</div>
+            <div class="type-use">"Classification" 级标签</div>
+          </div>
+          <div class="type-row">
+            <div class="type-meta"><b>numeric</b>Manrope · 500 · tabular-nums</div>
+            <div class="type-sample t-numeric">$ 1,284,930 &nbsp; · &nbsp; +48.2%</div>
+            <div class="type-use">所有数字一律走 Manrope</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 04 · ELEVATION + RADIUS ========================== -->
+    <section class="section section--surface">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">04 / DEPTH</div>
+          <div>
+            <h2 class="section-title">Elevation — 由色差构成的层次</h2>
+            <p class="section-desc">
+              放弃 Web-2.0 的下沉阴影。层次来自三种手段：<b>tonal layering</b>（色阶相邻）、
+              <b>ambient shadow</b>（主动态，ink 4% @ 48px blur），与 <b>ghost border</b>
+              （仅在无障碍需要时启用，outline-variant 15% opacity）。
+            </p>
+          </div>
+        </header>
+
+        <div class="elev-stack" style="margin-bottom: 72px;">
+          <div class="elev-card recessed">
+            <div class="level">— RECESSED · surface-highest</div>
+            <div class="name">凹陷</div>
+            <div class="note">承载"已完成 / 非活跃"的档案。颜色靠近 surface-dim，看起来像下沉。</div>
+          </div>
+          <div class="elev-card">
+            <div class="level">○ RESTING · surface-lowest</div>
+            <div class="name">静息</div>
+            <div class="note">默认态卡片。坐在 surface-low 工作区之上，靠色差浮起。</div>
+          </div>
+          <div class="elev-card floating">
+            <div class="level">⦿ FLOATING · + ambient shadow</div>
+            <div class="name">浮起（交互中）</div>
+            <div class="note">只在拖拽、modal、active hover 时启用。48px blur / 4% ink。</div>
+          </div>
+        </div>
+
+        <header class="section-head" style="margin-top: 40px;">
+          <div class="section-num">04 / RADIUS</div>
+          <div>
+            <h2 class="section-title">圆角五档 — 最大不过 12px</h2>
+            <p class="section-desc">
+              默认 4px；按钮 6px；容器 8px；特殊 hero 块最多 12px。
+              任何超过 12px 的圆角都会把"高精度仪器"变成"玩具 app"。
+            </p>
+          </div>
+        </header>
+
+        <div class="radius-row">
+          <div class="radius-tile" style="border-radius: var(--r-xs);">
+            <div>
+              <div class="class-label">r-xs</div>
+              <div class="hex">2px · inline chip</div>
+            </div>
+          </div>
+          <div class="radius-tile" style="border-radius: var(--r-sm);">
+            <div>
+              <div class="class-label">r-sm · DEFAULT</div>
+              <div class="hex">4px · 通用容器</div>
+            </div>
+          </div>
+          <div class="radius-tile" style="border-radius: var(--r-md);">
+            <div>
+              <div class="class-label">r-md · BUTTON</div>
+              <div class="hex">6px · 按钮 ergonomic lift</div>
+            </div>
+          </div>
+          <div class="radius-tile" style="border-radius: var(--r-lg);">
+            <div>
+              <div class="class-label">r-lg</div>
+              <div class="hex">8px · 卡片 / growth card</div>
+            </div>
+          </div>
+          <div class="radius-tile" style="border-radius: var(--r-xl);">
+            <div>
+              <div class="class-label">r-xl · MAX</div>
+              <div class="hex">12px · hero / 大容器</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 05 · BUTTONS ========================== -->
+    <section class="section section--low">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">05 / BUTTON</div>
+          <div>
+            <h2 class="section-title">按钮 — 系统的动词</h2>
+            <p class="section-desc">
+              所有行为都落在这六种类型里。6px 圆角 ergonomic lift，配 primary 的 32% 透明 focus ring，
+              无动画下沉。label 动词功能化：<b>Execute / Analyze / Configure</b>，不写营销文案。
+            </p>
+          </div>
+        </header>
+
+        <div class="grid grid-3">
+          <div class="family">
+            <div class="family-head"><div class="family-name">Primary</div><div class="family-hex">#0C4E77</div></div>
+            <div style="padding: 24px 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+              <button class="btn btn--primary btn--sm">Execute</button>
+              <button class="btn btn--primary">Execute Strategy</button>
+              <button class="btn btn--primary btn--lg">Launch Engagement</button>
+            </div>
+            <div class="class-label">高优先级行动 · 每屏最多一个</div>
+          </div>
+
+          <div class="family">
+            <div class="family-head"><div class="family-name">Inverted</div><div class="family-hex">#2D3142</div></div>
+            <div style="padding: 24px 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+              <button class="btn btn--inverted btn--sm">Analyze</button>
+              <button class="btn btn--inverted">Open Console</button>
+              <button class="btn btn--inverted btn--lg">Enter Growth OS</button>
+            </div>
+            <div class="class-label">深色 CTA · 页面主宣告</div>
+          </div>
+
+          <div class="family">
+            <div class="family-head"><div class="family-name">Secondary</div><div class="family-hex">#E4E2E1</div></div>
+            <div style="padding: 24px 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+              <button class="btn btn--secondary btn--sm">Configure</button>
+              <button class="btn btn--secondary">Preview Report</button>
+              <button class="btn btn--secondary btn--lg">Preview Workspace</button>
+            </div>
+            <div class="class-label">系统操作 · 与 Primary 成对</div>
+          </div>
+
+          <div class="family">
+            <div class="family-head"><div class="family-name">Outlined</div><div class="family-hex">Ghost border</div></div>
+            <div style="padding: 24px 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+              <button class="btn btn--outlined btn--sm">View Rules</button>
+              <button class="btn btn--outlined">Download PDF</button>
+              <button class="btn btn--outlined btn--lg">Read Playbook</button>
+            </div>
+            <div class="class-label">次要操作 · 可并列多枚</div>
+          </div>
+
+          <div class="family">
+            <div class="family-head"><div class="family-name">Ghost</div><div class="family-hex">text-primary</div></div>
+            <div style="padding: 24px 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+              <button class="btn btn--ghost btn--sm">Skip</button>
+              <button class="btn btn--ghost">Learn more →</button>
+              <button class="btn btn--ghost btn--lg">Continue later</button>
+            </div>
+            <div class="class-label">排印级动作 · hover 出下划线</div>
+          </div>
+
+          <div class="family">
+            <div class="family-head"><div class="family-name">Tertiary</div><div class="family-hex">#9D8420</div></div>
+            <div style="padding: 24px 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+              <button class="btn btn--tertiary btn--sm">Milestone</button>
+              <button class="btn btn--tertiary">View Trajectory</button>
+              <button class="btn btn--tertiary btn--lg">Unlock Growth Report</button>
+            </div>
+            <div class="class-label">里程碑 / 解锁 · 用于 Value Indicator</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 06 · INPUT / FIELD ========================== -->
+    <section class="section section--surface">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">06 / FIELD</div>
+          <div>
+            <h2 class="section-title">输入框 — 账本风格底线</h2>
+            <p class="section-desc">
+              只保留底边。surface-low 底色 + outline-variant 50% 底线，
+              focus 时底线变成 primary 2px。这种"账本单行"观感 reinforces the OS metaphor。
+            </p>
+          </div>
+        </header>
+
+        <div class="grid grid-2">
+          <div class="ledger-input">
+            <label>企业名称与品牌矩阵</label>
+            <div class="field">
+              <input type="text" placeholder="例如：ZAPEX · 峥锐集团" />
+            </div>
+            <div class="hint">默认态 — 底线 outline-variant @ 50%</div>
+          </div>
+
+          <div class="ledger-input">
+            <label>核心国家 / 市场</label>
+            <div class="field" style="background-image: linear-gradient(var(--primary-10), var(--primary-10)); background-size: 100% 2px;">
+              <input type="text" value="北美 · 欧盟 · 东南亚" />
+            </div>
+            <div class="hint" style="color: var(--primary-10);">Focus 态 — 底线 primary 2px</div>
+          </div>
+
+          <div class="ledger-input ledger-input--search">
+            <label>Search</label>
+            <div class="field">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input type="text" placeholder="Search strategy library…" />
+            </div>
+            <div class="hint">Search variant — surface-highest 底 + r-md</div>
+          </div>
+
+          <div class="ledger-input">
+            <label>90 天目标指标</label>
+            <div class="field" style="opacity:0.5;">
+              <input type="text" placeholder="—" disabled />
+            </div>
+            <div class="hint">Disabled — opacity 0.5，不改颜色</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 07 · GROWTH CARD ========================== -->
+    <section class="section section--low">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">07 / CARD</div>
+          <div>
+            <h2 class="section-title">Growth Card — 无边界档案</h2>
+            <p class="section-desc">
+              No borders. No inner dividers. Header 使用 label-md 全大写 + 0.05em tracking。
+              数据区 24px 垂直 padding 形成呼吸节奏，数据靠 Manrope tabular-nums 对齐。
+            </p>
+          </div>
+        </header>
+
+        <div class="grid grid-2">
+          <div class="growth-card">
+            <div class="growth-card__head">
+              <div>
+                <div class="class-label">CLASSIFICATION · Q3 REVIEW</div>
+                <div class="growth-card__title" style="margin-top: 6px;">跨境支付业务线</div>
+              </div>
+              <button class="btn btn--ghost btn--sm">Analyze →</button>
+            </div>
+            <div class="growth-card__body">
+              <div>
+                <div class="k">GMV</div>
+                <div class="v">$12.4M</div>
+                <div class="delta">▲ 48.2% YoY</div>
+              </div>
+              <div>
+                <div class="k">ROAS</div>
+                <div class="v">3.82×</div>
+                <div class="delta">▲ 0.91 pts</div>
+              </div>
+              <div>
+                <div class="k">CAC Payback</div>
+                <div class="v">4.6 mo</div>
+                <div class="delta" style="color: var(--primary-10);">▼ 1.2 mo</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="growth-card">
+            <div class="growth-card__head">
+              <div>
+                <div class="class-label">CLASSIFICATION · ACCESS LEDGER</div>
+                <div class="growth-card__title" style="margin-top: 6px;">90 天执行路径</div>
+              </div>
+              <button class="btn btn--ghost btn--sm">Configure →</button>
+            </div>
+
+            <div class="ledger-progress">
+              <div class="step done">
+                <div class="meta"><b>Diagnose</b><span>Day 1-14</span></div>
+                <div class="bar"><span></span></div>
+              </div>
+              <div class="step active">
+                <div class="meta"><b>Architect</b><span>Day 15-45</span></div>
+                <div class="bar"><span></span></div>
+              </div>
+              <div class="step upcoming">
+                <div class="meta"><b>Operate</b><span>Day 46-90</span></div>
+                <div class="bar"><span></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 08 · UTILITY RAIL ========================== -->
+    <section class="section section--surface">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">08 / RAIL</div>
+          <div>
+            <h2 class="section-title">Utility Rail — 64px 高频导航</h2>
+            <p class="section-desc">
+              仅在 Growth OS 工作台场景启用。surface-dim 底色让它"退后一层"，
+              active 项填 primary。不做 tooltip 爆棚，图标就是语言。
+            </p>
+          </div>
+        </header>
+
+        <div class="rail-demo">
+          <nav class="rail">
+            <button aria-label="Home">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </button>
+            <button class="is-active" aria-label="Dashboard">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+            </button>
+            <button aria-label="Search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </button>
+            <button aria-label="Settings">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
+            <button aria-label="Profile">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </button>
+          </nav>
+          <div class="rail-workspace">
+            <div class="class-label">ACTIVE · DASHBOARD</div>
+            <h4>跨境增长 · 战情室</h4>
+            <p>Rail 在工作台内只显示图标；workspace 承载具体模块。surface-low 与 surface-dim 之间天然分离。</p>
+            <div style="margin-top: 20px; display: flex; gap: 10px;">
+              <button class="btn btn--primary btn--sm">Execute Plan</button>
+              <button class="btn btn--outlined btn--sm">Review Rules</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 09 · GLASS + HERO ========================== -->
+    <section class="section section--low">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">09 / PATTERN</div>
+          <div>
+            <h2 class="section-title">Glass Nav + Signature Gradient</h2>
+            <p class="section-desc">
+              悬浮导航使用 surface 80% + 24px blur。Hero 表面使用 primary-container → primary
+              的 15° 径向渐变，作为系统的"灵魂表面" — 仅出现在 hero、login、关键启动点。
+            </p>
+          </div>
+        </header>
+
+        <div class="glass-demo">
+          <nav class="glass-nav">
+            <div class="glass-nav__brand">ZAPEX</div>
+            <div class="glass-nav__links">
+              <span class="active">系统定位</span>
+              <span>核心模块</span>
+              <span>咨询路径</span>
+              <span>案例</span>
+            </div>
+            <button class="btn btn--primary btn--sm">Enter Growth OS</button>
+          </nav>
+          <div class="glass-copy">
+            <h3>为跨境品牌装一台增长引擎。</h3>
+            <p>从诊断、架构到运营闭环 — 90 天内把可被复用的增长系统交到你的团队手里。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 10 · NESTED SURFACES ========================== -->
+    <section class="section section--surface">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">10 / NEST</div>
+          <div>
+            <h2 class="section-title">Nested Surfaces — 叠纸的节奏</h2>
+            <p class="section-desc">
+              工作区（low）→ 卡片（lowest）→ 卡内 leaf（low）。每向内一层色差收窄，
+              视觉上像纸上叠纸，不靠边线切割。这也是 Growth OS 标准的仪表构图。
+            </p>
+          </div>
+        </header>
+
+        <div class="nest-demo">
+          <div class="class-label" style="margin-bottom: 16px;">WORKSPACE · SURFACE-LOW</div>
+          <div class="sheet">
+            <div>
+              <h5>咨询档案</h5>
+              <p>surface-lowest 卡片坐在 workspace 上。</p>
+              <div class="sheet-leaf" style="margin-top: 16px;">
+                <div class="class-label" style="margin-bottom: 8px;">LEAF · SURFACE-LOW</div>
+                <p>内层叶子再退回到 low，形成嵌套节奏。</p>
+              </div>
+            </div>
+            <div>
+              <h5>执行看板</h5>
+              <p>多卡片并列时仍然靠色差分隔。</p>
+              <div class="sheet-leaf" style="margin-top: 16px;">
+                <div class="class-label" style="margin-bottom: 8px;">LEAF · SURFACE-LOW</div>
+                <p>即使三层嵌套也不需要描边。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 11 · DO / DON'T ========================== -->
+    <section class="section section--low">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">11 / RULES</div>
+          <div>
+            <h2 class="section-title">Do / Don't — 可视护栏</h2>
+            <p class="section-desc">
+              违反这四条规则等同于违反"Architectural Ledger"的人格。每一次 UI 评审只看这四条即可快速判断。
+            </p>
+          </div>
+        </header>
+
+        <div class="rules">
+          <div class="rule do">
+            <span class="tag">DO · 用色差分区</span>
+            <h4>surface 之间的微弱跳层足够作为分界。</h4>
+            <p class="copy">拥挤时放大空白，不加边框。纸叠纸的语言 — 这也是整份手册执行的规则。</p>
+            <div class="example" style="display:grid;grid-template-columns:1fr 1fr;border-radius: var(--r-sm);overflow:hidden;">
+              <div style="padding:14px; background: var(--surface); font-size:12px; color: var(--ink-muted);">surface</div>
+              <div style="padding:14px; background: var(--surface-low); font-size:12px; color: var(--ink-muted);">surface-low</div>
+            </div>
+          </div>
+
+          <div class="rule dont">
+            <span class="tag">DON'T · 1px 黑描边</span>
+            <h4>不要用 1px solid 把 UI "装进盒子里"。</h4>
+            <p class="copy">描边会制造 Web 2.0 的模板感。ghost border 仅在无障碍对比不足时才启用。</p>
+            <div class="example">
+              <div class="bad-line">← 通用 border · 典型模板感</div>
+            </div>
+          </div>
+
+          <div class="rule do">
+            <span class="tag">DO · Manrope 跑数字</span>
+            <h4>任何数字一律走 Manrope tabular-nums。</h4>
+            <p class="copy">系统感来自数据对齐。标题与数字用同一套字体传递"同一台机器"的人格。</p>
+            <div class="example" style="font-family: var(--font-display); font-variant-numeric: tabular-nums; font-size: 1.625rem; font-weight: 600; letter-spacing: -0.01em;">
+              $ 1,284,930 &nbsp; · &nbsp; 48.2%
+            </div>
+          </div>
+
+          <div class="rule dont">
+            <span class="tag">DON'T · Web-2.0 阴影</span>
+            <h4>不要给静态元素加下沉阴影。</h4>
+            <p class="copy">阴影只为"正在发生"的动作服务：拖拽、modal、active hover。静息用色差。</p>
+            <div class="example">
+              <div class="bad-shadow">错误：下沉 20px / 15% 黑阴影</div>
+            </div>
+          </div>
+
+          <div class="rule dont">
+            <span class="tag">DON'T · 超大圆角</span>
+            <h4>超过 12px 的圆角会把 OS 变成玩具。</h4>
+            <p class="copy">按钮 6px、卡片 8px、hero 12px 已是上限。用矩形承载权威。</p>
+            <div class="example">
+              <div class="bad-round">错误：pill / 999px 圆角</div>
+            </div>
+          </div>
+
+          <div class="rule dont">
+            <span class="tag">DON'T · 纯黑 #000</span>
+            <h4>永远用 ink · #1B1C1B 代替 #000。</h4>
+            <p class="copy">纯黑在屏幕上反刺眼，破坏"纸上墨水"的质感。所有正文、图标、边界都使用 ink。</p>
+            <div class="example">
+              <div class="bad-black">错误：背景 / 正文使用 #000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="page">
+      <div class="shell inner">
+        <div class="brand">ZAPEX · Growth OS</div>
+        <div class="ver">design-manual · v0.1 · 2026-04</div>
+      </div>
+    </footer>
+
+  </body>
+</html>

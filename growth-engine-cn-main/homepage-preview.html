@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZAPEX Homepage Preview</title>
+    <!--
+      ZAPEX preview palette
+      - Page background: #EEF2F6
+      - Surface background: #FFFFFF / #F7F9FC
+      - Primary text: #142033
+      - Secondary text: #5F6B7C
+      - Accent: #1F5EFF
+      - Border: #D8E0EA
+      - CTA colors: primary #142033 on light accent fill, secondary white surface with deep text
+      Why this fits ZAPEX:
+      restrained blue-gray neutrals communicate trust and consulting-grade clarity,
+      the accent is controlled and system-like rather than startup-loud,
+      and the surface/border treatment keeps the interface modular, premium, and low-noise.
+    -->
+    <style>
+      :root {
+        --bg: #eef2f6;
+        --surface: #ffffff;
+        --surface-soft: #f7f9fc;
+        --text: #142033;
+        --text-soft: #5f6b7c;
+        --accent: #1f5eff;
+        --accent-strong: #153fb4;
+        --accent-soft: rgba(31, 94, 255, 0.1);
+        --line: #d8e0ea;
+        --shadow: 0 12px 32px rgba(20, 32, 51, 0.06);
+        --radius-lg: 24px;
+        --radius-md: 16px;
+        --radius-sm: 12px;
+        --max: 1180px;
+        --font: "PingFang SC", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: var(--font);
+        background:
+          radial-gradient(circle at top left, rgba(31, 94, 255, 0.08), transparent 30%),
+          linear-gradient(180deg, #f4f7fa 0%, var(--bg) 100%);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      a { color: inherit; text-decoration: none; }
+
+      .frame {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 24px 20px 72px;
+      }
+
+      .brand-bar {
+        padding: 20px 0 12px;
+        color: var(--text-soft);
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .brand-bar strong {
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 12px;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        padding: 14px 18px;
+        margin-bottom: 22px;
+        border: 1px solid rgba(216, 224, 234, 0.9);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.82);
+        backdrop-filter: blur(14px);
+        box-shadow: 0 10px 28px rgba(20, 32, 51, 0.04);
+      }
+
+      .logo {
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        font-size: 14px;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .nav a {
+        font-size: 14px;
+        color: var(--text-soft);
+        padding: 8px 12px;
+        border-radius: 10px;
+      }
+
+      .nav .nav-cta {
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .nav .nav-cta.primary {
+        background: var(--text);
+        border-color: var(--text);
+        color: #fff;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.35fr 0.9fr;
+        gap: 22px;
+        margin-bottom: 22px;
+      }
+
+      .hero-main,
+      .hero-side,
+      .section {
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        background: rgba(255, 255, 255, 0.86);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-main {
+        padding: 44px 40px 38px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 12px;
+        margin-bottom: 18px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent-strong);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+
+      .hero h1 {
+        margin: 0 0 14px;
+        font-size: clamp(34px, 5vw, 56px);
+        line-height: 1.08;
+        letter-spacing: -0.03em;
+      }
+
+      .hero p.lead {
+        max-width: 660px;
+        margin: 0 0 28px;
+        color: var(--text-soft);
+        font-size: 17px;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 22px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 0 18px;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+      }
+
+      .btn-secondary {
+        background: var(--surface);
+        color: var(--text);
+        border-color: var(--line);
+      }
+
+      .hero-note {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+
+      .mini-metric {
+        padding: 14px 14px 12px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: var(--surface-soft);
+      }
+
+      .mini-metric strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 14px;
+      }
+
+      .mini-metric span {
+        color: var(--text-soft);
+        font-size: 12px;
+      }
+
+      .hero-side {
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .side-card {
+        padding: 18px 18px 16px;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      }
+
+      .side-kicker {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--accent-strong);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .side-card h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+      }
+
+      .side-card p,
+      .side-card li {
+        margin: 0;
+        color: var(--text-soft);
+        font-size: 13px;
+      }
+
+      .side-card ul {
+        padding-left: 16px;
+        margin: 10px 0 0;
+      }
+
+      .section {
+        padding: 30px 28px;
+        margin-bottom: 22px;
+      }
+
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 18px;
+        margin-bottom: 22px;
+      }
+
+      .section-head h2 {
+        margin: 0 0 6px;
+        font-size: clamp(24px, 3vw, 34px);
+        line-height: 1.15;
+      }
+
+      .section-head p {
+        margin: 0;
+        color: var(--text-soft);
+        max-width: 640px;
+      }
+
+      .proof-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr 1fr;
+        gap: 14px;
+      }
+
+      .proof-card {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--surface-soft);
+      }
+
+      .proof-card .label {
+        display: inline-block;
+        margin-bottom: 10px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--accent-strong);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .proof-card h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+      }
+
+      .proof-card p,
+      .proof-card li {
+        color: var(--text-soft);
+        font-size: 14px;
+      }
+
+      .proof-card ul {
+        margin: 12px 0 0;
+        padding-left: 18px;
+      }
+
+      .module-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+
+      .module {
+        padding: 22px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+      }
+
+      .module .label {
+        display: inline-block;
+        margin-bottom: 10px;
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--accent-strong);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .module h3 {
+        margin: 0 0 6px;
+        font-size: 22px;
+      }
+
+      .module .keys {
+        margin: 0 0 10px;
+        color: var(--accent-strong);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .module p {
+        margin: 0 0 14px;
+        color: var(--text-soft);
+      }
+
+      .module ul {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--text-soft);
+        font-size: 14px;
+      }
+
+      .offer-wrap {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 16px;
+      }
+
+      .deliver-group {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--surface-soft);
+        overflow: hidden;
+      }
+
+      .deliver-header {
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(20, 32, 51, 0.02);
+      }
+
+      .deliver-header h3 {
+        margin: 0 0 4px;
+        font-size: 16px;
+      }
+
+      .deliver-header p {
+        margin: 0;
+        font-size: 13px;
+        color: var(--text-soft);
+      }
+
+      .deliver-list {
+        padding: 8px 16px 10px;
+      }
+
+      .deliver-item {
+        display: grid;
+        grid-template-columns: 42px 1fr;
+        gap: 12px;
+        padding: 14px 4px;
+        border-bottom: 1px solid rgba(216, 224, 234, 0.8);
+      }
+
+      .deliver-item:last-child { border-bottom: none; }
+
+      .deliver-item .num {
+        color: var(--accent-strong);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        padding-top: 2px;
+      }
+
+      .deliver-item strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 15px;
+      }
+
+      .deliver-item span {
+        display: block;
+        color: var(--text-soft);
+        font-size: 13px;
+      }
+
+      .phase-panel {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: linear-gradient(180deg, #ffffff 0%, #f9fbfd 100%);
+      }
+
+      .phase-panel h3 {
+        margin: 0 0 14px;
+        font-size: 18px;
+      }
+
+      .phase {
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        gap: 12px;
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(216, 224, 234, 0.8);
+      }
+
+      .phase:last-child { border-bottom: none; }
+
+      .phase-step {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: var(--text);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .phase span {
+        display: block;
+        color: var(--accent-strong);
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+
+      .phase strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 15px;
+      }
+
+      .phase p,
+      .phase li {
+        color: var(--text-soft);
+        font-size: 13px;
+      }
+
+      .phase ul {
+        margin: 8px 0 0;
+        padding-left: 18px;
+      }
+
+      .cta {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 18px;
+        align-items: center;
+      }
+
+      .cta-box {
+        padding: 28px;
+        border-radius: 22px;
+        border: 1px solid rgba(216, 224, 234, 0.8);
+        background:
+          linear-gradient(135deg, rgba(20, 32, 51, 0.98), rgba(28, 56, 110, 0.96));
+        color: #fff;
+      }
+
+      .cta-box h2 {
+        margin: 0 0 10px;
+        font-size: clamp(28px, 3vw, 38px);
+        line-height: 1.12;
+      }
+
+      .cta-box p {
+        margin: 0 0 20px;
+        color: rgba(255, 255, 255, 0.76);
+        max-width: 620px;
+      }
+
+      .cta-box .btn-primary {
+        background: #fff;
+        color: var(--text);
+        border-color: #fff;
+      }
+
+      .cta-box .btn-secondary {
+        background: transparent;
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.26);
+      }
+
+      .cta-aside {
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--surface-soft);
+      }
+
+      .cta-aside strong {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 15px;
+      }
+
+      .cta-aside p {
+        margin: 0;
+        color: var(--text-soft);
+        font-size: 14px;
+      }
+
+      .footer {
+        padding: 10px 0 0;
+        text-align: center;
+        color: var(--text-soft);
+        font-size: 13px;
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .offer-wrap,
+        .cta,
+        .proof-grid,
+        .module-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-note { grid-template-columns: 1fr; }
+      }
+
+      @media (max-width: 720px) {
+        .frame { padding: 18px 14px 56px; }
+        .topbar { align-items: flex-start; }
+        .nav { gap: 8px; }
+        .hero-main,
+        .section,
+        .hero-side,
+        .cta-box,
+        .cta-aside { padding: 22px 18px; }
+        .hero h1 { font-size: 34px; }
+        .section-head { display: block; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <div class="brand-bar">
+        <strong>峥锐 ZAPEX</strong> · 品牌出海加速器 · 增长引擎验证舱
+      </div>
+
+      <header class="topbar">
+        <div class="logo">ZAPEX</div>
+        <nav class="nav">
+          <a href="#system">系统模块</a>
+          <a href="#deliverables">核心交付</a>
+          <a href="#process">合作流程</a>
+          <a href="#cta" class="nav-cta">飞书登录</a>
+          <a href="#cta" class="nav-cta primary">进入客户工作台</a>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <div class="hero-main">
+          <div class="eyebrow">不是代运营，不是单次咨询</div>
+          <h1>我们交付的不是流量动作，而是一套可验证、可复制的品牌增长系统。</h1>
+          <p class="lead">
+            从品牌定位、增长诊断、归因结构到执行路径与 SOP 沉淀，ZAPEX 用咨询判断和系统方法，帮助跨境企业建立真正属于自己的增长能力。
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#cta">进入客户工作台</a>
+            <a class="btn btn-secondary" href="#cta">使用飞书账号登录</a>
+          </div>
+          <div class="hero-note">
+            <div class="mini-metric">
+              <strong>战略定方向</strong>
+              <span>先统一增长判断，再进入执行系统。</span>
+            </div>
+            <div class="mini-metric">
+              <strong>引擎跑增长</strong>
+              <span>验证模型，再放大，再形成可复制机制。</span>
+            </div>
+            <div class="mini-metric">
+              <strong>能力归团队</strong>
+              <span>沉淀 SOP、数据底盘与组织能力，而非外包依赖。</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-side">
+          <div class="side-card">
+            <span class="side-kicker">For Decision Makers</span>
+            <h3>适合谁</h3>
+            <p>跨境品牌创始人、事业部负责人、增长负责人、CMO，以及需要把增长从经验驱动升级为系统驱动的团队。</p>
+          </div>
+          <div class="side-card">
+            <span class="side-kicker">What Gets Fixed</span>
+            <h3>优先解决的问题</h3>
+            <ul>
+              <li>增长依赖买量，缺少稳定模型</li>
+              <li>数据归因失真，ROI 判断失效</li>
+              <li>内容、广告、SKU、团队无法协同复制</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2>这不是外包服务页，而是一次系统重构入口。</h2>
+            <p>首页先给出判断依据，再解释系统结构，最后才进入流程与转化动作。</p>
+          </div>
+        </div>
+        <div class="proof-grid">
+          <div class="proof-card">
+            <span class="label">Positioning</span>
+            <h3>卖的是增长系统，不是单点执行</h3>
+            <p>品牌战略、归因结构、增长实验、SOP 交接与团队能力沉淀共同构成最终交付。</p>
+          </div>
+          <div class="proof-card">
+            <span class="label">Method</span>
+            <h3>先诊断，再统一判断，再进入执行</h3>
+            <p>页面结构要让访客感受到方法论顺序，而不是被功能卡片堆叠淹没。</p>
+          </div>
+          <div class="proof-card">
+            <span class="label">Trust</span>
+            <h3>系统感来自模块、路径与判断层级</h3>
+            <p>视觉应更像增长指挥系统入口，而不是标准 SaaS 营销页。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="system">
+        <div class="section-head">
+          <div>
+            <h2>两大核心模块，构成品牌增长系统的主结构。</h2>
+            <p>这一节应该成为整页最强的结构锚点，用来解释 ZAPEX 到底交付什么系统，而不是只列出服务项。</p>
+          </div>
+        </div>
+        <div class="module-grid">
+          <article class="module">
+            <span class="label">Module 01</span>
+            <h3>ZAPEX 品牌战略模块™</h3>
+            <p class="keys">定方向 · 建体系 · 落执行</p>
+            <p>统一品牌定位、市场判断、SKU 结构与渠道策略，形成可执行的品牌出海路线图。</p>
+            <ul>
+              <li>品牌定位与差异化判断</li>
+              <li>市场与渠道优先级</li>
+              <li>执行路径与组织协同结构</li>
+            </ul>
+          </article>
+          <article class="module">
+            <span class="label">Module 02</span>
+            <h3>ZAPEX 品牌增长引擎™</h3>
+            <p class="keys">验证 · 放大 · 复制</p>
+            <p>围绕数据归因、广告实验、内容系统与 SOP 沉淀，跑通增长模型并形成可复制机制。</p>
+            <ul>
+              <li>归因与数据底盘</li>
+              <li>增长实验与投放结构</li>
+              <li>SOP 与团队能力沉淀</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="deliverables">
+        <div class="section-head">
+          <div>
+            <h2>核心交付不是七张平铺卡片，而是一层层重建增长能力。</h2>
+            <p>保留现有交付内容，但改成更像 operating outputs 的组织方式，减少同权重平铺。</p>
+          </div>
+        </div>
+        <div class="offer-wrap">
+          <div>
+            <div class="deliver-group" style="margin-bottom: 14px;">
+              <div class="deliver-header">
+                <h3>战略与路径</h3>
+                <p>先解决方向、全球化打法与增长模型，不在错误结构上继续加预算。</p>
+              </div>
+              <div class="deliver-list">
+                <div class="deliver-item">
+                  <div class="num">01</div>
+                  <div>
+                    <strong>定品牌战略</strong>
+                    <span>明确品牌定位与差异化方向，让每一步都有战略依据。</span>
+                  </div>
+                </div>
+                <div class="deliver-item">
+                  <div class="num">02</div>
+                  <div>
+                    <strong>全球化品牌落地打法</strong>
+                    <span>从市场选择到渠道组合，输出可执行的全球化路径。</span>
+                  </div>
+                </div>
+                <div class="deliver-item">
+                  <div class="num">03</div>
+                  <div>
+                    <strong>可落地、可复制的增长模型</strong>
+                    <span>验证增长引擎并形成可规模化复制的投放与转化体系。</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="deliver-group">
+              <div class="deliver-header">
+                <h3>能力与资产</h3>
+                <p>把增长能力沉淀进品牌、组织、数据与模板系统，而不是停留在外部执行层。</p>
+              </div>
+              <div class="deliver-list">
+                <div class="deliver-item">
+                  <div class="num">04</div>
+                  <div>
+                    <strong>企业自己的品牌体系和团队能力</strong>
+                    <span>将品牌能力沉淀为组织能力，不再依赖外部。</span>
+                  </div>
+                </div>
+                <div class="deliver-item">
+                  <div class="num">05</div>
+                  <div>
+                    <strong>品牌增长飞轮</strong>
+                    <span>构建“内容—流量—转化—复购”自驱循环。</span>
+                  </div>
+                </div>
+                <div class="deliver-item">
+                  <div class="num">06</div>
+                  <div>
+                    <strong>品牌工具、SOP、模型库</strong>
+                    <span>标准化流程与模板，确保团队可独立运转。</span>
+                  </div>
+                </div>
+                <div class="deliver-item">
+                  <div class="num">07</div>
+                  <div>
+                    <strong>数据化的品牌资产管理</strong>
+                    <span>用户资产与内容资产全量追踪，用数据驱动品牌决策。</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="phase-panel" id="process">
+            <h3>合作流程</h3>
+            <div class="phase">
+              <div class="phase-step">01</div>
+              <div>
+                <span>免费诊断</span>
+                <strong>30分钟品牌现状诊断</strong>
+                <p>无论品牌是否合作，这一轮都应该提供明确判断。</p>
+                <ul>
+                  <li>诊断品牌现状和卡点</li>
+                  <li>给出下一步方向</li>
+                </ul>
+              </div>
+            </div>
+            <div class="phase">
+              <div class="phase-step">02</div>
+              <div>
+                <span>启动落地</span>
+                <strong>2周项目启动，认知对齐</strong>
+                <p>统一判断口径、权限边界与执行路径，避免边做边重来。</p>
+                <ul>
+                  <li>核心团队深度咨询</li>
+                  <li>培训认知对齐</li>
+                </ul>
+              </div>
+            </div>
+            <div class="phase">
+              <div class="phase-step">03</div>
+              <div>
+                <span>项目陪跑</span>
+                <strong>6-12个月深度陪跑</strong>
+                <p>分阶段交付，验证增长引擎，再进入规模化复制。</p>
+                <ul>
+                  <li>ZAPEX品牌战略模块™ 定方向</li>
+                  <li>ZAPEX增长引擎™ 跑增长模型</li>
+                  <li>ZAPEX品牌增长引擎™ 规模化复制</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta" id="cta">
+        <div class="cta-box">
+          <h2>先进入客户工作台，再开始增长诊断。</h2>
+          <p>首页的主任务不是解释一切，而是让合适的客户进入系统入口，开始统一经营口径、执行条件与增长诊断。</p>
+          <div class="hero-actions" style="margin-bottom: 0;">
+            <a class="btn btn-primary" href="javascript:void(0)">进入客户工作台</a>
+            <a class="btn btn-secondary" href="javascript:void(0)">使用飞书账号登录</a>
+          </div>
+        </div>
+        <aside class="cta-aside">
+          <strong>本次评审重点</strong>
+          <p>这是一个 preview-only 方向稿，目的是先确认首页应该更像“增长系统入口”，而不是继续停留在标准 SaaS 落地页结构里。</p>
+        </aside>
+      </section>
+
+      <footer class="footer">
+        <p>峥锐 ZAPEX｜品牌出海加速器 · 品牌战略 + 增长引擎 双驱动</p>
+      </footer>
+    </div>
+  </body>
+</html>

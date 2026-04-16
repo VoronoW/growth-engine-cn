@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZAPEX Homepage Preview v2</title>
+    <!--
+      Preview v2 notes
+      - Compared with v1, this version increases visual authorship, section rhythm, and asymmetry.
+      - Typography is sharper through tighter headline tracking, stronger weight contrast, smaller supporting copy, and more angular uppercase label treatment.
+      - The visual system is more branded through a deliberate Z/apex wordmark split, stronger hero composition, editorial module framing, and more distinct section transitions.
+      - Reference interpretation:
+        Linear -> tighter hierarchy and sharper control surfaces
+        Notion -> modular grouping and readable content logic
+        Apple -> spacing discipline, polish, and premium restraint
+        Cal -> lower-friction CTA flow and approachable action guidance
+    -->
+    <style>
+      :root {
+        --bg: #edf1f6;
+        --ink: #111a29;
+        --ink-2: #5f6978;
+        --surface: rgba(255, 255, 255, 0.9);
+        --surface-strong: #ffffff;
+        --surface-tint: #f5f8fc;
+        --surface-deep: #0f1725;
+        --line: rgba(20, 32, 51, 0.12);
+        --line-strong: rgba(20, 32, 51, 0.2);
+        --accent: #1d5bff;
+        --accent-deep: #153fae;
+        --accent-soft: rgba(29, 91, 255, 0.1);
+        --shadow: 0 18px 42px rgba(17, 26, 41, 0.08);
+        --shadow-soft: 0 10px 24px rgba(17, 26, 41, 0.05);
+        --radius-xl: 30px;
+        --radius-lg: 22px;
+        --radius-md: 16px;
+        --radius-sm: 12px;
+        --max: 1220px;
+        --font: "PingFang SC", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        font-family: var(--font);
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 10% 0%, rgba(29, 91, 255, 0.1), transparent 24%),
+          radial-gradient(circle at 100% 20%, rgba(17, 26, 41, 0.06), transparent 28%),
+          linear-gradient(180deg, #f4f7fb 0%, var(--bg) 100%);
+        line-height: 1.55;
+      }
+
+      a { color: inherit; text-decoration: none; }
+
+      .page {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 18px 18px 84px;
+      }
+
+      .top-context {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding: 10px 4px 18px;
+        color: var(--ink-2);
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .context-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .context-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: var(--accent);
+      }
+
+      .topbar {
+        position: sticky;
+        top: 12px;
+        z-index: 20;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 24px;
+        margin-bottom: 24px;
+        padding: 16px 18px;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(18px);
+        box-shadow: 0 18px 36px rgba(17, 26, 41, 0.05);
+      }
+
+      .wordmark {
+        display: inline-flex;
+        align-items: baseline;
+        font-size: 22px;
+        line-height: 1;
+        letter-spacing: -0.04em;
+        white-space: nowrap;
+      }
+
+      .wordmark .z {
+        color: var(--ink);
+        font-weight: 900;
+        font-size: 1.12em;
+        letter-spacing: -0.06em;
+      }
+
+      .wordmark .apex {
+        color: #6f7a89;
+        font-weight: 500;
+      }
+
+      .nav {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .nav a {
+        padding: 8px 12px;
+        border-radius: 10px;
+        color: var(--ink-2);
+        font-size: 13px;
+      }
+
+      .nav a:hover {
+        background: rgba(17, 26, 41, 0.04);
+        color: var(--ink);
+      }
+
+      .nav-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 16px;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        font-size: 14px;
+        font-weight: 700;
+        transition: 0.18s ease;
+      }
+
+      .btn-primary {
+        background: var(--ink);
+        color: #fff;
+        border-color: var(--ink);
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.86);
+        color: var(--ink);
+        border-color: var(--line);
+      }
+
+      .btn-primary:hover,
+      .btn-secondary:hover {
+        transform: translateY(-1px);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.18fr 0.82fr;
+        gap: 18px;
+        align-items: stretch;
+        margin-bottom: 26px;
+      }
+
+      .hero-main {
+        position: relative;
+        overflow: hidden;
+        padding: 48px 44px 34px;
+        border: 1px solid rgba(255, 255, 255, 0.65);
+        border-radius: 34px;
+        background:
+          linear-gradient(135deg, rgba(255,255,255,0.94), rgba(246,249,253,0.86)),
+          radial-gradient(circle at top right, rgba(29, 91, 255, 0.1), transparent 34%);
+        box-shadow: 0 22px 48px rgba(17, 26, 41, 0.08);
+      }
+
+      .hero-main::before {
+        content: "";
+        position: absolute;
+        right: -40px;
+        top: -30px;
+        width: 280px;
+        height: 280px;
+        border-radius: 40px;
+        background:
+          linear-gradient(180deg, rgba(29, 91, 255, 0.08), rgba(17, 26, 41, 0.02));
+        transform: rotate(16deg);
+        border: 1px solid rgba(29, 91, 255, 0.12);
+      }
+
+      .eyebrow {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 12px;
+        margin-bottom: 18px;
+        border-radius: 999px;
+        background: rgba(17, 26, 41, 0.05);
+        color: var(--ink);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--accent);
+      }
+
+      .hero-grid {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1.18fr 0.82fr;
+        gap: 22px;
+        align-items: end;
+      }
+
+      .hero-copy h1 {
+        margin: 0 0 16px;
+        font-size: clamp(40px, 5vw, 64px);
+        line-height: 0.98;
+        letter-spacing: -0.06em;
+        max-width: 760px;
+      }
+
+      .hero-copy p {
+        max-width: 620px;
+        margin: 0 0 24px;
+        font-size: 16px;
+        color: var(--ink-2);
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .hero-panel {
+        padding: 18px 18px 16px;
+        border-radius: 22px;
+        border: 1px solid rgba(17, 26, 41, 0.09);
+        background: rgba(247, 249, 252, 0.88);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .hero-panel .label {
+        display: inline-block;
+        margin-bottom: 10px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent-deep);
+      }
+
+      .hero-panel h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+        line-height: 1.15;
+      }
+
+      .hero-panel p,
+      .hero-panel li {
+        color: var(--ink-2);
+        font-size: 13px;
+      }
+
+      .hero-panel ul {
+        margin: 10px 0 0;
+        padding-left: 18px;
+      }
+
+      .hero-side {
+        display: grid;
+        grid-template-rows: auto auto 1fr;
+        gap: 14px;
+      }
+
+      .stack-card {
+        padding: 18px;
+        border-radius: 24px;
+        border: 1px solid rgba(255,255,255,0.6);
+        background: rgba(255, 255, 255, 0.82);
+        box-shadow: var(--shadow);
+      }
+
+      .stack-card.dark {
+        background:
+          linear-gradient(180deg, rgba(17, 26, 41, 0.98), rgba(25, 39, 64, 0.96));
+        border-color: rgba(255,255,255,0.06);
+        color: #fff;
+      }
+
+      .stack-card .micro {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent-deep);
+      }
+
+      .stack-card.dark .micro {
+        color: rgba(255,255,255,0.68);
+      }
+
+      .stack-card h3 {
+        margin: 0 0 8px;
+        font-size: 20px;
+        line-height: 1.15;
+      }
+
+      .stack-card p,
+      .stack-card li {
+        margin: 0;
+        color: var(--ink-2);
+        font-size: 14px;
+      }
+
+      .stack-card.dark p,
+      .stack-card.dark li {
+        color: rgba(255,255,255,0.76);
+      }
+
+      .stack-card ul {
+        margin: 10px 0 0;
+        padding-left: 18px;
+      }
+
+      .section {
+        position: relative;
+        margin-bottom: 22px;
+        border-radius: 30px;
+        border: 1px solid rgba(255,255,255,0.64);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .section.soft {
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.92), rgba(247,249,252,0.86));
+      }
+
+      .section.ink {
+        background:
+          linear-gradient(180deg, rgba(20, 32, 51, 0.98), rgba(16, 24, 39, 0.96));
+        color: #fff;
+      }
+
+      .section-inner {
+        padding: 30px 30px 32px;
+      }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 18px;
+        align-items: end;
+        margin-bottom: 24px;
+      }
+
+      .section-kicker {
+        display: inline-block;
+        margin-bottom: 10px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent-deep);
+      }
+
+      .section.ink .section-kicker {
+        color: rgba(255,255,255,0.7);
+      }
+
+      .section-head h2 {
+        margin: 0;
+        font-size: clamp(28px, 3vw, 42px);
+        line-height: 1.05;
+        letter-spacing: -0.05em;
+      }
+
+      .section-head p {
+        margin: 0;
+        color: var(--ink-2);
+        font-size: 14px;
+      }
+
+      .section.ink .section-head p {
+        color: rgba(255,255,255,0.72);
+      }
+
+      .trust-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr 1fr;
+        gap: 14px;
+      }
+
+      .editorial-card {
+        padding: 20px 20px 18px;
+        border-radius: 22px;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.76);
+      }
+
+      .editorial-card.tall {
+        background:
+          linear-gradient(180deg, rgba(17,26,41,0.03), rgba(29,91,255,0.05)),
+          rgba(255,255,255,0.86);
+      }
+
+      .editorial-card .label {
+        display: inline-block;
+        margin-bottom: 10px;
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--accent-deep);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .editorial-card h3 {
+        margin: 0 0 8px;
+        font-size: 20px;
+        line-height: 1.14;
+      }
+
+      .editorial-card p,
+      .editorial-card li {
+        color: var(--ink-2);
+        font-size: 14px;
+      }
+
+      .editorial-card ul {
+        margin: 10px 0 0;
+        padding-left: 18px;
+      }
+
+      .systems-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .system-card {
+        position: relative;
+        overflow: hidden;
+        padding: 24px 22px 22px;
+        border-radius: 24px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background:
+          linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      }
+
+      .system-card::after {
+        content: "";
+        position: absolute;
+        inset: auto -80px -80px auto;
+        width: 180px;
+        height: 180px;
+        border-radius: 28px;
+        transform: rotate(18deg);
+        background: linear-gradient(180deg, rgba(29,91,255,0.12), transparent);
+      }
+
+      .system-card .label {
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+        margin-bottom: 10px;
+        font-size: 11px;
+        font-weight: 800;
+        color: rgba(255,255,255,0.72);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .system-card h3 {
+        position: relative;
+        z-index: 1;
+        margin: 0 0 8px;
+        font-size: 26px;
+        line-height: 1.08;
+      }
+
+      .system-card .keys {
+        position: relative;
+        z-index: 1;
+        margin: 0 0 10px;
+        color: #8eb0ff;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .system-card p,
+      .system-card li {
+        position: relative;
+        z-index: 1;
+        color: rgba(255,255,255,0.74);
+        font-size: 14px;
+      }
+
+      .system-card ul {
+        margin: 12px 0 0;
+        padding-left: 18px;
+      }
+
+      .offer-layout {
+        display: grid;
+        grid-template-columns: 1.08fr 0.92fr;
+        gap: 16px;
+      }
+
+      .deliver-board {
+        padding: 10px;
+        border-radius: 24px;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.58);
+      }
+
+      .deliver-stack {
+        display: grid;
+        gap: 12px;
+      }
+
+      .deliver-group {
+        padding: 18px;
+        border-radius: 18px;
+        border: 1px solid rgba(20,32,51,0.08);
+        background: var(--surface-strong);
+      }
+
+      .deliver-group h3 {
+        margin: 0 0 6px;
+        font-size: 18px;
+      }
+
+      .deliver-group p.group-desc {
+        margin: 0 0 12px;
+        font-size: 13px;
+        color: var(--ink-2);
+      }
+
+      .deliver-item {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        gap: 12px;
+        padding: 12px 0;
+        border-top: 1px solid rgba(20,32,51,0.08);
+      }
+
+      .deliver-item:first-of-type { border-top: none; padding-top: 4px; }
+
+      .deliver-item .num {
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--accent-deep);
+        letter-spacing: 0.06em;
+        padding-top: 2px;
+      }
+
+      .deliver-item strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 15px;
+      }
+
+      .deliver-item span {
+        display: block;
+        color: var(--ink-2);
+        font-size: 13px;
+      }
+
+      .process-panel {
+        display: grid;
+        gap: 12px;
+      }
+
+      .process-card {
+        padding: 18px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(246,249,252,0.88));
+      }
+
+      .process-row {
+        display: grid;
+        grid-template-columns: 44px 1fr;
+        gap: 12px;
+      }
+
+      .step {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: var(--ink);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .process-card span {
+        display: block;
+        color: var(--accent-deep);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 3px;
+      }
+
+      .process-card strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 16px;
+      }
+
+      .process-card p,
+      .process-card li {
+        color: var(--ink-2);
+        font-size: 13px;
+      }
+
+      .process-card ul {
+        margin: 8px 0 0;
+        padding-left: 18px;
+      }
+
+      .cta-section {
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1.18fr 0.82fr;
+        gap: 18px;
+        padding: 0;
+      }
+
+      .cta-panel {
+        position: relative;
+        padding: 34px 30px;
+        border-radius: 30px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background:
+          radial-gradient(circle at top right, rgba(29,91,255,0.24), transparent 30%),
+          linear-gradient(135deg, rgba(17,26,41,1), rgba(19,31,53,0.96));
+        color: #fff;
+        box-shadow: 0 26px 48px rgba(17, 26, 41, 0.14);
+      }
+
+      .cta-panel h2 {
+        margin: 0 0 12px;
+        font-size: clamp(34px, 4vw, 48px);
+        line-height: 1.02;
+        letter-spacing: -0.05em;
+      }
+
+      .cta-panel p {
+        max-width: 640px;
+        margin: 0 0 22px;
+        color: rgba(255,255,255,0.74);
+        font-size: 15px;
+      }
+
+      .cta-panel .btn-primary {
+        background: #fff;
+        border-color: #fff;
+        color: var(--ink);
+      }
+
+      .cta-panel .btn-secondary {
+        background: rgba(255,255,255,0.04);
+        color: #fff;
+        border-color: rgba(255,255,255,0.18);
+      }
+
+      .cta-aside {
+        padding: 22px;
+        border-radius: 24px;
+        border: 1px solid rgba(255,255,255,0.7);
+        background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,249,252,0.88));
+        box-shadow: var(--shadow);
+      }
+
+      .cta-aside .micro {
+        display: inline-block;
+        margin-bottom: 10px;
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--accent-deep);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .cta-aside strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 18px;
+      }
+
+      .cta-aside p {
+        margin: 0;
+        color: var(--ink-2);
+        font-size: 14px;
+      }
+
+      .footer {
+        padding-top: 8px;
+        text-align: center;
+        color: var(--ink-2);
+        font-size: 13px;
+      }
+
+      @media (max-width: 1040px) {
+        .hero,
+        .hero-grid,
+        .trust-grid,
+        .systems-grid,
+        .offer-layout,
+        .cta-section,
+        .section-head {
+          grid-template-columns: 1fr;
+        }
+
+        .topbar {
+          grid-template-columns: 1fr;
+          justify-items: start;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .page {
+          padding: 14px 12px 58px;
+        }
+
+        .topbar,
+        .hero-main,
+        .section-inner,
+        .cta-panel,
+        .cta-aside,
+        .stack-card {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .hero-main { padding-top: 30px; }
+        .hero-copy h1 { font-size: 38px; }
+        .wordmark { font-size: 20px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="top-context">
+        <div class="context-left">
+          <span class="context-dot"></span>
+          <span>品牌出海加速器 · 增长引擎验证舱</span>
+        </div>
+        <div>Premium Growth Systems for Cross-Border Brands</div>
+      </div>
+
+      <header class="topbar">
+        <div class="wordmark">
+          <span class="z">Z</span><span class="apex">apex</span>
+        </div>
+
+        <nav class="nav">
+          <a href="#trust">系统定位</a>
+          <a href="#system">核心模块</a>
+          <a href="#offer">核心交付</a>
+          <a href="#cta">进入系统</a>
+        </nav>
+
+        <div class="nav-actions">
+          <a class="btn btn-secondary" href="#cta">飞书登录</a>
+          <a class="btn btn-primary" href="#cta">进入客户工作台</a>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-main">
+          <div class="eyebrow">不是代运营，不是单次咨询</div>
+
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <h1>我们交付的不是流量动作，而是可验证、可复制、可沉淀的品牌增长系统。</h1>
+              <p>
+                ZAPEX 以战略判断、增长诊断、归因结构、实验机制与 SOP 沉淀为核心，帮助跨境企业把增长能力真正留在团队内部，而不是继续依赖碎片化执行。
+              </p>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="#cta">进入客户工作台</a>
+                <a class="btn btn-secondary" href="#cta">使用飞书账号登录</a>
+              </div>
+            </div>
+
+            <div class="hero-panel">
+              <span class="label">Why now</span>
+              <h3>买量还能继续，但增长判断不能继续失真。</h3>
+              <p>真正要被重建的不是单个平台投放，而是品牌、归因、内容、实验与团队协同的整套增长结构。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <div class="stack-card dark">
+            <span class="micro">Who It Fits</span>
+            <h3>适合需要系统升级的跨境品牌团队</h3>
+            <p>创始人、CMO、增长负责人、跨境事业部负责人，以及所有希望把“经验增长”升级为“系统增长”的团队。</p>
+          </div>
+
+          <div class="stack-card">
+            <span class="micro">Growth Diagnosis</span>
+            <h3>常见卡点</h3>
+            <ul>
+              <li>广告跑得动，但增长跑不稳</li>
+              <li>数据看起来很多，但判断仍然失真</li>
+              <li>内容、SKU、投放、组织彼此割裂</li>
+            </ul>
+          </div>
+
+          <div class="stack-card">
+            <span class="micro">Operating Logic</span>
+            <h3>页面本身也应该像系统入口</h3>
+            <p>先统一判断，再展示模块，再给出交付与执行路径，最后才进入转化动作。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section soft" id="trust">
+        <div class="section-inner">
+          <div class="section-head">
+            <div>
+              <span class="section-kicker">Positioning</span>
+              <h2>这不是一页“服务介绍”，而是一次增长系统重构的判断入口。</h2>
+            </div>
+            <p>首页要先建立高层判断，再解释系统结构，最后给出进入系统的行动路径。信任感来自结构，而不仅是文案。</p>
+          </div>
+
+          <div class="trust-grid">
+            <article class="editorial-card tall">
+              <span class="label">System View</span>
+              <h3>卖的是增长系统，不是广告执行外包</h3>
+              <p>品牌战略、归因结构、增长实验、内容系统、SOP handoff 和团队能力沉淀共同构成最终交付。</p>
+            </article>
+            <article class="editorial-card">
+              <span class="label">Decision Flow</span>
+              <h3>先诊断，再统一判断，再进入执行</h3>
+              <p>页面结构也应体现这一顺序，而不是把所有价值打平成相似的卡片块。</p>
+            </article>
+            <article class="editorial-card">
+              <span class="label">Brand Feel</span>
+              <h3>咨询级克制 + 指挥舱式系统感</h3>
+              <p>更接近“增长 operating system”，而不是标准 SaaS 落地页或 agency homepage。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section ink" id="system">
+        <div class="section-inner">
+          <div class="section-head">
+            <div>
+              <span class="section-kicker">Core System</span>
+              <h2>两大核心模块，定义 ZAPEX 交付结构。</h2>
+            </div>
+            <p>这一节应该是整页最强的结构锚点。访客看完这部分，应当明白：你们卖的是一套怎样的系统，而不是若干零散服务。</p>
+          </div>
+
+          <div class="systems-grid">
+            <article class="system-card">
+              <span class="label">Module 01</span>
+              <h3>ZAPEX 品牌战略模块™</h3>
+              <p class="keys">定方向 · 建体系 · 落执行</p>
+              <p>统一品牌定位、市场判断、SKU 结构与渠道策略，形成清晰可执行的品牌增长路径。</p>
+              <ul>
+                <li>品牌定位与差异化方向</li>
+                <li>全球化市场与渠道优先级</li>
+                <li>战略执行路径与组织协同结构</li>
+              </ul>
+            </article>
+
+            <article class="system-card">
+              <span class="label">Module 02</span>
+              <h3>ZAPEX 品牌增长引擎™</h3>
+              <p class="keys">验证 · 放大 · 复制</p>
+              <p>围绕归因、广告实验、内容系统与 SOP 沉淀，跑通增长模型并形成可复制机制。</p>
+              <ul>
+                <li>数据归因与 BI 底盘</li>
+                <li>增长实验与广告结构</li>
+                <li>内容与团队能力复制机制</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section soft" id="offer">
+        <div class="section-inner">
+          <div class="section-head">
+            <div>
+              <span class="section-kicker">Operating Outputs</span>
+              <h2>核心交付要读起来像 operating outputs，而不是七张同权重服务卡。</h2>
+            </div>
+            <p>保留现有内容，但把它们重新组织为更清晰的战略层与能力层。</p>
+          </div>
+
+          <div class="offer-layout">
+            <div class="deliver-board">
+              <div class="deliver-stack">
+                <section class="deliver-group">
+                  <h3>战略与增长路径</h3>
+                  <p class="group-desc">先明确方向，再定义路径，再验证模型，不在错误结构上继续加预算。</p>
+
+                  <div class="deliver-item">
+                    <div class="num">01</div>
+                    <div>
+                      <strong>定品牌战略</strong>
+                      <span>明确品牌定位与差异化方向，让每一步都有战略依据。</span>
+                    </div>
+                  </div>
+                  <div class="deliver-item">
+                    <div class="num">02</div>
+                    <div>
+                      <strong>全球化品牌落地打法</strong>
+                      <span>从市场选择到渠道组合，输出可执行的全球化路径。</span>
+                    </div>
+                  </div>
+                  <div class="deliver-item">
+                    <div class="num">03</div>
+                    <div>
+                      <strong>可落地、可复制的增长模型</strong>
+                      <span>验证增长引擎并形成可规模化复制的投放与转化体系。</span>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="deliver-group">
+                  <h3>组织与资产沉淀</h3>
+                  <p class="group-desc">最终交付不是方法建议，而是可留在企业内部的结构、工具、SOP 与资产管理方式。</p>
+
+                  <div class="deliver-item">
+                    <div class="num">04</div>
+                    <div>
+                      <strong>企业自己的品牌体系和团队能力</strong>
+                      <span>将品牌能力沉淀为组织能力，不再依赖外部。</span>
+                    </div>
+                  </div>
+                  <div class="deliver-item">
+                    <div class="num">05</div>
+                    <div>
+                      <strong>品牌增长飞轮</strong>
+                      <span>构建“内容—流量—转化—复购”自驱循环。</span>
+                    </div>
+                  </div>
+                  <div class="deliver-item">
+                    <div class="num">06</div>
+                    <div>
+                      <strong>品牌工具、SOP、模型库</strong>
+                      <span>标准化流程与模板，确保团队可独立运转。</span>
+                    </div>
+                  </div>
+                  <div class="deliver-item">
+                    <div class="num">07</div>
+                    <div>
+                      <strong>数据化的品牌资产管理</strong>
+                      <span>用户资产与内容资产全量追踪，用数据驱动品牌决策。</span>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            <div class="process-panel">
+              <div class="process-card">
+                <div class="process-row">
+                  <div class="step">01</div>
+                  <div>
+                    <span>免费诊断</span>
+                    <strong>30分钟品牌现状诊断</strong>
+                    <p>第一步不是销售推进，而是给出一轮真正有价值的判断。</p>
+                    <ul>
+                      <li>诊断品牌现状和卡点</li>
+                      <li>给出下一步方向</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="process-card">
+                <div class="process-row">
+                  <div class="step">02</div>
+                  <div>
+                    <span>启动落地</span>
+                    <strong>2周项目启动，认知对齐</strong>
+                    <p>对齐经营口径、权限边界和执行条件，避免项目从一开始就偏离。</p>
+                    <ul>
+                      <li>核心团队深度咨询</li>
+                      <li>培训认知对齐</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="process-card">
+                <div class="process-row">
+                  <div class="step">03</div>
+                  <div>
+                    <span>项目陪跑</span>
+                    <strong>6-12个月深度陪跑</strong>
+                    <p>分阶段交付，每个里程碑都围绕验证、放大与复制展开。</p>
+                    <ul>
+                      <li>ZAPEX品牌战略模块™ 定方向</li>
+                      <li>ZAPEX增长引擎™ 跑增长模型</li>
+                      <li>ZAPEX品牌增长引擎™ 规模化复制</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section" id="cta">
+        <div class="cta-panel">
+          <h2>进入客户工作台，开始你的增长系统诊断。</h2>
+          <p>首页的主任务不是解释一切，而是让真正适配的客户进入系统入口，统一经营口径、执行条件与增长判断。</p>
+          <div class="hero-actions" style="margin-bottom: 0;">
+            <a class="btn btn-primary" href="javascript:void(0)">进入客户工作台</a>
+            <a class="btn btn-secondary" href="javascript:void(0)">使用飞书账号登录</a>
+          </div>
+        </div>
+
+        <aside class="cta-aside">
+          <span class="micro">Preview Intent</span>
+          <strong>v2 强化了品牌张力、字重对比、模块质感与 section 节奏。</strong>
+          <p>这版不是简单换色，而是把首页更明确地推向“高级增长系统品牌”的方向：更有锐度、更有秩序、也更有记忆点。</p>
+        </aside>
+      </section>
+
+      <footer class="footer">
+        <p>峥锐 ZAPEX｜品牌出海加速器 · 品牌战略 + 增长引擎 双驱动</p>
+      </footer>
+    </div>
+  </body>
+</html>

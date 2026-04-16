@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Button System — Visual Reference Baseline</title>
+    <!--
+      Button Reference — radix-nova (shadcn/ui) as ZAPEX visual baseline.
+      Faithful to the real registry source at:
+        https://ui.shadcn.com/r/styles/radix-nova/button.json
+      Hand-written CSS (no Tailwind runtime) so pixel behavior stays stable
+      even outside the React app. All tokens mirror src/shadcn.css (neutral).
+
+      Catalog: 6 variants × 4 sizes + 4 icon sizes + with-icon + spinner
+               + rounded + group + asChild + RTL + disabled + focus ring.
+    -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
+      /* ---------- shadcn neutral tokens (mirrors src/shadcn.css) ---------- */
+      :root {
+        --background: hsl(0 0% 100%);
+        --foreground: hsl(0 0% 3.9%);
+        --primary: hsl(0 0% 9%);
+        --primary-foreground: hsl(0 0% 98%);
+        --secondary: hsl(0 0% 96.1%);
+        --secondary-foreground: hsl(0 0% 9%);
+        --muted: hsl(0 0% 96.1%);
+        --muted-foreground: hsl(0 0% 45.1%);
+        --destructive: hsl(0 84.2% 60.2%);
+        --border: hsl(0 0% 89.8%);
+        --input: hsl(0 0% 89.8%);
+        --ring: hsl(0 0% 3.9%);
+        --radius: 0.5rem;
+        --radius-md: calc(var(--radius) - 2px);
+
+        /* page chrome */
+        --page-bg: #fafafa;
+        --page-fg: #0a0a0a;
+        --page-mute: #737373;
+        --page-line: rgba(10, 10, 10, 0.08);
+        --page-line-soft: rgba(10, 10, 10, 0.04);
+        --max: 1120px;
+        --font: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+        --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+      body {
+        font-family: var(--font);
+        color: var(--page-fg);
+        background: var(--page-bg);
+        line-height: 1.5;
+      }
+
+      /* ========== PAGE HEADER ========== */
+      header.page {
+        padding: 96px 32px 48px;
+        border-bottom: 1px solid var(--page-line);
+      }
+      header.page .inner {
+        max-width: var(--max);
+        margin: 0 auto;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--page-mute);
+        margin-bottom: 28px;
+      }
+      .eyebrow::before {
+        content: '';
+        width: 28px;
+        height: 1px;
+        background: currentColor;
+      }
+      h1.page {
+        font-size: 52px;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        line-height: 1.05;
+        margin-bottom: 20px;
+      }
+      h1.page em {
+        font-style: normal;
+        color: var(--page-mute);
+        font-weight: 400;
+      }
+      p.lede {
+        font-size: 17px;
+        line-height: 1.6;
+        color: var(--page-mute);
+        max-width: 640px;
+      }
+      .meta-row {
+        margin-top: 44px;
+        padding-top: 28px;
+        border-top: 1px solid var(--page-line);
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 28px;
+      }
+      .meta-row dt {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--page-mute);
+        margin-bottom: 8px;
+      }
+      .meta-row dd {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--page-fg);
+      }
+
+      /* ========== SECTION SHELL ========== */
+      section.cat {
+        padding: 88px 32px;
+        border-bottom: 1px solid var(--page-line);
+      }
+      section.cat .inner {
+        max-width: var(--max);
+        margin: 0 auto;
+      }
+      .cat-head {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 48px;
+        align-items: baseline;
+        margin-bottom: 44px;
+      }
+      .cat-num {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--page-mute);
+        letter-spacing: 0.12em;
+      }
+      .cat-title {
+        font-size: 26px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+      .cat-desc {
+        font-size: 14px;
+        color: var(--page-mute);
+        line-height: 1.6;
+        max-width: 560px;
+      }
+
+      /* ========== SPEC GRID ========== */
+      .grid {
+        display: grid;
+        gap: 1px;
+        background: var(--page-line);
+        border: 1px solid var(--page-line);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .cell {
+        background: var(--background);
+        padding: 32px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .cell.dark {
+        background: #0a0a0a;
+        color: #fafafa;
+      }
+      .cell-label {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--page-mute);
+        letter-spacing: 0.04em;
+      }
+      .cell.dark .cell-label {
+        color: rgba(250,250,250,0.45);
+      }
+      .cell-body {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        min-height: 44px;
+      }
+      .cell-body.col {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .cell-note {
+        font-family: var(--mono);
+        font-size: 10.5px;
+        color: var(--page-mute);
+        letter-spacing: 0.02em;
+      }
+      .cell.dark .cell-note { color: rgba(250,250,250,0.38); }
+
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+      .grid-2 { grid-template-columns: repeat(2, 1fr); }
+      .grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+      /* =======================================================
+         BUTTON — radix-nova, faithful
+         ======================================================= */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: var(--radius);
+        border: 1px solid transparent;
+        background-clip: padding-box;
+        font-family: var(--font);
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+        transition: background-color 160ms ease, color 160ms ease,
+                    border-color 160ms ease, box-shadow 160ms ease,
+                    transform 80ms ease, opacity 160ms ease;
+        outline: none;
+        user-select: none;
+        cursor: pointer;
+        height: 32px;
+        padding: 0 10px;
+        gap: 6px;
+      }
+      .btn:focus-visible {
+        border-color: var(--ring);
+        box-shadow: 0 0 0 3px hsl(0 0% 3.9% / 0.5);
+      }
+      .btn:active:not([aria-haspopup]) { transform: translateY(1px); }
+      .btn:disabled {
+        pointer-events: none;
+        opacity: 0.5;
+      }
+      .btn[aria-invalid="true"] {
+        border-color: var(--destructive);
+        box-shadow: 0 0 0 3px hsl(0 84.2% 60.2% / 0.2);
+      }
+      .btn svg {
+        flex-shrink: 0;
+        pointer-events: none;
+        width: 16px;
+        height: 16px;
+      }
+      .btn[data-icon="inline-end"] { padding-right: 8px; }
+      .btn[data-icon="inline-start"] { padding-left: 8px; }
+
+      /* variants */
+      .btn[data-variant="default"] {
+        background: var(--primary);
+        color: var(--primary-foreground);
+      }
+      .btn[data-variant="default"]:hover { background: hsl(0 0% 9% / 0.9); }
+
+      .btn[data-variant="outline"] {
+        border-color: var(--border);
+        background: var(--background);
+        color: var(--foreground);
+      }
+      .btn[data-variant="outline"]:hover {
+        background: var(--muted);
+        color: var(--foreground);
+      }
+
+      .btn[data-variant="secondary"] {
+        background: var(--secondary);
+        color: var(--secondary-foreground);
+      }
+      .btn[data-variant="secondary"]:hover { background: hsl(0 0% 96.1% / 0.72); }
+
+      .btn[data-variant="ghost"] {
+        background: transparent;
+        color: var(--foreground);
+      }
+      .btn[data-variant="ghost"]:hover {
+        background: var(--muted);
+      }
+
+      .btn[data-variant="destructive"] {
+        background: hsl(0 84.2% 60.2% / 0.10);
+        color: var(--destructive);
+      }
+      .btn[data-variant="destructive"]:hover {
+        background: hsl(0 84.2% 60.2% / 0.20);
+      }
+      .btn[data-variant="destructive"]:focus-visible {
+        border-color: hsl(0 84.2% 60.2% / 0.4);
+        box-shadow: 0 0 0 3px hsl(0 84.2% 60.2% / 0.2);
+      }
+
+      .btn[data-variant="link"] {
+        background: transparent;
+        color: var(--primary);
+        padding: 0;
+        height: auto;
+        text-underline-offset: 4px;
+      }
+      .btn[data-variant="link"]:hover { text-decoration: underline; }
+
+      /* sizes */
+      .btn[data-size="default"] {
+        height: 32px; padding: 0 10px; gap: 6px; font-size: 14px;
+      }
+      .btn[data-size="xs"] {
+        height: 24px; padding: 0 8px; gap: 4px;
+        font-size: 12px; border-radius: min(var(--radius-md), 10px);
+      }
+      .btn[data-size="xs"] svg { width: 12px; height: 12px; }
+      .btn[data-size="xs"][data-icon="inline-end"] { padding-right: 6px; }
+      .btn[data-size="xs"][data-icon="inline-start"] { padding-left: 6px; }
+
+      .btn[data-size="sm"] {
+        height: 28px; padding: 0 10px; gap: 4px;
+        font-size: 12.8px; border-radius: min(var(--radius-md), 12px);
+      }
+      .btn[data-size="sm"] svg { width: 14px; height: 14px; }
+      .btn[data-size="sm"][data-icon="inline-end"] { padding-right: 6px; }
+      .btn[data-size="sm"][data-icon="inline-start"] { padding-left: 6px; }
+
+      .btn[data-size="lg"] {
+        height: 36px; padding: 0 10px; gap: 6px; font-size: 14px;
+      }
+      .btn[data-size="lg"][data-icon="inline-end"] { padding-right: 8px; }
+      .btn[data-size="lg"][data-icon="inline-start"] { padding-left: 8px; }
+
+      .btn[data-size="icon"]     { width: 32px; height: 32px; padding: 0; }
+      .btn[data-size="icon-xs"]  { width: 24px; height: 24px; padding: 0; border-radius: min(var(--radius-md), 10px); }
+      .btn[data-size="icon-xs"] svg { width: 12px; height: 12px; }
+      .btn[data-size="icon-sm"]  { width: 28px; height: 28px; padding: 0; border-radius: min(var(--radius-md), 12px); }
+      .btn[data-size="icon-sm"] svg { width: 14px; height: 14px; }
+      .btn[data-size="icon-lg"]  { width: 36px; height: 36px; padding: 0; }
+
+      /* rounded */
+      .btn.rounded-full { border-radius: 9999px; }
+
+      /* =======================================================
+         BUTTON GROUP
+         ======================================================= */
+      .btn-group {
+        display: inline-flex;
+        isolation: isolate;
+      }
+      .btn-group > .btn {
+        border-radius: 0;
+      }
+      .btn-group > .btn + .btn {
+        margin-left: -1px;
+      }
+      .btn-group > .btn:first-child {
+        border-top-left-radius: var(--radius);
+        border-bottom-left-radius: var(--radius);
+      }
+      .btn-group > .btn:last-child {
+        border-top-right-radius: var(--radius);
+        border-bottom-right-radius: var(--radius);
+      }
+      .btn-group > .btn:hover,
+      .btn-group > .btn:focus-visible { z-index: 1; }
+
+      /* =======================================================
+         SPINNER
+         ======================================================= */
+      .spinner {
+        width: 16px; height: 16px;
+        border: 1.8px solid currentColor;
+        border-right-color: transparent;
+        border-radius: 9999px;
+        animation: spin 720ms linear infinite;
+        opacity: 0.9;
+      }
+      .btn[data-size="xs"] .spinner,
+      .btn[data-size="icon-xs"] .spinner { width: 12px; height: 12px; border-width: 1.5px; }
+      .btn[data-size="sm"] .spinner,
+      .btn[data-size="icon-sm"] .spinner { width: 14px; height: 14px; border-width: 1.6px; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+
+      /* =======================================================
+         FOOTER
+         ======================================================= */
+      footer.page {
+        padding: 64px 32px 96px;
+        color: var(--page-mute);
+        font-size: 12px;
+      }
+      footer.page .inner {
+        max-width: var(--max);
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        border-top: 1px solid var(--page-line);
+        padding-top: 28px;
+      }
+      footer .source {
+        font-family: var(--mono);
+      }
+
+      /* ========== RESPONSIVE ========== */
+      @media (max-width: 860px) {
+        h1.page { font-size: 38px; }
+        .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+        .meta-row { grid-template-columns: repeat(2, 1fr); }
+        .cat-head { grid-template-columns: 1fr; gap: 12px; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- =============== HEADER =============== -->
+    <header class="page">
+      <div class="inner">
+        <div class="eyebrow">Design Baseline · 01</div>
+        <h1 class="page">Button System <em>— Visual Reference Baseline</em></h1>
+        <p class="lede">
+          ZAPEX 整个界面交互的视觉基准。该文件严格映射 shadcn/ui <code>radix-nova</code>
+          样式的源码（variants × sizes × states），作为后续所有按钮、输入、表单与密度规范的唯一真源。
+        </p>
+
+        <dl class="meta-row">
+          <div><dt>Style</dt><dd>radix-nova</dd></div>
+          <div><dt>Base</dt><dd>radix</dd></div>
+          <div><dt>Tokens</dt><dd>neutral</dd></div>
+          <div><dt>Source</dt><dd>ui.shadcn.com/r</dd></div>
+        </dl>
+      </div>
+    </header>
+
+    <!-- =============== 01 · VARIANTS =============== -->
+    <section class="cat">
+      <div class="inner">
+        <div class="cat-head">
+          <div class="cat-num">01 / VARIANT</div>
+          <div>
+            <div class="cat-title">六种语义变体</div>
+            <div class="cat-desc">
+              default 是主要行动；outline / secondary 是次要操作的两种密度；
+              ghost 用于工具栏或内联；destructive 用软色调承载危险行动；link 退回到排印。
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="cell">
+            <div class="cell-label">default</div>
+            <div class="cell-body"><button class="btn" data-variant="default" data-size="default">Continue</button></div>
+            <div class="cell-note">bg-primary · text-primary-foreground</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">outline</div>
+            <div class="cell-body"><button class="btn" data-variant="outline" data-size="default">Continue</button></div>
+            <div class="cell-note">border + bg-background</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">secondary</div>
+            <div class="cell-body"><button class="btn" data-variant="secondary" data-size="default">Continue</button></div>
+            <div class="cell-note">bg-secondary · text-secondary-foreground</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">ghost</div>
+            <div class="cell-body"><button class="btn" data-variant="ghost" data-size="default">Continue</button></div>
+            <div class="cell-note">transparent · hover:bg-muted</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">destructive</div>
+            <div class="cell-body"><button class="btn" data-variant="destructive" data-size="default">Delete</button></div>
+            <div class="cell-note">bg-destructive/10 · text-destructive</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">link</div>
+            <div class="cell-body"><button class="btn" data-variant="link" data-size="default">View details</button></div>
+            <div class="cell-note">text-primary · underline-offset-4</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== 02 · SIZES =============== -->
+    <section class="cat">
+      <div class="inner">
+        <div class="cat-head">
+          <div class="cat-num">02 / SIZE</div>
+          <div>
+            <div class="cat-title">四挡文字尺寸</div>
+            <div class="cat-desc">
+              高度 24 / 28 / 32 / 36 → xs / sm / default / lg。xs 与 sm 使用较小 radius（10px / 12px），
+              让密度高的工具栏看起来更紧实；default 与 lg 保持 8px radius 的标准节奏。
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-4">
+          <div class="cell">
+            <div class="cell-label">xs · h-6 (24px)</div>
+            <div class="cell-body"><button class="btn" data-variant="default" data-size="xs">Button</button></div>
+            <div class="cell-note">text-xs · radius 10</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">sm · h-7 (28px)</div>
+            <div class="cell-body"><button class="btn" data-variant="default" data-size="sm">Button</button></div>
+            <div class="cell-note">text-0.8rem · radius 12</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">default · h-8 (32px)</div>
+            <div class="cell-body"><button class="btn" data-variant="default" data-size="default">Button</button></div>
+            <div class="cell-note">text-sm · radius 8</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">lg · h-9 (36px)</div>
+            <div class="cell-body"><button class="btn" data-variant="default" data-size="lg">Button</button></div>
+            <div class="cell-note">text-sm · radius 8</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== 03 · ICON SIZE =============== -->
+    <section class="cat">
+      <div class="inner">
+        <div class="cat-head">
+          <div class="cat-num">03 / ICON</div>
+          <div>
+            <div class="cat-title">纯图标按钮</div>
+            <div class="cat-desc">
+              正方形尺寸与文字版本对齐。icon-xs / icon-sm 使用较小 radius，
+              让它们在文本输入框的 addon 或高密度工具栏里视觉更整齐。
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-4">
+          <div class="cell">
+            <div class="cell-label">icon-xs · size-6</div>
+            <div class="cell-body">
+              <button class="btn" data-variant="outline" data-size="icon-xs" aria-label="Plus">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+            <div class="cell-note">24 × 24 · radius 10</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">icon-sm · size-7</div>
+            <div class="cell-body">
+              <button class="btn" data-variant="outline" data-size="icon-sm" aria-label="Plus">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+            <div class="cell-note">28 × 28 · radius 12</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">icon · size-8</div>
+            <div class="cell-body">
+              <button class="btn" data-variant="outline" data-size="icon" aria-label="Plus">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+            <div class="cell-note">32 × 32 · radius 8</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">icon-lg · size-9</div>
+            <div class="cell-body">
+              <button class="btn" data-variant="outline" data-size="icon-lg" aria-label="Plus">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+            <div class="cell-note">36 × 36 · radius 8</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== 04 · WITH ICON =============== -->
+    <section class="cat">
+      <div class="inner">
+        <div class="cat-head">
+          <div class="cat-num">04 / WITH ICON</div>
+          <div>
+            <div class="cat-title">文字 + 图标</div>
+            <div class="cat-desc">
+              用 <code>data-icon="inline-start"</code> 或 <code>inline-end"</code>
+              触发自动的 padding 收缩，让图标侧的视觉重量比纯字版本收紧一档，避免两侧过度对称。
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="cell">
+            <div class="cell-label">inline-start — 前置图标</div>
+            <div class="cell-body">
+              <button class="btn" data-variant="default" data-size="default" data-icon="inline-start">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                Add member
+              </button>
+              <button class="btn" data-variant="outline" data-size="default" data-icon="inline-start">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download
+              </button>
+              <button class="btn" data-variant="secondary" data-size="sm" data-icon="inline-start">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                Search
+              </button>
+            </div>
+            <div class="cell-note">pr-2.5 → pl-2 on icon side</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">inline-end — 后置图标</div>
+            <div class="cell-body">
+              <button class="btn" data-variant="default" data-size="default" data-icon="inline-end">
+                Continue
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <button class="btn" data-variant="outline" data-size="default" data-icon="inline-end">
+                Open
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </button>
+              <button class="btn" data-variant="ghost" data-size="sm" data-icon="inline-end">
+                See all
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+            <div class="cell-note">pl-2.5 → pr-2 on icon side</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== 05 · LOADING / SPINNER =============== -->
+    <section class="cat">
+      <div class="inner">
+        <div class="cat-head">
+          <div class="cat-num">05 / LOADING</div>
+          <div>
+            <div class="cat-title">加载状态</div>
+            <div class="cat-desc">
+              用 Spinner + <code>disabled</code> 组合，而不是内置的 <code>isLoading</code> prop。
+              图标位使用 <code>data-icon</code>，保持 padding 节奏一致。
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="cell">
+            <div class="cell-label">default · pending</div>
+            <div class="cell-body">
+              <button class="btn" data-variant="default" data-size="default" data-icon="inline-start" disabled>
+                <span class="spinner"></span>
+                Saving
+              </button>
+            </div>
+            <div class="cell-note">opacity-50 · pointer-events-none</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">outline · pending</div>
+            <div class="cell-body">
+              <button class="btn" data-variant="outline" data-size="default" data-icon="inline-start" disabled>
+                <span class="spinner"></span>
+                Processing
+              </button>
+            </div>
+            <div class="cell-note">border 保持稳定</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">icon · pending</div>
+            <div class="cell-body">
+              <button class="btn" data-variant="outline" data-size="icon" aria-label="Loading" disabled>
+                <span class="spinner"></span>
+              </button>
+            </div>
+            <div class="cell-note">纯加载态</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== 06 · ROUNDED =============== -->
+    <section class="cat">
+      <div class="inner">
+        <div class="cat-head">
+          <div class="cat-num">06 / ROUNDED</div>
+          <div>
+            <div class="cat-title">全圆角</div>
+            <div class="cat-desc">
+              加 <code>rounded-full</code> 即可，不做单独 variant。用于 tag-like 操作、navbar CTA，
+              或需要视觉减压的区域。
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="cell">
+            <div class="cell-label">default · rounded-full</div>
+            <div class="cell-body">
+              <button class="btn rounded-full" data-variant="default" data-size="default">Subscribe</button>
+              <button class="btn rounded-full" data-variant="default" data-size="sm">Follow</button>
+            </div>
+            <div class="cell-note">radius 9999px</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">outline · rounded-full</div>
+            <div class="cell-body">
+              <button class="btn rounded-full" data-variant="outline" data-size="default" data-icon="inline-end">
+                Explore
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              </button>
+            </div>
+            <div class="cell-note">与 hero / nav 搭配</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">icon · rounded-full</div>
+            <div class="cell-body">
+              <button class="btn rounded-full" data-variant="outline" data-size="icon" aria-label="Next">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <button class="btn rounded-full" data-variant="default" data-size="icon-lg" aria-label="Record">
+                <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+              </button>
+            </div>
+            <div class="cell-note">FAB / play control</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== 07 · BUTTON GROUP =============== -->
+    <section class="cat">
+      <div class="inner">
+        <div class="cat-head">
+          <div class="cat-num">07 / GROUP</div>
+          <div>
+            <div class="cat-title">按钮组</div>
+            <div class="cat-desc">
+              相邻按钮共享边界：首尾保留外侧 radius，中间变直角，负间距合并边框。
+              用于分段控件、编辑器工具栏、分页控制。
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="cell">
+            <div class="cell-label">segmented · outline</div>
+            <div class="cell-body">
+              <div class="btn-group" data-slot="button-group">
+                <button class="btn" data-variant="outline" data-size="default">Day</button>
+                <button class="btn" data-variant="outline" data-size="default" aria-expanded="true">Week</button>
+                <button class="btn" data-variant="outline" data-size="default">Month</button>
+              </div>
+            </div>
+            <div class="cell-note">aria-expanded 表示选中态</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">toolbar · ghost + icon</div>
+            <div class="cell-body">
+              <div class="btn-group" data-slot="button-group">
+                <button class="btn" data-variant="outline" data-size="icon-sm" aria-label="Bold">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>
+                </button>
+                <button class="btn" data-variant="outline" data-size="icon-sm" aria-label="Italic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
+                </button>
+                <button class="btn" data-variant="outline" data-size="icon-sm" aria-label="Underline">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"/><line x1="4" y1="21" x2="20" y2="21"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="cell-note">相邻 margin-left:-1px 合并边</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== 08 · DARK SURFACE =============== -->
+    <section class="cat" style="background: #0a0a0a; color: #fafafa; border-bottom-color: rgba(255,255,255,0.08);">
+      <div class="inner">
+        <div class="cat-head">
+          <div class="cat-num" style="color: rgba(250,250,250,0.5);">08 / DARK</div>
+          <div>
+            <div class="cat-title" style="color: #fafafa;">深色表面上的行为反转</div>
+            <div class="cat-desc" style="color: rgba(250,250,250,0.6);">
+              ZAPEX 首页的 hero / 核心模块使用深底。按钮 tokens 原样继承，
+              只是主色从黑变白 — 保证在 deck / brochure 场景下读起来是一个体系。
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-3" style="background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.08);">
+          <div class="cell dark">
+            <div class="cell-label">default</div>
+            <div class="cell-body">
+              <button class="btn" style="background:#fafafa;color:#0a0a0a;" data-size="default">Continue</button>
+            </div>
+            <div class="cell-note">deep surface 反转 primary</div>
+          </div>
+          <div class="cell dark">
+            <div class="cell-label">outline</div>
+            <div class="cell-body">
+              <button class="btn" style="background:transparent;color:#fafafa;border-color:rgba(255,255,255,0.2);" data-size="default">Continue</button>
+            </div>
+            <div class="cell-note">border 走半透明白</div>
+          </div>
+          <div class="cell dark">
+            <div class="cell-label">ghost</div>
+            <div class="cell-body">
+              <button class="btn" style="background:transparent;color:#fafafa;" data-size="default">Continue</button>
+            </div>
+            <div class="cell-note">hover:bg rgba(255,255,255,0.06)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== 09 · STATES =============== -->
+    <section class="cat">
+      <div class="inner">
+        <div class="cat-head">
+          <div class="cat-num">09 / STATE</div>
+          <div>
+            <div class="cat-title">状态总览</div>
+            <div class="cat-desc">
+              default / hover / focus-visible / active / disabled / aria-invalid —
+              六个状态单独检视。focus 不是 hover 的加强版，是独立的可达性信号。
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="cell">
+            <div class="cell-label">idle</div>
+            <div class="cell-body"><button class="btn" data-variant="default" data-size="default">Continue</button></div>
+            <div class="cell-note">base state</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">focus-visible</div>
+            <div class="cell-body">
+              <button class="btn" data-variant="default" data-size="default"
+                style="border-color: var(--ring); box-shadow: 0 0 0 3px hsl(0 0% 3.9% / 0.5);">Continue</button>
+            </div>
+            <div class="cell-note">ring-3 · ring/50</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">disabled</div>
+            <div class="cell-body"><button class="btn" data-variant="default" data-size="default" disabled>Continue</button></div>
+            <div class="cell-note">opacity-50</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">aria-invalid</div>
+            <div class="cell-body">
+              <button class="btn" data-variant="outline" data-size="default" aria-invalid="true">Submit</button>
+            </div>
+            <div class="cell-note">border-destructive · ring/20</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">destructive · hover hint</div>
+            <div class="cell-body">
+              <button class="btn" data-variant="destructive" data-size="default"
+                style="background: hsl(0 84.2% 60.2% / 0.20);">Delete</button>
+            </div>
+            <div class="cell-note">hover 提亮到 /20</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">link · hover</div>
+            <div class="cell-body">
+              <button class="btn" data-variant="link" data-size="default" style="text-decoration: underline;">View details</button>
+            </div>
+            <div class="cell-note">underline-offset-4</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== 10 · ASCHILD / RTL =============== -->
+    <section class="cat">
+      <div class="inner">
+        <div class="cat-head">
+          <div class="cat-num">10 / SLOT · RTL</div>
+          <div>
+            <div class="cat-title">asChild 与双向文字</div>
+            <div class="cat-desc">
+              <code>asChild</code> 把任意元素（通常是 <code>&lt;a&gt;</code>）套上按钮外观，不新增 DOM 层。
+              RTL 下图标位自动镜像（inline-start 仍是语义上的前置）。
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="cell">
+            <div class="cell-label">asChild — 一个看起来像按钮的 &lt;a&gt;</div>
+            <div class="cell-body">
+              <a class="btn" data-variant="outline" data-size="default" data-icon="inline-end" href="#">
+                View on GitHub
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              </a>
+            </div>
+            <div class="cell-note">&lt;Button asChild&gt;&lt;a href&gt;...</div>
+          </div>
+          <div class="cell" dir="rtl">
+            <div class="cell-label">RTL — 自动镜像 padding</div>
+            <div class="cell-body">
+              <button class="btn" data-variant="default" data-size="default" data-icon="inline-end">
+                متابعة
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 6 9 12 15 18"/></svg>
+              </button>
+            </div>
+            <div class="cell-note">逻辑 inline-end 视觉变左</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== TOKENS LEGEND =============== -->
+    <section class="cat">
+      <div class="inner">
+        <div class="cat-head">
+          <div class="cat-num">REF / TOKENS</div>
+          <div>
+            <div class="cat-title">颜色 token 索引</div>
+            <div class="cat-desc">
+              和 <code>src/shadcn.css</code> 一致。任何偏色调整都应改 token，不应改单个按钮。
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-4">
+          <div class="cell">
+            <div class="cell-label">--primary</div>
+            <div class="cell-body"><div style="width:100%;height:48px;background:var(--primary);border-radius:6px;"></div></div>
+            <div class="cell-note">hsl(0 0% 9%) · #171717</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">--secondary / --muted</div>
+            <div class="cell-body"><div style="width:100%;height:48px;background:var(--secondary);border:1px solid var(--border);border-radius:6px;"></div></div>
+            <div class="cell-note">hsl(0 0% 96.1%) · #f5f5f5</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">--muted-foreground</div>
+            <div class="cell-body"><div style="width:100%;height:48px;background:var(--muted-foreground);border-radius:6px;"></div></div>
+            <div class="cell-note">hsl(0 0% 45.1%) · #737373</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">--destructive</div>
+            <div class="cell-body"><div style="width:100%;height:48px;background:var(--destructive);border-radius:6px;"></div></div>
+            <div class="cell-note">hsl(0 84.2% 60.2%) · #ef4444</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">--border / --input</div>
+            <div class="cell-body"><div style="width:100%;height:48px;background:var(--border);border-radius:6px;"></div></div>
+            <div class="cell-note">hsl(0 0% 89.8%) · #e5e5e5</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">--ring</div>
+            <div class="cell-body"><div style="width:100%;height:48px;background:var(--ring);border-radius:6px;"></div></div>
+            <div class="cell-note">hsl(0 0% 3.9%) · #0a0a0a</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">--radius</div>
+            <div class="cell-body"><div style="width:72px;height:72px;background:var(--foreground);border-radius:var(--radius);"></div></div>
+            <div class="cell-note">0.5rem · 8px</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">--radius-md</div>
+            <div class="cell-body"><div style="width:72px;height:72px;background:var(--foreground);border-radius:var(--radius-md);"></div></div>
+            <div class="cell-note">0.375rem · 6px (sm/xs)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="page">
+      <div class="inner">
+        <div>ZAPEX · Growth Engine — Design Baseline 01 / Button System</div>
+        <div class="source">radix-nova · shadcn/ui · registry v4</div>
+      </div>
+    </footer>
+  </body>
+</html>

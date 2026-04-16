@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZAPEX · Logo Guidebook — The Mark Specification</title>
+    <!--
+      ZAPEX / 峥锐 Logo Guidebook
+      ================================================================
+      Companion to design-manual.html. Same scaffold (.shell / .section /
+      .section-head / tonal surfaces) — palette re-anchored to the
+      ZAPEX homepage blues (#1a4fff / #0f3ab8) over slate (#0b1120).
+
+      Philosophy:
+        · 标志不是装饰，而是系统的签名。
+        · Z + APEX — 唯一权威的书写方式。
+        · 留白 = 权威。保护区不可协商。
+        · Inter · -0.08em · uppercase — 从不手绘。
+    -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
+      /* =================================================================
+         TOKENS — ZAPEX Mark Specification
+         ================================================================= */
+      :root {
+        /* ---------- BRAND BLUE — signet core ------------------------- */
+        --brand-0:   #050b1a;
+        --brand-10:  #0f3ab8;  /* deep accent */
+        --brand-20:  #1a4fff;  /* PRIMARY · signet Z · homepage accent */
+        --brand-30:  #3d6bff;
+        --brand-40:  #6d8eff;
+        --brand-50:  #9cb2ff;
+        --brand-60:  #c6d3ff;
+        --brand-70:  #e5ebff;
+        --brand-muted: rgba(26, 79, 255, 0.08);
+
+        /* ---------- SLATE — canvas / anchor dark --------------------- */
+        --slate-0:   #05080f;
+        --slate-10:  #0b1120;  /* PRIMARY DARK — signet background */
+        --slate-20:  #111827;
+        --slate-30:  #1a2332;
+        --slate-40:  #2a3445;
+        --slate-50:  #4a5565;
+        --slate-60:  #8a94a6;
+        --slate-70:  #c7cdd8;
+
+        /* ---------- NEUTRAL / SURFACE ladder (harmonized w/ manual) --- */
+        --surface-lowest:  #ffffff;
+        --surface:         #fbf9f8;
+        --surface-low:     #f5f3f2;
+        --surface-high:    #efedec;
+        --surface-highest: #e4e2e1;
+
+        /* ---------- INK / SEMANTIC ---------------------------------- */
+        --ink:         #0a0f1a;      /* 从不 #000 */
+        --ink-muted:   rgba(10, 15, 26, 0.64);
+        --ink-quiet:   rgba(10, 15, 26, 0.44);
+        --ink-faint:   rgba(10, 15, 26, 0.14);
+        --on-dark:           #ffffff;
+        --on-dark-muted:     rgba(255, 255, 255, 0.72);
+        --on-dark-quiet:     rgba(255, 255, 255, 0.48);
+        --on-dark-faint:     rgba(255, 255, 255, 0.20);
+
+        /* ---------- GHOST / OUTLINE --------------------------------- */
+        --outline-variant: rgba(193, 199, 207, 0.18);
+        --outline-strong:  rgba(10, 15, 26, 0.10);
+        --outline-on-dark: rgba(255, 255, 255, 0.10);
+
+        /* ---------- ELEVATION --------------------------------------- */
+        --ambient:      0 24px 48px -12px rgba(10, 15, 26, 0.06);
+        --ambient-lift: 0 32px 64px -16px rgba(10, 15, 26, 0.08);
+
+        /* ---------- RADIUS ------------------------------------------ */
+        --r-xs: 2px;
+        --r-sm: 4px;
+        --r-md: 6px;
+        --r-lg: 8px;
+        --r-xl: 12px;
+
+        /* ---------- TYPOGRAPHY -------------------------------------- */
+        --font-display: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+        --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+        --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+        /* ---------- LAYOUT ------------------------------------------ */
+        --max: 1200px;
+        --gutter: 32px;
+      }
+
+      /* =================================================================
+         RESET (surgical)
+         ================================================================= */
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+      body {
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        line-height: 1.6;
+        color: var(--ink);
+        background: var(--surface);
+        font-feature-settings: "cv01", "ss03", "cv11";
+      }
+      a { color: inherit; text-decoration: none; }
+      code, .mono { font-family: var(--font-mono); }
+
+      /* =================================================================
+         LAYOUT SCAFFOLD
+         ================================================================= */
+      .shell { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+      .section { padding: 112px 0; }
+      .section--low     { background: var(--surface-low); }
+      .section--surface { background: var(--surface); }
+      .section--high    { background: var(--surface-high); }
+      .section--dark    { background: var(--slate-10); color: var(--on-dark); }
+      .section--dark .section-title { color: var(--on-dark); }
+      .section--dark .section-desc  { color: var(--on-dark-muted); }
+      .section--dark .section-num   { color: var(--on-dark-quiet); }
+      .section--dark .class-label   { color: var(--on-dark-quiet); }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        gap: 56px;
+        align-items: baseline;
+        margin-bottom: 56px;
+      }
+      .section-num {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--ink-quiet);
+        letter-spacing: 0.12em;
+      }
+      .section-title {
+        font-family: var(--font-display);
+        font-size: 2.25rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+        margin-bottom: 12px;
+      }
+      .section-desc {
+        font-size: 0.9375rem;
+        color: var(--ink-muted);
+        max-width: 620px;
+        line-height: 1.7;
+      }
+
+      .class-label {
+        font-family: var(--font-body);
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-quiet);
+      }
+
+      .grid { display: grid; gap: 24px; }
+      .grid-2 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+      .grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+      /* =================================================================
+         ZAPEX WORDMARK — the canonical text treatment
+         Matches homepage-preview-claude.html exactly.
+         ================================================================= */
+      .zpx-wordmark {
+        font-family: var(--font-body);
+        font-weight: 500;
+        letter-spacing: -0.08em;
+        text-transform: uppercase;
+        line-height: 1;
+        display: inline-flex;
+        align-items: baseline;
+        color: var(--on-dark);
+      }
+      .zpx-wordmark .z {
+        font-weight: 900;
+        letter-spacing: -0.06em;
+      }
+      .zpx-wordmark .apex {
+        font-weight: 500;
+        color: var(--on-dark-quiet);
+        letter-spacing: -0.06em;
+      }
+      /* On-light inversion — only for print/admin surfaces */
+      .zpx-wordmark.on-light { color: var(--ink); }
+      .zpx-wordmark.on-light .apex { color: var(--ink-quiet); }
+
+      /* Single-weight knockout — for favicons, embossing, stencil */
+      .zpx-wordmark.solid .apex { color: inherit; }
+
+      /* Accent variant — blue Z, for signet square lockup */
+      .zpx-wordmark.accent-z .z { color: var(--brand-20); }
+
+      /* =================================================================
+         SIGNET — square lockup (the image user shared)
+         ================================================================= */
+      .zpx-signet {
+        background: var(--slate-10);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        aspect-ratio: 1 / 1;
+        border-radius: var(--r-lg);
+      }
+      .zpx-signet .zpx-wordmark {
+        font-size: 3.5rem;
+      }
+      .zpx-signet.lg .zpx-wordmark { font-size: 5.25rem; }
+      .zpx-signet.sm .zpx-wordmark { font-size: 2rem; }
+      .zpx-signet.xs .zpx-wordmark { font-size: 1.25rem; }
+
+      /* =================================================================
+         COVER
+         ================================================================= */
+      .cover {
+        padding: 160px 0 120px;
+        background: var(--slate-10);
+        color: var(--on-dark);
+        position: relative;
+        overflow: hidden;
+      }
+      .cover::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 85% 18%, rgba(26, 79, 255, 0.22), transparent 48%),
+          radial-gradient(circle at 10% 82%, rgba(15, 58, 184, 0.16), transparent 52%);
+        pointer-events: none;
+      }
+      .cover-inner { position: relative; z-index: 1; }
+      .cover-top {
+        display: grid;
+        grid-template-columns: 1fr 280px;
+        gap: 56px;
+        align-items: center;
+      }
+      .cover-meta {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        margin-bottom: 48px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--on-dark-quiet);
+        letter-spacing: 0.04em;
+      }
+      .cover-meta .dot {
+        width: 5px; height: 5px; border-radius: 50%;
+        background: var(--brand-20);
+      }
+      .cover-title {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 4.25rem;
+        line-height: 1.02;
+        letter-spacing: -0.03em;
+        margin-bottom: 28px;
+        color: var(--on-dark);
+      }
+      .cover-title em {
+        font-style: normal;
+        display: block;
+        color: var(--brand-40);
+        font-weight: 400;
+      }
+      .cover-lede {
+        font-size: 1.0625rem;
+        line-height: 1.7;
+        color: var(--on-dark-muted);
+        max-width: 560px;
+        margin-bottom: 72px;
+      }
+      .cover-specs {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
+        padding-top: 32px;
+        background-image: linear-gradient(var(--outline-on-dark), var(--outline-on-dark));
+        background-size: 64px 1px;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+      }
+      .cover-specs dt {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--on-dark-quiet);
+        margin-bottom: 10px;
+      }
+      .cover-specs dd {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1rem;
+        color: var(--on-dark);
+      }
+      .cover-signet {
+        width: 260px;
+        height: 260px;
+        border-radius: 14px;
+        box-shadow: 0 40px 80px -20px rgba(0,0,0,0.5);
+      }
+
+      /* =================================================================
+         TABLE OF CONTENTS (sticky scroll index)
+         ================================================================= */
+      .toc {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background: var(--slate-10);
+        color: var(--on-dark-muted);
+        border-top: 1px solid var(--outline-on-dark);
+        border-bottom: 1px solid var(--outline-on-dark);
+      }
+      .toc-inner {
+        display: flex;
+        gap: 28px;
+        overflow-x: auto;
+        padding: 14px 0;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        scrollbar-width: none;
+      }
+      .toc-inner::-webkit-scrollbar { display: none; }
+      .toc-inner a {
+        color: var(--on-dark-quiet);
+        white-space: nowrap;
+        transition: color 160ms ease;
+      }
+      .toc-inner a:hover { color: var(--on-dark); }
+
+      /* =================================================================
+         BRAND FOUNDATION CARDS
+         ================================================================= */
+      .foundation {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr;
+        gap: 24px;
+      }
+      .found-card {
+        background: var(--surface-lowest);
+        border-radius: var(--r-xl);
+        padding: 36px 32px;
+        box-shadow: var(--ambient);
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .found-card .label {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-quiet);
+      }
+      .found-card h3 {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.375rem;
+        letter-spacing: -0.01em;
+        line-height: 1.3;
+      }
+      .found-card p {
+        font-size: 0.875rem;
+        color: var(--ink-muted);
+        line-height: 1.7;
+      }
+      .found-card .quote {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.5rem;
+        letter-spacing: -0.015em;
+        line-height: 1.25;
+        color: var(--brand-10);
+      }
+
+      /* =================================================================
+         ANATOMY DIAGRAM
+         ================================================================= */
+      .anatomy {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 32px;
+        align-items: stretch;
+      }
+      .anatomy-stage {
+        background: var(--slate-10);
+        border-radius: var(--r-xl);
+        padding: 48px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 420px;
+        background-image:
+          linear-gradient(to right, var(--outline-on-dark) 1px, transparent 1px),
+          linear-gradient(to bottom, var(--outline-on-dark) 1px, transparent 1px);
+        background-size: 32px 32px;
+      }
+      .anatomy-mark {
+        position: relative;
+        display: inline-flex;
+        align-items: baseline;
+        font-family: var(--font-body);
+        font-weight: 500;
+        letter-spacing: -0.08em;
+        text-transform: uppercase;
+        font-size: 6rem;
+        line-height: 1;
+        color: var(--on-dark);
+      }
+      .anatomy-mark .z {
+        font-weight: 900;
+        color: var(--brand-20);
+        letter-spacing: -0.06em;
+        position: relative;
+      }
+      .anatomy-mark .apex {
+        font-weight: 500;
+        color: var(--on-dark);
+        letter-spacing: -0.06em;
+      }
+      .anatomy-mark .guide-cap,
+      .anatomy-mark .guide-base {
+        position: absolute;
+        left: -8%;
+        right: -4%;
+        height: 1px;
+        background: var(--brand-20);
+        opacity: 0.55;
+      }
+      .anatomy-mark .guide-cap { top: 0; }
+      .anatomy-mark .guide-base { bottom: 0; }
+      .anatomy-mark .x-unit {
+        position: absolute;
+        left: -14%;
+        top: 0;
+        bottom: 0;
+        width: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--brand-40);
+        letter-spacing: 0.08em;
+      }
+      .anatomy-mark .x-unit::before,
+      .anatomy-mark .x-unit::after {
+        content: '';
+        position: absolute;
+        left: 12px;
+        width: 6px;
+        height: 1px;
+        background: var(--brand-40);
+      }
+      .anatomy-mark .x-unit::before { top: 0; }
+      .anatomy-mark .x-unit::after  { bottom: 0; }
+
+      .anatomy-notes {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .anatomy-row {
+        background: var(--surface-lowest);
+        border-radius: var(--r-md);
+        padding: 22px 24px;
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        gap: 18px;
+        align-items: baseline;
+      }
+      .anatomy-row .idx {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--brand-10);
+      }
+      .anatomy-row h4 {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.0625rem;
+        margin-bottom: 6px;
+      }
+      .anatomy-row p {
+        font-size: 0.8125rem;
+        color: var(--ink-muted);
+        line-height: 1.65;
+      }
+      .anatomy-row code {
+        font-size: 0.75rem;
+        background: var(--surface-low);
+        padding: 2px 6px;
+        border-radius: var(--r-xs);
+        color: var(--brand-10);
+      }
+
+      /* =================================================================
+         VARIANTS GRID
+         ================================================================= */
+      .variants {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+      }
+      .variant {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .variant-stage {
+        aspect-ratio: 1 / 1;
+        border-radius: var(--r-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .variant-stage.v-dark    { background: var(--slate-10); }
+      .variant-stage.v-horiz   { background: var(--slate-10); aspect-ratio: 16 / 9; }
+      .variant-stage.v-light   { background: var(--surface-lowest); box-shadow: inset 0 0 0 1px var(--outline-strong); }
+      .variant-stage.v-mono    { background: var(--brand-20); }
+      .variant-stage.v-knockout{ background: var(--surface-lowest); box-shadow: inset 0 0 0 1px var(--outline-strong); }
+      .variant-stage .zpx-wordmark { font-size: 2.75rem; }
+      .variant-stage.v-horiz .zpx-wordmark { font-size: 2rem; }
+      .variant-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+      .variant-meta h4 {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.9375rem;
+      }
+      .variant-meta .tag {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--ink-quiet);
+      }
+      .variant p {
+        font-size: 0.8125rem;
+        color: var(--ink-muted);
+        line-height: 1.65;
+      }
+
+      /* =================================================================
+         CLEAR SPACE DEMO
+         ================================================================= */
+      .clearspace {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 32px;
+      }
+      .clear-stage {
+        background: var(--surface-lowest);
+        border-radius: var(--r-xl);
+        padding: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 380px;
+      }
+      .clear-frame {
+        position: relative;
+        padding: 72px 80px;
+        background: var(--slate-10);
+        border-radius: var(--r-md);
+      }
+      .clear-frame::before {
+        content: '';
+        position: absolute;
+        inset: -40px;
+        border: 1px dashed var(--brand-30);
+        border-radius: var(--r-md);
+        opacity: 0.6;
+      }
+      .clear-frame .zpx-wordmark { font-size: 3rem; }
+      .clear-frame .x-tag {
+        position: absolute;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.08em;
+        color: var(--brand-10);
+        background: var(--surface-lowest);
+        padding: 2px 6px;
+        border-radius: var(--r-xs);
+      }
+      .clear-frame .x-tag.tl { top: -48px; left: -40px; }
+      .clear-frame .x-tag.tr { top: -48px; right: -40px; }
+      .clear-frame .x-tag.bl { bottom: -48px; left: -40px; }
+
+      .minsize {
+        background: var(--surface-lowest);
+        border-radius: var(--r-xl);
+        padding: 36px;
+      }
+      .minsize h4 {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.0625rem;
+        margin-bottom: 20px;
+      }
+      .minsize-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: center;
+        padding: 20px 0;
+        background-image: linear-gradient(var(--outline-strong), var(--outline-strong));
+        background-size: 100% 1px;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+      }
+      .minsize-row:first-of-type { background-image: none; padding-top: 8px; }
+      .minsize-row .lbl {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .minsize-row .lbl b {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.9375rem;
+      }
+      .minsize-row .lbl span {
+        font-size: 0.75rem;
+        color: var(--ink-muted);
+      }
+      .minsize-row .val {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--brand-10);
+        padding: 4px 10px;
+        background: var(--brand-muted);
+        border-radius: var(--r-xs);
+      }
+
+      /* =================================================================
+         COLOR SYSTEM
+         ================================================================= */
+      .family {
+        background: var(--surface-lowest);
+        border-radius: var(--r-xl);
+        padding: 28px;
+        box-shadow: var(--ambient);
+      }
+      .family-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 24px;
+      }
+      .family-name {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.125rem;
+        letter-spacing: -0.01em;
+      }
+      .family-hex {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--ink-quiet);
+      }
+      .family-swatch {
+        border-radius: var(--r-md);
+        height: 120px;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: flex-end;
+        padding: 16px;
+      }
+      .family-swatch.on-dark { color: var(--on-dark); }
+      .family-swatch.on-dark .swatch-role { color: var(--on-dark-muted); }
+      .family-swatch.on-light { color: var(--ink); }
+      .family-swatch.on-light .swatch-role { color: var(--ink-muted); }
+      .swatch-role {
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+      }
+      .tonal-ladder {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        height: 28px;
+        border-radius: var(--r-sm);
+        overflow: hidden;
+      }
+      .tonal-ladder > div { position: relative; }
+      .family-use {
+        margin-top: 14px;
+        font-size: 0.75rem;
+        color: var(--ink-muted);
+        line-height: 1.65;
+      }
+
+      /* =================================================================
+         TYPOGRAPHY SPECIMEN (wordmark construction)
+         ================================================================= */
+      .wordmark-spec {
+        background: var(--slate-10);
+        border-radius: var(--r-xl);
+        padding: 72px 64px;
+        color: var(--on-dark);
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 64px;
+        align-items: center;
+      }
+      .wordmark-spec .zpx-wordmark { font-size: 5rem; }
+      .wordmark-spec-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .wordmark-spec-meta .row {
+        display: flex;
+        justify-content: space-between;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        padding: 12px 0;
+        background-image: linear-gradient(var(--outline-on-dark), var(--outline-on-dark));
+        background-size: 100% 1px;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+      }
+      .wordmark-spec-meta .row:first-child { background-image: none; padding-top: 0; }
+      .wordmark-spec-meta .k { color: var(--on-dark-quiet); letter-spacing: 0.08em; text-transform: uppercase; }
+      .wordmark-spec-meta .v { color: var(--on-dark); }
+
+      /* =================================================================
+         SURFACE / PLACEMENT DEMOS
+         ================================================================= */
+      .surfaces {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .surface-demo {
+        aspect-ratio: 4 / 3;
+        border-radius: var(--r-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .surface-demo .zpx-wordmark { font-size: 2.5rem; }
+      .s-dark { background: var(--slate-10); }
+      .s-light { background: var(--surface-lowest); box-shadow: inset 0 0 0 1px var(--outline-strong); }
+      .s-image {
+        background:
+          linear-gradient(135deg, rgba(11,17,32,0.55), rgba(11,17,32,0.35)),
+          linear-gradient(120deg, #2a3445 0%, #4a5565 50%, #1a2332 100%);
+      }
+      .s-image::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 30% 30%, rgba(26,79,255,0.25), transparent 45%),
+          radial-gradient(circle at 70% 70%, rgba(15,58,184,0.2), transparent 50%);
+        pointer-events: none;
+      }
+      .s-image .zpx-wordmark { position: relative; z-index: 1; }
+      .surface-note {
+        margin-top: 14px;
+        font-size: 0.8125rem;
+        color: var(--ink-muted);
+        line-height: 1.65;
+      }
+      .surface-note b {
+        display: block;
+        font-family: var(--font-display);
+        font-weight: 600;
+        color: var(--ink);
+        font-size: 0.9375rem;
+        margin-bottom: 4px;
+      }
+
+      /* =================================================================
+         MISUSE GRID
+         ================================================================= */
+      .misuse {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .misuse-cell {
+        background: var(--surface-lowest);
+        border-radius: var(--r-lg);
+        padding: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .misuse-stage {
+        background: var(--slate-10);
+        border-radius: var(--r-md);
+        padding: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 140px;
+        position: relative;
+        overflow: hidden;
+      }
+      .misuse-stage::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          transparent calc(50% - 1px),
+          rgba(255,255,255,0.22) calc(50% - 1px),
+          rgba(255,255,255,0.22) calc(50% + 1px),
+          transparent calc(50% + 1px)
+        );
+        pointer-events: none;
+      }
+      .misuse-stage .zpx-wordmark { font-size: 1.75rem; }
+      .misuse-tag {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--brand-10);
+        background: var(--brand-muted);
+        padding: 4px 8px;
+        border-radius: var(--r-xs);
+        align-self: flex-start;
+      }
+      .misuse-cell h4 {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1rem;
+      }
+      .misuse-cell p {
+        font-size: 0.8125rem;
+        color: var(--ink-muted);
+        line-height: 1.65;
+      }
+      /* Individual violation treatments (scoped) */
+      .vio-stretch .zpx-wordmark   { transform: scaleX(1.45); }
+      .vio-recolor .zpx-wordmark .z    { color: #ff4d6b; }
+      .vio-recolor .zpx-wordmark .apex { color: #ffd166; }
+      .vio-outline .zpx-wordmark {
+        -webkit-text-stroke: 2px var(--on-dark);
+        color: transparent;
+      }
+      .vio-shadow  .zpx-wordmark  { text-shadow: 0 8px 18px rgba(0,0,0,0.6); }
+      .vio-rotate  .zpx-wordmark  { transform: rotate(-9deg); }
+      .vio-contrast               { background: #2a3445; }
+      .vio-contrast .zpx-wordmark { color: #3d4556; }
+      .vio-contrast .zpx-wordmark .apex { color: #3d4556; }
+
+      /* =================================================================
+         APPLICATION EXAMPLES
+         ================================================================= */
+      .apps {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .app-card {
+        background: var(--surface-lowest);
+        border-radius: var(--r-xl);
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .app-stage {
+        background: var(--slate-10);
+        border-radius: var(--r-md);
+        overflow: hidden;
+      }
+      .app-navbar {
+        height: 56px;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(11, 17, 32, 0.92);
+        backdrop-filter: blur(12px);
+      }
+      .app-navbar .zpx-wordmark { font-size: 20px; }
+      .app-navbar .nav-links {
+        display: flex;
+        gap: 20px;
+        font-family: var(--font-body);
+        font-size: 13px;
+        color: var(--on-dark-muted);
+      }
+      .app-navbar .nav-cta {
+        background: var(--brand-20);
+        color: var(--on-dark);
+        font-size: 12px;
+        font-weight: 600;
+        padding: 8px 14px;
+        border-radius: var(--r-md);
+        letter-spacing: 0.02em;
+      }
+      .app-footer {
+        padding: 36px 24px;
+        color: var(--on-dark-muted);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-family: var(--font-mono);
+        font-size: 12px;
+      }
+      .app-footer .zpx-wordmark { font-size: 15px; }
+
+      .app-avatar {
+        aspect-ratio: 1 / 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .app-avatar .zpx-wordmark { font-size: 2.75rem; }
+
+      .app-card-row {
+        display: grid;
+        grid-template-columns: 1fr 120px;
+        gap: 24px;
+        align-items: center;
+      }
+      .app-bizcard {
+        background: var(--slate-10);
+        border-radius: var(--r-md);
+        padding: 28px;
+        aspect-ratio: 16 / 9;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .app-bizcard .zpx-wordmark { font-size: 1.375rem; }
+      .app-bizcard .person {
+        font-family: var(--font-display);
+        font-size: 0.8125rem;
+        color: var(--on-dark-muted);
+        line-height: 1.6;
+      }
+      .app-bizcard .person b {
+        display: block;
+        color: var(--on-dark);
+        font-weight: 600;
+        margin-bottom: 2px;
+      }
+      .app-favicon {
+        width: 80px;
+        height: 80px;
+        background: var(--slate-10);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+      }
+      .app-favicon .zpx-wordmark { font-size: 14px; }
+
+      .app-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+      .app-meta h4 {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1rem;
+      }
+      .app-meta .size {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--ink-quiet);
+      }
+      .app-card p {
+        font-size: 0.8125rem;
+        color: var(--ink-muted);
+        line-height: 1.65;
+      }
+
+      /* =================================================================
+         VOICE & TONE PILLARS
+         ================================================================= */
+      .voice {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+      .voice-pillar {
+        background: var(--surface-lowest);
+        border-radius: var(--r-xl);
+        padding: 36px 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .voice-pillar .idx {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--brand-10);
+        text-transform: uppercase;
+      }
+      .voice-pillar h3 {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.5rem;
+        letter-spacing: -0.01em;
+      }
+      .voice-pillar p {
+        font-size: 0.875rem;
+        color: var(--ink-muted);
+        line-height: 1.7;
+      }
+      .voice-compare {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 6px;
+      }
+      .voice-compare .col {
+        padding: 18px;
+        border-radius: var(--r-md);
+        background: var(--surface-low);
+      }
+      .voice-compare .col.good { background: rgba(26, 79, 255, 0.06); }
+      .voice-compare .col.bad  { background: rgba(10, 15, 26, 0.04); }
+      .voice-compare .tag {
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        display: block;
+      }
+      .voice-compare .col.good .tag { color: var(--brand-10); }
+      .voice-compare .col.bad  .tag { color: var(--ink-quiet); }
+      .voice-compare .line {
+        font-size: 0.875rem;
+        line-height: 1.6;
+        color: var(--ink);
+      }
+      .voice-compare .col.bad .line { color: var(--ink-muted); text-decoration: line-through; text-decoration-color: var(--ink-faint); }
+
+      /* =================================================================
+         FOOTER
+         ================================================================= */
+      footer.page {
+        padding: 72px 0 96px;
+        background: var(--slate-10);
+        color: var(--on-dark-muted);
+      }
+      footer.page .inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-size: 0.8125rem;
+      }
+      footer.page .brand .zpx-wordmark {
+        font-size: 18px;
+      }
+      footer.page .ver {
+        font-family: var(--font-mono);
+        font-size: 12px;
+      }
+
+      /* =================================================================
+         RESPONSIVE
+         ================================================================= */
+      @media (max-width: 960px) {
+        .cover-title { font-size: 3rem; }
+        .cover-top { grid-template-columns: 1fr; }
+        .cover-signet { width: 180px; height: 180px; }
+        .section-head { grid-template-columns: 1fr; gap: 12px; }
+        .grid-4, .grid-3, .grid-2,
+        .variants, .surfaces, .misuse, .apps, .voice,
+        .foundation, .anatomy, .clearspace { grid-template-columns: 1fr; }
+        .cover-specs { grid-template-columns: 1fr 1fr; }
+        .wordmark-spec { grid-template-columns: 1fr; padding: 48px 32px; gap: 32px; }
+        .wordmark-spec .zpx-wordmark { font-size: 3.5rem; }
+        .app-card-row { grid-template-columns: 1fr; }
+        .variant-stage .zpx-wordmark { font-size: 2.25rem; }
+      }
+      @media (max-width: 560px) {
+        .section { padding: 80px 0; }
+        .cover { padding: 120px 0 80px; }
+        .cover-title { font-size: 2.25rem; }
+        .cover-specs { grid-template-columns: 1fr; gap: 24px; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ========================== COVER ========================== -->
+    <section class="cover">
+      <div class="shell cover-inner">
+        <div class="cover-meta">
+          <span>ZAPEX · 峥锐</span><span class="dot"></span>
+          <span>Logo Guidebook · v0.1</span><span class="dot"></span>
+          <span>The Mark Specification</span>
+        </div>
+        <div class="cover-top">
+          <div>
+            <h1 class="cover-title">
+              The Mark
+              <em>— 标志不是装饰，是系统的签名</em>
+            </h1>
+            <p class="cover-lede">
+              这是 ZAPEX 标志的唯一权威书写手册。不是 moodboard，也不是 branding deck，
+              而是一份施工图：字形怎么构造、保护区多大、什么颜色能用、什么背景不能放。
+              每一条都能被复制到 CSS 或印刷文件中直接执行。
+            </p>
+          </div>
+          <div class="cover-signet zpx-signet lg">
+            <div class="zpx-wordmark accent-z">
+              <span class="z">Z</span><span class="apex">APEX</span>
+            </div>
+          </div>
+        </div>
+        <dl class="cover-specs">
+          <div><dt>TYPEFACE</dt><dd>Inter · 900 / 500</dd></div>
+          <div><dt>TRACKING</dt><dd>-0.08em wordmark</dd></div>
+          <div><dt>CANVAS</dt><dd>#0B1120 slate</dd></div>
+          <div><dt>ACCENT</dt><dd>#1A4FFF brand</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ========================== TABLE OF CONTENTS ========================== -->
+    <nav class="toc">
+      <div class="shell toc-inner">
+        <a href="#foundation">01 / Foundation</a>
+        <a href="#anatomy">02 / Anatomy</a>
+        <a href="#variants">03 / Variants</a>
+        <a href="#clearspace">04 / Clear Space</a>
+        <a href="#color">05 / Color</a>
+        <a href="#type">06 / Typography</a>
+        <a href="#surface">07 / Surface</a>
+        <a href="#misuse">08 / Misuse</a>
+        <a href="#apps">09 / Applications</a>
+        <a href="#voice">10 / Voice</a>
+      </div>
+    </nav>
+
+    <!-- ========================== 01 · FOUNDATION ========================== -->
+    <section class="section section--low" id="foundation">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">01 / FOUNDATION</div>
+          <div>
+            <h2 class="section-title">品牌锚点</h2>
+            <p class="section-desc">
+              标志承载的是定位、标语与人格。使用标志之前，先确认这三件事。
+              每一次出现都必须与下面三段文本保持同一呼吸。
+            </p>
+          </div>
+        </header>
+
+        <div class="foundation">
+          <div class="found-card">
+            <span class="label">Core Positioning</span>
+            <h3>峥锐 ZAPEX · 品牌出海加速器</h3>
+            <p>
+              跨境增长操作系统，由一支高级顾问团队交付。我们不做代运营 —
+              我们做增长系统重构。标志必须伴随这套"系统化判断"的印象出现，
+              不能被塞进促销语境。
+            </p>
+            <div class="quote">不是代运营，是增长系统重构。</div>
+          </div>
+          <div class="found-card">
+            <span class="label">Tagline Rule</span>
+            <h3>只有一句主语</h3>
+            <p>
+              主标语固定为 <code style="font-family: var(--font-mono); font-size: 12px; background: var(--surface-low); padding: 2px 6px; border-radius: 3px;">不是代运营，是增长系统重构</code>。
+              其他场景的副标题最多一行，14–16 字，禁止感叹号、禁止"首选/领先"等竞价词汇。
+            </p>
+          </div>
+          <div class="found-card">
+            <span class="label">Voice · 4 Pillars</span>
+            <h3>战略判断 · 执行纪律<br/>冷静控制 · 系统导向</h3>
+            <p>
+              标志周围的文案必须符合这四个基调。若文案偏营销口吻（"立即体验"、"限时"），
+              则不应出现 ZAPEX 标志 — 它属于决策语境，不属于转化漏斗。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 02 · ANATOMY ========================== -->
+    <section class="section section--surface" id="anatomy">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">02 / ANATOMY</div>
+          <div>
+            <h2 class="section-title">标志结构</h2>
+            <p class="section-desc">
+              标志由两部分组成：一个粗壮的 Z（品牌蓝）与一个中等磅数的 APEX。
+              两部分必须一次性排版、同一基线、同一字距 — 任何重绘或分离使用均视为破坏结构。
+            </p>
+          </div>
+        </header>
+
+        <div class="anatomy">
+          <div class="anatomy-stage">
+            <div class="anatomy-mark">
+              <span class="x-unit">X · cap-height</span>
+              <span class="guide-cap"></span>
+              <span class="z">Z</span><span class="apex">APEX</span>
+              <span class="guide-base"></span>
+            </div>
+          </div>
+          <div class="anatomy-notes">
+            <div class="anatomy-row">
+              <div class="idx">A</div>
+              <div>
+                <h4>Z 是锚，APEX 是延伸</h4>
+                <p>
+                  Z 与 APEX 等高（同为 <code>1.0em</code>），Z 以 <code>font-weight: 900</code> 建立视觉重量锚点；
+                  APEX 以 <code>font-weight: 500</code> 跟随，充当延伸不抢戏。
+                </p>
+              </div>
+            </div>
+            <div class="anatomy-row">
+              <div class="idx">B</div>
+              <div>
+                <h4>基线与 cap-height 严格对齐</h4>
+                <p>
+                  所有字符共享同一基线与同一 cap-height（以 Z 为基准 = 1X）。APEX 的字号 = Z 的字号 ÷ 1.2，
+                  视觉上等高。<b>不要</b>把 APEX 降到小写，不要让它上浮。
+                </p>
+              </div>
+            </div>
+            <div class="anatomy-row">
+              <div class="idx">C</div>
+              <div>
+                <h4>字距是结构的一部分</h4>
+                <p>
+                  整体字距 <code>letter-spacing: -0.08em</code>，单字块内部 <code>-0.06em</code>。
+                  紧凑的 tracking 让 ZAPEX 呈现"一块金属"的感觉，而不是散装字母。
+                </p>
+              </div>
+            </div>
+            <div class="anatomy-row">
+              <div class="idx">D</div>
+              <div>
+                <h4>APEX 的透明度编码层级</h4>
+                <p>
+                  在深色画布上，APEX 使用 <code>rgba(255,255,255,0.48)</code> — 这不是装饰，
+                  它建立了 Z 为主、APEX 为附的阅读顺序。切勿同等高亮。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 03 · VARIANTS ========================== -->
+    <section class="section section--low" id="variants">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">03 / VARIANTS</div>
+          <div>
+            <h2 class="section-title">标志变体</h2>
+            <p class="section-desc">
+              共四种合法书写方式 — 任何超出此范围的变体都是错误。优先使用 Signet（方形锁定形式），
+              仅在导航条、页脚、横向受限空间使用 Wordmark。
+            </p>
+          </div>
+        </header>
+
+        <div class="variants">
+          <div class="variant">
+            <div class="variant-stage v-dark">
+              <div class="zpx-wordmark accent-z">
+                <span class="z">Z</span><span class="apex">APEX</span>
+              </div>
+            </div>
+            <div class="variant-meta">
+              <h4>Signet · 方形主形象</h4>
+              <span class="tag">PRIMARY</span>
+            </div>
+            <p>深色画布上，Z 为品牌蓝，APEX 为白色。社媒头像、封面、视频片头一律使用此形式。</p>
+          </div>
+
+          <div class="variant">
+            <div class="variant-stage v-horiz">
+              <div class="zpx-wordmark">
+                <span class="z">Z</span><span class="apex">APEX</span>
+              </div>
+            </div>
+            <div class="variant-meta">
+              <h4>Wordmark · 横向主形象</h4>
+              <span class="tag">NAV / FOOTER</span>
+            </div>
+            <p>深色画布上，Z 为白色、APEX 为 48% 白。主站导航条与页脚使用。字号 ≥16px。</p>
+          </div>
+
+          <div class="variant">
+            <div class="variant-stage v-light">
+              <div class="zpx-wordmark on-light">
+                <span class="z">Z</span><span class="apex">APEX</span>
+              </div>
+            </div>
+            <div class="variant-meta">
+              <h4>Inverse · 浅色场合</h4>
+              <span class="tag">PRINT / DOC</span>
+            </div>
+            <p>白底出现时，Z 为 ink（#0A0F1A），APEX 为 ink-quiet（44% 黑）。用于报告、名片、PDF。</p>
+          </div>
+
+          <div class="variant">
+            <div class="variant-stage v-mono">
+              <div class="zpx-wordmark solid" style="color: var(--on-dark);">
+                <span class="z">Z</span><span class="apex">APEX</span>
+              </div>
+            </div>
+            <div class="variant-meta">
+              <h4>Knockout · 单色击出</h4>
+              <span class="tag">STENCIL</span>
+            </div>
+            <p>用于单色载体 — 烫金、丝印、favicon 16px、低分辨率媒介。Z 与 APEX 同色同权重。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 04 · CLEAR SPACE ========================== -->
+    <section class="section section--surface" id="clearspace">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">04 / CLEAR SPACE</div>
+          <div>
+            <h2 class="section-title">保护区与最小尺寸</h2>
+            <p class="section-desc">
+              标志需要呼吸的距离 — 保护区 = 0.5X（Z 字母 cap-height 的一半）。
+              最小尺寸保证字形可辨，低于最小尺寸应切换到 Knockout 变体。
+            </p>
+          </div>
+        </header>
+
+        <div class="clearspace">
+          <div class="clear-stage">
+            <div class="clear-frame">
+              <span class="x-tag tl">↕ 0.5X</span>
+              <span class="x-tag tr">↔ 0.5X</span>
+              <span class="x-tag bl">clear zone</span>
+              <div class="zpx-wordmark accent-z">
+                <span class="z">Z</span><span class="apex">APEX</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="minsize">
+            <h4>最小尺寸 · Minimum size</h4>
+            <div class="minsize-row">
+              <div class="lbl">
+                <b>Wordmark 横向</b>
+                <span>数字屏幕 · web / app</span>
+              </div>
+              <div class="val">≥ 24px 高</div>
+            </div>
+            <div class="minsize-row">
+              <div class="lbl">
+                <b>Signet 方形</b>
+                <span>头像 / 封面 / favicon</span>
+              </div>
+              <div class="val">≥ 32px 边长</div>
+            </div>
+            <div class="minsize-row">
+              <div class="lbl">
+                <b>Print · 印刷</b>
+                <span>名片 / 报告 / 合同</span>
+              </div>
+              <div class="val">≥ 8mm 高</div>
+            </div>
+            <div class="minsize-row">
+              <div class="lbl">
+                <b>低于上限</b>
+                <span>favicon 16px / 压花 / 绣章</span>
+              </div>
+              <div class="val">切至 Knockout</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 05 · COLOR ========================== -->
+    <section class="section section--low" id="color">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">05 / COLOR</div>
+          <div>
+            <h2 class="section-title">色彩系统</h2>
+            <p class="section-desc">
+              四个颜色承担标志的全部语义：品牌蓝（身份）、深蓝（按压/锚点）、
+              深板岩（画布）、白（书写）。超出这四个的任何颜色都不是 ZAPEX。
+            </p>
+          </div>
+        </header>
+
+        <div class="grid grid-4">
+          <div class="family">
+            <div class="family-head">
+              <div class="family-name">Brand Blue</div>
+              <div class="family-hex">#1A4FFF</div>
+            </div>
+            <div class="family-swatch on-dark" style="background: var(--brand-20);">
+              <div class="swatch-role">Signet · Z 字 · 主 CTA</div>
+            </div>
+            <div class="tonal-ladder">
+              <div style="background: var(--brand-0);"></div>
+              <div style="background: var(--brand-10);"></div>
+              <div style="background: var(--brand-20);"></div>
+              <div style="background: var(--brand-30);"></div>
+              <div style="background: var(--brand-40);"></div>
+              <div style="background: var(--brand-50);"></div>
+              <div style="background: var(--brand-60);"></div>
+              <div style="background: var(--brand-70);"></div>
+            </div>
+            <p class="family-use">标志身份色 — 仅用于 Z 字本身、主按钮、强调数据。不得作为大面积背景。</p>
+          </div>
+
+          <div class="family">
+            <div class="family-head">
+              <div class="family-name">Deep Accent</div>
+              <div class="family-hex">#0F3AB8</div>
+            </div>
+            <div class="family-swatch on-dark" style="background: var(--brand-10);">
+              <div class="swatch-role">Hover / Active · 按压态</div>
+            </div>
+            <div class="tonal-ladder">
+              <div style="background: var(--brand-0);"></div>
+              <div style="background: var(--brand-10);"></div>
+              <div style="background: var(--brand-20);"></div>
+              <div style="background: var(--brand-30);"></div>
+              <div style="background: var(--brand-40);"></div>
+              <div style="background: var(--brand-50);"></div>
+              <div style="background: var(--brand-60);"></div>
+              <div style="background: var(--brand-70);"></div>
+            </div>
+            <p class="family-use">品牌蓝的按压态 — hover、active、focused。印刷场合替代品牌蓝可获得更稳的墨色。</p>
+          </div>
+
+          <div class="family">
+            <div class="family-head">
+              <div class="family-name">Slate Canvas</div>
+              <div class="family-hex">#0B1120</div>
+            </div>
+            <div class="family-swatch on-dark" style="background: var(--slate-10);">
+              <div class="swatch-role">Signet 背景 · Dark Nav · Hero</div>
+            </div>
+            <div class="tonal-ladder">
+              <div style="background: var(--slate-0);"></div>
+              <div style="background: var(--slate-10);"></div>
+              <div style="background: var(--slate-20);"></div>
+              <div style="background: var(--slate-30);"></div>
+              <div style="background: var(--slate-40);"></div>
+              <div style="background: var(--slate-50);"></div>
+              <div style="background: var(--slate-60);"></div>
+              <div style="background: var(--slate-70);"></div>
+            </div>
+            <p class="family-use">标志的默认画布色 — 所有深色形象的唯一合法背景。从不使用纯黑。</p>
+          </div>
+
+          <div class="family">
+            <div class="family-head">
+              <div class="family-name">On-Dark White</div>
+              <div class="family-hex">#FFFFFF</div>
+            </div>
+            <div class="family-swatch on-light" style="background: #ffffff; box-shadow: inset 0 0 0 1px var(--outline-strong);">
+              <div class="swatch-role">APEX 文字 · 深底书写</div>
+            </div>
+            <div class="tonal-ladder" style="background: var(--surface-lowest);">
+              <div style="background: #ffffff;"></div>
+              <div style="background: rgba(255,255,255,0.72);"></div>
+              <div style="background: rgba(255,255,255,0.48);"></div>
+              <div style="background: rgba(255,255,255,0.32);"></div>
+              <div style="background: rgba(255,255,255,0.20);"></div>
+              <div style="background: rgba(255,255,255,0.12);"></div>
+              <div style="background: rgba(255,255,255,0.08);"></div>
+              <div style="background: rgba(255,255,255,0.04);"></div>
+            </div>
+            <p class="family-use">深底上 APEX 使用 48% 白；Wordmark 中 Z 用 100% 白。从不使用 #F8F8F8 或米白。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 06 · TYPOGRAPHY ========================== -->
+    <section class="section section--surface" id="type">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">06 / TYPOGRAPHY</div>
+          <div>
+            <h2 class="section-title">字体规范</h2>
+            <p class="section-desc">
+              标志<b>永远</b>由 Inter 排版 — 从不手绘、从不描边、从不使用其他字体替代。
+              下列参数是唯一合法的书写配方，可直接复制到 CSS / Figma。
+            </p>
+          </div>
+        </header>
+
+        <div class="wordmark-spec">
+          <div class="zpx-wordmark accent-z">
+            <span class="z">Z</span><span class="apex">APEX</span>
+          </div>
+          <div class="wordmark-spec-meta">
+            <div class="row"><span class="k">Family</span><span class="v">Inter</span></div>
+            <div class="row"><span class="k">Z weight</span><span class="v">900</span></div>
+            <div class="row"><span class="k">APEX weight</span><span class="v">500</span></div>
+            <div class="row"><span class="k">Size</span><span class="v">1.0em both</span></div>
+            <div class="row"><span class="k">Tracking</span><span class="v">-0.08em</span></div>
+            <div class="row"><span class="k">Inner</span><span class="v">-0.06em</span></div>
+            <div class="row"><span class="k">Case</span><span class="v">uppercase</span></div>
+            <div class="row"><span class="k">APEX α</span><span class="v">0.48</span></div>
+          </div>
+        </div>
+
+        <p class="class-label" style="margin-top: 40px; margin-bottom: 14px;">CSS REFERENCE</p>
+        <pre style="font-family: var(--font-mono); font-size: 12.5px; line-height: 1.7; background: var(--slate-10); color: var(--on-dark-muted); padding: 28px 32px; border-radius: var(--r-md); overflow-x: auto;">.zpx-wordmark {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  display: inline-flex;
+  align-items: baseline;
+}
+.zpx-wordmark .z {
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  /* signet variant: color: #1A4FFF */
+}
+.zpx-wordmark .apex {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.48);
+  letter-spacing: -0.06em;
+}</pre>
+      </div>
+    </section>
+
+    <!-- ========================== 07 · SURFACE ========================== -->
+    <section class="section section--low" id="surface">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">07 / SURFACE</div>
+          <div>
+            <h2 class="section-title">应用背景</h2>
+            <p class="section-desc">
+              标志与三种画布发生关系：深板岩（默认）、白底（印刷 / 后台）、图像（须加 32% 板岩遮罩）。
+              其他任何背景都不是合法使用场景。
+            </p>
+          </div>
+        </header>
+
+        <div class="surfaces">
+          <div>
+            <div class="surface-demo s-dark">
+              <div class="zpx-wordmark accent-z">
+                <span class="z">Z</span><span class="apex">APEX</span>
+              </div>
+            </div>
+            <div class="surface-note">
+              <b>深板岩 · Primary</b>
+              背景 #0B1120。99% 的线上场景使用此组合 — 导航、hero、社媒封面、视频片头。
+            </div>
+          </div>
+
+          <div>
+            <div class="surface-demo s-light">
+              <div class="zpx-wordmark on-light">
+                <span class="z">Z</span><span class="apex">APEX</span>
+              </div>
+            </div>
+            <div class="surface-note">
+              <b>白底 · Print / Admin</b>
+              仅用于报告、发票、合同、名片内页。Z 为 ink、APEX 为 ink-quiet。禁止搭配品牌蓝 Z。
+            </div>
+          </div>
+
+          <div>
+            <div class="surface-demo s-image">
+              <div class="zpx-wordmark">
+                <span class="z">Z</span><span class="apex">APEX</span>
+              </div>
+            </div>
+            <div class="surface-note">
+              <b>图像 · Over Imagery</b>
+              必须叠加 32% 板岩遮罩（linear-gradient with #0B1120 / 0.55）。未达遮罩时切换到 Signet 方形。
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 08 · MISUSE ========================== -->
+    <section class="section section--surface" id="misuse">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">08 / MISUSE</div>
+          <div>
+            <h2 class="section-title">禁用规则</h2>
+            <p class="section-desc">
+              以下六种是全部被禁止的动作。每一条违反的不是美学偏好，
+              而是品牌的"系统化判断"这一基础人格。评审时逐条比对即可。
+            </p>
+          </div>
+        </header>
+
+        <div class="misuse">
+          <div class="misuse-cell">
+            <span class="misuse-tag">DON'T · 拉伸</span>
+            <div class="misuse-stage vio-stretch">
+              <div class="zpx-wordmark accent-z">
+                <span class="z">Z</span><span class="apex">APEX</span>
+              </div>
+            </div>
+            <h4>不要水平或垂直拉伸</h4>
+            <p>字形比例是工程参数，不是装饰选项。等比缩放是唯一合法的尺寸变换。</p>
+          </div>
+
+          <div class="misuse-cell">
+            <span class="misuse-tag">DON'T · 改色</span>
+            <div class="misuse-stage vio-recolor">
+              <div class="zpx-wordmark">
+                <span class="z">Z</span><span class="apex">APEX</span>
+              </div>
+            </div>
+            <h4>不要替换品牌色</h4>
+            <p>只允许 §05 中定义的四色。渐变、霓虹、节日彩色版本 — 一律不存在。</p>
+          </div>
+
+          <div class="misuse-cell">
+            <span class="misuse-tag">DON'T · 描边</span>
+            <div class="misuse-stage vio-outline">
+              <div class="zpx-wordmark">
+                <span class="z">Z</span><span class="apex">APEX</span>
+              </div>
+            </div>
+            <h4>不要使用空心描边</h4>
+            <p>Inter 的字形是实心结构。描边破坏视觉重量的锚点 — 这是品牌感的根源。</p>
+          </div>
+
+          <div class="misuse-cell">
+            <span class="misuse-tag">DON'T · 投影</span>
+            <div class="misuse-stage vio-shadow">
+              <div class="zpx-wordmark accent-z">
+                <span class="z">Z</span><span class="apex">APEX</span>
+              </div>
+            </div>
+            <h4>不要加投影或发光</h4>
+            <p>深度来自画布（板岩）而不是阴影。任何 drop-shadow 都是 Web-2.0 模板化的信号。</p>
+          </div>
+
+          <div class="misuse-cell">
+            <span class="misuse-tag">DON'T · 旋转</span>
+            <div class="misuse-stage vio-rotate">
+              <div class="zpx-wordmark accent-z">
+                <span class="z">Z</span><span class="apex">APEX</span>
+              </div>
+            </div>
+            <h4>不要旋转或倾斜</h4>
+            <p>标志始终水平。Z 本身的对角线已经提供了方向感，无需再加角度。</p>
+          </div>
+
+          <div class="misuse-cell vio-contrast">
+            <span class="misuse-tag">DON'T · 低对比</span>
+            <div class="misuse-stage vio-contrast">
+              <div class="zpx-wordmark">
+                <span class="z">Z</span><span class="apex">APEX</span>
+              </div>
+            </div>
+            <h4>不要放在低对比背景</h4>
+            <p>WCAG 对比度必须 ≥ 4.5:1。若背景无法满足，切至白底 Inverse 或加板岩遮罩。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 09 · APPLICATIONS ========================== -->
+    <section class="section section--low" id="apps">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">09 / APPLICATIONS</div>
+          <div>
+            <h2 class="section-title">应用场景</h2>
+            <p class="section-desc">
+              六个典型投放位 — 官网导航、页脚、社媒头像、名片、favicon、视频水印。
+              尺寸、留白、变体的选择参照下列示例，不要自行判断。
+            </p>
+          </div>
+        </header>
+
+        <div class="apps">
+          <div class="app-card">
+            <div class="app-stage">
+              <div class="app-navbar">
+                <div class="zpx-wordmark">
+                  <span class="z">Z</span><span class="apex">APEX</span>
+                </div>
+                <div class="nav-links">
+                  <span>能力</span><span>案例</span><span>方法论</span><span>团队</span>
+                </div>
+                <div class="nav-cta">预约诊断</div>
+              </div>
+            </div>
+            <div class="app-meta">
+              <h4>Web Nav · 官网导航条</h4>
+              <span class="size">56px height · 20px wordmark</span>
+            </div>
+            <p>Sticky 导航条。背景 <code>rgba(11,17,32,0.92)</code> + 12px 背景模糊。Wordmark 变体。</p>
+          </div>
+
+          <div class="app-card">
+            <div class="app-stage">
+              <div class="app-footer">
+                <div class="zpx-wordmark">
+                  <span class="z">Z</span><span class="apex">APEX</span>
+                </div>
+                <div>© 2026 · 峥锐科技 · 沪 ICP 备案</div>
+              </div>
+            </div>
+            <div class="app-meta">
+              <h4>Footer · 页脚锁定</h4>
+              <span class="size">15px wordmark</span>
+            </div>
+            <p>页脚最右/最左端。与版权信息对齐。仅使用 Wordmark 变体，禁止 Signet。</p>
+          </div>
+
+          <div class="app-card">
+            <div class="app-stage">
+              <div class="app-avatar zpx-signet">
+                <div class="zpx-wordmark accent-z">
+                  <span class="z">Z</span><span class="apex">APEX</span>
+                </div>
+              </div>
+            </div>
+            <div class="app-meta">
+              <h4>Avatar · 社媒头像</h4>
+              <span class="size">1:1 square · 1024×1024 源文件</span>
+            </div>
+            <p>LinkedIn / 微信公众号 / 视频号封面。Signet 方形变体 — 保护区即画布四周 0.5X。</p>
+          </div>
+
+          <div class="app-card">
+            <div class="app-stage" style="padding: 16px;">
+              <div class="app-bizcard">
+                <div class="zpx-wordmark">
+                  <span class="z">Z</span><span class="apex">APEX</span>
+                </div>
+                <div class="person">
+                  <b>张峥锐 · Zack Zhang</b>
+                  增长合伙人 · Growth Partner
+                </div>
+              </div>
+            </div>
+            <div class="app-meta">
+              <h4>Business Card · 名片</h4>
+              <span class="size">90×54mm · 22px wordmark</span>
+            </div>
+            <p>正面左上角放置 Wordmark，右下角放姓名/职位。深板岩底 + 金属蓝烫印可选。</p>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card-row">
+              <div class="app-stage" style="padding: 40px;">
+                <div class="app-favicon">
+                  <div class="zpx-wordmark accent-z" style="font-size: 14px;">
+                    <span class="z">Z</span><span class="apex" style="display:none;">APEX</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="app-meta">
+                  <h4>Favicon</h4>
+                </div>
+                <p style="margin-top: 10px;">
+                  32px 及以下，仅保留单字母 Z（品牌蓝）。16px 切至 Knockout 单色白底 Z。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="app-stage" style="padding: 24px; aspect-ratio: 16/9; display: flex; align-items: flex-end; justify-content: flex-start;">
+              <div class="zpx-wordmark" style="font-size: 17px; opacity: 0.72;">
+                <span class="z">Z</span><span class="apex">APEX</span>
+              </div>
+            </div>
+            <div class="app-meta">
+              <h4>Video Watermark · 视频水印</h4>
+              <span class="size">17px · 72% opacity · 左下角</span>
+            </div>
+            <p>案例视频、方法论讲解。左下角固定位置，72% 不透明度。切勿放中心或居顶。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 10 · VOICE ========================== -->
+    <section class="section section--surface" id="voice">
+      <div class="shell">
+        <header class="section-head">
+          <div class="section-num">10 / VOICE</div>
+          <div>
+            <h2 class="section-title">品牌语调</h2>
+            <p class="section-desc">
+              标志只是视觉层 — 真正被识别的是它承载的文案人格。四个支柱定义什么叫"像 ZAPEX"。
+              每个支柱给出一个"写这样 / 不写这样"的并列参考。
+            </p>
+          </div>
+        </header>
+
+        <div class="voice">
+          <div class="voice-pillar">
+            <span class="idx">01 · Strategic Judgment</span>
+            <h3>战略判断</h3>
+            <p>
+              我们不罗列功能、不堆砌承诺。每一句文案都在做一次判断 — 为什么选这条路、
+              放弃哪条路。标志出现的位置应配以"判断"而非"卖点"。
+            </p>
+            <div class="voice-compare">
+              <div class="col good">
+                <span class="tag">DO</span>
+                <div class="line">跨境增长的瓶颈不在渠道，在组织判断力。</div>
+              </div>
+              <div class="col bad">
+                <span class="tag">DON'T</span>
+                <div class="line">一站式海外增长解决方案，助您快速突破！</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="voice-pillar">
+            <span class="idx">02 · Execution Discipline</span>
+            <h3>执行纪律</h3>
+            <p>
+              系统落地的动作必须被分解到周频、SOP 与 KPI 层面。语气克制，动词精确，
+              禁用"快速/立即/轻松"这类去复杂化的词汇。
+            </p>
+            <div class="voice-compare">
+              <div class="col good">
+                <span class="tag">DO</span>
+                <div class="line">第 4 周：广告素材库 A/B 开关切换到自动化规则。</div>
+              </div>
+              <div class="col bad">
+                <span class="tag">DON'T</span>
+                <div class="line">轻松搞定广告投放，让增长飞起来！</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="voice-pillar">
+            <span class="idx">03 · Calm Control</span>
+            <h3>冷静控制</h3>
+            <p>
+              不渲染焦虑、不制造 FOMO。遇到增长问题，语气是"我们来拆解"而不是
+              "再不做就来不及"。标志周围从不出现倒计时。
+            </p>
+            <div class="voice-compare">
+              <div class="col good">
+                <span class="tag">DO</span>
+                <div class="line">先看三个月的留存数据，再决定是否加预算。</div>
+              </div>
+              <div class="col bad">
+                <span class="tag">DON'T</span>
+                <div class="line">限时 48 小时！错过今天就涨价！</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="voice-pillar">
+            <span class="idx">04 · System Orientation</span>
+            <h3>系统导向</h3>
+            <p>
+              把问题看成系统的失衡，而不是个别指标的异常。文案的主语常常是"系统/机制/结构"，
+              而不是"团队/某人/某次活动"。
+            </p>
+            <div class="voice-compare">
+              <div class="col good">
+                <span class="tag">DO</span>
+                <div class="line">这不是广告素材的问题，是归因模型错配导致的系统偏差。</div>
+              </div>
+              <div class="col bad">
+                <span class="tag">DON'T</span>
+                <div class="line">换个投手就能解决，我们的投手经验丰富！</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="page">
+      <div class="shell inner">
+        <div class="brand">
+          <div class="zpx-wordmark">
+            <span class="z">Z</span><span class="apex">APEX</span>
+          </div>
+        </div>
+        <div class="ver">logo-guidebook · v0.1 · 2026-04</div>
+      </div>
+    </footer>
+
+  </body>
+</html>

@@ -920,14 +920,14 @@ img {
 .site-footer {
   background: var(--s10);
   color: var(--od);
-  padding: 72px 0 0;
+  padding: 44px 0 0;
 }
 
 .site-footer-inner {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  gap: 72px;
-  padding-bottom: 64px;
+  gap: 44px;
+  padding-bottom: 38px;
 }
 
 .site-footer-brand {
@@ -946,19 +946,19 @@ img {
 
 .site-footer-contact {
   display: grid;
-  gap: 28px;
+  gap: 17px;
 }
 
 .site-footer-qr-row {
   display: grid;
-  grid-template-columns: 120px minmax(0, 1fr);
-  gap: 20px;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 12px;
   align-items: start;
 }
 
 .site-footer-qr {
-  width: 120px;
-  height: 120px;
+  width: 72px;
+  height: 72px;
   border-radius: var(--r-lg);
   background:
     repeating-linear-gradient(0deg, rgba(126,166,194,0.06), rgba(126,166,194,0.06) 10px, transparent 10px, transparent 20px),
@@ -1004,7 +1004,7 @@ img {
 }
 
 .site-footer-meta {
-  padding: 24px 0;
+  padding: 14px 0;
   border-top: 1px solid var(--ol-dark);
   display: flex;
   justify-content: space-between;

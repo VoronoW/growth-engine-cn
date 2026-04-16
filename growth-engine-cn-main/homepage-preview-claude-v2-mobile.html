@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZAPEX Mobile Preview — iPhone 15</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+      /* ===== Frame shell ===== */
+      :root {
+        --frame-w: 393px;
+        --frame-h: 852px;
+        --frame-radius: 52px;
+        --shell-bg: #1a1a1e;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { -webkit-font-smoothing: antialiased; }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--shell-bg);
+        font-family: 'Inter', -apple-system, sans-serif;
+        padding: 40px 20px;
+      }
+
+      .phone {
+        position: relative;
+        width: var(--frame-w);
+        height: var(--frame-h);
+        border-radius: var(--frame-radius);
+        background: #000;
+        box-shadow:
+          0 0 0 2px #2a2a2e,
+          0 0 0 6px #0a0a0c,
+          0 40px 80px rgba(0,0,0,0.6);
+        overflow: hidden;
+      }
+
+      /* Dynamic Island */
+      .phone::before {
+        content: "";
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 126px;
+        height: 36px;
+        border-radius: 20px;
+        background: #000;
+        z-index: 200;
+      }
+
+      /* Screen bezel inner glow */
+      .phone::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: var(--frame-radius);
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+        pointer-events: none;
+        z-index: 150;
+      }
+
+      .screen {
+        position: absolute;
+        inset: 0;
+        border-radius: var(--frame-radius);
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .screen::-webkit-scrollbar { display: none; }
+
+      /* ===== Page content inside phone ===== */
+      .page {
+        --bg: #f4f6f9;
+        --surface: #ffffff;
+        --surface-deep: #0b1120;
+        --ink: #0a0f1a;
+        --ink-2: #4b5563;
+        --ink-3: #9ca3af;
+        --line: rgba(10, 15, 26, 0.06);
+        --line-strong: rgba(10, 15, 26, 0.10);
+        --accent: #1a4fff;
+        --accent-deep: #0f3ab8;
+        --font: 'Inter', -apple-system, 'PingFang SC', 'Noto Sans SC', sans-serif;
+
+        font-family: var(--font);
+        font-feature-settings: "cv01", "ss03";
+        color: var(--ink);
+        background: var(--bg);
+        min-height: 100%;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .page a { color: inherit; text-decoration: none; }
+
+      /* ===== Mobile Nav ===== */
+      .m-nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 56px 16px 8px;
+        background: transparent;
+      }
+
+      .m-nav-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 4px 0 16px;
+        height: 48px;
+        border-radius: 14px;
+        background: rgba(11, 17, 32, 0.94);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        border: 1px solid rgba(255,255,255,0.06);
+        box-shadow: 0 6px 24px rgba(10,15,26,0.2);
+      }
+
+      .m-wm {
+        display: inline-flex;
+        align-items: baseline;
+        font-size: 17px;
+        letter-spacing: -0.08em;
+        line-height: 1;
+      }
+
+      .m-wm .z { font-weight: 900; color: #fff; font-size: 1.2em; }
+      .m-wm .a { font-weight: 500; color: rgba(255,255,255,0.40); }
+
+      .m-nav-cta {
+        display: inline-flex;
+        align-items: center;
+        height: 34px;
+        padding: 0 14px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--ink);
+        background: #fff;
+        border-radius: 8px;
+      }
+
+      /* ===== Mobile Hero ===== */
+      .m-hero {
+        position: relative;
+        padding: 72px 24px 80px;
+        text-align: center;
+      }
+
+      /* Decorative grid */
+      .m-hero::after {
+        content: "";
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 300px;
+        height: 300px;
+        background:
+          linear-gradient(rgba(10,15,26,0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(10,15,26,0.025) 1px, transparent 1px);
+        background-size: 48px 48px;
+        mask-image: radial-gradient(circle, black 10%, transparent 70%);
+        -webkit-mask-image: radial-gradient(circle, black 10%, transparent 70%);
+        pointer-events: none;
+      }
+
+      .m-eyebrow {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 28px;
+        padding: 4px 12px 4px 8px;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-2);
+        background: var(--surface);
+        border: 1px solid var(--line-strong);
+        border-radius: 999px;
+      }
+
+      .m-eyebrow::before {
+        content: "";
+        width: 4px;
+        height: 4px;
+        border-radius: 999px;
+        background: var(--accent);
+      }
+
+      .m-hero h1 {
+        position: relative;
+        font-size: 40px;
+        font-weight: 900;
+        line-height: 0.88;
+        letter-spacing: -0.06em;
+        margin-bottom: 20px;
+      }
+
+      .m-hero h1 em {
+        font-style: normal;
+        background: linear-gradient(135deg, var(--accent), #4f7aff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .m-hero-sub {
+        position: relative;
+        font-size: 14px;
+        line-height: 1.65;
+        color: var(--ink-2);
+        margin-bottom: 36px;
+        max-width: 320px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .m-hero-actions {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 0 12px;
+      }
+
+      .m-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 48px;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        border-radius: 12px;
+        border: 1px solid transparent;
+      }
+
+      .m-btn-dark {
+        background: var(--surface-deep);
+        color: #fff;
+        box-shadow: 0 4px 16px rgba(10,15,26,0.16);
+      }
+
+      .m-btn-ghost {
+        background: var(--surface);
+        color: var(--ink);
+        border-color: var(--line-strong);
+      }
+
+      /* ===== Mobile Positioning ===== */
+      .m-positioning {
+        padding: 0 24px 72px;
+      }
+
+      .m-rule {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+
+      .m-rule::before,
+      .m-rule::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--line-strong);
+      }
+
+      .m-rule span {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        white-space: nowrap;
+      }
+
+      .m-pos-head {
+        margin-bottom: 40px;
+      }
+
+      .m-pos-head h2 {
+        font-size: 32px;
+        font-weight: 900;
+        line-height: 0.92;
+        letter-spacing: -0.055em;
+        margin-bottom: 16px;
+      }
+
+      .m-pos-head p {
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--ink-2);
+      }
+
+      .m-pos-list {
+        border-top: 1px solid var(--line-strong);
+      }
+
+      .m-pos-item {
+        padding: 24px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .m-pos-item .micro {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent-deep);
+      }
+
+      .m-pos-item h3 {
+        margin-bottom: 6px;
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+      }
+
+      .m-pos-item p {
+        font-size: 13px;
+        line-height: 1.55;
+        color: var(--ink-2);
+      }
+
+      /* ===== Mobile System ===== */
+      .m-system {
+        position: relative;
+        background: var(--surface-deep);
+        overflow: hidden;
+      }
+
+      /* Decorative glow */
+      .m-system::before {
+        content: "";
+        position: absolute;
+        top: -120px;
+        left: -80px;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(26,79,255,0.14) 0%, transparent 60%);
+        pointer-events: none;
+      }
+
+      /* Grid texture */
+      .m-system::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+        background-size: 60px 60px;
+        pointer-events: none;
+      }
+
+      .m-system-inner {
+        position: relative;
+        z-index: 1;
+        padding: 72px 24px 80px;
+      }
+
+      .m-system-head {
+        text-align: center;
+        margin-bottom: 48px;
+      }
+
+      .m-sys-label {
+        display: inline-block;
+        margin-bottom: 16px;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.28);
+      }
+
+      .m-system-head h2 {
+        font-size: 28px;
+        font-weight: 900;
+        line-height: 0.94;
+        letter-spacing: -0.055em;
+        color: #fff;
+        margin-bottom: 14px;
+      }
+
+      .m-system-head p {
+        font-size: 13px;
+        line-height: 1.6;
+        color: rgba(255,255,255,0.40);
+      }
+
+      .m-sys-card {
+        position: relative;
+        padding: 36px 24px;
+        margin-bottom: 12px;
+        border-radius: 2px;
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.05);
+        overflow: hidden;
+      }
+
+      .m-sys-card:last-child { margin-bottom: 0; }
+
+      /* Top gradient line */
+      .m-sys-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 24px;
+        right: 24px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(120,160,255,0.25), transparent);
+      }
+
+      .m-sys-num {
+        display: block;
+        margin-bottom: 20px;
+        font-size: 36px;
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.06em;
+        color: rgba(255,255,255,0.05);
+      }
+
+      .m-sys-card h3 {
+        position: relative;
+        margin-bottom: 4px;
+        font-size: 20px;
+        font-weight: 900;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+        color: #fff;
+      }
+
+      .m-sys-card .keys {
+        position: relative;
+        margin-bottom: 16px;
+        font-size: 11px;
+        font-weight: 600;
+        color: rgba(120,160,255,0.65);
+        letter-spacing: 0.01em;
+      }
+
+      .m-sys-card > p {
+        position: relative;
+        font-size: 13px;
+        line-height: 1.6;
+        color: rgba(255,255,255,0.40);
+        margin-bottom: 20px;
+      }
+
+      .m-sys-card ul {
+        position: relative;
+        list-style: none;
+      }
+
+      .m-sys-card li {
+        padding: 10px 0;
+        font-size: 13px;
+        color: rgba(255,255,255,0.45);
+        border-top: 1px solid rgba(255,255,255,0.04);
+      }
+
+      .m-sys-card li:first-child { border-top: none; padding-top: 0; }
+
+      .m-sys-card li::before {
+        content: "";
+        display: inline-block;
+        width: 3px;
+        height: 3px;
+        border-radius: 1px;
+        background: rgba(120,160,255,0.45);
+        margin-right: 10px;
+        vertical-align: middle;
+      }
+
+      /* ===== Mobile CTA ===== */
+      .m-cta {
+        padding: 72px 24px;
+        text-align: center;
+      }
+
+      .m-cta-label {
+        display: inline-block;
+        margin-bottom: 16px;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+      }
+
+      .m-cta h2 {
+        font-size: 28px;
+        font-weight: 900;
+        line-height: 0.94;
+        letter-spacing: -0.055em;
+        margin-bottom: 14px;
+      }
+
+      .m-cta > p {
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--ink-2);
+        margin-bottom: 32px;
+      }
+
+      .m-cta-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      /* ===== Mobile Footer ===== */
+      .m-footer {
+        padding: 0 24px 40px;
+      }
+
+      .m-footer-line {
+        height: 1px;
+        background: var(--line);
+        margin-bottom: 20px;
+      }
+
+      .m-footer-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 11px;
+        color: var(--ink-3);
+      }
+
+      .m-footer .m-wm { font-size: 13px; }
+      .m-footer .m-wm .z { color: var(--ink); }
+      .m-footer .m-wm .a { color: var(--ink-3); }
+
+      /* ===== Home indicator ===== */
+      .home-indicator {
+        display: flex;
+        justify-content: center;
+        padding: 12px 0 8px;
+        background: var(--bg);
+      }
+
+      .home-indicator::after {
+        content: "";
+        width: 134px;
+        height: 5px;
+        border-radius: 999px;
+        background: rgba(10,15,26,0.18);
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="phone">
+      <div class="screen">
+        <div class="page">
+
+          <!-- Nav -->
+          <div class="m-nav">
+            <div class="m-nav-bar">
+              <div class="m-wm"><span class="z">Z</span><span class="a">APEX</span></div>
+              <a class="m-nav-cta" href="#">进入工作台</a>
+            </div>
+          </div>
+
+          <!-- Hero -->
+          <section class="m-hero">
+            <div class="m-eyebrow">品牌增长操作系统</div>
+            <h1>不是代运营，<br>是增长系统<em>重构。</em></h1>
+            <p class="m-hero-sub">
+              ZAPEX 用战略判断、增长诊断、归因结构与实验机制，帮助跨境企业把增长能力留在团队内部。
+            </p>
+            <div class="m-hero-actions">
+              <a class="m-btn m-btn-dark" href="#">进入客户工作台</a>
+              <a class="m-btn m-btn-ghost" href="#">飞书账号登录</a>
+            </div>
+          </section>
+
+          <!-- Positioning -->
+          <section class="m-positioning">
+            <div class="m-rule"><span>Positioning</span></div>
+
+            <div class="m-pos-head">
+              <h2>这不是服务介绍，而是增长系统重构的判断入口。</h2>
+              <p>信任感来自结构、权重和节奏。</p>
+            </div>
+
+            <div class="m-pos-list">
+              <div class="m-pos-item">
+                <span class="micro">System View</span>
+                <h3>卖的是增长系统，不是广告执行外包。</h3>
+                <p>品牌战略、归因结构、增长实验、内容系统与团队能力沉淀共同构成最终交付。</p>
+              </div>
+              <div class="m-pos-item">
+                <span class="micro">Decision Flow</span>
+                <h3>先诊断，再统一判断，再进入执行。</h3>
+                <p>结构本身体现决策顺序。</p>
+              </div>
+              <div class="m-pos-item">
+                <span class="micro">Brand Feel</span>
+                <h3>咨询级克制 + 产品系统精度。</h3>
+                <p>增长 operating system 的入口。</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- System -->
+          <section class="m-system">
+            <div class="m-system-inner">
+              <div class="m-system-head">
+                <span class="m-sys-label">Core System</span>
+                <h2>两大核心模块，<br>定义交付结构。</h2>
+                <p>一套系统，而不是几项零散服务。</p>
+              </div>
+
+              <div class="m-sys-card">
+                <span class="m-sys-num">01</span>
+                <h3>ZAPEX 品牌战略模块&trade;</h3>
+                <div class="keys">定方向 &middot; 建体系 &middot; 落执行</div>
+                <p>统一品牌定位、市场判断、SKU 结构与渠道策略。</p>
+                <ul>
+                  <li>品牌定位与差异化方向</li>
+                  <li>全球化市场与渠道优先级</li>
+                  <li>战略执行路径与组织协同</li>
+                </ul>
+              </div>
+
+              <div class="m-sys-card">
+                <span class="m-sys-num">02</span>
+                <h3>ZAPEX 品牌增长引擎&trade;</h3>
+                <div class="keys">验证 &middot; 放大 &middot; 复制</div>
+                <p>围绕归因、实验、内容与 SOP 沉淀，跑通增长模型。</p>
+                <ul>
+                  <li>数据归因与 BI 底盘</li>
+                  <li>增长实验与广告结构</li>
+                  <li>内容与团队能力复制</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- CTA -->
+          <section class="m-cta">
+            <span class="m-cta-label">Start Here</span>
+            <h2>进入客户工作台，<br>开始增长系统诊断。</h2>
+            <p>统一经营口径、执行条件与增长判断。</p>
+            <div class="m-cta-actions">
+              <a class="m-btn m-btn-dark" href="#">进入客户工作台</a>
+              <a class="m-btn m-btn-ghost" href="#">飞书账号登录</a>
+            </div>
+          </section>
+
+          <!-- Footer -->
+          <footer class="m-footer">
+            <div class="m-footer-line"></div>
+            <div class="m-footer-row">
+              <div class="m-wm"><span class="z">Z</span><span class="a">APEX</span></div>
+              <span>峥锐｜品牌出海加速器</span>
+            </div>
+          </footer>
+
+          <!-- Home indicator -->
+          <div class="home-indicator"></div>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

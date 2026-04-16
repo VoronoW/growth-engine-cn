@@ -1,0 +1,34 @@
+const FEISHU_APP_ID = process.env.FEISHU_APP_ID;
+const REDIRECT_URI = process.env.FEISHU_REDIRECT_URI;
+
+export const handler = async () => {
+  if (!FEISHU_APP_ID || !REDIRECT_URI) {
+    console.error(
+      'FEISHU_APP_ID or FEISHU_REDIRECT_URI not set. Available env keys:',
+      Object.keys(process.env).filter((k) => k.startsWith('FEISHU')).join(', ')
+    );
+    return {
+      statusCode: 302,
+      headers: {
+        Location: '/growth-forms.html?error=app_not_configured',
+      },
+    };
+  }
+
+  const state =
+    Math.random().toString(36).substring(2) + Date.now().toString(36);
+
+  const authUrl =
+    `https://open.feishu.cn/open-apis/authen/v1/index` +
+    `?app_id=${encodeURIComponent(FEISHU_APP_ID)}` +
+    `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}` +
+    `&state=${encodeURIComponent(state)}`;
+
+  return {
+    statusCode: 302,
+    headers: {
+      Location: authUrl,
+      'Set-Cookie': `feishu_state=${state}; Path=/; HttpOnly; SameSite=Lax; Max-Age=600`,
+    },
+  };
+};

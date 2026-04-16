@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZAPEX Homepage Preview — Claude v2</title>
+    <!--
+      Claude v2 — 精简 + 设计感提升
+      ==============================
+      1. 彻底去掉 teaser 卡片，核心交付/进入系统只出现在导航栏
+      2. 页面只有：Hero → 系统定位 → 核心模块 → CTA → Footer
+      3. 大幅增加留白，section 间距 160px+
+      4. 增加设计元素：几何装饰线、渐变光晕、网格纹理、
+         typographic scale 对比、decorative Z mark
+      5. 不只是颜色，而是构图、节奏、形状语言
+    -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+      :root {
+        --bg: #f4f6f9;
+        --surface: #ffffff;
+        --surface-deep: #0b1120;
+        --surface-deep-2: #111827;
+        --ink: #0a0f1a;
+        --ink-2: #4b5563;
+        --ink-3: #9ca3af;
+        --line: rgba(10, 15, 26, 0.06);
+        --line-strong: rgba(10, 15, 26, 0.10);
+        --accent: #1a4fff;
+        --accent-deep: #0f3ab8;
+        --max: 1080px;
+        --font: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans SC', sans-serif;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+      body {
+        font-family: var(--font);
+        color: var(--ink);
+        background: var(--bg);
+        line-height: 1.5;
+        font-feature-settings: "cv01", "ss03";
+        overflow-x: hidden;
+      }
+
+      a { color: inherit; text-decoration: none; }
+
+      /* ========== NAV ========== */
+      .nav-wrap {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 12px 24px;
+      }
+
+      .nav {
+        max-width: var(--max);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 6px 0 20px;
+        height: 54px;
+        border-radius: 14px;
+        background: rgba(11, 17, 32, 0.94);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        border: 1px solid rgba(255,255,255, 0.06);
+        box-shadow: 0 8px 32px rgba(10, 15, 26, 0.18);
+      }
+
+      .wm {
+        display: inline-flex;
+        align-items: baseline;
+        font-size: 19px;
+        letter-spacing: -0.08em;
+        line-height: 1;
+      }
+
+      .wm .z { font-weight: 900; color: #fff; font-size: 1.2em; }
+      .wm .a { font-weight: 500; color: rgba(255,255,255,0.40); }
+
+      .nav-links {
+        display: flex;
+        gap: 2px;
+      }
+
+      .nav-links a {
+        padding: 7px 14px;
+        font-size: 13px;
+        font-weight: 500;
+        color: rgba(255,255,255,0.44);
+        letter-spacing: -0.01em;
+        border-radius: 8px;
+        transition: color 0.15s, background 0.15s;
+      }
+
+      .nav-links a:hover {
+        color: rgba(255,255,255,0.85);
+        background: rgba(255,255,255,0.06);
+      }
+
+      .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        height: 38px;
+        padding: 0 18px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ink);
+        background: #fff;
+        border-radius: 9px;
+        letter-spacing: -0.01em;
+        transition: opacity 0.15s;
+      }
+
+      .nav-cta:hover { opacity: 0.88; }
+
+      /* ========== HERO ========== */
+      .hero {
+        position: relative;
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 180px 24px 200px;
+        text-align: center;
+      }
+
+      /* Decorative: gradient orb */
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(26, 79, 255, 0.06) 0%, transparent 70%);
+        pointer-events: none;
+      }
+
+      /* Decorative: fine grid lines behind hero */
+      .hero::after {
+        content: "";
+        position: absolute;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 480px;
+        height: 480px;
+        background:
+          linear-gradient(rgba(10, 15, 26, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(10, 15, 26, 0.03) 1px, transparent 1px);
+        background-size: 60px 60px;
+        mask-image: radial-gradient(circle, black 20%, transparent 70%);
+        -webkit-mask-image: radial-gradient(circle, black 20%, transparent 70%);
+        pointer-events: none;
+      }
+
+      .hero-eyebrow {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 40px;
+        padding: 5px 14px 5px 10px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-2);
+        background: var(--surface);
+        border: 1px solid var(--line-strong);
+        border-radius: 999px;
+        box-shadow: 0 1px 3px rgba(10,15,26,0.04);
+      }
+
+      .hero-eyebrow::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 999px;
+        background: var(--accent);
+      }
+
+      .hero h1 {
+        position: relative;
+        max-width: 760px;
+        margin: 0 auto 36px;
+        font-size: clamp(52px, 7vw, 84px);
+        font-weight: 900;
+        line-height: 0.88;
+        letter-spacing: -0.065em;
+      }
+
+      .hero h1 em {
+        font-style: normal;
+        background: linear-gradient(135deg, var(--accent), #4f7aff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-sub {
+        position: relative;
+        max-width: 460px;
+        margin: 0 auto 56px;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.65;
+        color: var(--ink-2);
+        letter-spacing: -0.01em;
+      }
+
+      .hero-actions {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 50px;
+        padding: 0 30px;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        border-radius: 13px;
+        border: 1px solid transparent;
+        transition: all 0.2s;
+      }
+
+      .btn-dark {
+        background: var(--surface-deep);
+        color: #fff;
+        box-shadow: 0 4px 20px rgba(10, 15, 26, 0.18),
+                    inset 0 1px 0 rgba(255,255,255,0.06);
+      }
+
+      .btn-dark:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(10, 15, 26, 0.24);
+      }
+
+      .btn-ghost {
+        background: var(--surface);
+        color: var(--ink);
+        border-color: var(--line-strong);
+        box-shadow: 0 1px 3px rgba(10,15,26,0.04);
+      }
+
+      .btn-ghost:hover { border-color: rgba(10, 15, 26, 0.2); }
+
+      /* ========== POSITIONING ========== */
+      .positioning {
+        position: relative;
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0 24px 200px;
+      }
+
+      /* Decorative: horizontal rule with label */
+      .section-rule {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 80px;
+      }
+
+      .section-rule::before,
+      .section-rule::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--line-strong);
+      }
+
+      .section-rule span {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        white-space: nowrap;
+      }
+
+      .pos-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+      }
+
+      .pos-headline {
+        padding-right: 80px;
+        padding-top: 8px;
+      }
+
+      .pos-headline h2 {
+        font-size: clamp(36px, 4vw, 56px);
+        font-weight: 900;
+        line-height: 0.92;
+        letter-spacing: -0.06em;
+        margin-bottom: 28px;
+      }
+
+      .pos-headline p {
+        max-width: 380px;
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--ink-2);
+      }
+
+      .pos-points {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        border-left: 1px solid var(--line-strong);
+      }
+
+      .pos-item {
+        padding: 36px 0 36px 40px;
+        border-bottom: 1px solid var(--line);
+        position: relative;
+      }
+
+      .pos-item:last-child { border-bottom: none; }
+
+      /* Decorative: left accent dot */
+      .pos-item::before {
+        content: "";
+        position: absolute;
+        left: -3px;
+        top: 44px;
+        width: 5px;
+        height: 5px;
+        border-radius: 999px;
+        background: var(--accent);
+      }
+
+      .pos-item .micro {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent-deep);
+      }
+
+      .pos-item h3 {
+        margin-bottom: 8px;
+        font-size: 18px;
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.03em;
+      }
+
+      .pos-item p {
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--ink-2);
+        max-width: 400px;
+      }
+
+      /* ========== CORE SYSTEM — dark anchor ========== */
+      .system-section {
+        position: relative;
+        overflow: hidden;
+        background: var(--surface-deep);
+      }
+
+      /* Decorative: top-left geometric glow */
+      .system-section::before {
+        content: "";
+        position: absolute;
+        top: -200px;
+        left: -200px;
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(26, 79, 255, 0.15) 0%, transparent 60%);
+        pointer-events: none;
+      }
+
+      /* Decorative: subtle grid texture */
+      .system-section::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+        background-size: 80px 80px;
+        pointer-events: none;
+      }
+
+      .system-inner {
+        position: relative;
+        z-index: 1;
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 160px 24px 180px;
+      }
+
+      .system-head {
+        text-align: center;
+        margin-bottom: 100px;
+      }
+
+      .system-label {
+        display: inline-block;
+        margin-bottom: 24px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.28);
+      }
+
+      .system-head h2 {
+        max-width: 640px;
+        margin: 0 auto 24px;
+        font-size: clamp(36px, 4vw, 56px);
+        font-weight: 900;
+        line-height: 0.92;
+        letter-spacing: -0.06em;
+        color: #fff;
+      }
+
+      .system-head p {
+        max-width: 480px;
+        margin: 0 auto;
+        font-size: 15px;
+        line-height: 1.65;
+        color: rgba(255,255,255,0.44);
+      }
+
+      .system-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+      }
+
+      .system-card {
+        position: relative;
+        padding: 56px 48px;
+        border-radius: 2px;
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.05);
+        overflow: hidden;
+      }
+
+      /* Decorative: top gradient line on each card */
+      .system-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 48px;
+        right: 48px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(120, 160, 255, 0.3), transparent);
+      }
+
+      /* Decorative: corner geometric accent */
+      .system-card::after {
+        content: "";
+        position: absolute;
+        bottom: -60px;
+        right: -60px;
+        width: 160px;
+        height: 160px;
+        border: 1px solid rgba(255,255,255,0.03);
+        border-radius: 32px;
+        transform: rotate(15deg);
+        pointer-events: none;
+      }
+
+      .system-num {
+        position: relative;
+        display: block;
+        margin-bottom: 32px;
+        font-size: 48px;
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.06em;
+        color: rgba(255,255,255,0.06);
+      }
+
+      .system-card h3 {
+        position: relative;
+        margin-bottom: 6px;
+        font-size: 24px;
+        font-weight: 900;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+        color: #fff;
+      }
+
+      .system-card .keys {
+        position: relative;
+        margin-bottom: 24px;
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(120, 160, 255, 0.7);
+        letter-spacing: 0.02em;
+      }
+
+      .system-card > p {
+        position: relative;
+        font-size: 14px;
+        line-height: 1.65;
+        color: rgba(255,255,255,0.44);
+        margin-bottom: 28px;
+        max-width: 380px;
+      }
+
+      .system-card ul {
+        position: relative;
+        list-style: none;
+      }
+
+      .system-card li {
+        padding: 12px 0;
+        font-size: 14px;
+        color: rgba(255,255,255,0.5);
+        border-top: 1px solid rgba(255,255,255,0.05);
+        letter-spacing: -0.01em;
+      }
+
+      .system-card li:first-child { border-top: none; padding-top: 0; }
+
+      .system-card li::before {
+        content: "";
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        border-radius: 1px;
+        background: rgba(120, 160, 255, 0.5);
+        margin-right: 12px;
+        vertical-align: middle;
+      }
+
+      /* ========== CTA ========== */
+      .cta-section {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 160px 24px 40px;
+        text-align: center;
+      }
+
+      .cta-label {
+        display: inline-block;
+        margin-bottom: 24px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+      }
+
+      .cta-section h2 {
+        max-width: 580px;
+        margin: 0 auto 20px;
+        font-size: clamp(32px, 3.6vw, 48px);
+        font-weight: 900;
+        line-height: 0.94;
+        letter-spacing: -0.06em;
+      }
+
+      .cta-section > p {
+        max-width: 420px;
+        margin: 0 auto 48px;
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--ink-2);
+      }
+
+      .cta-actions {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      /* ========== FOOTER ========== */
+      .footer {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 100px 24px 48px;
+      }
+
+      .footer-line {
+        height: 1px;
+        background: var(--line);
+        margin-bottom: 32px;
+      }
+
+      .footer-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--ink-3);
+        font-size: 12px;
+        letter-spacing: -0.01em;
+      }
+
+      .footer-brand {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+      }
+
+      .footer .wm { font-size: 15px; }
+      .footer .wm .z { color: var(--ink); }
+      .footer .wm .a { color: var(--ink-3); }
+
+      .footer-sep {
+        width: 1px;
+        height: 12px;
+        background: var(--line-strong);
+      }
+
+      /* ========== RESPONSIVE ========== */
+      @media (max-width: 900px) {
+        .pos-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .pos-headline {
+          padding-right: 0;
+          margin-bottom: 48px;
+        }
+
+        .pos-points {
+          border-left: none;
+          border-top: 1px solid var(--line-strong);
+        }
+
+        .pos-item {
+          padding: 28px 0;
+        }
+
+        .pos-item::before {
+          display: none;
+        }
+
+        .system-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .nav-links { display: none; }
+
+        .hero {
+          padding: 100px 20px 120px;
+        }
+
+        .hero h1 { font-size: 44px; }
+
+        .hero::after { display: none; }
+
+        .positioning {
+          padding: 0 20px 120px;
+        }
+
+        .system-inner {
+          padding: 100px 20px 120px;
+        }
+
+        .system-card {
+          padding: 36px 28px;
+        }
+
+        .system-head { margin-bottom: 60px; }
+
+        .cta-section {
+          padding: 100px 20px 40px;
+        }
+
+        .footer {
+          padding: 80px 20px 40px;
+        }
+
+        .footer-row {
+          flex-direction: column;
+          gap: 12px;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- NAV -->
+    <div class="nav-wrap">
+      <nav class="nav">
+        <div class="wm"><span class="z">Z</span><span class="a">APEX</span></div>
+        <div class="nav-links">
+          <a href="#positioning">系统定位</a>
+          <a href="#system">核心模块</a>
+          <a href="#">核心交付</a>
+          <a href="#">进入系统</a>
+        </div>
+        <a class="nav-cta" href="#">进入工作台</a>
+      </nav>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-eyebrow">品牌增长操作系统</div>
+      <h1>不是代运营，<br>是增长系统<em>重构。</em></h1>
+      <p class="hero-sub">
+        ZAPEX 用战略判断、增长诊断、归因结构与实验机制，<br>帮助跨境企业把增长能力真正留在团队内部。
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-dark" href="#">进入客户工作台</a>
+        <a class="btn btn-ghost" href="#">飞书账号登录</a>
+      </div>
+    </section>
+
+    <!-- POSITIONING -->
+    <section class="positioning" id="positioning">
+      <div class="section-rule"><span>Positioning</span></div>
+
+      <div class="pos-layout">
+        <div class="pos-headline">
+          <h2>这不是服务介绍，<br>而是增长系统重构的判断入口。</h2>
+          <p>信任感来自结构、权重和节奏。首页先建立判断，再解释系统结构，最后给出进入系统的路径。</p>
+        </div>
+
+        <div class="pos-points">
+          <div class="pos-item">
+            <span class="micro">System View</span>
+            <h3>卖的是增长系统，不是广告执行外包。</h3>
+            <p>品牌战略、归因结构、增长实验、内容系统、SOP handoff 与团队能力沉淀共同构成最终交付。</p>
+          </div>
+          <div class="pos-item">
+            <span class="micro">Decision Flow</span>
+            <h3>先诊断，再统一判断，再进入执行。</h3>
+            <p>不是把所有价值打平成相似的卡片——结构本身体现决策顺序。</p>
+          </div>
+          <div class="pos-item">
+            <span class="micro">Brand Feel</span>
+            <h3>咨询级克制 + 产品系统精度。</h3>
+            <p>更接近增长 operating system 的入口，而不是标准 B2B 落地页。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE SYSTEM -->
+    <section class="system-section" id="system">
+      <div class="system-inner">
+        <div class="system-head">
+          <span class="system-label">Core System</span>
+          <h2>两大核心模块，<br>定义 ZAPEX 的交付结构。</h2>
+          <p>访客看完这里，应当明白你们卖的是一套系统，而不是几项零散服务。</p>
+        </div>
+
+        <div class="system-grid">
+          <article class="system-card">
+            <span class="system-num">01</span>
+            <h3>ZAPEX 品牌战略模块&trade;</h3>
+            <div class="keys">定方向 &middot; 建体系 &middot; 落执行</div>
+            <p>统一品牌定位、市场判断、SKU 结构与渠道策略，形成可执行的品牌增长路径。</p>
+            <ul>
+              <li>品牌定位与差异化方向</li>
+              <li>全球化市场与渠道优先级</li>
+              <li>战略执行路径与组织协同结构</li>
+            </ul>
+          </article>
+
+          <article class="system-card">
+            <span class="system-num">02</span>
+            <h3>ZAPEX 品牌增长引擎&trade;</h3>
+            <div class="keys">验证 &middot; 放大 &middot; 复制</div>
+            <p>围绕归因、广告实验、内容系统与 SOP 沉淀，跑通增长模型并形成可复制机制。</p>
+            <ul>
+              <li>数据归因与 BI 底盘</li>
+              <li>增长实验与广告结构</li>
+              <li>内容与团队能力复制机制</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <span class="cta-label">Start Here</span>
+      <h2>进入客户工作台，<br>开始增长系统诊断。</h2>
+      <p>让真正适配的客户进入系统入口，统一经营口径、执行条件与增长判断。</p>
+      <div class="cta-actions">
+        <a class="btn btn-dark" href="#">进入客户工作台</a>
+        <a class="btn btn-ghost" href="#">飞书账号登录</a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-line"></div>
+      <div class="footer-row">
+        <div class="footer-brand">
+          <div class="wm"><span class="z">Z</span><span class="a">APEX</span></div>
+          <div class="footer-sep"></div>
+          <span>峥锐｜品牌出海加速器</span>
+        </div>
+        <span>品牌战略 + 增长引擎 双驱动</span>
+      </div>
+    </footer>
+
+  </body>
+</html>

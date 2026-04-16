@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZAPEX Homepage Preview — Claude</title>
+    <!--
+      ZAPEX Homepage Preview — Claude Version
+      =========================================
+
+      vs. v3 / Codex 版本的核心变化：
+
+      1. 首页只保留前两个版块（系统定位 + 核心模块），后两个版块
+         仅作轻量 teaser 过渡，不再展开为完整内容区。这样首页的
+         职责变成"建立判断 → 建立信任 → 展示结构 → 引导进入"，
+         而不是一次讲完全部。
+
+      2. linear-app + apple 主导执行：
+         - linear-app：更强的深色锚点（nav dark bar、核心模块 full-dark section）、
+           更紧的 letter-spacing（display -0.06em+）、micro-label 精度、
+           semi-transparent border language、控制感。
+         - apple：更大的留白节奏（section 间 120px+）、更强的构图控制（
+           hero 全幅 + 单列中心式）、cinematic 深/浅交替节奏、
+           premium contrast、极致收边。
+         - notion 只负责模块化分组与信息可读性。
+         - cal 只负责低摩擦引导与 CTA 友好度。
+
+      3. Logo / Wordmark：
+         - ZAPEX 全大写，Z 更深更重 (#0a0f1a, 900)，APEX 更浅 (#8a92a1, 500)。
+         - 整体 letter-spacing -0.08em，现代、锋利、intentional。
+
+      4. Typography：
+         - 标题 line-height 压到 0.92–0.96，letter-spacing -0.06em 起步。
+         - 字重反差更强：标题 900 vs body 400 vs micro-label 700。
+         - micro-label 10px/uppercase/0.12em tracking，更克制更规整。
+         - supporting text 更小(14px)、更受控、更安静。
+
+      5. 色彩层次：
+         - light-based 整体，但有 3 层深色锚点：
+           (a) nav bar = near-black glass
+           (b) 核心模块 section = full dark (#0b1120)
+           (c) CTA footer = dark gradient
+         - 新增 surface 层级：bg → bg-2 → surface → surface-muted → surface-deep
+         - border hierarchy: line (0.06) → line-strong (0.12) → line-deep (0.2)
+         - accent hierarchy: accent → accent-deep → accent-muted
+
+      6. Section rhythm 不再平均：
+         - Hero: 全幅、中心式、cinematic 大留白
+         - 系统定位: light surface, asymmetric grid, editorial
+         - 核心模块: full-dark anchor section, 最强结构锚点
+         - Teaser: 极简过渡，轻量引导
+         - CTA: dark gradient anchor, 收束全页
+    -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+      :root {
+        /* Surfaces */
+        --bg: #f3f5f8;
+        --bg-2: #eaecf1;
+        --surface: #ffffff;
+        --surface-muted: #f7f8fa;
+        --surface-deep: #0b1120;
+        --surface-deep-2: #111827;
+        --surface-deep-3: #1a2332;
+
+        /* Ink */
+        --ink: #0a0f1a;
+        --ink-2: #4b5563;
+        --ink-3: #9ca3af;
+        --ink-muted: #6b7280;
+
+        /* Borders */
+        --line: rgba(10, 15, 26, 0.06);
+        --line-strong: rgba(10, 15, 26, 0.12);
+        --line-deep: rgba(10, 15, 26, 0.20);
+
+        /* Accent */
+        --accent: #1a4fff;
+        --accent-deep: #0f3ab8;
+        --accent-muted: rgba(26, 79, 255, 0.08);
+
+        /* Shadows */
+        --shadow-sm: 0 1px 3px rgba(10, 15, 26, 0.04);
+        --shadow-md: 0 4px 16px rgba(10, 15, 26, 0.06);
+        --shadow-lg: 0 12px 40px rgba(10, 15, 26, 0.08);
+        --shadow-xl: 0 24px 64px rgba(10, 15, 26, 0.12);
+
+        /* Layout */
+        --max: 1120px;
+        --font: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans SC', 'Segoe UI', sans-serif;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+      body {
+        font-family: var(--font);
+        color: var(--ink);
+        background: var(--bg);
+        line-height: 1.5;
+        font-feature-settings: "cv01", "ss03";
+      }
+
+      a { color: inherit; text-decoration: none; }
+
+      /* ========== NAV — dark glass anchor (linear-app) ========== */
+      .nav-wrap {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 12px 24px;
+      }
+
+      .nav {
+        max-width: var(--max);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 6px 0 20px;
+        height: 56px;
+        border-radius: 16px;
+        background: rgba(11, 17, 32, 0.92);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        border: 1px solid rgba(255,255,255, 0.06);
+        box-shadow: 0 8px 32px rgba(10, 15, 26, 0.18);
+      }
+
+      .wordmark {
+        display: inline-flex;
+        align-items: baseline;
+        font-size: 20px;
+        letter-spacing: -0.08em;
+        line-height: 1;
+        user-select: none;
+      }
+
+      .wordmark .z {
+        font-weight: 900;
+        color: #ffffff;
+        font-size: 1.2em;
+        letter-spacing: -0.06em;
+      }
+
+      .wordmark .apex {
+        font-weight: 500;
+        color: rgba(255,255,255,0.48);
+        letter-spacing: -0.06em;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 4px;
+      }
+
+      .nav-links a {
+        padding: 7px 14px;
+        font-size: 13px;
+        font-weight: 500;
+        color: rgba(255,255,255,0.52);
+        letter-spacing: -0.01em;
+        border-radius: 8px;
+        transition: color 0.15s, background 0.15s;
+      }
+
+      .nav-links a:hover {
+        color: rgba(255,255,255,0.88);
+        background: rgba(255,255,255,0.06);
+      }
+
+      .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        height: 40px;
+        padding: 0 20px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ink);
+        background: #ffffff;
+        border-radius: 10px;
+        letter-spacing: -0.01em;
+        transition: opacity 0.15s;
+      }
+
+      .nav-cta:hover { opacity: 0.88; }
+
+      /* ========== HERO — cinematic, apple-level breathing room ========== */
+      .hero {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 140px 24px 160px;
+        text-align: center;
+      }
+
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 32px;
+        padding: 6px 16px 6px 12px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-2);
+        background: var(--surface);
+        border: 1px solid var(--line-strong);
+        border-radius: 999px;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .hero-eyebrow::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: var(--surface-deep);
+      }
+
+      .hero h1 {
+        max-width: 820px;
+        margin: 0 auto 28px;
+        font-size: clamp(48px, 6vw, 76px);
+        font-weight: 900;
+        line-height: 0.92;
+        letter-spacing: -0.06em;
+        color: var(--ink);
+      }
+
+      .hero h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+
+      .hero-sub {
+        max-width: 540px;
+        margin: 0 auto 48px;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.6;
+        color: var(--ink-2);
+        letter-spacing: -0.01em;
+      }
+
+      .hero-actions {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 48px;
+        padding: 0 28px;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+
+      .btn-dark {
+        background: var(--surface-deep);
+        color: #ffffff;
+        border-color: var(--surface-deep);
+        box-shadow: 0 4px 16px rgba(10, 15, 26, 0.16),
+                    inset 0 1px 0 rgba(255,255,255,0.06);
+      }
+
+      .btn-dark:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(10, 15, 26, 0.2); }
+
+      .btn-ghost {
+        background: var(--surface);
+        color: var(--ink);
+        border-color: var(--line-strong);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .btn-ghost:hover { border-color: var(--line-deep); }
+
+      /* ========== DIVIDER — structural pause ========== */
+      .divider {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      .divider-line {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--line-strong) 20%, var(--line-strong) 80%, transparent);
+      }
+
+      /* ========== SECTION: 系统定位 — light editorial (apple restraint + notion grouping) ========== */
+      .positioning {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 120px 24px 140px;
+      }
+
+      .section-label {
+        display: inline-block;
+        margin-bottom: 20px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+      }
+
+      .positioning-head {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 80px;
+        align-items: end;
+        margin-bottom: 80px;
+      }
+
+      .positioning-head h2 {
+        font-size: clamp(32px, 3.6vw, 48px);
+        font-weight: 900;
+        line-height: 0.96;
+        letter-spacing: -0.055em;
+      }
+
+      .positioning-head p {
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--ink-2);
+        max-width: 440px;
+      }
+
+      .positioning-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1px;
+        background: var(--line-strong);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+      }
+
+      .pos-card {
+        padding: 40px 32px;
+        background: var(--surface);
+      }
+
+      .pos-card:first-child {
+        grid-row: span 2;
+        background:
+          linear-gradient(160deg, var(--surface) 60%, rgba(26,79,255,0.03));
+      }
+
+      .pos-card .micro {
+        display: block;
+        margin-bottom: 16px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent-deep);
+      }
+
+      .pos-card h3 {
+        margin-bottom: 12px;
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -0.03em;
+      }
+
+      .pos-card:first-child h3 {
+        font-size: 26px;
+        letter-spacing: -0.04em;
+      }
+
+      .pos-card p {
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--ink-2);
+      }
+
+      /* ========== SECTION: 核心模块 — full dark anchor (linear-app dominant) ========== */
+      .system-section {
+        background:
+          radial-gradient(ellipse at 20% 0%, rgba(26,79,255,0.12), transparent 50%),
+          radial-gradient(ellipse at 80% 100%, rgba(26,79,255,0.06), transparent 40%),
+          linear-gradient(180deg, var(--surface-deep) 0%, #0d1526 100%);
+      }
+
+      .system-inner {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 120px 24px 140px;
+      }
+
+      .system-head {
+        max-width: 680px;
+        margin-bottom: 80px;
+      }
+
+      .system-head .section-label {
+        color: rgba(255,255,255,0.36);
+      }
+
+      .system-head h2 {
+        font-size: clamp(32px, 3.6vw, 48px);
+        font-weight: 900;
+        line-height: 0.96;
+        letter-spacing: -0.055em;
+        color: #ffffff;
+        margin-bottom: 20px;
+      }
+
+      .system-head p {
+        font-size: 15px;
+        line-height: 1.65;
+        color: rgba(255,255,255, 0.52);
+        max-width: 520px;
+      }
+
+      .system-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .system-card {
+        position: relative;
+        padding: 48px 40px;
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.06);
+        background:
+          linear-gradient(160deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+        overflow: hidden;
+      }
+
+      .system-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: radial-gradient(ellipse at top left, rgba(26,79,255,0.08), transparent 60%);
+        pointer-events: none;
+      }
+
+      .system-card .micro {
+        position: relative;
+        display: block;
+        margin-bottom: 24px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.32);
+      }
+
+      .system-card h3 {
+        position: relative;
+        margin-bottom: 8px;
+        font-size: 28px;
+        font-weight: 900;
+        line-height: 1.0;
+        letter-spacing: -0.05em;
+        color: #ffffff;
+      }
+
+      .system-card .keys {
+        position: relative;
+        margin-bottom: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        color: rgba(120, 160, 255, 0.8);
+        letter-spacing: -0.01em;
+      }
+
+      .system-card p {
+        position: relative;
+        font-size: 14px;
+        line-height: 1.6;
+        color: rgba(255,255,255,0.52);
+        margin-bottom: 20px;
+      }
+
+      .system-card ul {
+        position: relative;
+        list-style: none;
+        padding: 0;
+      }
+
+      .system-card li {
+        padding: 10px 0;
+        font-size: 14px;
+        color: rgba(255,255,255,0.56);
+        border-top: 1px solid rgba(255,255,255,0.06);
+        letter-spacing: -0.01em;
+      }
+
+      .system-card li:first-child { border-top: none; }
+
+      .system-card li::before {
+        content: "";
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        border-radius: 1px;
+        background: rgba(120, 160, 255, 0.6);
+        margin-right: 12px;
+        vertical-align: middle;
+      }
+
+      /* ========== TEASER — minimal transition (cal low-friction) ========== */
+      .teaser {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 100px 24px;
+      }
+
+      .teaser-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .teaser-card {
+        position: relative;
+        padding: 40px 36px;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        box-shadow: var(--shadow-sm);
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+
+      .teaser-card:hover {
+        border-color: var(--line-strong);
+        box-shadow: var(--shadow-md);
+      }
+
+      .teaser-card .micro {
+        display: block;
+        margin-bottom: 16px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+      }
+
+      .teaser-card h3 {
+        margin-bottom: 10px;
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -0.03em;
+      }
+
+      .teaser-card p {
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--ink-2);
+        margin-bottom: 20px;
+      }
+
+      .teaser-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--accent);
+        letter-spacing: -0.01em;
+      }
+
+      .teaser-link::after {
+        content: "\2192";
+        font-size: 14px;
+        transition: transform 0.15s;
+      }
+
+      .teaser-card:hover .teaser-link::after {
+        transform: translateX(3px);
+      }
+
+      /* ========== CTA — dark gradient anchor ========== */
+      .cta-section {
+        padding: 0 24px 24px;
+      }
+
+      .cta-wrap {
+        max-width: var(--max);
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+        padding: 80px 60px;
+        border-radius: 24px;
+        background:
+          radial-gradient(ellipse at 30% 0%, rgba(26,79,255,0.14), transparent 50%),
+          linear-gradient(135deg, var(--surface-deep) 0%, #0e1a30 50%, var(--surface-deep-2) 100%);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .cta-wrap::after {
+        content: "";
+        position: absolute;
+        right: -40px;
+        bottom: -40px;
+        width: 240px;
+        height: 240px;
+        border-radius: 40px;
+        transform: rotate(15deg);
+        border: 1px solid rgba(255,255,255,0.04);
+        background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent);
+        pointer-events: none;
+      }
+
+      .cta-content {
+        position: relative;
+        max-width: 560px;
+      }
+
+      .cta-content .section-label {
+        color: rgba(255,255,255,0.32);
+        margin-bottom: 24px;
+      }
+
+      .cta-content h2 {
+        font-size: clamp(30px, 3.2vw, 44px);
+        font-weight: 900;
+        line-height: 0.96;
+        letter-spacing: -0.055em;
+        color: #ffffff;
+        margin-bottom: 16px;
+      }
+
+      .cta-content p {
+        font-size: 15px;
+        line-height: 1.6;
+        color: rgba(255,255,255,0.52);
+        margin-bottom: 36px;
+        max-width: 460px;
+      }
+
+      .cta-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .btn-white {
+        background: #ffffff;
+        color: var(--ink);
+        border-color: #ffffff;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      }
+
+      .btn-white:hover { opacity: 0.92; transform: translateY(-1px); }
+
+      .btn-outline-light {
+        background: rgba(255,255,255,0.04);
+        color: rgba(255,255,255,0.72);
+        border-color: rgba(255,255,255,0.12);
+      }
+
+      .btn-outline-light:hover {
+        background: rgba(255,255,255,0.08);
+        color: #ffffff;
+      }
+
+      /* ========== FOOTER ========== */
+      .footer {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 48px 24px 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--ink-3);
+        font-size: 12px;
+        letter-spacing: -0.01em;
+      }
+
+      .footer-brand {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+      }
+
+      .footer .wordmark {
+        font-size: 15px;
+      }
+
+      .footer .wordmark .z {
+        color: var(--ink);
+      }
+
+      .footer .wordmark .apex {
+        color: var(--ink-3);
+      }
+
+      .footer-sep {
+        width: 1px;
+        height: 12px;
+        background: var(--line-strong);
+      }
+
+      /* ========== RESPONSIVE ========== */
+      @media (max-width: 1024px) {
+        .positioning-head {
+          grid-template-columns: 1fr;
+          gap: 24px;
+        }
+
+        .positioning-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .positioning-grid .pos-card:first-child {
+          grid-column: span 2;
+          grid-row: span 1;
+        }
+
+        .system-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-links { display: none; }
+
+        .hero {
+          padding: 80px 20px 100px;
+        }
+
+        .hero h1 {
+          font-size: 40px;
+        }
+
+        .positioning {
+          padding: 80px 20px 100px;
+        }
+
+        .positioning-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .positioning-grid .pos-card:first-child {
+          grid-column: span 1;
+        }
+
+        .system-inner {
+          padding: 80px 20px 100px;
+        }
+
+        .system-card {
+          padding: 32px 24px;
+        }
+
+        .teaser {
+          padding: 60px 20px 80px;
+        }
+
+        .teaser-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .cta-wrap {
+          padding: 48px 28px;
+        }
+
+        .footer {
+          flex-direction: column;
+          gap: 12px;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===== NAV — dark glass bar ===== -->
+    <div class="nav-wrap">
+      <nav class="nav">
+        <div class="wordmark">
+          <span class="z">Z</span><span class="apex">APEX</span>
+        </div>
+
+        <div class="nav-links">
+          <a href="#positioning">系统定位</a>
+          <a href="#system">核心模块</a>
+          <a href="#outputs">核心交付</a>
+          <a href="#enter">进入系统</a>
+        </div>
+
+        <a class="nav-cta" href="#enter">进入工作台</a>
+      </nav>
+    </div>
+
+    <!-- ===== HERO — cinematic center composition ===== -->
+    <section class="hero">
+      <div class="hero-eyebrow">品牌增长操作系统</div>
+
+      <h1>不是代运营，<br>是增长系统<em>重构。</em></h1>
+
+      <p class="hero-sub">
+        ZAPEX 用战略判断、增长诊断、归因结构与实验机制，帮助跨境企业把增长能力真正留在团队内部。
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-dark" href="#enter">进入客户工作台</a>
+        <a class="btn btn-ghost" href="#enter">飞书账号登录</a>
+      </div>
+    </section>
+
+    <!-- ===== DIVIDER ===== -->
+    <div class="divider"><div class="divider-line"></div></div>
+
+    <!-- ===== 系统定位 — editorial grid ===== -->
+    <section class="positioning" id="positioning">
+      <div class="positioning-head">
+        <div>
+          <span class="section-label">Positioning</span>
+          <h2>这不是一页服务介绍，<br>而是增长系统重构的判断入口。</h2>
+        </div>
+        <p>
+          信任感来自结构、权重和节奏，不只是文案。首页先建立判断，再解释系统结构，最后给出进入系统的行动路径。
+        </p>
+      </div>
+
+      <div class="positioning-grid">
+        <article class="pos-card">
+          <span class="micro">System View</span>
+          <h3>卖的是增长系统，而不是广告执行外包。</h3>
+          <p>
+            品牌战略、归因结构、增长实验、内容系统、SOP handoff 与团队能力沉淀共同构成最终交付。不是帮你跑广告，而是帮你重建增长判断与执行结构。
+          </p>
+        </article>
+
+        <article class="pos-card">
+          <span class="micro">Decision Flow</span>
+          <h3>先诊断，再统一判断，再进入执行。</h3>
+          <p>
+            页面结构本身体现这个顺序——不是把所有价值打平成相似的卡片。
+          </p>
+        </article>
+
+        <article class="pos-card">
+          <span class="micro">Brand Feel</span>
+          <h3>咨询级克制 + 产品系统精度。</h3>
+          <p>
+            更接近增长 operating system 的入口，而不是标准化的 B2B 落地页。
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== 核心模块 — full dark anchor ===== -->
+    <section class="system-section" id="system">
+      <div class="system-inner">
+        <div class="system-head">
+          <span class="section-label">Core System</span>
+          <h2>两大核心模块，定义 ZAPEX 的交付结构。</h2>
+          <p>
+            这是整页最重要的结构锚点。访客看完这里，应当明白你们卖的是一套怎样的系统，而不是几项零散服务。
+          </p>
+        </div>
+
+        <div class="system-grid">
+          <article class="system-card">
+            <span class="micro">Module 01</span>
+            <h3>ZAPEX 品牌战略模块&trade;</h3>
+            <div class="keys">定方向 &middot; 建体系 &middot; 落执行</div>
+            <p>
+              统一品牌定位、市场判断、SKU 结构与渠道策略，形成可执行的品牌增长路径。
+            </p>
+            <ul>
+              <li>品牌定位与差异化方向</li>
+              <li>全球化市场与渠道优先级</li>
+              <li>战略执行路径与组织协同结构</li>
+            </ul>
+          </article>
+
+          <article class="system-card">
+            <span class="micro">Module 02</span>
+            <h3>ZAPEX 品牌增长引擎&trade;</h3>
+            <div class="keys">验证 &middot; 放大 &middot; 复制</div>
+            <p>
+              围绕归因、广告实验、内容系统与 SOP 沉淀，跑通增长模型并形成可复制机制。
+            </p>
+            <ul>
+              <li>数据归因与 BI 底盘</li>
+              <li>增长实验与广告结构</li>
+              <li>内容与团队能力复制机制</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TEASER — lightweight transition ===== -->
+    <section class="teaser" id="outputs">
+      <div class="teaser-grid">
+        <article class="teaser-card">
+          <span class="micro">Operating Outputs</span>
+          <h3>核心交付</h3>
+          <p>
+            战略层与能力层双线交付，最终沉淀为企业自己的品牌体系、SOP、模型库与数据化资产管理。
+          </p>
+          <a class="teaser-link" href="#">了解完整交付清单</a>
+        </article>
+
+        <article class="teaser-card" id="enter">
+          <span class="micro">Enter the System</span>
+          <h3>进入系统</h3>
+          <p>
+            从 30 分钟品牌现状诊断开始，到 2 周认知对齐，再到 6-12 个月深度陪跑，分阶段验证、放大与复制。
+          </p>
+          <a class="teaser-link" href="#">了解完整流程</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== CTA — dark gradient anchor ===== -->
+    <section class="cta-section">
+      <div class="cta-wrap">
+        <div class="cta-content">
+          <span class="section-label">Start Here</span>
+          <h2>进入客户工作台，<br>开始你的增长系统诊断。</h2>
+          <p>
+            首页的主任务不是解释一切，而是让真正适配的客户进入系统入口，统一经营口径、执行条件与增长判断。
+          </p>
+          <div class="cta-actions">
+            <a class="btn btn-white" href="javascript:void(0)">进入客户工作台</a>
+            <a class="btn btn-outline-light" href="javascript:void(0)">飞书账号登录</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <div class="footer-brand">
+        <div class="wordmark">
+          <span class="z">Z</span><span class="apex">APEX</span>
+        </div>
+        <div class="footer-sep"></div>
+        <span>峥锐｜品牌出海加速器</span>
+      </div>
+      <span>品牌战略 + 增长引擎 双驱动</span>
+    </footer>
+  </body>
+</html>
