@@ -901,6 +901,105 @@ img {
   font-size: 0.9375rem;
 }
 
+/* ── Site Footer ─────────────────────────────── */
+.site-footer {
+  background: var(--s10);
+  color: var(--od);
+  padding: 72px 0 0;
+}
+
+.site-footer-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 72px;
+  padding-bottom: 64px;
+}
+
+.site-footer-brand {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
+.site-footer-desc {
+  color: var(--od-muted);
+  font-size: 0.9375rem;
+  max-width: 440px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.site-footer-contact {
+  display: grid;
+  gap: 28px;
+}
+
+.site-footer-qr-row {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.site-footer-qr {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--r-lg);
+  background:
+    repeating-linear-gradient(0deg, rgba(126,166,194,0.06), rgba(126,166,194,0.06) 10px, transparent 10px, transparent 20px),
+    repeating-linear-gradient(90deg, rgba(126,166,194,0.06), rgba(126,166,194,0.06) 10px, transparent 10px, transparent 20px);
+  border: 1px solid rgba(255,255,255,0.14);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.site-footer-qr::before {
+  content: "QR";
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem;
+  color: var(--od-quiet);
+  letter-spacing: 0.1em;
+}
+
+.site-footer-qr-info {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.site-footer-contact-block {
+  display: grid;
+  gap: 6px;
+}
+
+.site-footer-contact-label {
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--od-quiet);
+}
+
+.site-footer-contact-value {
+  font-size: 0.875rem;
+  color: var(--od-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.site-footer-meta {
+  padding: 24px 0;
+  border-top: 1px solid var(--ol-dark);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--ff-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--od-quiet);
+}
+
 @media (max-width: 960px) {
   .nav {
     min-height: auto;
@@ -927,7 +1026,9 @@ img {
   .footer-grid,
   .qr-body,
   .footer-columns,
-  .placeholder-grid {
+  .placeholder-grid,
+  .site-footer-inner,
+  .site-footer-qr-row {
     grid-template-columns: 1fr;
     gap: 32px;
   }
