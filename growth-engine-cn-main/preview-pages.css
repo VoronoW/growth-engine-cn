@@ -901,6 +901,21 @@ img {
   font-size: 0.9375rem;
 }
 
+/* ── Deliverable overrides in light panels ───── */
+.panel:not(.panel--dark) .deliverable {
+  border-top-color: var(--ol-strong);
+}
+
+.panel:not(.panel--dark) .deliverable-num {
+  color: var(--p10);
+}
+
+/* item-heading specificity fix inside .panel / .card */
+.panel .item-heading,
+.card .item-heading {
+  font-size: 1.25rem;
+}
+
 /* ── Site Footer ─────────────────────────────── */
 .site-footer {
   background: var(--s10);
