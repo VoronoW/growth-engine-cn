@@ -5,19 +5,29 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "node scripts/build-static-site.mjs",
+    "build:app": "tsc -b && vite build",
+    "build:static": "node scripts/build-static-site.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.460.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.30.1"
+    "react-router-dom": "^6.30.1",
+    "tailwind-merge": "^2.5.4",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
     "@types/react": "^18.3.21",
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
     "typescript": "^5.8.3",
     "vite": "^5.4.18"
   }

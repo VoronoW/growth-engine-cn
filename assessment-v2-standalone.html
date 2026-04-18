@@ -1,0 +1,1978 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZAPEX｜品牌诊断评估表</title>
+  <style>
+/* ==================================================================
+   ZAPEX OS · Website Framework v2
+   ------------------------------------------------------------------
+   Discipline: Editorial (consulting) · Technical (SaaS) · Data-Forward
+   Anchors:    #1a4fff brand · #0b1120 slate · #fbf9f8 paper
+   Philosophy: Hairlines over shadows · Mono meta everywhere
+               Oversized type · 12-col implicit grid · Blue as signature
+   ================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ── Tokens ───────────────────────────────────────────────────── */
+:root {
+  /* Brand — signet blue */
+  --brand:        #1a4fff;
+  --brand-deep:   #0f3ab8;
+  --brand-hover:  #3d6bff;
+  --brand-soft:   #e5ebff;
+  --brand-tint:   rgba(26, 79, 255, 0.08);
+
+  /* Slate — dark canvas */
+  --slate-0:      #05080f;
+  --slate:        #0b1120;
+  --slate-1:      #111827;
+  --slate-2:      #1a2332;
+  --slate-3:      #2a3445;
+
+  /* Paper — light canvas */
+  --paper-0:      #ffffff;
+  --paper:        #fbf9f8;
+  --paper-1:      #f5f3f2;
+  --paper-2:      #efedec;
+  --paper-3:      #e4e2e1;
+
+  /* Ink (on light) */
+  --ink:          #0a0f1a;
+  --ink-80:       rgba(10, 15, 26, 0.80);
+  --ink-60:       rgba(10, 15, 26, 0.60);
+  --ink-40:       rgba(10, 15, 26, 0.40);
+  --ink-20:       rgba(10, 15, 26, 0.14);
+
+  /* On-dark */
+  --od:           #ffffff;
+  --od-80:        rgba(255, 255, 255, 0.80);
+  --od-60:        rgba(255, 255, 255, 0.60);
+  --od-40:        rgba(255, 255, 255, 0.40);
+  --od-20:        rgba(255, 255, 255, 0.14);
+
+  /* Hairlines */
+  --line:         rgba(10, 15, 26, 0.10);
+  --line-soft:    rgba(10, 15, 26, 0.06);
+  --line-dark:    rgba(255, 255, 255, 0.12);
+  --line-dark-soft: rgba(255, 255, 255, 0.06);
+
+  /* Type families */
+  --ff-display:   'Manrope', -apple-system, 'PingFang SC', sans-serif;
+  --ff-body:      'Inter', -apple-system, 'PingFang SC', sans-serif;
+  --ff-mono:      'JetBrains Mono', ui-monospace, monospace;
+
+  /* Editorial type scale */
+  --t-mono:       0.6875rem;   /* 11px — mono meta */
+  --t-xs:         0.75rem;     /* 12px — kicker */
+  --t-sm:         0.8125rem;   /* 13px — small body */
+  --t-base:       0.9375rem;   /* 15px — body */
+  --t-lead:       1.0625rem;   /* 17px — lead paragraph */
+  --t-md:         1.25rem;     /* 20px — h4 */
+  --t-lg:         1.625rem;    /* 26px — h3 */
+  --t-xl:         2.25rem;     /* 36px — h2 */
+  --t-2xl:        3.5rem;      /* 56px — section display */
+  --t-3xl:        5.25rem;     /* 84px — hero */
+  --t-4xl:        clamp(4.5rem, 10vw, 8.25rem);  /* 72–132px — mega */
+
+  /* Rhythm */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 24px;
+  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px;
+  --s-11: 180px; --s-12: 220px;
+
+  /* Radius — minimal */
+  --r-sm: 2px;  --r-md: 4px;  --r-lg: 6px;  --r-xl: 10px;
+
+  /* Layout */
+  --max:          1280px;
+  --max-wide:     1440px;
+  --gutter:       40px;
+
+  /* Motion */
+  --ease:         cubic-bezier(0.2, 0.0, 0.0, 1.0);
+  --dur-fast:     120ms;
+  --dur:          200ms;
+  --dur-slow:     400ms;
+}
+
+/* ── Reset (surgical) ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body {
+  font-family: var(--ff-body);
+  font-size: var(--t-base);
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--paper);
+  font-feature-settings: "cv01", "ss03", "cv11", "tnum";
+}
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; cursor: pointer; background: none; border: 0; color: inherit; }
+ul, ol { list-style: none; }
+
+/* ── Layout shell ─────────────────────────────────────────────── */
+.shell {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.shell--wide {
+  max-width: var(--max-wide);
+}
+
+/* ── Meta bar · top strip ─────────────────────────────────────── */
+.meta-bar {
+  background: var(--slate-0);
+  color: var(--od-60);
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--line-dark-soft);
+}
+.meta-bar-inner {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  gap: var(--s-7);
+}
+.meta-bar-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  white-space: nowrap;
+}
+.meta-bar-item + .meta-bar-item {
+  padding-left: var(--s-7);
+  border-left: 1px solid var(--line-dark-soft);
+}
+.meta-bar-item .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.12);
+}
+.meta-bar-spacer { flex: 1; }
+
+/* ── Site nav ─────────────────────────────────────────────────── */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(251, 249, 248, 0.88);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--line);
+}
+.site-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-7);
+  height: 72px;
+}
+.site-nav-left,
+.site-nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+/* Wordmark · brand signature */
+.wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--ff-body);
+  font-weight: 500;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  user-select: none;
+}
+.wordmark .z {
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  color: var(--brand);
+}
+.wordmark .apex {
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  color: var(--ink-60);
+}
+.wordmark.on-dark .apex { color: var(--od-40); }
+.wordmark--nav   { font-size: 22px; }
+.wordmark--foot  { font-size: 20px; }
+.wordmark--mega  { font-size: clamp(6rem, 18vw, 16rem); }
+
+/* Inline ZAPEX in body text */
+.zapex-word .z    { color: var(--brand); font-weight: 700; }
+.zapex-word .apex { color: inherit; }
+
+/* Primary nav links */
+.site-nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.site-nav-link {
+  position: relative;
+  padding: 8px 14px;
+  font-size: var(--t-sm);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--ink-60);
+  transition: color var(--dur) var(--ease);
+}
+.site-nav-link:hover { color: var(--ink); }
+.site-nav-link.is-current { color: var(--ink); }
+.site-nav-link.is-current::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 2px;
+  height: 2px;
+  background: var(--brand);
+}
+.site-nav-link .idx {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  margin-right: 6px;
+  color: var(--ink-40);
+  font-weight: 500;
+}
+
+/* Nav CTAs */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: var(--t-sm);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.pill:hover { background: var(--ink); color: var(--od); border-color: var(--ink); }
+.pill .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+}
+.pill--primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: var(--od);
+}
+.pill--primary:hover { background: var(--brand-deep); border-color: var(--brand-deep); }
+
+/* Stacked pill — two-line text for 客户工作台 · 飞书入口 */
+.pill--stacked { height: auto; padding: 6px 14px 6px 14px; align-items: center; }
+.pill--stacked .pill-stack { display: inline-flex; flex-direction: column; line-height: 1.15; gap: 1px; }
+.pill--stacked .pill-main { font-size: var(--t-sm); font-weight: 500; color: inherit; }
+.pill--stacked .pill-sub {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--ink-60);
+  text-transform: uppercase;
+}
+.pill--stacked:hover .pill-sub { color: var(--od-60); }
+
+/* ── Section primitives ───────────────────────────────────────── */
+.section {
+  position: relative;
+  padding: var(--s-11) 0;
+  border-top: 1px solid var(--line);
+}
+.section--dark {
+  background: var(--slate);
+  color: var(--od);
+  border-top-color: var(--line-dark);
+}
+.section--dark .section-idx { color: var(--od-40); }
+.section--dark .section-kicker { color: var(--od-60); }
+.section--dark .section-lead { color: var(--od-80); }
+.section--dark .hr-line { background: var(--line-dark); }
+.section--paper   { background: var(--paper); }
+.section--paper-1 { background: var(--paper-1); }
+.section--paper-2 { background: var(--paper-2); }
+.section--brand {
+  background: var(--brand);
+  color: var(--od);
+  border-top-color: transparent;
+}
+.section--compact { padding: var(--s-9) 0; }
+
+/* Section header — 12-col editorial */
+.section-head {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: var(--s-8);
+  margin-bottom: var(--s-9);
+  padding-bottom: var(--s-7);
+  border-bottom: 1px solid var(--line);
+}
+.section--dark .section-head { border-bottom-color: var(--line-dark); }
+
+.section-idx {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  display: block;
+  padding-top: 12px;
+}
+
+.section-head-main {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--s-8);
+  align-items: start;
+}
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+  margin-bottom: var(--s-5);
+}
+.section-kicker::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+}
+.section-title {
+  font-family: var(--ff-display);
+  font-size: var(--t-2xl);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+  max-width: 18ch;
+}
+.section-lead {
+  font-family: var(--ff-body);
+  font-size: var(--t-lead);
+  line-height: 1.55;
+  color: var(--ink-80);
+  max-width: 42ch;
+  padding-top: var(--s-4);
+}
+
+/* ── Hero — editorial ─────────────────────────────────────────── */
+.hero {
+  position: relative;
+  padding: var(--s-12) 0 var(--s-11);
+  background: var(--paper);
+  overflow: hidden;
+}
+.hero--dark {
+  background: var(--slate);
+  color: var(--od);
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: var(--s-8);
+}
+.hero-idx {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  padding-top: 16px;
+}
+.hero--dark .hero-idx { color: var(--od-40); }
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brand);
+  margin-bottom: var(--s-6);
+}
+.hero--dark .hero-kicker { color: var(--brand-hover); }
+.hero-kicker::before {
+  content: "";
+  width: 36px;
+  height: 1px;
+  background: currentColor;
+}
+
+.hero-display {
+  font-family: var(--ff-display);
+  font-size: var(--t-4xl);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+  max-width: 16ch;
+}
+.hero-display em {
+  font-style: normal;
+  color: var(--brand);
+}
+.hero--dark .hero-display em { color: var(--brand-hover); }
+
+.hero-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-8);
+  margin-top: var(--s-9);
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--line);
+}
+.hero--dark .hero-body { border-top-color: var(--line-dark); }
+.hero-lead {
+  font-size: var(--t-lead);
+  line-height: 1.55;
+  color: var(--ink-80);
+  max-width: 40ch;
+}
+.hero--dark .hero-lead { color: var(--od-80); }
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-7);
+}
+
+/* Subtle grid overlay for hero */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px);
+  background-size: calc((100% - 2 * var(--gutter)) / 12) 100%;
+  background-position: var(--gutter) 0;
+  opacity: 0.5;
+  pointer-events: none;
+}
+.hero--dark::before {
+  background-image: linear-gradient(to right, var(--line-dark-soft) 1px, transparent 1px);
+}
+.hero > .shell { position: relative; z-index: 1; }
+
+/* ── Buttons ──────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  height: 52px;
+  padding: 0 28px;
+  font-family: var(--ff-body);
+  font-size: var(--t-base);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  white-space: nowrap;
+}
+.btn .arrow {
+  font-family: var(--ff-mono);
+  font-weight: 400;
+  transition: transform var(--dur) var(--ease);
+}
+.btn:hover .arrow { transform: translateX(3px); }
+
+.btn--primary {
+  background: var(--brand);
+  color: var(--od);
+  border-color: var(--brand);
+}
+.btn--primary:hover { background: var(--brand-deep); border-color: var(--brand-deep); }
+
+.btn--solid-ink {
+  background: var(--ink);
+  color: var(--od);
+  border-color: var(--ink);
+}
+.btn--solid-ink:hover { background: var(--slate); border-color: var(--slate); }
+
+.btn--outline {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn--outline:hover { border-color: var(--ink); }
+
+.btn--ghost-dark {
+  background: transparent;
+  color: var(--od);
+  border-color: var(--line-dark);
+}
+.btn--ghost-dark:hover { background: var(--od-20); border-color: var(--od-40); }
+
+/* ── Ticker strip ─────────────────────────────────────────────── */
+.ticker {
+  background: var(--slate);
+  color: var(--od);
+  border-top: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--line-dark);
+  overflow: hidden;
+  padding: 20px 0;
+}
+.ticker-track {
+  display: flex;
+  gap: var(--s-8);
+  white-space: nowrap;
+  animation: ticker 40s linear infinite;
+  font-family: var(--ff-mono);
+  font-size: var(--t-sm);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--od-60);
+}
+.ticker-track > span { display: inline-flex; align-items: center; gap: var(--s-5); }
+.ticker-sep {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Capability matrix (tabular data) ─────────────────────────── */
+.matrix {
+  display: grid;
+  grid-template-columns: 120px repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+}
+.section--dark .matrix { border-top-color: var(--line-dark); }
+.matrix-cell {
+  padding: var(--s-6) var(--s-5);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  transition: background var(--dur) var(--ease);
+}
+.section--dark .matrix-cell {
+  border-right-color: var(--line-dark);
+  border-bottom-color: var(--line-dark);
+}
+.matrix-cell:last-child { border-right: 0; }
+.matrix-cell:hover { background: var(--brand-tint); }
+.section--dark .matrix-cell:hover { background: rgba(26, 79, 255, 0.14); }
+.matrix-idx {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.1em;
+  color: var(--ink-40);
+  margin-bottom: var(--s-4);
+}
+.section--dark .matrix-idx { color: var(--od-40); }
+.matrix-title {
+  font-family: var(--ff-display);
+  font-size: var(--t-md);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--s-3);
+}
+.matrix-body {
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  color: var(--ink-60);
+}
+.section--dark .matrix-body { color: var(--od-60); }
+.matrix-head {
+  padding: var(--s-5);
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-1);
+}
+.section--dark .matrix-head {
+  background: var(--slate-1);
+  color: var(--od-40);
+  border-right-color: var(--line-dark);
+  border-bottom-color: var(--line-dark);
+}
+
+/* ── Method grid — numbered phases ────────────────────────────── */
+.method {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.section--dark .method { border-top-color: var(--line-dark); }
+.method-step {
+  padding: var(--s-7) var(--s-5) var(--s-8);
+  border-right: 1px solid var(--line);
+  position: relative;
+}
+.section--dark .method-step { border-right-color: var(--line-dark); }
+.method-step:last-child { border-right: 0; }
+.method-step::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--brand);
+}
+.method-num {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.12em;
+  color: var(--brand);
+  display: block;
+  margin-bottom: var(--s-6);
+}
+.method-title {
+  font-family: var(--ff-display);
+  font-size: var(--t-lg);
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+  margin-bottom: var(--s-4);
+}
+.method-body {
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--ink-60);
+}
+.section--dark .method-body { color: var(--od-60); }
+.method-list {
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line-soft);
+  display: grid;
+  gap: 6px;
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.06em;
+  color: var(--ink-40);
+  text-transform: uppercase;
+}
+.section--dark .method-list {
+  border-top-color: var(--line-dark-soft);
+  color: var(--od-40);
+}
+
+/* ── Metric board XL ──────────────────────────────────────────── */
+.metrics-xl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+}
+.section--dark .metrics-xl { border-top-color: var(--line-dark); }
+.metric-xl {
+  padding: var(--s-8) var(--s-5) var(--s-7);
+  border-right: 1px solid var(--line);
+}
+.section--dark .metric-xl { border-right-color: var(--line-dark); }
+.metric-xl:last-child { border-right: 0; }
+.metric-xl-label {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  margin-bottom: var(--s-5);
+}
+.section--dark .metric-xl-label { color: var(--od-40); }
+.metric-xl-value {
+  font-family: var(--ff-display);
+  font-size: clamp(3.5rem, 7vw, 5.5rem);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+.section--dark .metric-xl-value { color: var(--od); }
+.metric-xl-value .unit {
+  font-size: 0.5em;
+  font-weight: 500;
+  color: var(--brand);
+  margin-left: 8px;
+  letter-spacing: -0.02em;
+}
+.metric-xl-caption {
+  margin-top: var(--s-4);
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  color: var(--ink-60);
+  max-width: 28ch;
+}
+.section--dark .metric-xl-caption { color: var(--od-60); }
+
+/* ── Case spotlight ───────────────────────────────────────────── */
+.case-list {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.section--dark .case-list { border-top-color: var(--line-dark); }
+.case-row {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  gap: var(--s-7);
+  padding: var(--s-7) 0;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  transition: padding var(--dur) var(--ease), background var(--dur) var(--ease);
+  cursor: pointer;
+}
+.section--dark .case-row { border-bottom-color: var(--line-dark); }
+.case-row:hover { padding-left: var(--s-4); background: var(--paper-1); }
+.section--dark .case-row:hover { background: var(--slate-1); }
+.case-meta {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  display: grid;
+  gap: 6px;
+}
+.section--dark .case-meta { color: var(--od-40); }
+.case-title {
+  font-family: var(--ff-display);
+  font-size: var(--t-xl);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--s-3);
+}
+.case-body {
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--ink-60);
+  max-width: 56ch;
+}
+.section--dark .case-body { color: var(--od-60); }
+.case-arrow {
+  font-family: var(--ff-mono);
+  font-size: 22px;
+  color: var(--ink-40);
+  transition: color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.case-row:hover .case-arrow { color: var(--brand); transform: translateX(6px); }
+.section--dark .case-arrow { color: var(--od-40); }
+.section--dark .case-row:hover .case-arrow { color: var(--brand-hover); }
+
+/* ── Quote / pullquote ────────────────────────────────────────── */
+.quote-block {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: var(--s-8);
+  padding: var(--s-9) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.section--dark .quote-block {
+  border-top-color: var(--line-dark);
+  border-bottom-color: var(--line-dark);
+}
+.quote-marker {
+  font-family: var(--ff-display);
+  font-size: 6rem;
+  line-height: 0.8;
+  color: var(--brand);
+  font-weight: 500;
+}
+.quote-text {
+  font-family: var(--ff-display);
+  font-size: var(--t-xl);
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  max-width: 36ch;
+  color: var(--ink);
+}
+.section--dark .quote-text { color: var(--od); }
+.quote-attrib {
+  margin-top: var(--s-6);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 4px;
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+}
+.section--dark .quote-attrib {
+  border-top-color: var(--line-dark);
+  color: var(--od-60);
+}
+
+/* ── Feature cards (3-col) ────────────────────────────────────── */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.section--dark .feature-grid { border-top-color: var(--line-dark); }
+.feature {
+  padding: var(--s-7) var(--s-5) var(--s-7) 0;
+  border-right: 1px solid var(--line);
+}
+.feature:last-child { border-right: 0; padding-right: 0; }
+.feature:not(:first-child) { padding-left: var(--s-5); }
+.section--dark .feature { border-right-color: var(--line-dark); }
+.feature-glyph {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  margin-bottom: var(--s-5);
+  color: var(--brand);
+  font-family: var(--ff-mono);
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+.section--dark .feature-glyph { border-color: var(--line-dark); }
+.feature-title {
+  font-family: var(--ff-display);
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.14;
+  margin-bottom: var(--s-3);
+}
+.feature-body {
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--ink-60);
+  max-width: 32ch;
+}
+.section--dark .feature-body { color: var(--od-60); }
+
+/* ── CTA band ─────────────────────────────────────────────────── */
+.cta-band {
+  position: relative;
+  background: var(--brand);
+  color: var(--od);
+  padding: var(--s-11) 0;
+  overflow: hidden;
+}
+.cta-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: calc((100% - 2 * var(--gutter)) / 12) 80px;
+  background-position: var(--gutter) 0;
+  pointer-events: none;
+}
+.cta-band > .shell { position: relative; z-index: 1; }
+.cta-band-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--s-8);
+  align-items: end;
+}
+.cta-band-title {
+  font-family: var(--ff-display);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  max-width: 16ch;
+}
+.cta-band-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-5);
+}
+.cta-band-note {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--od-60);
+  padding-top: var(--s-4);
+  border-top: 1px solid rgba(255, 255, 255, 0.24);
+  width: 100%;
+  max-width: 320px;
+}
+
+/* ── Footer ──────────────────────────────────────────────────── */
+.site-foot {
+  background: var(--slate);
+  color: var(--od);
+  padding: var(--s-10) 0 0;
+  overflow: hidden;
+}
+.foot-top {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--s-8);
+  padding-bottom: var(--s-9);
+  border-bottom: 1px solid var(--line-dark);
+}
+.foot-statement {
+  font-family: var(--ff-display);
+  font-size: var(--t-xl);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  max-width: 22ch;
+  color: var(--od);
+}
+.foot-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  align-items: flex-start;
+}
+.foot-columns {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-5);
+  padding: var(--s-8) 0;
+  border-bottom: 1px solid var(--line-dark);
+}
+.foot-col { display: grid; gap: var(--s-3); }
+.foot-col-head {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--od-40);
+  margin-bottom: var(--s-2);
+}
+.foot-col a,
+.foot-col span {
+  font-size: var(--t-sm);
+  color: var(--od-80);
+  transition: color var(--dur) var(--ease);
+}
+.foot-col a:hover { color: var(--od); }
+
+/* Mega wordmark bleeding footer bottom */
+.foot-signature {
+  padding: var(--s-7) 0 var(--s-4);
+  text-align: left;
+  line-height: 0.85;
+  color: var(--od);
+  overflow: hidden;
+}
+.foot-signature .wordmark {
+  font-size: clamp(6rem, 22vw, 20rem);
+  letter-spacing: -0.09em;
+}
+.foot-signature .wordmark .z { color: var(--brand); }
+.foot-signature .wordmark .apex { color: var(--od-20); }
+
+.foot-meta {
+  padding: var(--s-5) 0;
+  border-top: 1px solid var(--line-dark);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--od-40);
+}
+.foot-meta-left,
+.foot-meta-right {
+  display: flex;
+  gap: var(--s-6);
+  align-items: center;
+}
+
+/* ── Utilities ────────────────────────────────────────────────── */
+.hr-line {
+  height: 1px;
+  background: var(--line);
+  border: 0;
+  margin: var(--s-7) 0;
+}
+.mono { font-family: var(--ff-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.muted { color: var(--ink-60); }
+.accent { color: var(--brand); }
+.hidden-sm { display: inline; }
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .section-head,
+  .hero-grid,
+  .quote-block { grid-template-columns: 1fr; gap: var(--s-6); }
+  .section-head-main { grid-template-columns: 1fr; }
+  .hero-body { grid-template-columns: 1fr; }
+  .matrix,
+  .method,
+  .metrics-xl,
+  .feature-grid { grid-template-columns: 1fr 1fr; }
+  .foot-top,
+  .cta-band-grid,
+  .foot-columns { grid-template-columns: 1fr 1fr; }
+  .hidden-sm { display: none; }
+  .case-row { grid-template-columns: 100px 1fr auto; }
+}
+@media (max-width: 640px) {
+  :root { --gutter: 20px; }
+  .meta-bar-item + .meta-bar-item { display: none; }
+  .site-nav-links { display: none; }
+  .matrix,
+  .method,
+  .metrics-xl,
+  .feature-grid,
+  .foot-columns { grid-template-columns: 1fr; }
+  .matrix-cell,
+  .method-step,
+  .metric-xl,
+  .feature { border-right: 0; border-bottom: 1px solid var(--line); }
+  .case-row { grid-template-columns: 1fr auto; }
+  .case-meta { display: none; }
+  .hero { padding: var(--s-10) 0 var(--s-9); }
+  .section { padding: var(--s-9) 0; }
+}
+
+</style>
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       Assessment v2 · page-scoped form components
+       ═══════════════════════════════════════════════════════════ */
+
+    /* Form shell — editorial split: left meta rail · right form */
+    .assess-shell {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: var(--s-8);
+      padding-top: var(--s-7);
+      border-top: 1px solid var(--line);
+    }
+    .assess-rail {
+      position: sticky;
+      top: var(--s-7);
+      align-self: start;
+    }
+    .assess-rail-idx {
+      font-family: var(--ff-mono);
+      font-size: var(--t-mono);
+      letter-spacing: 0.14em;
+      color: var(--brand);
+      margin-bottom: var(--s-3);
+      display: block;
+    }
+    .assess-rail-title {
+      font-family: var(--ff-display);
+      font-size: var(--t-lg);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin: 0 0 var(--s-5);
+    }
+    .assess-rail-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      border-top: 1px solid var(--line);
+    }
+    .assess-rail-list li {
+      padding: var(--s-3) 0;
+      border-bottom: 1px solid var(--line);
+      font-family: var(--ff-mono);
+      font-size: var(--t-sm);
+      color: var(--ink-60);
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 10px;
+    }
+    .assess-rail-list li span {
+      color: var(--brand);
+      letter-spacing: 0.1em;
+    }
+    .assess-rail-note {
+      margin-top: var(--s-5);
+      font-size: var(--t-sm);
+      color: var(--ink-60);
+      line-height: 1.65;
+      padding-top: var(--s-4);
+      border-top: 1px solid var(--line);
+    }
+
+    .assess-form {
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: var(--s-8) var(--s-7);
+      position: relative;
+    }
+    .assess-form::before {
+      content: "";
+      position: absolute;
+      top: -1px; left: 0;
+      width: 56px; height: 2px;
+      background: var(--brand);
+    }
+
+    .assess-section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding-bottom: var(--s-4);
+      border-bottom: 1px solid var(--line);
+      margin-bottom: var(--s-6);
+    }
+    .assess-section-head .step {
+      font-family: var(--ff-mono);
+      font-size: var(--t-mono);
+      letter-spacing: 0.14em;
+      color: var(--brand);
+    }
+    .assess-section-head .title {
+      font-family: var(--ff-display);
+      font-size: var(--t-lg);
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--s-5);
+    }
+    .form-group {
+      display: grid;
+      gap: 8px;
+      margin-bottom: var(--s-5);
+    }
+    .form-group--full { grid-column: 1 / -1; }
+    .form-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      font-family: var(--ff-body);
+    }
+    .form-required { color: var(--brand); margin-left: 2px; }
+    .form-hint {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      letter-spacing: 0.02em;
+      color: var(--ink-60);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-family: var(--ff-body);
+      font-size: 14px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      outline: none;
+      transition: border-color 0.14s, background 0.14s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--ink-40);
+    }
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--brand);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(26,79,255,0.08);
+    }
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231a4fff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 38px;
+      cursor: pointer;
+    }
+    .form-textarea {
+      resize: vertical;
+      min-height: 108px;
+      line-height: 1.65;
+    }
+    .form-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .form-option {
+      position: relative;
+      display: inline-flex;
+      cursor: pointer;
+    }
+    .form-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .form-option span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.45;
+      transition: border-color 0.14s, background 0.14s, color 0.14s, transform 0.14s;
+    }
+    .form-option:hover span {
+      border-color: var(--brand);
+      transform: translateY(-1px);
+    }
+    .form-option input:checked + span {
+      border-color: var(--brand);
+      background: rgba(26,79,255,0.08);
+      color: var(--brand);
+    }
+
+    .form-divider {
+      height: 1px;
+      background: var(--line);
+      margin: var(--s-7) 0 var(--s-6);
+    }
+
+    .form-footer {
+      display: flex;
+      align-items: center;
+      gap: var(--s-5);
+      margin-top: var(--s-7);
+      padding-top: var(--s-5);
+      border-top: 1px solid var(--line);
+      flex-wrap: wrap;
+    }
+    .form-note {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: var(--ink-60);
+      line-height: 1.65;
+    }
+    .form-error-msg {
+      display: none;
+      padding: 12px 16px;
+      background: rgba(220,38,38,0.06);
+      border: 1px solid rgba(220,38,38,0.18);
+      color: #b91c1c;
+      font-size: 13px;
+      margin-top: var(--s-4);
+    }
+    .form-error-msg.visible { display: block; }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: var(--s-8) var(--s-6);
+    }
+    .form-success.visible { display: block; }
+    .form-success-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(26,79,255,0.08);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--s-5);
+    }
+    .form-success-icon svg { width: 24px; height: 24px; stroke: var(--brand); }
+    .form-success h3 {
+      font-family: var(--ff-display);
+      font-size: var(--t-xl);
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin: 0 0 var(--s-3);
+    }
+    .form-success p {
+      color: var(--ink-60);
+      max-width: 420px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+    .btn--loading { opacity: 0.65; pointer-events: none; }
+
+    /* Footer contact */
+    .foot-contact {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: var(--s-8);
+      padding: var(--s-8) 0;
+      border-bottom: 1px solid var(--line-dark);
+    }
+    .foot-qr-row { display: grid; grid-template-columns: 140px 1fr; gap: var(--s-5); align-items: start; }
+    .foot-qr { width: 140px; height: 140px; background: var(--od); padding: 8px; display: grid; place-items: center; }
+    .foot-qr img { width: 100%; height: 100%; object-fit: contain; }
+    .foot-qr-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--line-dark);
+      border-radius: 999px;
+      font-size: var(--t-sm);
+      color: var(--od);
+      margin-bottom: var(--s-3);
+    }
+    .foot-qr-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); }
+    .foot-qr-desc { font-size: var(--t-sm); color: var(--od-60); line-height: 1.6; max-width: 36ch; }
+    .foot-contact-blocks { display: grid; gap: var(--s-5); }
+    .foot-contact-block { padding-top: var(--s-4); border-top: 1px solid var(--line-dark-soft); }
+    .foot-contact-block:first-child { border-top: 0; padding-top: 0; }
+    .foot-contact-key {
+      display: block;
+      font-family: var(--ff-mono);
+      font-size: var(--t-mono);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--od-40);
+      margin-bottom: 8px;
+    }
+    .foot-contact-value { font-size: var(--t-sm); color: var(--od-80); line-height: 1.55; }
+
+    .banner-text {
+      color: var(--od-80) !important;
+      letter-spacing: 0.04em !important;
+      text-transform: none !important;
+      font-family: var(--ff-body) !important;
+      font-size: 11px !important;
+    }
+
+    @media (max-width: 1024px) {
+      .assess-shell { grid-template-columns: 1fr; gap: var(--s-6); }
+      .assess-rail { position: static; }
+      .foot-contact { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .form-grid-2 { grid-template-columns: 1fr; }
+      .assess-form { padding: var(--s-6) var(--s-5); }
+      .foot-qr-row { grid-template-columns: 100px 1fr; }
+      .foot-qr { width: 100px; height: 100px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- META BAR -->
+  <div class="meta-bar">
+    <div class="shell shell--wide">
+      <div class="meta-bar-inner">
+        <span class="meta-bar-item"><span class="dot"></span> LIVE · OPERATIONAL</span>
+        <span class="meta-bar-item hidden-sm">
+          <span class="banner-text">先判断，再行动 · 增长系统评估 · 1–2 个工作日回复</span>
+        </span>
+        <span class="meta-bar-spacer"></span>
+        <span class="meta-bar-item hidden-sm">SHENZHEN</span>
+        <span class="meta-bar-item">2026.Q2</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="site-nav">
+    <div class="shell shell--wide">
+      <div class="site-nav-inner">
+        <div class="site-nav-left">
+          <a href="./homepage-v2.html" class="wordmark wordmark--nav">
+            <span class="z">Z</span><span class="apex">APEX</span>
+          </a>
+        </div>
+        <nav class="site-nav-links">
+          <a class="site-nav-link" href="./homepage-v2.html"><span class="idx">01</span>品牌首页</a>
+          <a class="site-nav-link" href="./system-and-modules-v2.html"><span class="idx">02</span>系统与模块</a>
+          <a class="site-nav-link" href="./delivery-and-cases-v2.html"><span class="idx">03</span>交付与案例</a>
+          <a class="site-nav-link is-current" href="./assessment-v2.html"><span class="idx">04</span>评估表</a>
+        </nav>
+        <div class="site-nav-right">
+          <a class="pill pill--stacked" href="./growth-forms.html"><span class="dot"></span><span class="pill-stack"><span class="pill-main">客户工作台</span><span class="pill-sub">飞书入口</span></span></a>
+          <a class="pill pill--primary" href="./contact-and-cta.html">预约诊断 <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- 00 · HERO -->
+    <section class="hero hero--dark">
+      <div class="shell shell--wide">
+        <div class="hero-grid">
+          <div class="hero-idx">00<br/>Assessment</div>
+          <div>
+            <span class="hero-kicker">品牌诊断 · Assessment</span>
+            <h1 class="hero-display">
+              增长系统<em>评估</em><br/>
+              先判断，<em>再行动</em>
+            </h1>
+            <div class="hero-body">
+              <p class="hero-lead">
+                在进入系统合作之前，先用这套评估框架判断你的团队处于哪个阶段，以及当前增长断层最可能出现在哪里——
+                <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span>
+                不推销、不承诺 ROI，只做结构性诊断
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01 · FORM -->
+    <section class="section section--paper">
+      <div class="shell shell--wide">
+        <header class="section-head">
+          <span class="section-idx">01 / Form</span>
+          <div class="section-head-main">
+            <div>
+              <span class="section-kicker">评估骨架 · Assessment Skeleton</span>
+              <h2 class="section-title">三段结构<br/>大约 3 分钟填完</h2>
+            </div>
+            <p class="section-lead">
+              基础信息 · 业务现状 · 增长卡点——这些信息会直接进入诊断准备，而不是销售跟进
+            </p>
+          </div>
+        </header>
+
+        <div class="assess-shell">
+
+          <!-- 左侧 meta rail -->
+          <aside class="assess-rail">
+            <span class="assess-rail-idx">ASSESS · STRUCTURE</span>
+            <h3 class="assess-rail-title">评估骨架</h3>
+            <ol class="assess-rail-list">
+              <li><span>01</span>生意基本面 / Business Fundamentals</li>
+              <li><span>02</span>增长结构 / Growth Structure</li>
+              <li><span>03</span>产品与竞争 / Product Edge</li>
+              <li><span>04</span>品牌资产 / Brand Assets</li>
+              <li><span>05</span>痛点与意愿 / Readiness</li>
+              <li><span>06</span>联系方式 / Contact</li>
+            </ol>
+            <p class="assess-rail-note">
+              填写后，我们会与您联系，判断您的生意是否适合启动品牌化，以及下一步该做什么
+            </p>
+          </aside>
+
+          <!-- 右侧 form -->
+          <div class="assess-form">
+
+            <!-- 成功状态 -->
+            <div class="form-success" id="form-success">
+              <div class="form-success-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <h3>评估已提交</h3>
+              <p>我们会在 1–2 个工作日内通过你填写的联系方式与你确认诊断时间，感谢你的信任</p>
+            </div>
+
+            <form id="assessment-form" novalidate>
+
+              <div class="assess-section-head">
+                <span class="step">STEP · 01</span>
+                <span class="title">生意基本面</span>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="monthly-sales">月销售额<span class="form-required">*</span></label>
+                  <select class="form-select" id="monthly-sales">
+                    <option value="" selected>请选择</option>
+                    <option>10万以下</option>
+                    <option>10-50万</option>
+                    <option>50-100万</option>
+                    <option>100-300万</option>
+                    <option>300-500万</option>
+                    <option>500万-1000万</option>
+                    <option>1000万以上</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="profit-rate">综合净利润率<span class="form-required">*</span></label>
+                  <select class="form-select" id="profit-rate">
+                    <option value="" selected>请选择</option>
+                    <option>亏损或接近0</option>
+                    <option>5%以下</option>
+                    <option>5-10%</option>
+                    <option>10-15%</option>
+                    <option>15-20%</option>
+                    <option>20%以上</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="sku-count">SKU数量<span class="form-required">*</span></label>
+                  <select class="form-select" id="sku-count">
+                    <option value="" selected>请选择</option>
+                    <option>1-5个</option>
+                    <option>6-15个</option>
+                    <option>16-50个</option>
+                    <option>50个以上</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="top3-ratio">Top 3 SKU销售占比<span class="form-required">*</span></label>
+                  <select class="form-select" id="top3-ratio">
+                    <option value="" selected>请选择</option>
+                    <option>不到30%</option>
+                    <option>30-50%</option>
+                    <option>50-70%</option>
+                    <option>70-85%</option>
+                    <option>85%以上</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group form-group--full">
+                <label class="form-label">主要销售平台<span class="form-required">*</span></label>
+                <div class="form-options">
+                  <label class="form-option"><input type="checkbox" name="primary-platform" value="Amazon（美国站）" /><span>Amazon（美国站）</span></label>
+                  <label class="form-option"><input type="checkbox" name="primary-platform" value="Amazon（欧洲站）" /><span>Amazon（欧洲站）</span></label>
+                  <label class="form-option"><input type="checkbox" name="primary-platform" value="Amazon（其他站点）" /><span>Amazon（其他站点）</span></label>
+                  <label class="form-option"><input type="checkbox" name="primary-platform" value="独立站（Shopify/WooCommerce等）" /><span>独立站（Shopify/WooCommerce等）</span></label>
+                  <label class="form-option"><input type="checkbox" name="primary-platform" value="TikTok Shop" /><span>TikTok Shop</span></label>
+                  <label class="form-option"><input type="checkbox" name="primary-platform" value="其他平台" /><span>其他平台</span></label>
+                </div>
+              </div>
+
+              <div class="form-group form-group--full">
+                <label class="form-label" for="other-platform">其他平台说明</label>
+                <input class="form-input" id="other-platform" type="text" placeholder="如选择了其他平台，请补充说明" />
+              </div>
+
+              <div class="form-divider"></div>
+
+              <div class="assess-section-head">
+                <span class="step">STEP · 02</span>
+                <span class="title">增长结构</span>
+              </div>
+
+              <div class="form-group form-group--full">
+                <label class="form-label">当前增长主要来源<span class="form-required">*</span></label>
+                <div class="form-options">
+                  <label class="form-option"><input type="checkbox" name="growth-source" value="不断上新SKU测款" /><span>不断上新SKU测款</span></label>
+                  <label class="form-option"><input type="checkbox" name="growth-source" value="加大广告投放" /><span>加大广告投放</span></label>
+                  <label class="form-option"><input type="checkbox" name="growth-source" value="自然流量增长" /><span>自然流量增长</span></label>
+                  <label class="form-option"><input type="checkbox" name="growth-source" value="KOL/达人/网红带货" /><span>KOL/达人/网红带货</span></label>
+                  <label class="form-option"><input type="checkbox" name="growth-source" value="老客户复购" /><span>老客户复购</span></label>
+                  <label class="form-option"><input type="checkbox" name="growth-source" value="不太清楚，比较随机" /><span>不太清楚，比较随机</span></label>
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="ad-ratio">广告费用占销售额比例<span class="form-required">*</span></label>
+                  <select class="form-select" id="ad-ratio">
+                    <option value="" selected>请选择</option>
+                    <option>不到10%</option>
+                    <option>10-20%</option>
+                    <option>20-30%</option>
+                    <option>30-40%</option>
+                    <option>40%以上</option>
+                    <option>不太清楚</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="repurchase">老客户复购情况<span class="form-required">*</span></label>
+                  <select class="form-select" id="repurchase">
+                    <option value="" selected>请选择</option>
+                    <option>几乎没有</option>
+                    <option>有一些，但很少</option>
+                    <option>有稳定复购（占比10%以内）</option>
+                    <option>复购比例较高（10-30%）</option>
+                    <option>复购占比很高（30%以上）</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-divider"></div>
+
+              <div class="assess-section-head">
+                <span class="step">STEP · 03</span>
+                <span class="title">产品与竞争</span>
+              </div>
+
+              <div class="form-group form-group--full">
+                <label class="form-label" for="difference">产品相对竞品的最大差别<span class="form-required">*</span></label>
+                <textarea class="form-textarea" id="difference" placeholder="请描述你们产品相对竞品最明显的差异点"></textarea>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="pricing">产品定价相对竞品<span class="form-required">*</span></label>
+                  <select class="form-select" id="pricing">
+                    <option value="" selected>请选择</option>
+                    <option>明显更低（低10%以上）</option>
+                    <option>差不多</option>
+                    <option>略高一些（高10-20%）</option>
+                    <option>明显更高（高20-30%）</option>
+                    <option>高很多（高30%以上）</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="buy-reason">用户购买主要原因<span class="form-required">*</span></label>
+                  <select class="form-select" id="buy-reason">
+                    <option value="" selected>请选择</option>
+                    <option>价格便宜/性价比高</option>
+                    <option>解决了某个具体痛点</option>
+                    <option>设计好看/有品质感</option>
+                    <option>看到好评/别人推荐</option>
+                    <option>不太清楚，可能是广告吸引的</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-divider"></div>
+
+              <div class="assess-section-head">
+                <span class="step">STEP · 04</span>
+                <span class="title">品牌资产</span>
+              </div>
+
+              <div class="form-group form-group--full">
+                <label class="form-label">现有品牌资产<span class="form-required">*</span></label>
+                <div class="form-options">
+                  <label class="form-option"><input type="checkbox" name="brand-assets" value="注册了品牌商标" /><span>注册了品牌商标</span></label>
+                  <label class="form-option"><input type="checkbox" name="brand-assets" value="有独立站" /><span>有独立站</span></label>
+                  <label class="form-option"><input type="checkbox" name="brand-assets" value="有在运营的社交媒体账号" /><span>有在运营的社交媒体账号</span></label>
+                  <label class="form-option"><input type="checkbox" name="brand-assets" value="有用户邮件列表" /><span>有用户邮件列表</span></label>
+                  <label class="form-option"><input type="checkbox" name="brand-assets" value="有私域" /><span>有私域</span></label>
+                  <label class="form-option"><input type="checkbox" name="brand-assets" value="做过KOL/达人合作" /><span>做过KOL/达人合作</span></label>
+                  <label class="form-option"><input type="checkbox" name="brand-assets" value="产品包装有自己的品牌设计" /><span>产品包装有自己的品牌设计</span></label>
+                  <label class="form-option"><input type="checkbox" name="brand-assets" value="以上都没有" /><span>以上都没有</span></label>
+                </div>
+              </div>
+
+              <div class="form-group form-group--full">
+                <label class="form-label" for="brand-owner">是否有专人负责品牌/内容/社媒<span class="form-required">*</span></label>
+                <select class="form-select" id="brand-owner">
+                  <option value="" selected>请选择</option>
+                  <option>没有，老板自己或兼职做</option>
+                  <option>有人在做，但不是全职</option>
+                  <option>有专职人员负责</option>
+                </select>
+              </div>
+
+              <div class="form-divider"></div>
+
+              <div class="assess-section-head">
+                <span class="step">STEP · 05</span>
+                <span class="title">痛点与意愿</span>
+              </div>
+
+              <div class="form-group form-group--full">
+                <label class="form-label" for="biggest-problem">当前最头疼的问题<span class="form-required">*</span></label>
+                <textarea class="form-textarea" id="biggest-problem" placeholder="请直接写最影响你增长或品牌化推进的一件事"></textarea>
+              </div>
+
+              <div class="form-group form-group--full">
+                <label class="form-label">对品牌升级的主要担心<span class="form-required">*</span></label>
+                <div class="form-options">
+                  <label class="form-option"><input type="checkbox" name="brand-concern" value="不知道从哪开始" /><span>不知道从哪开始</span></label>
+                  <label class="form-option"><input type="checkbox" name="brand-concern" value="担心投入太大、回报不确定" /><span>担心投入太大、回报不确定</span></label>
+                  <label class="form-option"><input type="checkbox" name="brand-concern" value="不确定产品适不适合做品牌" /><span>不确定产品适不适合做品牌</span></label>
+                  <label class="form-option"><input type="checkbox" name="brand-concern" value="担心做了也没效果、浪费时间" /><span>担心做了也没效果、浪费时间</span></label>
+                  <label class="form-option"><input type="checkbox" name="brand-concern" value="担心团队能力不够" /><span>担心团队能力不够</span></label>
+                  <label class="form-option"><input type="checkbox" name="brand-concern" value="目前没有太多担心，想尽快启动" /><span>目前没有太多担心，想尽快启动</span></label>
+                </div>
+              </div>
+
+              <div class="form-group form-group--full">
+                <label class="form-label" for="brand-intent">品牌化投入意愿<span class="form-required">*</span></label>
+                <select class="form-select" id="brand-intent">
+                  <option value="" selected>请选择</option>
+                  <option>暂时不考虑，只是先了解一下</option>
+                  <option>可以小规模尝试</option>
+                  <option>已经准备好投入，就是缺方法和方向</option>
+                </select>
+              </div>
+
+              <div class="form-divider"></div>
+
+              <div class="assess-section-head">
+                <span class="step">STEP · 06</span>
+                <span class="title">联系方式</span>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="name">姓名<span class="form-required">*</span></label>
+                  <input class="form-input" id="name" type="text" placeholder="请输入姓名" autocomplete="name" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="wechat">微信/WhatsApp<span class="form-required">*</span></label>
+                  <input class="form-input" id="wechat" type="text" placeholder="请输入微信号或 WhatsApp" />
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="email">邮箱</label>
+                  <input class="form-input" id="email" type="email" placeholder="如方便，也可以留下邮箱" autocomplete="email" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="contact-time">方便联系时间段</label>
+                  <input class="form-input" id="contact-time" type="text" placeholder="例如：工作日 14:00-18:00" />
+                </div>
+              </div>
+
+              <div class="form-error-msg" id="form-error"></div>
+
+              <div class="form-footer">
+                <button class="btn btn--primary" type="submit" id="submit-btn">提交评估表 <span class="arrow">→</span></button>
+                <p class="form-note">SUBMIT · INTO FEISHU MAIN TABLE<br/>提交成功后，我们会尽快与您联系</p>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 · PRINCIPLE -->
+    <section class="section section--paper-2 section--compact">
+      <div class="shell shell--wide">
+        <div class="quote-block">
+          <span class="quote-marker">"</span>
+          <div>
+            <p class="quote-text">第一次对话的目的只有一个——判断你的增长问题，是否在我们能系统性解决的范围内</p>
+            <div class="quote-attrib">
+              <span>— 诊断原则 · <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span> Principle</span>
+              <span>不推销 · 不承诺 ROI · 只做结构性诊断</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-foot">
+    <div class="shell shell--wide">
+
+      <div class="foot-contact">
+        <div class="foot-qr-row">
+          <div class="foot-qr"><img src="./assets/qr-wechat-crop.png" alt="峥锐品牌出海小助手 微信二维码" /></div>
+        </div>
+        <div class="foot-contact-blocks">
+          <div class="foot-contact-block">
+            <span class="foot-contact-key">Address · 地址</span>
+            <p class="foot-contact-value">深圳市龙华区龙华大道有品文化创意园 4 栋 201-1</p>
+          </div>
+          <div class="foot-contact-block">
+            <span class="foot-contact-key">Contact · 联系</span>
+            <p class="foot-contact-value">hello@zapex.io</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot-columns">
+        <div class="foot-col">
+          <span class="foot-col-head">Sitemap · 站点</span>
+          <a href="./homepage-v2.html">品牌首页</a>
+          <a href="./system-and-modules-v2.html">系统与模块</a>
+          <a href="./delivery-and-cases-v2.html">交付与案例</a>
+          <a href="./assessment-v2.html">评估表</a>
+        </div>
+        <div class="foot-col">
+          <span class="foot-col-head">Services · 服务</span>
+          <span><span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span> 品牌战略模块™</span>
+          <span><span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span> 品牌增长引擎™</span>
+          <span>增长验证舱™</span>
+        </div>
+        <div class="foot-col">
+          <span class="foot-col-head">Portal · 客户</span>
+          <a href="./growth-forms.html">客户工作台</a>
+          <a href="./contact-and-cta.html">预约增长诊断</a>
+        </div>
+        <div class="foot-col">
+          <span class="foot-col-head">Legal · 合规</span>
+          <a href="./privacy.html">Privacy</a>
+          <a href="./terms.html">Terms</a>
+        </div>
+      </div>
+
+      <div class="foot-signature">
+        <span class="wordmark wordmark--mega">
+          <span class="z">Z</span><span class="apex">APEX</span>
+        </span>
+      </div>
+
+      <div class="foot-meta">
+        <div class="foot-meta-left">
+          <span>© 2026 峥锐科技 · 深圳</span>
+          <span class="hidden-sm">ZAPEX™ 品牌出海加速器</span>
+        </div>
+        <div class="foot-meta-right">
+          <span class="hidden-sm">v2026.04 · build 0417</span>
+          <span>hello@zapex.io</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var form = document.getElementById('assessment-form');
+      var submitBtn = document.getElementById('submit-btn');
+      var errorEl = document.getElementById('form-error');
+      var successEl = document.getElementById('form-success');
+
+      function getCheckedValues(name) {
+        return Array.prototype.slice.call(
+          document.querySelectorAll('input[name="' + name + '"]:checked')
+        ).map(function (node) { return node.value; });
+      }
+
+      function showError(msg) {
+        errorEl.textContent = msg;
+        errorEl.classList.add('visible');
+        submitBtn.classList.remove('btn--loading');
+        submitBtn.innerHTML = '提交评估表 <span class="arrow">→</span>';
+      }
+      function clearError() { errorEl.classList.remove('visible'); }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        clearError();
+
+        var fields = {
+          '提交来源': '官网表单',
+          '月销售额': document.getElementById('monthly-sales').value,
+          '综合净利润率': document.getElementById('profit-rate').value,
+          'SKU数量': document.getElementById('sku-count').value,
+          'Top 3 SKU销售占比': document.getElementById('top3-ratio').value,
+          '主要销售平台': getCheckedValues('primary-platform'),
+          '其他平台说明': document.getElementById('other-platform').value.trim(),
+          '当前增长主要来源': getCheckedValues('growth-source'),
+          '广告费用占销售额比例': document.getElementById('ad-ratio').value,
+          '老客户复购情况': document.getElementById('repurchase').value,
+          '产品相对竞品的最大差别': document.getElementById('difference').value.trim(),
+          '产品定价相对竞品': document.getElementById('pricing').value,
+          '用户购买主要原因': document.getElementById('buy-reason').value,
+          '现有品牌资产': getCheckedValues('brand-assets'),
+          '是否有专人负责品牌/内容/社媒': document.getElementById('brand-owner').value,
+          '当前最头疼的问题': document.getElementById('biggest-problem').value.trim(),
+          '对品牌升级的主要担心': getCheckedValues('brand-concern'),
+          '品牌化投入意愿': document.getElementById('brand-intent').value,
+          '姓名': document.getElementById('name').value.trim(),
+          '微信/WhatsApp': document.getElementById('wechat').value.trim(),
+          '邮箱': document.getElementById('email').value.trim(),
+          '方便联系时间段': document.getElementById('contact-time').value.trim()
+        };
+
+        var requiredFields = [
+          '月销售额',
+          '综合净利润率',
+          'SKU数量',
+          'Top 3 SKU销售占比',
+          '主要销售平台',
+          '当前增长主要来源',
+          '广告费用占销售额比例',
+          '老客户复购情况',
+          '产品相对竞品的最大差别',
+          '产品定价相对竞品',
+          '用户购买主要原因',
+          '现有品牌资产',
+          '是否有专人负责品牌/内容/社媒',
+          '当前最头疼的问题',
+          '对品牌升级的主要担心',
+          '品牌化投入意愿',
+          '姓名',
+          '微信/WhatsApp'
+        ];
+
+        for (var i = 0; i < requiredFields.length; i++) {
+          var key = requiredFields[i];
+          var value = fields[key];
+          if ((Array.isArray(value) && value.length === 0) || (!Array.isArray(value) && !String(value || '').trim())) {
+            showError('请填写：' + key);
+            return;
+          }
+        }
+
+        if (
+          fields['主要销售平台'].indexOf('其他平台') >= 0 &&
+          !fields['其他平台说明']
+        ) {
+          showError('选择“其他平台”后，请补充其他平台说明');
+          return;
+        }
+
+        submitBtn.classList.add('btn--loading');
+        submitBtn.textContent = '提交中…';
+
+        try {
+          var res = await fetch('/.netlify/functions/feishu-assessment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(fields),
+          });
+          var data = await res.json();
+
+          if (res.ok && data.ok) {
+            form.style.display = 'none';
+            successEl.classList.add('visible');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            showError(data.error || '提交失败，请稍后重试');
+          }
+        } catch (err) {
+          showError('网络错误，请稍后重试或通过微信联系我们');
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

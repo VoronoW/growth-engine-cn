@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>流量资产交互表格系统 — 品牌出海加速器</title>
+
+<!-- 飞书 JSSDK（仅在飞书客户端内生效） -->
+<script src="https://lf1-cdn-tos.bytegoofy.com/goofy/lark/op/h5-js-sdk-1.5.16/index.umd.js" onerror="console.log('[JSSDK] 非飞书环境，跳过加载')"></script>
+
+<style>
+  :root {
+    --brand-primary: #1C6EF2;
+    --brand-bg: #F4F6FA;
+    --surface: #FFFFFF;
+    --surface-2: #F7F8FA;
+    --border: #E4E7EE;
+    --border-hover: #B8C0D0;
+    --text-primary: #1A1D23;
+    --text-secondary: #5C6170;
+    --text-tertiary: #9AA0B0;
+    --accent-m1: #F59E0B;
+    --accent-m2: #3B82F6;
+    --accent-success: #10B981;
+    --accent-danger: #EF4444;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --font: 'PingFang SC', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', Consolas, monospace;
+  }
+
+  /* Dark mode disabled — light-first */
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--brand-bg);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── 顶部 header ── */
+  .app-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .app-logo {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .app-logo .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand-primary); }
+  .app-meta { font-size: 12px; color: var(--text-tertiary); margin-left: auto; }
+  .feishu-badge {
+    font-size: 11px; font-weight: 500;
+    padding: 3px 10px; border-radius: 20px;
+    background: #E8F3FF; color: #1C6EF2;
+    border: 1px solid #C2DAFF;
+  }
+
+  /* ── 主布局 ── */
+  .app-layout { display: flex; height: calc(100vh - 56px); }
+
+  /* ── 左侧导航 ── */
+  .sidebar {
+    width: 220px;
+    min-width: 220px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 16px 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sidebar-section {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 8px 8px 4px;
+    margin-top: 8px;
+  }
+  .sidebar-section:first-child { margin-top: 0; }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-secondary);
+    transition: all 0.15s;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+  }
+  .nav-item:hover { background: var(--surface-2); color: var(--text-primary); }
+  .nav-item.active {
+    background: #EBF2FF;
+    color: var(--brand-primary);
+    font-weight: 500;
+  }
+  .nav-item .nav-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-m1 { background: var(--accent-m1); }
+  .dot-m2 { background: var(--accent-m2); }
+
+  /* ── 主内容区 ── */
+  .main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+  }
+
+  /* ── 面板 ── */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── 面板 header ── */
+  .panel-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .panel-title-group {}
+  .phase-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  .badge-m1 { background: #FEF3C7; color: #92400E; }
+  .badge-m2 { background: #DBEAFE; color: #1E40AF; }
+  .panel-title { font-size: 18px; font-weight: 600; color: var(--text-primary); }
+  .panel-meta { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+  .panel-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+  /* ── 按钮 ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: 1px solid transparent;
+    font-family: var(--font);
+  }
+  .btn-secondary {
+    background: var(--surface);
+    border-color: var(--border);
+    color: var(--text-secondary);
+  }
+  .btn-secondary:hover { border-color: var(--border-hover); color: var(--text-primary); background: var(--surface-2); }
+  .btn-primary {
+    background: var(--brand-primary);
+    color: #fff;
+    border-color: var(--brand-primary);
+  }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-success {
+    background: var(--accent-success);
+    color: #fff;
+    border-color: var(--accent-success);
+  }
+  .btn-success:hover { opacity: 0.88; }
+  .btn-sm { padding: 4px 10px; font-size: 12px; }
+
+  /* ── Section ── */
+  .section { margin-bottom: 24px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  /* ── 表格 ── */
+  .table-wrap { overflow-x: auto; border-radius: var(--radius-md); border: 1px solid var(--border); }
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 600px;
+  }
+  table.data-table th {
+    text-align: left;
+    padding: 9px 12px;
+    background: var(--surface-2);
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 11px;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--border);
+  }
+  table.data-table td {
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+    padding: 0;
+  }
+  table.data-table tbody tr:last-child td { border-bottom: none; }
+  table.data-table tbody tr:hover td { background: var(--surface-2); }
+  table.data-table td input,
+  table.data-table td select,
+  table.data-table td textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    font-family: var(--font);
+    color: var(--text-primary);
+    outline: none;
+    resize: none;
+  }
+  table.data-table td input:focus,
+  table.data-table td select:focus,
+  table.data-table td textarea:focus {
+    background: #EBF2FF;
+    outline: 1px solid #93C5FD;
+    outline-offset: -1px;
+  }
+  table.data-table td.cell-lbl {
+    padding: 8px 12px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  table.data-table td.cell-num {
+    text-align: right;
+  }
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239AA0B0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px !important;
+    cursor: pointer;
+  }
+
+  /* ── 状态徽章 ── */
+  .status-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .pill-pass { background: #D1FAE5; color: #065F46; }
+  .pill-fail { background: #FEE2E2; color: #991B1B; }
+  .pill-pend { background: #FEF3C7; color: #92400E; }
+  .pill-info { background: #DBEAFE; color: #1E40AF; }
+
+  /* ── 字段类型徽章 ── */
+  .ftype { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; }
+  .ft-text { background: var(--surface-2); color: var(--text-secondary); border: 1px solid var(--border); }
+  .ft-select { background: #DBEAFE; color: #1E40AF; }
+  .ft-number { background: #FEF3C7; color: #92400E; }
+  .ft-date { background: #D1FAE5; color: #065F46; }
+  .ft-url { background: #FCE7F3; color: #9D174D; }
+
+  /* ── 提示 ── */
+  .hint { font-size: 12px; color: var(--text-tertiary); margin-top: 8px; line-height: 1.5; }
+  .info-box {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 10px 0;
+  }
+  .info-box strong { color: var(--text-primary); font-weight: 600; }
+
+  /* ── 代码块 ── */
+  .code-block {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    line-height: 1.75;
+    overflow-x: auto;
+    white-space: pre;
+    color: var(--text-primary);
+    margin: 8px 0;
+  }
+
+  /* ── 提交反馈 ── */
+  #submit-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--accent-success);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 500;
+    display: none;
+    z-index: 999;
+    box-shadow: 0 4px 20px rgba(16,185,129,0.3);
+  }
+
+  /* ── 响应式 ── */
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main-content { padding: 16px; }
+    .panel-header { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 登录遮罩 -->
+<div id="login-overlay" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(244,246,250,0.96);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+  <div style="background:#fff;border:1px solid #E4E7EE;border-radius:14px;padding:40px 48px;text-align:center;max-width:400px;width:90%;">
+    <div style="width:48px;height:48px;background:#E8F3FF;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:22px;">🔐</div>
+    <h2 style="color:#1A1D23;font-size:18px;font-weight:600;margin-bottom:8px;">请登录飞书账号</h2>
+    <p style="color:#5C6170;font-size:14px;margin-bottom:24px;">使用飞书 OAuth 登录以访问增长引擎数据表单</p>
+    <a href="/.netlify/functions/feishu-auth-start" style="display:inline-block;background:#1C6EF2;color:#fff;padding:12px 32px;border-radius:8px;font-size:15px;font-weight:500;text-decoration:none;">使用飞书账号登录</a>
+    <p id="login-error" style="color:#EF4444;font-size:13px;margin-top:12px;display:none;"></p>
+  </div>
+</div>
+
+<!-- 顶部 Header -->
+<header class="app-header">
+  <div class="app-logo">
+    <div class="dot"></div>
+    流量资产交互表格系统
+  </div>
+  <span id="feishu-badge" class="feishu-badge" style="display:none;">飞书已连接</span>
+  <div class="app-meta" id="user-info">品牌出海加速器 · 90天增长引擎验证舱</div>
+  <button id="logout-btn" onclick="logout()" style="display:none;margin-left:12px;background:none;border:1px solid #E4E7EE;border-radius:6px;padding:4px 12px;font-size:12px;color:#5C6170;cursor:pointer;">退出登录</button>
+</header>
+
+<div class="app-layout">
+
+  <!-- 左侧导航 -->
+  <nav class="sidebar">
+    <div class="sidebar-section">Month 1 — 数据底盘</div>
+    <button class="nav-item active" onclick="showPanel('a1',this)">
+      <span class="nav-dot dot-m1"></span> A1 数据导出清洗
+    </button>
+    <button class="nav-item" onclick="showPanel('a2',this)">
+      <span class="nav-dot dot-m1"></span> A2 UTM 参数标准化表 / 命名规范对照
+    </button>
+    <button class="nav-item" onclick="showPanel('a3',this)">
+      <span class="nav-dot dot-m1"></span> A3 Pixel vs S2S 观测矩阵 / QA 清单
+    </button>
+    <button class="nav-item" onclick="showPanel('a4',this)">
+      <span class="nav-dot dot-m1"></span> A4 归因沙盘演习报告
+    </button>
+
+    <div class="sidebar-section">Month 2 — 创意工业化</div>
+    <button class="nav-item" onclick="showPanel('b2',this)">
+      <span class="nav-dot dot-m2"></span> B2 品牌基础设定 / 广告文案矩阵
+    </button>
+    <button class="nav-item" onclick="showPanel('b3',this)">
+      <span class="nav-dot dot-m2"></span> B3 SKU脚本矩阵
+    </button>
+    <button class="nav-item" onclick="showPanel('b4',this)">
+      <span class="nav-dot dot-m2"></span> B4 素材沙盒测试矩阵 / Winner Insights
+    </button>
+    <button class="nav-item" onclick="showPanel('b5',this)">
+      <span class="nav-dot dot-m2"></span> B5 漏斗分层投放策略 / 止损护航规则
+    </button>
+    <button class="nav-item" onclick="showPanel('b6',this)">
+      <span class="nav-dot dot-m2"></span> B6 用户多维分析 / 种子标签包
+    </button>
+
+    <div class="sidebar-section">开发者</div>
+    <button class="nav-item" onclick="showPanel('api',this)">
+      <span class="nav-dot" style="background:#8B5CF6"></span> 飞书API对接规范
+    </button>
+  </nav>
+
+  <!-- 主内容 -->
+  <main class="main-content">
+
+    <!-- ═══════════ A1 ═══════════ -->
+    <div class="panel active" id="panel-a1">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m1">Month 1 · Week 1 交付</div>
+          <div class="panel-title">A1・SKU档案盘点表</div>
+          <div class="panel-meta">Owner: 数据分析师 / 投放总监 &nbsp;·&nbsp; 目标SKU数量: 30–50个</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('tbl-a1','A1_SKU档案盘点表')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('a1')">→ 提交飞书</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">A1・SKU档案盘点表</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-a1',rowTpl.a1)">+ 新增行</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-a1">
+            <thead><tr>
+              <th style="width:7%">序号</th>
+              <th style="width:12%">创建日期</th>
+              <th style="width:14%">最后更新时间</th>
+              <th style="width:14%">综合健康分</th>
+              <th style="width:16%">产品链接</th>
+              <th style="width:12%">当前售价(USD)</th>
+              <th style="width:12%">近30天退货量</th>
+              <th style="width:13%">SKU角色定位</th>
+              <th style="width:12%">操盘建议</th>
+            </tr></thead>
+            <tbody id="tbody-a1"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <div class="section">
+        <div class="section-title" style="margin-bottom:10px">A1 数据质检清单</div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th style="width:55%">检查项</th><th style="width:20%">状态</th><th style="width:25%">备注</th></tr></thead>
+            <tbody id="tbody-a1-qa"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">A1 待补资料缺口清单</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-a1-gap',rowTpl.gap)">+ 新增</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th style="width:28%">缺失资料</th><th style="width:25%">用途</th><th style="width:22%">责任人</th><th style="width:25%">截止日期</th></tr></thead>
+            <tbody id="tbody-a1-gap"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ A2 ═══════════ -->
+    <div class="panel" id="panel-a2">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m1">Month 1 · Week 2 交付</div>
+          <div class="panel-title">A2 UTM 参数标准化表 / A2 命名规范对照</div>
+          <div class="panel-meta">Owner: 流量负责人 / 数据分析师 &nbsp;·&nbsp; 适用范围: FB / Google / TikTok / EDM / KOL</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('panel-a2','A2_UTM参数标准化表_命名规范对照')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('a2')">→ 提交飞书</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">A2 UTM 参数标准化表</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-a2',rowTpl.a2)">+ 新增行</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-a2">
+            <thead><tr>
+              <th style="width:7%">序号</th>
+              <th style="width:16%">规范版本号</th>
+              <th style="width:18%">最后更新时间</th>
+              <th style="width:12%">投放平台</th>
+              <th style="width:13%">渠道来源</th>
+              <th style="width:16%">活动目标</th>
+              <th style="width:18%">UTM 生成结果</th>
+            </tr></thead>
+            <tbody id="tbody-a2"></tbody>
+          </table>
+        </div>
+        <p class="hint">按正式 UTM 标准维护平台、来源、活动目标与生成结果，统一作为后续投放与归因口径的唯一来源。</p>
+      </div>
+
+      <hr class="divider">
+      <div class="section">
+        <div class="section-title" style="margin-bottom:10px">A2 命名规范对照</div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-a2-naming">
+            <thead><tr><th style="width:16%">规范版本号</th><th style="width:18%">最后更新时间</th><th style="width:22%">原始素材名/文件名</th><th style="width:14%">投放平台</th><th style="width:14%">素材类型</th><th style="width:16%">规范命名</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><input type="text" placeholder="例：V1.0"></td>
+                <td><input type="text" placeholder="例：2026-04-14"></td>
+                <td><input type="text" placeholder="原始素材名或文件名"></td>
+                <td><input type="text" placeholder="例：Facebook"></td>
+                <td><input type="text" placeholder="例：短视频"></td>
+                <td><input type="text" placeholder="填写规范命名结果"></td>
+              </tr>
+              <tr>
+                <td><input type="text" placeholder="例：V1.0"></td>
+                <td><input type="text" placeholder="例：2026-04-14"></td>
+                <td><input type="text" placeholder="原始素材名或文件名"></td>
+                <td><input type="text" placeholder="例：TikTok"></td>
+                <td><input type="text" placeholder="例：图片"></td>
+                <td><input type="text" placeholder="填写规范命名结果"></td>
+              </tr>
+              <tr>
+                <td><input type="text" placeholder="例：V1.0"></td>
+                <td><input type="text" placeholder="例：2026-04-14"></td>
+                <td><input type="text" placeholder="原始素材名或文件名"></td>
+                <td><input type="text" placeholder="例：Google"></td>
+                <td><input type="text" placeholder="例：落地页"></td>
+                <td><input type="text" placeholder="填写规范命名结果"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ A3 ═══════════ -->
+    <div class="panel" id="panel-a3">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m1">Month 1 · Week 3 交付</div>
+          <div class="panel-title">A3 Pixel vs S2S 观测矩阵 / A3 QA 清单</div>
+          <div class="panel-meta">Owner: 技术负责人 / 数据分析师 &nbsp;·&nbsp; 适用范围: Meta CAPI / Google GTM Server / TikTok Events API</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('panel-a3','A3_Pixel_vs_S2S_观测矩阵_QA清单')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('a3')">→ 提交飞书</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">A3 Pixel vs S2S 观测矩阵</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-a3',rowTpl.a3)">+ 新增行</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-a3">
+            <thead><tr>
+              <th style="width:8%">序号</th>
+              <th style="width:11%">记录周期</th>
+              <th style="width:12%">更新时间</th>
+              <th style="width:10%">数据差异%</th>
+              <th style="width:10%">平台</th>
+              <th style="width:12%">事件名称</th>
+              <th style="width:13%">Pixel报告数值</th>
+              <th style="width:12%">观测时间段</th>
+              <th style="width:12%">S2S实际数值</th>
+              <th style="width:12%">差异原因分析</th>
+              <th style="width:10%">可信度评级</th>
+              <th style="width:11%">建议使用口径</th>
+              <th style="width:9%">优先级</th>
+              <th style="width:10%">备注</th>
+            </tr></thead>
+            <tbody id="tbody-a3"></tbody>
+          </table>
+        </div>
+        <p class="hint">按正式观测矩阵记录平台、事件、观测区间与差异原因，作为归因口径校准与数据可信度评估的统一底表。</p>
+      </div>
+
+      <hr class="divider">
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">A3 QA 清单</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-a3-qa',rowTpl.a3qa)">+ 新增行</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-a3-qa">
+            <thead><tr><th style="width:8%">序号</th><th style="width:12%">检查批次时间</th><th style="width:10%">整体通过率</th><th style="width:18%">检查项目描述</th><th style="width:10%">对应平台</th><th style="width:12%">上线/变更时间</th><th style="width:10%">检查结果</th><th style="width:12%">问题说明</th><th style="width:8%">负责人</th><th style="width:12%">截止修复时间</th><th style="width:10%">复查结果</th><th style="width:10%">备注</th></tr></thead>
+            <tbody id="tbody-a3-qa"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ A4 ═══════════ -->
+    <div class="panel" id="panel-a4">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m1">Month 1 · Week 4 交付</div>
+          <div class="panel-title">A4 归因沙盘演习报告</div>
+          <div class="panel-meta">Owner: 数据分析师 / 投放总监 &nbsp;·&nbsp; 适用范围: 全渠道 FB / GG / TT / Organic / Direct</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('panel-a4','A4_归因沙盘演习报告')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('a4')">→ 提交飞书</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title" style="margin-bottom:10px">A4 归因沙盘演习报告</div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-a4">
+            <thead><tr>
+              <th style="width:8%">序号</th>
+              <th style="width:12%">沙盘批次</th>
+              <th style="width:12%">演习日期</th>
+              <th style="width:15%">触点路径描述</th>
+              <th style="width:13%">归因模型</th>
+              <th style="width:12%">归因结果</th>
+              <th style="width:14%">偏差说明</th>
+              <th style="width:14%">结论建议</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td class="cell-lbl" style="text-align:center">P-01</td>
+                <td><input type="text" placeholder="FB发现 → Google搜索品牌词 → 下单"></td>
+                <td><input type="text" placeholder="Google 100%"></td>
+                <td><input type="text" placeholder="FB 40% / GG 60%"></td>
+                <td><input type="text" placeholder="填写..."></td>
+                <td><input type="number" placeholder="填写..."></td>
+                <td><select><option>待确认</option><option>以 Last Click</option><option>以 DDA</option><option>以 GA4</option></select></td>
+              </tr>
+              <tr>
+                <td class="cell-lbl" style="text-align:center">P-02</td>
+                <td><input type="text" placeholder="TikTok视频 → 直接访问 → 下单"></td>
+                <td><input type="text" placeholder="Direct 100%"></td>
+                <td><input type="text" placeholder="TT 70% / Direct 30%"></td>
+                <td><input type="text" placeholder="填写..."></td>
+                <td><input type="number" placeholder="填写..."></td>
+                <td><select><option>待确认</option><option>以 Last Click</option><option>以 DDA</option><option>以 GA4</option></select></td>
+              </tr>
+              <tr>
+                <td class="cell-lbl" style="text-align:center">P-03</td>
+                <td><input type="text" placeholder="EDM邮件 → 加购 → 下单"></td>
+                <td><input type="text" placeholder="填写..."></td>
+                <td><input type="text" placeholder="填写..."></td>
+                <td><input type="text" placeholder="填写..."></td>
+                <td><input type="number" placeholder="填写..."></td>
+                <td><select><option>待确认</option><option>以 Last Click</option><option>以 DDA</option><option>以 GA4</option></select></td>
+              </tr>
+              <tr>
+                <td class="cell-lbl" style="text-align:center">P-04</td>
+                <td><input type="text" placeholder="跨设备（手机看广告 → 桌面下单）"></td>
+                <td><input type="text" placeholder="填写..."></td>
+                <td><input type="text" placeholder="填写..."></td>
+                <td><input type="text" placeholder="填写..."></td>
+                <td><input type="number" placeholder="填写..."></td>
+                <td><select><option>待确认</option><option>以 Last Click</option><option>以 DDA</option><option>以 GA4</option></select></td>
+              </tr>
+              <tr>
+                <td class="cell-lbl" style="text-align:center">P-05</td>
+                <td><input type="text" placeholder="折扣码归因 vs UTM归因优先级测试"></td>
+                <td><input type="text" placeholder="填写..."></td>
+                <td><input type="text" placeholder="填写..."></td>
+                <td><input type="text" placeholder="填写..."></td>
+                <td><input type="number" placeholder="填写..."></td>
+                <td><select><option>待确认</option><option>折扣码优先</option><option>UTM优先</option></select></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="hint">目标输出：Month 2 投放时各渠道统一结算口径，确定 VTC/CTC 比例认定标准</p>
+      </div>
+    </div>
+
+    <!-- ═══════════ B2 ═══════════ -->
+    <div class="panel" id="panel-b2">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m2">Month 2 · Day 50 交付</div>
+          <div class="panel-title">B2 品牌基础设定 / B2 广告文案矩阵</div>
+          <div class="panel-meta">Owner: 内容策略师 / 文案负责人 &nbsp;·&nbsp; 适用范围: 落地页 / 广告文案 / EDM / 社群简介</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('panel-b2','B2_品牌基础设定_广告文案矩阵')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('b2')">→ 提交飞书</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title" style="margin-bottom:10px">B2 品牌基础设定</div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-b2-base">
+            <thead><tr><th style="width:20%">品牌维度</th><th style="width:20%">当前定义</th><th style="width:20%">目标定义</th><th style="width:20%">差距说明</th><th style="width:20%">修正建议</th></tr></thead>
+            <tbody>
+              <tr><td class="cell-lbl">核心产品卖点</td><td><textarea rows="2" placeholder="列出3个最核心的产品特性与优势..."></textarea></td></tr>
+              <tr><td class="cell-lbl">目标受众画像</td><td><input type="text" placeholder="例：北美 25-35岁职场女性，关注效率与品质"></td></tr>
+              <tr><td class="cell-lbl">品牌语气 (TOV)</td><td><select><option>——</option><option>专业权威</option><option>幽默轻松</option><option>极简高级</option><option>温暖亲和</option><option>大胆挑衅</option></select></td></tr>
+              <tr><td class="cell-lbl">品牌金句 (Slogan)</td><td><input type="text" placeholder="填写品牌核心价值主张..."></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">B2 广告文案矩阵</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-b2',rowTpl.b2)">+ 新增Hook</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-b2">
+            <thead><tr>
+              <th style="width:8%">序号</th>
+              <th style="width:12%">受众细分</th>
+              <th style="width:12%">核心钩子</th>
+              <th style="width:15%">价值主张</th>
+              <th style="width:20%">文案矩阵正文</th>
+              <th style="width:16%">行动号召</th>
+              <th style="width:17%">适用场景</th>
+            </tr></thead>
+            <tbody id="tbody-b2"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ B3 ═══════════ -->
+    <div class="panel" id="panel-b3">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m2">Month 2 · Day 40 交付</div>
+          <div class="panel-title">B3 SKU 阵营划分表 / B3 SKU 脚本矩阵</div>
+          <div class="panel-meta">Owner: 内容策划 / 创意团队 &nbsp;·&nbsp; 适用范围: TikTok / Instagram Reels / YouTube Shorts</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('panel-b3','B3_SKU阵营划分表_SKU脚本矩阵')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('b3')">→ 提交飞书</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">B3 SKU 阵营划分表</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-b3-sku',rowTpl.b3sku)">+ 新增SKU</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-b3-sku">
+            <thead><tr>
+              <th style="width:9%">SKU ID</th>
+              <th style="width:16%">产品名称</th>
+              <th style="width:11%">SKU阵营</th>
+              <th style="width:10%">毛利率%</th>
+              <th style="width:10%">月销量</th>
+              <th style="width:10%">客单价$</th>
+              <th style="width:20%">核心卖点（1句话）</th>
+              <th style="width:14%">脚本优先级</th>
+            </tr></thead>
+            <tbody id="tbody-b3-sku"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">B3 SKU 脚本矩阵</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-b3-script',rowTpl.b3script)">+ 新增脚本</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-b3-script">
+            <thead><tr>
+              <th style="width:8%">脚本ID</th>
+              <th style="width:9%">SKU ID</th>
+              <th style="width:12%">脚本框架</th>
+              <th style="width:30%">脚本内容(Hook+展开+CTA)</th>
+              <th style="width:10%">目标情绪</th>
+              <th style="width:10%">视频时长</th>
+              <th style="width:10%">制作状态</th>
+              <th style="width:11%">投测优先级</th>
+            </tr></thead>
+            <tbody id="tbody-b3-script"></tbody>
+          </table>
+        </div>
+        <p class="hint">按正式脚本矩阵维护每个 SKU 的优先脚本框架、核心卖点、投放优先级与制作状态，避免脚本资产再分散在外部表中。</p>
+      </div>
+    </div>
+
+    <!-- ═══════════ B4 ═══════════ -->
+    <div class="panel" id="panel-b4">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m2">Month 2 · Day 50 交付</div>
+          <div class="panel-title">B4 素材沙盒测试矩阵 / B4 Winner Insights</div>
+          <div class="panel-meta">Owner: 广告优化师 / 数据分析师 &nbsp;·&nbsp; 适用范围: Meta Ads / TikTok Ads / YouTube Shorts</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('panel-b4','B4_素材沙盒测试矩阵_WinnerInsights')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('b4')">→ 提交飞书</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">B4 素材沙盒测试矩阵</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-b4',rowTpl.b4)">+ 新增素材</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-b4">
+            <thead><tr>
+              <th style="width:7%">序号</th>
+              <th style="width:10%">测试周期</th>
+              <th style="width:10%">创建时间</th>
+              <th style="width:12%">素材名称/ID</th>
+              <th style="width:10%">素材类型</th>
+              <th style="width:10%">投放平台</th>
+              <th style="width:11%">测试预算(USD)</th>
+              <th style="width:10%">实际曝光量</th>
+              <th style="width:10%">实际点击量</th>
+              <th style="width:10%">实际转化量</th>
+              <th style="width:10%">CTR(%)</th>
+              <th style="width:9%">CVR(%)</th>
+              <th style="width:9%">CPA(USD)</th>
+              <th style="width:9%">ROAS</th>
+              <th style="width:13%">测试结论</th>
+            </tr></thead>
+            <tbody id="tbody-b4"></tbody>
+          </table>
+        </div>
+        <p class="hint">按正式测试矩阵记录预算、曝光、点击、转化与结论，保留对比与复盘所需的完整测试上下文。</p>
+      </div>
+
+      <hr class="divider">
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">B4 Winner Insights</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-b4-winner',rowTpl.b4winner)">+ 新增行</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-b4-winner">
+            <thead><tr><th style="width:7%">序号</th><th style="width:10%">记录时间</th><th style="width:10%">洞察版本</th><th style="width:12%">赢家素材名称/ID</th><th style="width:10%">投放平台</th><th style="width:10%">投放周期</th><th style="width:9%">花费(USD)</th><th style="width:8%">实际ROAS</th><th style="width:10%">钩子类型分析</th><th style="width:10%">画面/视觉元素</th><th style="width:10%">文案结构</th><th style="width:12%">受众匹配度分析</th><th style="width:12%">可复用核心元素</th><th style="width:10%">放量建议</th><th style="width:10%">关联SKU</th><th style="width:10%">归档标签</th></tr></thead>
+            <tbody id="tbody-b4-winner"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ B5 ═══════════ -->
+    <div class="panel" id="panel-b5">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m2">Month 2 · Day 60 交付</div>
+          <div class="panel-title">B5 漏斗分层投放策略 / B5 止损护航规则</div>
+          <div class="panel-meta">Owner: 广告投放总监 / 优化师 &nbsp;·&nbsp; 适用范围: Meta / Google / TikTok Ads</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('panel-b5','B5_漏斗分层投放策略_止损护航规则')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('b5')">→ 提交飞书</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">B5 漏斗分层投放策略</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-b5-funnel',rowTpl.b5funnel)">+ 新增行</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-b5">
+            <thead><tr>
+              <th style="width:7%">序号</th>
+              <th style="width:12%">漏斗层级</th>
+              <th style="width:13%">投放目标</th>
+              <th style="width:14%">核心受众</th>
+              <th style="width:15%">素材策略</th>
+              <th style="width:13%">预算分配比例</th>
+              <th style="width:14%">关键优化动作</th>
+              <th style="width:12%">复盘口径</th>
+            </tr></thead>
+            <tbody id="tbody-b5-funnel"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">B5 止损护航规则</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-b5-rules',rowTpl.b5rules)">+ 新增行</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-b5-rules">
+            <thead><tr><th style="width:7%">序号</th><th style="width:10%">规则版本</th><th style="width:10%">生效时间</th><th style="width:10%">平台</th><th style="width:12%">当前日均花费</th><th style="width:10%">近7天ROAS</th><th style="width:10%">近7天CPA</th><th style="width:16%">止损触发条件</th><th style="width:10%">ROAS红线阈值</th><th style="width:10%">CPA红线阈值</th><th style="width:12%">触发动作</th><th style="width:10%">执行负责人</th><th style="width:12%">例外情形说明</th><th style="width:10%">规则优先级</th><th style="width:10%">复盘频率</th></tr></thead>
+            <tbody id="tbody-b5-rules"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ B6 ═══════════ -->
+    <div class="panel" id="panel-b6">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge badge-m2">Month 2 · Day 60 交付</div>
+          <div class="panel-title">B6 用户多维分析 / B6 种子标签包</div>
+          <div class="panel-meta">Owner: 数据分析师 / CRM 经理 &nbsp;·&nbsp; 适用范围: 广告受众扩张 / EDM / 产品开发</div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="exportTable('panel-b6','B6_用户多维分析_种子标签包')">↓ 导出CSV</button>
+          <button class="btn btn-primary" onclick="submitToFeishu('b6')">→ 提交飞书</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">B6 用户多维分析</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-b6',rowTpl.b6)">+ 新增行</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-b6">
+            <thead><tr>
+              <th style="width:7%">序号</th>
+              <th style="width:10%">分析周期</th>
+              <th style="width:10%">更新时间</th>
+              <th style="width:10%">数据来源平台</th>
+              <th style="width:12%">分析时间区间</th>
+              <th style="width:10%">样本订单量</th>
+              <th style="width:10%">新客占比(%)</th>
+              <th style="width:10%">复购客占比(%)</th>
+              <th style="width:10%">RFM分层结果</th>
+              <th style="width:12%">高价值用户特征</th>
+              <th style="width:10%">LTV估算(USD)</th>
+              <th style="width:10%">核心流失节点</th>
+              <th style="width:12%">增长机会洞察</th>
+              <th style="width:10%">策略建议</th>
+              <th style="width:10%">下一步动作</th>
+            </tr></thead>
+            <tbody id="tbody-b6"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">B6 种子标签包</div>
+          <button class="btn btn-secondary btn-sm" onclick="addRow('tbody-b6-seeds',rowTpl.b6seed)">+ 新增行</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="tbl-b6-seeds">
+            <thead><tr><th style="width:7%">序号</th><th style="width:10%">标签包版本</th><th style="width:10%">创建时间</th><th style="width:12%">对应SKU/产品类目</th><th style="width:10%">目标平台</th><th style="width:14%">已知高转化受众描述</th><th style="width:10%">兴趣标签(列表)</th><th style="width:10%">行为标签(列表)</th><th style="width:10%">人口属性</th><th style="width:12%">自定义受众规则</th><th style="width:10%">相似受众来源</th><th style="width:10%">排除人群条件</th><th style="width:10%">适用场景</th><th style="width:8%">测试优先级</th><th style="width:7%">备注</th></tr></thead>
+            <tbody id="tbody-b6-seeds"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ API 规范 ═══════════ -->
+    <div class="panel" id="panel-api">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <div class="phase-badge" style="background:#EDE9FE;color:#5B21B6">开发者文档</div>
+          <div class="panel-title">飞书网页应用 + Bitable API 对接规范</div>
+          <div class="panel-meta">适用接口: 飞书开放平台 v2 · 本文件可直接交给 Codex / 开发者使用</div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <strong>架构说明：</strong> 本系统采用「网页应用免登 + Bitable API 写入」方案。用户在飞书客户端内打开本页面，通过飞书 JSSDK 获取 <code>code</code>，后端用 <code>code</code> 换取 <code>user_access_token</code>，再调用 Bitable API 将表单数据写入对应多维表格。在非飞书环境下（普通浏览器），表格仍可正常使用并支持导出 CSV。
+      </div>
+
+      <div class="section">
+        <div class="section-title" style="margin-bottom:10px">Step 1 — 前端免登流程（飞书客户端内）</div>
+        <div class="code-block">/* 1. 检测飞书环境 */
+const isFeishu = navigator.userAgent.includes('Lark') || navigator.userAgent.includes('Feishu');
+
+/* 2. 在飞书内，调用 JSAPI 获取登录 code */
+if (isFeishu && window.h5sdk) {
+  window.h5sdk.ready(() => {
+    window.h5sdk.requestAuthCode({
+      appId: 'YOUR_APP_ID',
+      success(res) {
+        const code = res.code;
+        // 3. 将 code 发送给你的后端换取 user_access_token
+        fetch('/api/feishu/auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code })
+        })
+        .then(r => r.json())
+        .then(data => {
+          window.__feishuToken = data.user_access_token;
+          document.getElementById('feishu-badge').style.display = 'inline';
+          document.getElementById('user-info').textContent = data.user_name || '已登录';
+        });
+      },
+      fail(err) { console.error('飞书免登失败', err); }
+    });
+  });
+}</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title" style="margin-bottom:10px">Step 2 — 后端代理接口（Node.js / Cloudflare Worker）</div>
+        <div class="code-block">// /api/feishu/auth  — 用 code 换 user_access_token
+app.post('/api/feishu/auth', async (req, res) => {
+  const { code } = req.body;
+
+  // 1. 获取 app_access_token
+  const appTokenRes = await fetch('https://open.feishu.cn/open-apis/auth/v3/app_access_token/internal', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ app_id: process.env.FEISHU_APP_ID, app_secret: process.env.FEISHU_APP_SECRET })
+  });
+  const { app_access_token } = await appTokenRes.json();
+
+  // 2. 用 code 换 user_access_token
+  const userTokenRes = await fetch('https://open.feishu.cn/open-apis/authen/v1/access_token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${app_access_token}` },
+    body: JSON.stringify({ grant_type: 'authorization_code', code })
+  });
+  const userData = await userTokenRes.json();
+  res.json({
+    user_access_token: userData.data?.access_token,
+    user_name: userData.data?.name
+  });
+});</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title" style="margin-bottom:10px">Step 3 — 写入 Bitable API（前端调用示例）</div>
+        <div class="code-block">/**
+ * 将表格数据提交到飞书多维表格
+ * @param {string} tableId - 多维表格的 table_id（tblXXX）
+ * @param {object} fields  - 字段键值对（参照下方字段映射表）
+ */
+async function submitRecord(tableId, fields) {
+  const APP_TOKEN = 'YOUR_BITABLE_APP_TOKEN'; // 从多维表格 URL /base/ 后获取
+  const token = window.__feishuToken || await getTenantToken(); // 非登录态降级用 tenant_token
+
+  const res = await fetch(
+    `https://open.feishu.cn/open-apis/bitable/v1/apps/${APP_TOKEN}/tables/${tableId}/records`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ fields })
+    }
+  );
+  return res.json();
+}
+
+// 示例：提交 B4 素材测试一条记录
+submitRecord('TBL_B4_ID', {
+  creative_id:       document.getElementById('cr-id').value,
+  script_type:       document.getElementById('script-type').value,
+  thumb_stop_rate:   parseFloat(document.getElementById('ts-rate').value),
+  hold_rate:         parseFloat(document.getElementById('hold-rate').value),
+  ctr:               parseFloat(document.getElementById('ctr').value),
+  cvr:               parseFloat(document.getElementById('cvr').value),
+  action:            document.getElementById('action').value
+});</div>
+      </div>
+
+      <hr class="divider">
+      <div class="section">
+        <div class="section-title" style="margin-bottom:10px">Bitable 字段映射总表（A1–B6）</div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr>
+              <th style="width:8%">文档</th>
+              <th style="width:20%">飞书字段名</th>
+              <th style="width:15%">field_type</th>
+              <th style="width:22%">API key</th>
+              <th style="width:35%">枚举值 / 说明</th>
+            </tr></thead>
+            <tbody>
+              <!-- A1 -->
+              <tr><td class="cell-lbl" rowspan="7" style="vertical-align:top;padding-top:10px;font-weight:600">A1</td><td class="cell-lbl">SKU 名称</td><td><span class="ftype ft-text">文本</span></td><td class="cell-lbl"><code>sku_name</code></td><td class="cell-lbl">自由填写</td></tr>
+              <tr><td class="cell-lbl">投放平台</td><td><span class="ftype ft-select">单选</span></td><td class="cell-lbl"><code>platform</code></td><td class="cell-lbl">Meta / Amazon / TikTok / Google / Shopee</td></tr>
+              <tr><td class="cell-lbl">近30天销量</td><td><span class="ftype ft-number">数字</span></td><td class="cell-lbl"><code>sales_30d</code></td><td class="cell-lbl">整数</td></tr>
+              <tr><td class="cell-lbl">广告花费(RMB)</td><td><span class="ftype ft-number">数字</span></td><td class="cell-lbl"><code>ad_spend_rmb</code></td><td class="cell-lbl">2位小数</td></tr>
+              <tr><td class="cell-lbl">平台ROAS</td><td><span class="ftype ft-number">数字</span></td><td class="cell-lbl"><code>platform_roas</code></td><td class="cell-lbl">2位小数</td></tr>
+              <tr><td class="cell-lbl">实际利润(RMB)</td><td><span class="ftype ft-number">数字</span></td><td class="cell-lbl"><code>actual_profit_rmb</code></td><td class="cell-lbl">可为负数</td></tr>
+              <tr><td class="cell-lbl">数据状态</td><td><span class="ftype ft-select">单选</span></td><td class="cell-lbl"><code>data_status</code></td><td class="cell-lbl">待填 / 完整 / 部分缺失 / 缺失</td></tr>
+              <!-- A2 -->
+              <tr><td class="cell-lbl" rowspan="6" style="vertical-align:top;padding-top:10px;font-weight:600">A2</td><td class="cell-lbl">原始落地页URL</td><td><span class="ftype ft-url">超链接</span></td><td class="cell-lbl"><code>landing_url</code></td><td class="cell-lbl">https:// 开头</td></tr>
+              <tr><td class="cell-lbl">utm_source</td><td><span class="ftype ft-select">单选</span></td><td class="cell-lbl"><code>utm_source</code></td><td class="cell-lbl">facebook / google / tiktok / klaviyo / influencer</td></tr>
+              <tr><td class="cell-lbl">utm_medium</td><td><span class="ftype ft-select">单选</span></td><td class="cell-lbl"><code>utm_medium</code></td><td class="cell-lbl">cpc / paid_social / email / bio / kol</td></tr>
+              <tr><td class="cell-lbl">utm_campaign</td><td><span class="ftype ft-text">文本</span></td><td class="cell-lbl"><code>utm_campaign</code></td><td class="cell-lbl">格式: [国家]_[产品]_[活动]</td></tr>
+              <tr><td class="cell-lbl">utm_content</td><td><span class="ftype ft-text">文本</span></td><td class="cell-lbl"><code>utm_content</code></td><td class="cell-lbl">格式: vid01_xxx</td></tr>
+              <tr><td class="cell-lbl">最终投放URL</td><td><span class="ftype ft-url">超链接</span></td><td class="cell-lbl"><code>final_url</code></td><td class="cell-lbl">自动拼接结果</td></tr>
+              <!-- A3 -->
+              <tr><td class="cell-lbl" rowspan="7" style="vertical-align:top;padding-top:10px;font-weight:600">A3</td><td class="cell-lbl">观测日期</td><td><span class="ftype ft-date">日期</span></td><td class="cell-lbl"><code>obs_date</code></td><td class="cell-lbl">YYYY-MM-DD</td></tr>
+              <tr><td class="cell-lbl">平台</td><td><span class="ftype ft-select">单选</span></td><td class="cell-lbl"><code>platform</code></td><td class="cell-lbl">Meta / Google / TikTok</td></tr>
+              <tr><td class="cell-lbl">Pixel接收量</td><td><span class="ftype ft-number">数字</span></td><td class="cell-lbl"><code>pixel_count</code></td><td class="cell-lbl">整数</td></tr>
+              <tr><td class="cell-lbl">S2S接收量</td><td><span class="ftype ft-number">数字</span></td><td class="cell-lbl"><code>s2s_count</code></td><td class="cell-lbl">整数</td></tr>
+              <tr><td class="cell-lbl">去重后总量</td><td><span class="ftype ft-number">数字</span></td><td class="cell-lbl"><code>dedup_count</code></td><td class="cell-lbl">整数</td></tr>
+              <tr><td class="cell-lbl">真实订单数</td><td><span class="ftype ft-number">数字</span></td><td class="cell-lbl"><code>actual_orders</code></td><td class="cell-lbl">来自Shopify/CRM</td></tr>
+              <tr><td class="cell-lbl">补足率%</td><td><span class="ftype ft-number">数字</span></td><td class="cell-lbl"><code>supplement_rate</code></td><td class="cell-lbl">(dedup/pixel-1)×100</td></tr>
+              <!-- B4 -->
+              <tr><td class="cell-lbl" rowspan="7" style="vertical-align:top;padding-top:10px;font-weight:600">B4</td><td class="cell-lbl">素材ID</td><td><span class="ftype ft-text">文本</span></td><td class="cell-lbl"><code>creative_id</code></td><td class="cell-lbl">格式: CR-01</td></tr>
+              <tr><td class="cell-lbl">脚本框架</td><td><span class="ftype ft-select">单选</span></td><td class="cell-lbl"><code>script_type</code></td><td class="cell-lbl">痛点对比/场景化/UGC证言/极限测试/悬念揭秘</td></tr>
+              <tr><td class="cell-lbl">3s停留率%</td><td><span class="ftype ft-number">数字</span></td><td class="cell-lbl"><code>thumb_stop_rate</code></td><td class="cell-lbl">阈值 &gt;25%</td></tr>
+              <tr><td class="cell-lbl">15s完播率%</td><td><span class="ftype ft-number">数字</span></td><td class="cell-lbl"><code>hold_rate</code></td><td class="cell-lbl">阈值 &gt;20%</td></tr>
+              <tr><td class="cell-lbl">CTR%</td><td><span class="ftype ft-number">数字</span></td><td class="cell-lbl"><code>ctr</code></td><td class="cell-lbl">阈值 &gt;1.5%</td></tr>
+              <tr><td class="cell-lbl">CVR%</td><td><span class="ftype ft-number">数字</span></td><td class="cell-lbl"><code>cvr</code></td><td class="cell-lbl">2位小数</td></tr>
+              <tr><td class="cell-lbl">结论</td><td><span class="ftype ft-select">单选</span></td><td class="cell-lbl"><code>action</code></td><td class="cell-lbl">放量 / 优化后重测 / 弃用 / 待评估</td></tr>
+              <!-- B6 -->
+              <tr><td class="cell-lbl" rowspan="6" style="vertical-align:top;padding-top:10px;font-weight:600">B6</td><td class="cell-lbl">分析维度</td><td><span class="ftype ft-select">单选</span></td><td class="cell-lbl"><code>dimension</code></td><td class="cell-lbl">性别年龄/地理位置/购买时点/设备/复购行为</td></tr>
+              <tr><td class="cell-lbl">核心特征</td><td><span class="ftype ft-text">文本</span></td><td class="cell-lbl"><code>key_insight</code></td><td class="cell-lbl">自由填写</td></tr>
+              <tr><td class="cell-lbl">占比%</td><td><span class="ftype ft-number">数字</span></td><td class="cell-lbl"><code>share_pct</code></td><td class="cell-lbl">0–100</td></tr>
+              <tr><td class="cell-lbl">投放建议</td><td><span class="ftype ft-text">文本</span></td><td class="cell-lbl"><code>action_suggestion</code></td><td class="cell-lbl">自由填写</td></tr>
+              <tr><td class="cell-lbl">种子包标签</td><td><span class="ftype ft-select">单选</span></td><td class="cell-lbl"><code>seed_tag</code></td><td class="cell-lbl">Seed_01 / Seed_02 / Seed_03 / 未分配</td></tr>
+              <tr><td class="cell-lbl">导入状态</td><td><span class="ftype ft-select">单选</span></td><td class="cell-lbl"><code>import_status</code></td><td class="cell-lbl">未导入 / 已导入Meta / 已导入Google / 全部已导入</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <div class="section">
+        <div class="section-title" style="margin-bottom:10px">Repo 文件结构建议（growth-engine-cn）</div>
+        <div class="code-block">growth-engine-cn/
+├── index.html                  ← 主入口（现有页面）
+├── growth-forms.html           ← 本文件（表格系统独立页面）
+├── api/
+│   ├── feishu-auth.js          ← 飞书免登代理（Node / CF Worker）
+│   └── feishu-bitable.js       ← Bitable 写入代理
+├── js/
+│   └── feishu-sdk.js           ← JSSDK 初始化封装（可复用）
+└── .env.example                ← FEISHU_APP_ID / FEISHU_APP_SECRET 模板</div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- 提交反馈 Toast -->
+<div id="submit-toast">✓ 数据已提交到飞书多维表格</div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   行模板
+═══════════════════════════════════════════════ */
+var rowCounts = {};
+
+var rowTpl = {
+  a1: function(i) {
+    return '<tr>' +
+      '<td class="cell-lbl" style="text-align:center">' + (i+1) + '</td>' +
+      '<td><input type="text" placeholder="SKU名称"></td>' +
+      '<td><select><option>——</option><option>Meta</option><option>Amazon</option><option>TikTok</option><option>Google</option><option>Shopee</option></select></td>' +
+      '<td><input type="number" placeholder="数量"></td>' +
+      '<td><input type="number" placeholder="金额" step="0.01"></td>' +
+      '<td><input type="number" placeholder="ROAS" step="0.01"></td>' +
+      '<td><input type="number" placeholder="利润" step="0.01"></td>' +
+      '<td><input type="number" placeholder="%" step="0.1"></td>' +
+      '<td><select><option>待填</option><option>✅ 完整</option><option>⚠️ 部分缺失</option><option>❌ 缺失</option></select></td>' +
+      '</tr>';
+  },
+  a2: function(i) {
+    return '<tr>' +
+      '<td class="cell-lbl" style="text-align:center">' + (i+1) + '</td>' +
+      '<td><input type="text" placeholder="https://..."></td>' +
+      '<td><select><option>——</option><option>facebook</option><option>google</option><option>tiktok</option><option>klaviyo</option><option>influencer</option><option>affiliate</option></select></td>' +
+      '<td><select><option>——</option><option>cpc</option><option>paid_social</option><option>email</option><option>bio</option><option>kol</option><option>sms</option></select></td>' +
+      '<td><input type="text" placeholder="us_sku01_blackfriday"></td>' +
+      '<td><input type="text" placeholder="vid01_xxx"></td>' +
+      '<td><input type="text" placeholder="自动生成后粘贴此处"></td>' +
+      '</tr>';
+  },
+  a3: function(i) {
+    return '<tr>' +
+      '<td><input type="date"></td>' +
+      '<td><select><option>Meta</option><option>Google</option><option>TikTok</option></select></td>' +
+      '<td><input type="number" placeholder="数量"></td>' +
+      '<td><input type="number" placeholder="数量"></td>' +
+      '<td><input type="number" placeholder="数量"></td>' +
+      '<td><input type="number" placeholder="数量"></td>' +
+      '<td><input type="number" placeholder="%" step="0.1"></td>' +
+      '<td><input type="text" placeholder="备注..."></td>' +
+      '</tr>';
+  },
+  a3qa: function(i) {
+    return '<tr>' +
+      '<td><input type="text" placeholder="填写验收项"></td>' +
+      '<td><select><option>——</option><option>✅ 通过</option><option>❌ 失败</option><option>⏳ 进行中</option></select></td>' +
+      '<td><input type="text" placeholder="EMQ分数或备注"></td>' +
+      '</tr>';
+  },
+  gap: function(i) {
+    return '<tr>' +
+      '<td><input type="text" placeholder="缺失资料名称"></td>' +
+      '<td><input type="text" placeholder="用途说明"></td>' +
+      '<td><input type="text" placeholder="责任人"></td>' +
+      '<td><input type="date"></td>' +
+      '</tr>';
+  },
+  b2: function(i) {
+    return '<tr>' +
+      '<td class="cell-lbl" style="text-align:center">H-0' + (i+1) + '</td>' +
+      '<td><input type="text" placeholder="用户痛点场景"></td>' +
+      '<td><select><option>——</option><option>AIDA</option><option>PAS</option><option>社会认同</option><option>害怕错过</option><option>权威背书</option></select></td>' +
+      '<td><textarea rows="2" placeholder="文案内容（含Hook+展开+CTA）"></textarea></td>' +
+      '<td><input type="text" placeholder="CTA文字"></td>' +
+      '<td><select><option>——</option><option>恐惧诉求</option><option>欲望诉求</option><option>好奇诉求</option><option>社群认同</option></select></td>' +
+      '</tr>';
+  },
+  b3sku: function(i) {
+    return '<tr>' +
+      '<td><input type="text" placeholder="SKU-0' + (i+1) + '"></td>' +
+      '<td><input type="text" placeholder="产品名称"></td>' +
+      '<td><select><option>——</option><option>利润款</option><option>引流款</option><option>库存款</option></select></td>' +
+      '<td><input type="number" placeholder="%" step="0.1"></td>' +
+      '<td><input type="number" placeholder="数量"></td>' +
+      '<td><input type="number" placeholder="$" step="0.01"></td>' +
+      '<td><input type="text" placeholder="一句话卖点"></td>' +
+      '<td><select><option>——</option><option>P1 最高优先</option><option>P2 次优先</option><option>P3 待排期</option></select></td>' +
+      '</tr>';
+  },
+  b3script: function(i) {
+    return '<tr>' +
+      '<td><input type="text" placeholder="SC-0' + (i+1) + '"></td>' +
+      '<td><input type="text" placeholder="SKU ID"></td>' +
+      '<td><select><option>——</option><option>痛点对比</option><option>使用场景</option><option>UGC证言</option><option>极限测试</option><option>悬念揭秘</option></select></td>' +
+      '<td><textarea rows="2" placeholder="Hook（前3秒）→ 展开 → CTA"></textarea></td>' +
+      '<td><select><option>——</option><option>恐惧/焦虑</option><option>欲望/渴望</option><option>好奇/惊喜</option><option>信任/认同</option></select></td>' +
+      '<td><select><option>——</option><option>15s</option><option>30s</option><option>45s</option><option>60s</option></select></td>' +
+      '<td><select><option>待制作</option><option>制作中</option><option>待审核</option><option>已就绪</option></select></td>' +
+      '<td><select><option>——</option><option>P1</option><option>P2</option><option>P3</option></select></td>' +
+      '</tr>';
+  },
+  b4: function(i) {
+    return '<tr>' +
+      '<td><input type="text" placeholder="CR-0' + (i+1) + '"></td>' +
+      '<td><select><option>——</option><option>痛点对比</option><option>使用场景</option><option>UGC证言</option><option>极限测试</option><option>悬念揭秘</option></select></td>' +
+      '<td><input type="number" placeholder="%" step="0.1"></td>' +
+      '<td><input type="number" placeholder="%" step="0.1"></td>' +
+      '<td><input type="number" placeholder="%" step="0.1"></td>' +
+      '<td><input type="number" placeholder="%" step="0.1"></td>' +
+      '<td><input type="number" placeholder="$" step="0.01"></td>' +
+      '<td><input type="number" placeholder="$" step="0.01"></td>' +
+      '<td><input type="number" placeholder="次数"></td>' +
+      '<td><select><option>待评估</option><option>放量 Winner</option><option>优化后重测</option><option>弃用</option></select></td>' +
+      '</tr>';
+  },
+  b4winner: function(i) {
+    return '<tr>' +
+      '<td><input type="text" placeholder="分析维度"></td>' +
+      '<td><input type="text" placeholder="观察记录"></td>' +
+      '<td><input type="text" placeholder="后续行动方案"></td>' +
+      '</tr>';
+  },
+  b5funnel: function(i) {
+    return '<tr>' +
+      '<td><select><option>——</option><option>TOF 拉新</option><option>MOF 再温</option><option>BOF 收割</option><option>Sandbox 测试</option></select></td>' +
+      '<td><input type="text" placeholder="战术目标"></td>' +
+      '<td><input type="text" placeholder="受众选择"></td>' +
+      '<td><input type="text" placeholder="素材应用"></td>' +
+      '<td><input type="number" placeholder="%" step="0.1"></td>' +
+      '<td><input type="number" placeholder="金额" step="0.01"></td>' +
+      '<td><input type="text" placeholder="核心监控指标"></td>' +
+      '</tr>';
+  },
+  b5rules: function(i) {
+    return '<tr>' +
+      '<td><select><option>——</option><option>止损规则</option><option>护航规则</option><option>扩量规则</option></select></td>' +
+      '<td><input type="text" placeholder="触发条件"></td>' +
+      '<td><input type="text" placeholder="执行动作"></td>' +
+      '<td><input type="text" placeholder="适用账户"></td>' +
+      '</tr>';
+  },
+  b6: function(i) {
+    return '<tr>' +
+      '<td><select><option>——</option><option>性别/年龄</option><option>地理位置</option><option>购买时点</option><option>设备环境</option><option>复购行为</option></select></td>' +
+      '<td><input type="text" placeholder="核心特征描述"></td>' +
+      '<td><input type="number" placeholder="%" step="0.1"></td>' +
+      '<td><input type="text" placeholder="对应投放建议..."></td>' +
+      '</tr>';
+  },
+  b6seed: function(i) {
+    return '<tr>' +
+      '<td><select><option>——</option><option>Seed_01</option><option>Seed_02</option><option>Seed_03</option></select></td>' +
+      '<td><input type="text" placeholder="用户定义"></td>' +
+      '<td><input type="number" placeholder="人数"></td>' +
+      '<td><select><option>未导入</option><option>已导入 Meta</option><option>已导入 Google</option><option>已导入 TikTok</option><option>全部已导入</option></select></td>' +
+      '</tr>';
+  }
+};
+
+/* ═══════════════════════════════════════════════
+   初始化预置行
+═══════════════════════════════════════════════ */
+function initRows() {
+  var inits = [
+    ['tbody-a1', rowTpl.a1, 3],
+    ['tbody-a2', rowTpl.a2, 2],
+    ['tbody-a3', rowTpl.a3, 3],
+    ['tbody-a3-qa', rowTpl.a3qa, 1],
+    ['tbody-a1-gap', rowTpl.gap, 1],
+    ['tbody-b2', rowTpl.b2, 3],
+    ['tbody-b3-sku', rowTpl.b3sku, 3],
+    ['tbody-b3-script', rowTpl.b3script, 5],
+    ['tbody-b4', rowTpl.b4, 4],
+    ['tbody-b4-winner', rowTpl.b4winner, 1],
+    ['tbody-b5-funnel', rowTpl.b5funnel, 1],
+    ['tbody-b5-rules', rowTpl.b5rules, 1],
+    ['tbody-b6', rowTpl.b6, 1],
+    ['tbody-b6-seeds', rowTpl.b6seed, 1]
+  ];
+  inits.forEach(function(cfg) {
+    rowCounts[cfg[0]] = 0;
+    for (var j = 0; j < cfg[2]; j++) addRow(cfg[0], cfg[1]);
+  });
+
+  // A1 QA 清单预置
+  var qaItems = [
+    'Amazon / Meta / Google / TikTok 历史订单已导出至本地',
+    'Shopify 后台真实成交数与平台数据已对齐',
+    '退款订单与测试订单已剔除',
+    '各平台数据已统一币种（USD）',
+    'GA4 中 Unassigned 流量占比已低于 5%'
+  ];
+  var qaTbody = document.getElementById('tbody-a1-qa');
+  qaItems.forEach(function(item) {
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td class="cell-lbl">' + item + '</td>' +
+      '<td><select><option>——</option><option>✅ 通过</option><option>❌ 未完成</option><option>⏳ 进行中</option></select></td>' +
+      '<td><input type="text" placeholder="备注..."></td>';
+    qaTbody.appendChild(tr);
+  });
+
+}
+
+function addRow(tbodyId, tpl) {
+  var tbody = document.getElementById(tbodyId);
+  if (!tbody) return;
+  var idx = rowCounts[tbodyId] || 0;
+  tbody.insertAdjacentHTML('beforeend', tpl(idx));
+  rowCounts[tbodyId] = idx + 1;
+}
+
+/* ═══════════════════════════════════════════════
+   导航切换
+═══════════════════════════════════════════════ */
+function showPanel(id, btn) {
+  document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(b) { b.classList.remove('active'); });
+  var panel = document.getElementById('panel-' + id);
+  if (panel) panel.classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+/* ═══════════════════════════════════════════════
+   CSV 导出
+═══════════════════════════════════════════════ */
+function getTableCSV(tbl) {
+  if (!tbl) return '';
+  var rows = [], headers = [];
+  tbl.querySelectorAll('thead th').forEach(function(th) { headers.push(th.textContent.trim()); });
+  if (headers.length) rows.push(headers.join(','));
+  tbl.querySelectorAll('tbody tr').forEach(function(tr) {
+    var cells = [];
+    tr.querySelectorAll('td').forEach(function(td) {
+      var el = td.querySelector('input,select,textarea');
+      var val = el ? (el.tagName === 'SELECT' ? el.options[el.selectedIndex].text : el.value) : td.textContent.trim();
+      cells.push('"' + (val || '').replace(/"/g, '""') + '"');
+    });
+    if (cells.some(function(c) { return c !== '""'; })) rows.push(cells.join(','));
+  });
+  return rows.join('\n');
+}
+
+function exportTable(tableIdOrPanelId, filename) {
+  var allCSV = [];
+
+  /* 先尝试：直接用 id 找单张 TABLE */
+  var direct = document.getElementById(tableIdOrPanelId);
+  if (direct && direct.tagName === 'TABLE') {
+    var csv = getTableCSV(direct);
+    if (csv) allCSV.push(csv);
+  } else {
+    /* 备用：把 id 当面板容器，遍历其内所有 .data-table */
+    var container = direct || document.querySelector('.panel.active');
+    if (!container) { showToast('找不到可导出的表格'); return; }
+    container.querySelectorAll('table.data-table').forEach(function(t) {
+      var csv = getTableCSV(t);
+      if (csv) {
+        if (allCSV.length > 0) allCSV.push('');
+        allCSV.push(csv);
+      }
+    });
+  }
+
+  if (allCSV.length === 0) { showToast('请先填写数据再导出'); return; }
+
+  var blob = new Blob(['\uFEFF' + allCSV.join('\n')], { type: 'text/csv;charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename + '_' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  showToast('✓ CSV 已下载：' + filename);
+}
+
+/* ═══════════════════════════════════════════════
+   飞书提交（需配合后端代理）
+   TODO: 替换 BITABLE_CONFIG 中的 app_token 和各 table_id
+═══════════════════════════════════════════════ */
+var BITABLE_CONFIG = {
+  app_token: 'YOUR_BITABLE_APP_TOKEN',  // 替换为你的多维表格 App Token
+  tables: {
+    a1: 'TBL_A1_SKU_CHECKLIST',         // 替换为实际 table_id
+    a2: 'TBL_A2_UTM_PARAMS',
+    a3: 'TBL_A3_PIXEL_S2S',
+    a4: 'TBL_A4_ATTRIBUTION',
+    b2: 'TBL_B2_COPY_MATRIX',
+    b3: 'TBL_B3_SCRIPT_MATRIX',
+    b4: 'TBL_B4_SANDBOX_TEST',
+    b5: 'TBL_B5_AD_STRATEGY',
+    b6: 'TBL_B6_USER_PROFILE'
+  }
+};
+
+function collectTableData(tableId) {
+  var tbl = document.getElementById(tableId);
+  if (!tbl) return [];
+  var headers = [];
+  tbl.querySelectorAll('thead th').forEach(function(th) { headers.push(th.textContent.trim()); });
+  var records = [];
+  tbl.querySelectorAll('tbody tr').forEach(function(tr) {
+    var rec = {};
+    tr.querySelectorAll('td').forEach(function(td, idx) {
+      var el = td.querySelector('input,select,textarea');
+      var val = el ? (el.tagName === 'SELECT' ? el.options[el.selectedIndex].text : el.value) : td.textContent.trim();
+      if (headers[idx] && val && val !== '——') rec[headers[idx]] = val;
+    });
+    if (Object.keys(rec).length > 0) records.push(rec);
+  });
+  return records;
+}
+
+function collectA3ObsData() {
+  var tbl = document.getElementById('tbl-a3');
+  if (!tbl) return [];
+  var records = [];
+  tbl.querySelectorAll('tbody tr').forEach(function(tr) {
+    var cells = tr.querySelectorAll('td');
+    if (cells.length < 8) return;
+    var record = {
+      '日期': cells[0].querySelector('input')?.value || '',
+      '平台': cells[1].querySelector('select')?.value || '',
+      'Pixel接收量(A)': cells[2].querySelector('input')?.value || '',
+      'S2S接收量(B)': cells[3].querySelector('input')?.value || '',
+      '去重后总量(C)': cells[4].querySelector('input')?.value || '',
+      '真实订单数': cells[5].querySelector('input')?.value || '',
+      '补足率(C/A-1)%': cells[6].querySelector('input')?.value || '',
+      '备注': cells[7].querySelector('input')?.value || ''
+    };
+    var hasAnyValue = Object.values(record).some(function(val) {
+      return val !== '' && val !== '——';
+    });
+    if (hasAnyValue) records.push(record);
+  });
+  return records;
+}
+
+function collectA3QaData() {
+  var tbl = document.getElementById('tbl-a3-qa');
+  if (!tbl) return [];
+  var records = [];
+  tbl.querySelectorAll('tbody tr').forEach(function(tr) {
+    var cells = tr.querySelectorAll('td');
+    if (cells.length < 3) return;
+    var record = {
+      '验收项': cells[0].querySelector('input')?.value || '',
+      '状态': cells[1].querySelector('select')?.value || '',
+      'EMQ分数/备注': cells[2].querySelector('input')?.value || ''
+    };
+    var hasAnyValue = Object.values(record).some(function(val) {
+      return val !== '' && val !== '——';
+    });
+    if (hasAnyValue) records.push(record);
+  });
+  return records;
+}
+
+async function submitToFeishu(panelId) {
+  if (!window.__session) {
+    document.getElementById('login-overlay').style.display = 'flex';
+    showToast('请先登录飞书账号');
+    return;
+  }
+
+  if (panelId === 'a3') {
+    var a3Payloads = [
+      { subKey: 'obs', records: collectA3ObsData() },
+      { subKey: 'qa', records: collectA3QaData() }
+    ].filter(function(target) {
+      return target.records.length > 0;
+    });
+
+    if (a3Payloads.length === 0) { showToast('请先填写数据再提交'); return; }
+
+    showToast('提交中...');
+    try {
+      var a3TotalCount = 0;
+      for (var j = 0; j < a3Payloads.length; j++) {
+        var a3Payload = a3Payloads[j];
+        var a3Resp = await fetch('/.netlify/functions/feishu-submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ panelId: 'a3', subKey: a3Payload.subKey, records: a3Payload.records })
+        });
+        var a3Data = await a3Resp.json();
+        if (!a3Data.ok) {
+          showToast('提交失败：' + (a3Data.error || '未知错误'));
+          console.error('Submit error:', a3Data);
+          return;
+        }
+        a3TotalCount += a3Data.count || a3Payload.records.length;
+      }
+      showToast('✓ ' + a3TotalCount + ' 条数据已提交到飞书多维表格');
+    } catch (e) {
+      showToast('提交失败，请检查网络连接');
+      console.error(e);
+    }
+    return;
+  }
+
+  var submitConfig = {
+    a1: [{ subKey: 'main', tableId: 'tbl-a1' }],
+    b3: [{ subKey: 'script', tableId: 'tbl-b3-script' }],
+    b4: [
+      { subKey: 'core', tableId: 'tbl-b4' },
+      { subKey: 'winner', tableId: 'tbl-b4-winner' }
+    ],
+    b5: [
+      { subKey: 'rules', tableId: 'tbl-b5-rules' }
+    ],
+    b6: [
+      { subKey: 'analysis', tableId: 'tbl-b6' },
+      { subKey: 'seeds', tableId: 'tbl-b6-seeds' }
+    ]
+  };
+  var targets = submitConfig[panelId];
+  if (!targets) {
+    if (panelId === 'a2' || panelId === 'b2') {
+      showToast('当前面板仅展示/导出，不写入飞书');
+      return;
+    }
+    showToast('本面板提交尚未接入，请先使用导出CSV');
+    return;
+  }
+
+  var payloads = targets.map(function(target) {
+    return {
+      subKey: target.subKey,
+      records: collectTableData(target.tableId)
+    };
+  }).filter(function(target) {
+    return target.records.length > 0;
+  });
+
+  if (payloads.length === 0) { showToast('请先填写数据再提交'); return; }
+
+  showToast('提交中...');
+  try {
+    var totalCount = 0;
+    for (var i = 0; i < payloads.length; i++) {
+      var payload = payloads[i];
+      var r = await fetch('/.netlify/functions/feishu-submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ panelId: panelId, subKey: payload.subKey, records: payload.records })
+      });
+      var data = await r.json();
+      if (!data.ok) {
+        showToast('提交失败：' + (data.error || '未知错误'));
+        console.error('Submit error:', data);
+        return;
+      }
+      totalCount += data.count || payload.records.length;
+    }
+    showToast('✓ ' + totalCount + ' 条数据已提交到飞书多维表格');
+  } catch (e) {
+    showToast('提交失败，请检查网络连接');
+    console.error(e);
+  }
+}
+
+function showToast(msg) {
+  var toast = document.getElementById('submit-toast');
+  toast.textContent = msg;
+  toast.style.display = 'block';
+  setTimeout(function() { toast.style.display = 'none'; }, 3000);
+}
+
+/* ═══════════════════════════════════════════════
+   飞书 OAuth Session 检查
+═══════════════════════════════════════════════ */
+window.__session = null;
+
+async function checkSession() {
+  // Show URL error if redirected back with error param
+  var urlParams = new URLSearchParams(window.location.search);
+  var loginError = urlParams.get('error');
+  if (loginError) {
+    var errMessages = {
+      'state_mismatch': '登录状态验证失败，请重试',
+      'no_code': '飞书未返回授权码，请重试',
+      'app_token_failed': '应用认证失败，请联系管理员',
+      'user_token_failed': '用户认证失败，请重试',
+      'callback_error': '登录回调出错，请重试',
+      'app_not_configured': '飞书应用未配置（FEISHU_APP_ID），请联系管理员'
+    };
+    var errEl = document.getElementById('login-error');
+    if (errEl) {
+      errEl.textContent = errMessages[loginError] || '登录失败：' + loginError;
+      errEl.style.display = 'block';
+    }
+    document.getElementById('login-overlay').style.display = 'flex';
+    return;
+  }
+
+  try {
+    var r = await fetch('/.netlify/functions/feishu-session');
+    var data = await r.json();
+    if (data.loggedIn && data.user) {
+      window.__session = data.user;
+      document.getElementById('login-overlay').style.display = 'none';
+      document.getElementById('feishu-badge').style.display = 'inline';
+      document.getElementById('user-info').textContent =
+        (data.user.name || '已登录') + ' · 飞书已连接';
+      var logoutBtn = document.getElementById('logout-btn');
+      if (logoutBtn) logoutBtn.style.display = 'inline-block';
+    } else {
+      document.getElementById('login-overlay').style.display = 'flex';
+    }
+  } catch (e) {
+    console.error('Session check failed:', e);
+    document.getElementById('login-overlay').style.display = 'flex';
+  }
+}
+
+function logout() {
+  document.cookie = 'feishu_session=; Path=/; Max-Age=0';
+  window.__session = null;
+  document.getElementById('login-overlay').style.display = 'flex';
+  document.getElementById('feishu-badge').style.display = 'none';
+  document.getElementById('user-info').textContent = '品牌出海加速器 · 90天增长引擎验证舱';
+  var logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn) logoutBtn.style.display = 'none';
+}
+
+/* ═══════════════════════════════════════════════
+   启动
+═══════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function() {
+  initRows();
+  checkSession();
+});
+</script>
+</body>
+</html>
