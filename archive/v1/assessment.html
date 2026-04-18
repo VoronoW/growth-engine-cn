@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZAPEX｜品牌诊断评估表</title>
+    <link rel="stylesheet" href="./preview-pages.css" />
+    <style>
+      /* ── Assessment form ─────────────────────── */
+      .assessment-wrap {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .assessment-card {
+        background: var(--sf-lowest);
+        border: 1px solid var(--ink-faint);
+        border-radius: var(--r-xl);
+        padding: 56px 64px;
+        box-shadow: var(--ambient);
+      }
+
+      .assessment-section-label {
+        font-family: var(--ff-mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-quiet);
+        display: block;
+        margin-bottom: 28px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--ol-strong);
+      }
+
+      .form-grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      .form-group {
+        display: grid;
+        gap: 8px;
+        margin-bottom: 28px;
+      }
+
+      .form-label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+      }
+
+      .form-required {
+        color: var(--p10);
+        margin-left: 2px;
+      }
+
+      .form-hint {
+        font-size: 0.8125rem;
+        color: var(--ink-quiet);
+      }
+
+      .form-input,
+      .form-select,
+      .form-textarea {
+        width: 100%;
+        padding: 11px 14px;
+        font-family: var(--ff-body);
+        font-size: 0.9375rem;
+        color: var(--ink);
+        background: var(--sf);
+        border: 1px solid var(--ol-strong);
+        border-radius: var(--r-md);
+        outline: none;
+        transition: border-color 0.14s, background 0.14s;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+
+      .form-input::placeholder,
+      .form-textarea::placeholder {
+        color: var(--ink-quiet);
+      }
+
+      .form-input:focus,
+      .form-select:focus,
+      .form-textarea:focus {
+        border-color: var(--p10);
+        background: var(--sf-lowest);
+      }
+
+      .form-select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231b1c1b' opacity='.4' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 38px;
+        cursor: pointer;
+      }
+
+      .form-textarea {
+        resize: vertical;
+        min-height: 96px;
+        line-height: 1.65;
+      }
+
+      .form-divider {
+        height: 1px;
+        background: var(--ol-strong);
+        margin: 40px 0;
+      }
+
+      .form-footer {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+      }
+
+      .form-note {
+        font-size: 0.8125rem;
+        color: var(--ink-quiet);
+        line-height: 1.55;
+      }
+
+      .form-error-msg {
+        display: none;
+        padding: 12px 16px;
+        background: rgba(220, 38, 38, 0.06);
+        border: 1px solid rgba(220, 38, 38, 0.18);
+        border-radius: var(--r-md);
+        color: #b91c1c;
+        font-size: 0.875rem;
+        margin-top: 16px;
+      }
+
+      .form-error-msg.visible { display: block; }
+
+      .form-success {
+        display: none;
+        text-align: center;
+        padding: 72px 32px;
+      }
+
+      .form-success.visible { display: block; }
+
+      .form-success-icon {
+        width: 56px;
+        height: 56px;
+        background: rgba(12, 78, 119, 0.08);
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24px;
+      }
+
+      .form-success-icon svg {
+        width: 24px;
+        height: 24px;
+        stroke: var(--p10);
+      }
+
+      .form-success h3 {
+        font-family: var(--ff-display);
+        font-size: 1.5rem;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        margin: 0 0 12px;
+      }
+
+      .form-success p {
+        color: var(--ink-muted);
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .btn--loading {
+        opacity: 0.65;
+        pointer-events: none;
+      }
+
+      @media (max-width: 720px) {
+        .assessment-card { padding: 36px 28px; }
+        .form-grid-2 { grid-template-columns: 1fr; }
+      }
+
+      @media (max-width: 480px) {
+        .assessment-card { padding: 28px 20px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="nav-wrap">
+        <div class="shell nav">
+          <a href="./homepage-overview.html" class="wordmark on-dark nav-wordmark">
+            <span class="z">Z</span><span class="apex">APEX</span>
+          </a>
+          <nav class="nav-links">
+            <a href="./homepage-overview.html">品牌首页</a>
+            <a href="./system-and-modules.html">系统与模块</a>
+            <a href="./delivery-and-cases.html">交付与案例</a>
+            <a class="current" href="./assessment.html">评估表</a>
+          </nav>
+          <a class="nav-secondary" href="./growth-forms.html"><span class="nav-secondary-dot"></span><span class="nav-secondary-text"><span class="nav-secondary-main">客户工作台</span><span class="nav-secondary-sub">飞书登入</span></span></a>
+          <a class="nav-cta" href="./assessment.html">预约诊断</a>
+        </div>
+      </div>
+
+      <section class="hero hero--compact">
+        <div class="shell hero-inner">
+          <span class="label">品牌诊断 / Assessment</span>
+          <h1>增长系统准备度评估<br>先判断再行动</h1>
+          <p class="hero-sub">
+            在进入系统合作之前，先用这套评估框架判断你的团队处于哪个阶段，以及当前增长断层最可能出现在哪里
+          </p>
+        </div>
+      </section>
+
+      <section class="section section-soft">
+        <div class="shell">
+          <div class="assessment-wrap">
+            <div class="assessment-card">
+
+              <!-- 成功状态 -->
+              <div class="form-success" id="form-success">
+                <div class="form-success-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <h3>评估已提交</h3>
+                <p>我们会在 1–2 个工作日内通过你填写的联系方式与你确认诊断时间，感谢你的信任</p>
+              </div>
+
+              <!-- 表单主体 -->
+              <form id="assessment-form" novalidate>
+
+                <span class="assessment-section-label">基础信息 / Basic Info</span>
+
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label class="form-label" for="brand-name">品牌 / 公司名称<span class="form-required">*</span></label>
+                    <input class="form-input" id="brand-name" type="text" placeholder="例：峥锐科技" autocomplete="organization" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="contact-name">姓名与职位<span class="form-required">*</span></label>
+                    <input class="form-input" id="contact-name" type="text" placeholder="例：张总 · 创始人" autocomplete="name" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="contact-info">联系方式（微信号或邮箱）<span class="form-required">*</span></label>
+                  <input class="form-input" id="contact-info" type="text" placeholder="微信号 / 邮箱" autocomplete="email" />
+                  <span class="form-hint">用于确认诊断时间，不会用于任何推广</span>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <span class="assessment-section-label">业务现状 / Business Context</span>
+
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label class="form-label" for="channel">目前主营销售渠道</label>
+                    <select class="form-select" id="channel">
+                      <option value="" disabled selected>请选择</option>
+                      <option>Amazon / eBay 等第三方平台</option>
+                      <option>独立站（Shopify / WooCommerce）</option>
+                      <option>TikTok Shop / 社交电商</option>
+                      <option>B2B / 批发分销</option>
+                      <option>多渠道同时运营</option>
+                      <option>其他</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="gmv">近12个月月均 GMV 规模</label>
+                    <select class="form-select" id="gmv">
+                      <option value="" disabled selected>请选择</option>
+                      <option>月均 100 万人民币以下</option>
+                      <option>100 万 – 500 万人民币</option>
+                      <option>500 万 – 2000 万人民币</option>
+                      <option>2000 万人民币以上</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <span class="assessment-section-label">增长卡点 / Growth Bottleneck</span>
+
+                <div class="form-group">
+                  <label class="form-label" for="bottleneck">目前最大的增长卡点</label>
+                  <select class="form-select" id="bottleneck">
+                    <option value="" disabled selected>请选择最接近的描述</option>
+                    <option>不知道从哪个 SKU 切入做品牌</option>
+                    <option>做了很多单点动作，但没有形成品牌体系</option>
+                    <option>有战略文件，但团队执行和落地困难</option>
+                    <option>只会投流，没有设计品牌驱动的增长路径</option>
+                    <option>投入了预算，看不到可量化的品牌效果</option>
+                    <option>竞争对手已经在做品牌，担心时机窗口关闭</option>
+                  </select>
+                </div>
+
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label class="form-label" for="brand-status">品牌现状</label>
+                    <select class="form-select" id="brand-status">
+                      <option value="" disabled selected>请选择</option>
+                      <option>还没有明确品牌定位和名称</option>
+                      <option>有品牌名称，但没有清晰的战略定位</option>
+                      <option>有战略文件，但落地执行困难</option>
+                      <option>品牌体系基本完整，需要增长引擎</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="timeline">希望何时启动</label>
+                    <select class="form-select" id="timeline">
+                      <option value="" disabled selected>请选择</option>
+                      <option>1 个月内，时机紧迫</option>
+                      <option>3 个月内，正在做前期判断</option>
+                      <option>半年内，处于探索阶段</option>
+                      <option>暂不确定，先了解系统框架</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="notes">补充说明（可选）</label>
+                  <textarea class="form-textarea" id="notes" placeholder="可以简单描述你目前遇到的具体问题，或对诊断的期望……"></textarea>
+                </div>
+
+                <div class="form-error-msg" id="form-error"></div>
+
+                <div class="form-footer">
+                  <button class="btn btn--primary" type="submit" id="submit-btn">提交评估，预约诊断</button>
+                  <p class="form-note">提交后我们会在 1–2 个工作日内联系你<br>也可直接扫描页面底部二维码</p>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="site-footer">
+      <div class="shell">
+        <div class="site-footer-inner">
+          <div class="site-footer-brand">
+            <div class="wordmark on-dark" style="font-size: 18px;">
+              <span class="z">Z</span><span class="apex">APEX</span>
+            </div>
+            <p class="site-footer-desc">峥锐科技以品牌战略与增长系统双线协同，帮助跨境企业把判断、执行与资产沉淀统一到一个稳定结构里</p>
+          </div>
+          <div class="site-footer-contact">
+            <div class="site-footer-qr-row">
+              <div class="site-footer-qr"><img src="./assets/qr-wechat.png" alt="峥锐品牌出海小助手 微信二维码" /></div>
+              <div class="site-footer-qr-info">
+                <span class="identity-badge">
+                  <span class="identity-dot"></span>
+                  峥锐品牌出海小助手
+                </span>
+                <p class="site-footer-contact-value">通过微信扫码联系业务入口，完成基础合作判断后再进入诊断沟通</p>
+              </div>
+            </div>
+            <div class="site-footer-contact-block">
+              <span class="site-footer-contact-label">地址</span>
+              <p class="site-footer-contact-value">深圳市龙华区龙华大道有品文化创意园4栋201-1</p>
+            </div>
+            <div class="site-footer-contact-block">
+              <span class="site-footer-contact-label">联系</span>
+              <p class="site-footer-contact-value">hello@zapex.io</p>
+            </div>
+          </div>
+        </div>
+        <div class="site-footer-meta">
+          <span>© 2026 峥锐科技 · 深圳</span>
+          <span>hello@zapex.io</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var form = document.getElementById('assessment-form');
+        var submitBtn = document.getElementById('submit-btn');
+        var errorEl = document.getElementById('form-error');
+        var successEl = document.getElementById('form-success');
+
+        function showError(msg) {
+          errorEl.textContent = msg;
+          errorEl.classList.add('visible');
+          submitBtn.classList.remove('btn--loading');
+          submitBtn.textContent = '提交评估，预约诊断';
+        }
+
+        function clearError() {
+          errorEl.classList.remove('visible');
+        }
+
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          clearError();
+
+          var brandName    = document.getElementById('brand-name').value.trim();
+          var contactName  = document.getElementById('contact-name').value.trim();
+          var contactInfo  = document.getElementById('contact-info').value.trim();
+          var channel      = document.getElementById('channel').value;
+          var gmv          = document.getElementById('gmv').value;
+          var bottleneck   = document.getElementById('bottleneck').value;
+          var brandStatus  = document.getElementById('brand-status').value;
+          var timeline     = document.getElementById('timeline').value;
+          var notes        = document.getElementById('notes').value.trim();
+
+          if (!brandName)   { showError('请填写品牌 / 公司名称'); return; }
+          if (!contactName) { showError('请填写姓名与职位'); return; }
+          if (!contactInfo) { showError('请填写联系方式（微信号或邮箱）'); return; }
+
+          submitBtn.classList.add('btn--loading');
+          submitBtn.textContent = '提交中…';
+
+          var fields = {
+            '品牌名称': brandName,
+            '姓名职位': contactName,
+            '联系方式': contactInfo,
+          };
+          if (channel)     fields['主营渠道']  = channel;
+          if (gmv)         fields['GMV规模']   = gmv;
+          if (bottleneck)  fields['增长瓶颈']  = bottleneck;
+          if (brandStatus) fields['品牌现状']  = brandStatus;
+          if (timeline)    fields['启动时间']  = timeline;
+          if (notes)       fields['补充说明']  = notes;
+
+          try {
+            var res = await fetch('/.netlify/functions/feishu-assessment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(fields),
+            });
+            var data = await res.json();
+
+            if (res.ok && data.ok) {
+              form.style.display = 'none';
+              successEl.classList.add('visible');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+              showError(data.error || '提交失败，请稍后重试');
+            }
+          } catch (err) {
+            showError('网络错误，请稍后重试或通过微信联系我们');
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
