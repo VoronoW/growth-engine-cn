@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZAPEX｜品牌出海加速器</title>
+  <style>
+/* ==================================================================
+   ZAPEX OS · Website Framework v2
+   ------------------------------------------------------------------
+   Discipline: Editorial (consulting) · Technical (SaaS) · Data-Forward
+   Anchors:    #1a4fff brand · #0b1120 slate · #fbf9f8 paper
+   Philosophy: Hairlines over shadows · Mono meta everywhere
+               Oversized type · 12-col implicit grid · Blue as signature
+   ================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ── Tokens ───────────────────────────────────────────────────── */
+:root {
+  /* Brand — signet blue */
+  --brand:        #1a4fff;
+  --brand-deep:   #0f3ab8;
+  --brand-hover:  #3d6bff;
+  --brand-soft:   #e5ebff;
+  --brand-tint:   rgba(26, 79, 255, 0.08);
+
+  /* Slate — dark canvas */
+  --slate-0:      #05080f;
+  --slate:        #0b1120;
+  --slate-1:      #111827;
+  --slate-2:      #1a2332;
+  --slate-3:      #2a3445;
+
+  /* Paper — light canvas */
+  --paper-0:      #ffffff;
+  --paper:        #fbf9f8;
+  --paper-1:      #f5f3f2;
+  --paper-2:      #efedec;
+  --paper-3:      #e4e2e1;
+
+  /* Ink (on light) */
+  --ink:          #0a0f1a;
+  --ink-80:       rgba(10, 15, 26, 0.80);
+  --ink-60:       rgba(10, 15, 26, 0.60);
+  --ink-40:       rgba(10, 15, 26, 0.40);
+  --ink-20:       rgba(10, 15, 26, 0.14);
+
+  /* On-dark */
+  --od:           #ffffff;
+  --od-80:        rgba(255, 255, 255, 0.80);
+  --od-60:        rgba(255, 255, 255, 0.60);
+  --od-40:        rgba(255, 255, 255, 0.40);
+  --od-20:        rgba(255, 255, 255, 0.14);
+
+  /* Hairlines */
+  --line:         rgba(10, 15, 26, 0.10);
+  --line-soft:    rgba(10, 15, 26, 0.06);
+  --line-dark:    rgba(255, 255, 255, 0.12);
+  --line-dark-soft: rgba(255, 255, 255, 0.06);
+
+  /* Type families */
+  --ff-display:   'Manrope', -apple-system, 'PingFang SC', sans-serif;
+  --ff-body:      'Inter', -apple-system, 'PingFang SC', sans-serif;
+  --ff-mono:      'JetBrains Mono', ui-monospace, monospace;
+
+  /* Editorial type scale */
+  --t-mono:       0.6875rem;   /* 11px — mono meta */
+  --t-xs:         0.75rem;     /* 12px — kicker */
+  --t-sm:         0.8125rem;   /* 13px — small body */
+  --t-base:       0.9375rem;   /* 15px — body */
+  --t-lead:       1.0625rem;   /* 17px — lead paragraph */
+  --t-md:         1.25rem;     /* 20px — h4 */
+  --t-lg:         1.625rem;    /* 26px — h3 */
+  --t-xl:         2.25rem;     /* 36px — h2 */
+  --t-2xl:        3.5rem;      /* 56px — section display */
+  --t-3xl:        5.25rem;     /* 84px — hero */
+  --t-4xl:        clamp(4.5rem, 10vw, 8.25rem);  /* 72–132px — mega */
+
+  /* Rhythm */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 24px;
+  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px;
+  --s-11: 180px; --s-12: 220px;
+
+  /* Radius — minimal */
+  --r-sm: 2px;  --r-md: 4px;  --r-lg: 6px;  --r-xl: 10px;
+
+  /* Layout */
+  --max:          1280px;
+  --max-wide:     1440px;
+  --gutter:       40px;
+
+  /* Motion */
+  --ease:         cubic-bezier(0.2, 0.0, 0.0, 1.0);
+  --dur-fast:     120ms;
+  --dur:          200ms;
+  --dur-slow:     400ms;
+}
+
+/* ── Reset (surgical) ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body {
+  font-family: var(--ff-body);
+  font-size: var(--t-base);
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--paper);
+  font-feature-settings: "cv01", "ss03", "cv11", "tnum";
+}
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; cursor: pointer; background: none; border: 0; color: inherit; }
+ul, ol { list-style: none; }
+
+/* ── Layout shell ─────────────────────────────────────────────── */
+.shell {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.shell--wide {
+  max-width: var(--max-wide);
+}
+
+/* ── Meta bar · top strip ─────────────────────────────────────── */
+.meta-bar {
+  background: var(--slate-0);
+  color: var(--od-60);
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--line-dark-soft);
+}
+.meta-bar-inner {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  gap: var(--s-7);
+}
+.meta-bar-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  white-space: nowrap;
+}
+.meta-bar-item + .meta-bar-item {
+  padding-left: var(--s-7);
+  border-left: 1px solid var(--line-dark-soft);
+}
+.meta-bar-item .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.12);
+}
+.meta-bar-spacer { flex: 1; }
+
+/* ── Site nav ─────────────────────────────────────────────────── */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(251, 249, 248, 0.88);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--line);
+}
+.site-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-7);
+  height: 72px;
+}
+.site-nav-left,
+.site-nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+/* Wordmark · brand signature */
+.wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--ff-body);
+  font-weight: 500;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  user-select: none;
+}
+.wordmark .z {
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  color: var(--brand);
+}
+.wordmark .apex {
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  color: var(--ink-60);
+}
+.wordmark.on-dark .apex { color: var(--od-40); }
+.wordmark--nav   { font-size: 22px; }
+.wordmark--foot  { font-size: 20px; }
+.wordmark--mega  { font-size: clamp(6rem, 18vw, 16rem); }
+
+/* Inline ZAPEX in body text */
+.zapex-word .z    { color: var(--brand); font-weight: 700; }
+.zapex-word .apex { color: inherit; }
+
+/* Primary nav links */
+.site-nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.site-nav-link {
+  position: relative;
+  padding: 8px 14px;
+  font-size: var(--t-sm);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--ink-60);
+  transition: color var(--dur) var(--ease);
+}
+.site-nav-link:hover { color: var(--ink); }
+.site-nav-link.is-current { color: var(--ink); }
+.site-nav-link.is-current::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 2px;
+  height: 2px;
+  background: var(--brand);
+}
+.site-nav-link .idx {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  margin-right: 6px;
+  color: var(--ink-40);
+  font-weight: 500;
+}
+
+/* Nav CTAs */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: var(--t-sm);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.pill:hover { background: var(--ink); color: var(--od); border-color: var(--ink); }
+.pill .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+}
+.pill--primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: var(--od);
+}
+.pill--primary:hover { background: var(--brand-deep); border-color: var(--brand-deep); }
+
+/* Stacked pill — two-line text for 客户工作台 · 飞书入口 */
+.pill--stacked { height: auto; padding: 6px 14px 6px 14px; align-items: center; }
+.pill--stacked .pill-stack { display: inline-flex; flex-direction: column; line-height: 1.15; gap: 1px; }
+.pill--stacked .pill-main { font-size: var(--t-sm); font-weight: 500; color: inherit; }
+.pill--stacked .pill-sub {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--ink-60);
+  text-transform: uppercase;
+}
+.pill--stacked:hover .pill-sub { color: var(--od-60); }
+
+/* ── Section primitives ───────────────────────────────────────── */
+.section {
+  position: relative;
+  padding: var(--s-11) 0;
+  border-top: 1px solid var(--line);
+}
+.section--dark {
+  background: var(--slate);
+  color: var(--od);
+  border-top-color: var(--line-dark);
+}
+.section--dark .section-idx { color: var(--od-40); }
+.section--dark .section-kicker { color: var(--od-60); }
+.section--dark .section-lead { color: var(--od-80); }
+.section--dark .hr-line { background: var(--line-dark); }
+.section--paper   { background: var(--paper); }
+.section--paper-1 { background: var(--paper-1); }
+.section--paper-2 { background: var(--paper-2); }
+.section--brand {
+  background: var(--brand);
+  color: var(--od);
+  border-top-color: transparent;
+}
+.section--compact { padding: var(--s-9) 0; }
+
+/* Section header — 12-col editorial */
+.section-head {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: var(--s-8);
+  margin-bottom: var(--s-9);
+  padding-bottom: var(--s-7);
+  border-bottom: 1px solid var(--line);
+}
+.section--dark .section-head { border-bottom-color: var(--line-dark); }
+
+.section-idx {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  display: block;
+  padding-top: 12px;
+}
+
+.section-head-main {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--s-8);
+  align-items: start;
+}
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+  margin-bottom: var(--s-5);
+}
+.section-kicker::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+}
+.section-title {
+  font-family: var(--ff-display);
+  font-size: var(--t-2xl);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+  max-width: 18ch;
+}
+.section-lead {
+  font-family: var(--ff-body);
+  font-size: var(--t-lead);
+  line-height: 1.55;
+  color: var(--ink-80);
+  max-width: 42ch;
+  padding-top: var(--s-4);
+}
+
+/* ── Hero — editorial ─────────────────────────────────────────── */
+.hero {
+  position: relative;
+  padding: var(--s-12) 0 var(--s-11);
+  background: var(--paper);
+  overflow: hidden;
+}
+.hero--dark {
+  background: var(--slate);
+  color: var(--od);
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: var(--s-8);
+}
+.hero-idx {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  padding-top: 16px;
+}
+.hero--dark .hero-idx { color: var(--od-40); }
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brand);
+  margin-bottom: var(--s-6);
+}
+.hero--dark .hero-kicker { color: var(--brand-hover); }
+.hero-kicker::before {
+  content: "";
+  width: 36px;
+  height: 1px;
+  background: currentColor;
+}
+
+.hero-display {
+  font-family: var(--ff-display);
+  font-size: var(--t-4xl);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+  max-width: 16ch;
+}
+.hero-display em {
+  font-style: normal;
+  color: var(--brand);
+}
+.hero--dark .hero-display em { color: var(--brand-hover); }
+
+.hero-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-8);
+  margin-top: var(--s-9);
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--line);
+}
+.hero--dark .hero-body { border-top-color: var(--line-dark); }
+.hero-lead {
+  font-size: var(--t-lead);
+  line-height: 1.55;
+  color: var(--ink-80);
+  max-width: 40ch;
+}
+.hero--dark .hero-lead { color: var(--od-80); }
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-7);
+}
+
+/* Subtle grid overlay for hero */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px);
+  background-size: calc((100% - 2 * var(--gutter)) / 12) 100%;
+  background-position: var(--gutter) 0;
+  opacity: 0.5;
+  pointer-events: none;
+}
+.hero--dark::before {
+  background-image: linear-gradient(to right, var(--line-dark-soft) 1px, transparent 1px);
+}
+.hero > .shell { position: relative; z-index: 1; }
+
+/* ── Buttons ──────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  height: 52px;
+  padding: 0 28px;
+  font-family: var(--ff-body);
+  font-size: var(--t-base);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  white-space: nowrap;
+}
+.btn .arrow {
+  font-family: var(--ff-mono);
+  font-weight: 400;
+  transition: transform var(--dur) var(--ease);
+}
+.btn:hover .arrow { transform: translateX(3px); }
+
+.btn--primary {
+  background: var(--brand);
+  color: var(--od);
+  border-color: var(--brand);
+}
+.btn--primary:hover { background: var(--brand-deep); border-color: var(--brand-deep); }
+
+.btn--solid-ink {
+  background: var(--ink);
+  color: var(--od);
+  border-color: var(--ink);
+}
+.btn--solid-ink:hover { background: var(--slate); border-color: var(--slate); }
+
+.btn--outline {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn--outline:hover { border-color: var(--ink); }
+
+.btn--ghost-dark {
+  background: transparent;
+  color: var(--od);
+  border-color: var(--line-dark);
+}
+.btn--ghost-dark:hover { background: var(--od-20); border-color: var(--od-40); }
+
+/* ── Ticker strip ─────────────────────────────────────────────── */
+.ticker {
+  background: var(--slate);
+  color: var(--od);
+  border-top: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--line-dark);
+  overflow: hidden;
+  padding: 20px 0;
+}
+.ticker-track {
+  display: flex;
+  gap: var(--s-8);
+  white-space: nowrap;
+  animation: ticker 40s linear infinite;
+  font-family: var(--ff-mono);
+  font-size: var(--t-sm);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--od-60);
+}
+.ticker-track > span { display: inline-flex; align-items: center; gap: var(--s-5); }
+.ticker-sep {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Capability matrix (tabular data) ─────────────────────────── */
+.matrix {
+  display: grid;
+  grid-template-columns: 120px repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+}
+.section--dark .matrix { border-top-color: var(--line-dark); }
+.matrix-cell {
+  padding: var(--s-6) var(--s-5);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  transition: background var(--dur) var(--ease);
+}
+.section--dark .matrix-cell {
+  border-right-color: var(--line-dark);
+  border-bottom-color: var(--line-dark);
+}
+.matrix-cell:last-child { border-right: 0; }
+.matrix-cell:hover { background: var(--brand-tint); }
+.section--dark .matrix-cell:hover { background: rgba(26, 79, 255, 0.14); }
+.matrix-idx {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.1em;
+  color: var(--ink-40);
+  margin-bottom: var(--s-4);
+}
+.section--dark .matrix-idx { color: var(--od-40); }
+.matrix-title {
+  font-family: var(--ff-display);
+  font-size: var(--t-md);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--s-3);
+}
+.matrix-body {
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  color: var(--ink-60);
+}
+.section--dark .matrix-body { color: var(--od-60); }
+.matrix-head {
+  padding: var(--s-5);
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-1);
+}
+.section--dark .matrix-head {
+  background: var(--slate-1);
+  color: var(--od-40);
+  border-right-color: var(--line-dark);
+  border-bottom-color: var(--line-dark);
+}
+
+/* ── Method grid — numbered phases ────────────────────────────── */
+.method {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.section--dark .method { border-top-color: var(--line-dark); }
+.method-step {
+  padding: var(--s-7) var(--s-5) var(--s-8);
+  border-right: 1px solid var(--line);
+  position: relative;
+}
+.section--dark .method-step { border-right-color: var(--line-dark); }
+.method-step:last-child { border-right: 0; }
+.method-step::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--brand);
+}
+.method-num {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.12em;
+  color: var(--brand);
+  display: block;
+  margin-bottom: var(--s-6);
+}
+.method-title {
+  font-family: var(--ff-display);
+  font-size: var(--t-lg);
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+  margin-bottom: var(--s-4);
+}
+.method-body {
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--ink-60);
+}
+.section--dark .method-body { color: var(--od-60); }
+.method-list {
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line-soft);
+  display: grid;
+  gap: 6px;
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.06em;
+  color: var(--ink-40);
+  text-transform: uppercase;
+}
+.section--dark .method-list {
+  border-top-color: var(--line-dark-soft);
+  color: var(--od-40);
+}
+
+/* ── Metric board XL ──────────────────────────────────────────── */
+.metrics-xl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+}
+.section--dark .metrics-xl { border-top-color: var(--line-dark); }
+.metric-xl {
+  padding: var(--s-8) var(--s-5) var(--s-7);
+  border-right: 1px solid var(--line);
+}
+.section--dark .metric-xl { border-right-color: var(--line-dark); }
+.metric-xl:last-child { border-right: 0; }
+.metric-xl-label {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  margin-bottom: var(--s-5);
+}
+.section--dark .metric-xl-label { color: var(--od-40); }
+.metric-xl-value {
+  font-family: var(--ff-display);
+  font-size: clamp(3.5rem, 7vw, 5.5rem);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+.section--dark .metric-xl-value { color: var(--od); }
+.metric-xl-value .unit {
+  font-size: 0.5em;
+  font-weight: 500;
+  color: var(--brand);
+  margin-left: 8px;
+  letter-spacing: -0.02em;
+}
+.metric-xl-caption {
+  margin-top: var(--s-4);
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  color: var(--ink-60);
+  max-width: 28ch;
+}
+.section--dark .metric-xl-caption { color: var(--od-60); }
+
+/* ── Case spotlight ───────────────────────────────────────────── */
+.case-list {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.section--dark .case-list { border-top-color: var(--line-dark); }
+.case-row {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  gap: var(--s-7);
+  padding: var(--s-7) 0;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  transition: padding var(--dur) var(--ease), background var(--dur) var(--ease);
+  cursor: pointer;
+}
+.section--dark .case-row { border-bottom-color: var(--line-dark); }
+.case-row:hover { padding-left: var(--s-4); background: var(--paper-1); }
+.section--dark .case-row:hover { background: var(--slate-1); }
+.case-meta {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  display: grid;
+  gap: 6px;
+}
+.section--dark .case-meta { color: var(--od-40); }
+.case-title {
+  font-family: var(--ff-display);
+  font-size: var(--t-xl);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--s-3);
+}
+.case-body {
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--ink-60);
+  max-width: 56ch;
+}
+.section--dark .case-body { color: var(--od-60); }
+.case-arrow {
+  font-family: var(--ff-mono);
+  font-size: 22px;
+  color: var(--ink-40);
+  transition: color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.case-row:hover .case-arrow { color: var(--brand); transform: translateX(6px); }
+.section--dark .case-arrow { color: var(--od-40); }
+.section--dark .case-row:hover .case-arrow { color: var(--brand-hover); }
+
+/* ── Quote / pullquote ────────────────────────────────────────── */
+.quote-block {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: var(--s-8);
+  padding: var(--s-9) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.section--dark .quote-block {
+  border-top-color: var(--line-dark);
+  border-bottom-color: var(--line-dark);
+}
+.quote-marker {
+  font-family: var(--ff-display);
+  font-size: 6rem;
+  line-height: 0.8;
+  color: var(--brand);
+  font-weight: 500;
+}
+.quote-text {
+  font-family: var(--ff-display);
+  font-size: var(--t-xl);
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  max-width: 36ch;
+  color: var(--ink);
+}
+.section--dark .quote-text { color: var(--od); }
+.quote-attrib {
+  margin-top: var(--s-6);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 4px;
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+}
+.section--dark .quote-attrib {
+  border-top-color: var(--line-dark);
+  color: var(--od-60);
+}
+
+/* ── Feature cards (3-col) ────────────────────────────────────── */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.section--dark .feature-grid { border-top-color: var(--line-dark); }
+.feature {
+  padding: var(--s-7) var(--s-5) var(--s-7) 0;
+  border-right: 1px solid var(--line);
+}
+.feature:last-child { border-right: 0; padding-right: 0; }
+.feature:not(:first-child) { padding-left: var(--s-5); }
+.section--dark .feature { border-right-color: var(--line-dark); }
+.feature-glyph {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  margin-bottom: var(--s-5);
+  color: var(--brand);
+  font-family: var(--ff-mono);
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+.section--dark .feature-glyph { border-color: var(--line-dark); }
+.feature-title {
+  font-family: var(--ff-display);
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.14;
+  margin-bottom: var(--s-3);
+}
+.feature-body {
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--ink-60);
+  max-width: 32ch;
+}
+.section--dark .feature-body { color: var(--od-60); }
+
+/* ── CTA band ─────────────────────────────────────────────────── */
+.cta-band {
+  position: relative;
+  background: var(--brand);
+  color: var(--od);
+  padding: var(--s-11) 0;
+  overflow: hidden;
+}
+.cta-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: calc((100% - 2 * var(--gutter)) / 12) 80px;
+  background-position: var(--gutter) 0;
+  pointer-events: none;
+}
+.cta-band > .shell { position: relative; z-index: 1; }
+.cta-band-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--s-8);
+  align-items: end;
+}
+.cta-band-title {
+  font-family: var(--ff-display);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  max-width: 16ch;
+}
+.cta-band-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-5);
+}
+.cta-band-note {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--od-60);
+  padding-top: var(--s-4);
+  border-top: 1px solid rgba(255, 255, 255, 0.24);
+  width: 100%;
+  max-width: 320px;
+}
+
+/* ── Footer ──────────────────────────────────────────────────── */
+.site-foot {
+  background: var(--slate);
+  color: var(--od);
+  padding: var(--s-10) 0 0;
+  overflow: hidden;
+}
+.foot-top {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--s-8);
+  padding-bottom: var(--s-9);
+  border-bottom: 1px solid var(--line-dark);
+}
+.foot-statement {
+  font-family: var(--ff-display);
+  font-size: var(--t-xl);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  max-width: 22ch;
+  color: var(--od);
+}
+.foot-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  align-items: flex-start;
+}
+.foot-columns {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-5);
+  padding: var(--s-8) 0;
+  border-bottom: 1px solid var(--line-dark);
+}
+.foot-col { display: grid; gap: var(--s-3); }
+.foot-col-head {
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--od-40);
+  margin-bottom: var(--s-2);
+}
+.foot-col a,
+.foot-col span {
+  font-size: var(--t-sm);
+  color: var(--od-80);
+  transition: color var(--dur) var(--ease);
+}
+.foot-col a:hover { color: var(--od); }
+
+/* Mega wordmark bleeding footer bottom */
+.foot-signature {
+  padding: var(--s-7) 0 var(--s-4);
+  text-align: left;
+  line-height: 0.85;
+  color: var(--od);
+  overflow: hidden;
+}
+.foot-signature .wordmark {
+  font-size: clamp(6rem, 22vw, 20rem);
+  letter-spacing: -0.09em;
+}
+.foot-signature .wordmark .z { color: var(--brand); }
+.foot-signature .wordmark .apex { color: var(--od-20); }
+
+.foot-meta {
+  padding: var(--s-5) 0;
+  border-top: 1px solid var(--line-dark);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--od-40);
+}
+.foot-meta-left,
+.foot-meta-right {
+  display: flex;
+  gap: var(--s-6);
+  align-items: center;
+}
+
+/* ── Utilities ────────────────────────────────────────────────── */
+.hr-line {
+  height: 1px;
+  background: var(--line);
+  border: 0;
+  margin: var(--s-7) 0;
+}
+.mono { font-family: var(--ff-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.muted { color: var(--ink-60); }
+.accent { color: var(--brand); }
+.hidden-sm { display: inline; }
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .section-head,
+  .hero-grid,
+  .quote-block { grid-template-columns: 1fr; gap: var(--s-6); }
+  .section-head-main { grid-template-columns: 1fr; }
+  .hero-body { grid-template-columns: 1fr; }
+  .matrix,
+  .method,
+  .metrics-xl,
+  .feature-grid { grid-template-columns: 1fr 1fr; }
+  .foot-top,
+  .cta-band-grid,
+  .foot-columns { grid-template-columns: 1fr 1fr; }
+  .hidden-sm { display: none; }
+  .case-row { grid-template-columns: 100px 1fr auto; }
+}
+@media (max-width: 640px) {
+  :root { --gutter: 20px; }
+  .meta-bar-item + .meta-bar-item { display: none; }
+  .site-nav-links { display: none; }
+  .matrix,
+  .method,
+  .metrics-xl,
+  .feature-grid,
+  .foot-columns { grid-template-columns: 1fr; }
+  .matrix-cell,
+  .method-step,
+  .metric-xl,
+  .feature { border-right: 0; border-bottom: 1px solid var(--line); }
+  .case-row { grid-template-columns: 1fr auto; }
+  .case-meta { display: none; }
+  .hero { padding: var(--s-10) 0 var(--s-9); }
+  .section { padding: var(--s-9) 0; }
+}
+
+</style>
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       Homepage v2 · page-scoped components
+       ═══════════════════════════════════════════════════════════ */
+
+    /* Pain matrix — 3-col without axis column */
+    .matrix--pain {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* Core modules showcase — 2-col big cards on dark */
+    .modules-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--line-dark);
+    }
+    .module-big {
+      padding: var(--s-8) var(--s-7);
+      border-right: 1px solid var(--line-dark);
+      position: relative;
+    }
+    .module-big:last-child { border-right: 0; }
+    .module-big::before {
+      content: "";
+      position: absolute;
+      top: -1px; left: 0;
+      width: 56px; height: 2px;
+      background: var(--brand-hover);
+    }
+    .module-big-num {
+      display: block;
+      font-family: var(--ff-mono);
+      font-size: var(--t-mono);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--brand-hover);
+      margin-bottom: var(--s-6);
+    }
+    .module-big-title {
+      font-family: var(--ff-display);
+      font-size: var(--t-xl);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      font-weight: 600;
+      margin-bottom: var(--s-4);
+      color: var(--od);
+    }
+    .module-big-keyline {
+      display: inline-block;
+      font-family: var(--ff-mono);
+      font-size: var(--t-sm);
+      letter-spacing: 0.1em;
+      color: var(--od-60);
+      padding-bottom: var(--s-4);
+      margin-bottom: var(--s-4);
+      border-bottom: 1px solid var(--line-dark-soft);
+    }
+    .module-big-lead {
+      font-size: var(--t-lead);
+      line-height: 1.6;
+      color: var(--od-80);
+      margin-bottom: var(--s-6);
+      padding-bottom: var(--s-5);
+      border-bottom: 1px solid var(--line-dark-soft);
+    }
+    .module-big-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .module-big-tag {
+      font-family: var(--ff-mono);
+      font-size: var(--t-mono);
+      letter-spacing: 0.08em;
+      color: var(--brand-hover);
+      padding: 6px 10px;
+      border: 1px solid var(--line-dark);
+      border-radius: var(--r-sm);
+    }
+
+    /* Footer contact section (QR + address + email) */
+    .foot-contact {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: var(--s-8);
+      padding: var(--s-8) 0;
+      border-bottom: 1px solid var(--line-dark);
+    }
+    .foot-qr-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: var(--s-5);
+      align-items: start;
+    }
+    .foot-qr {
+      width: 140px;
+      height: 140px;
+      background: var(--od);
+      padding: 6px;
+      display: grid;
+      place-items: center;
+    }
+    .foot-qr img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .foot-qr-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--line-dark);
+      border-radius: 999px;
+      font-size: var(--t-sm);
+      color: var(--od);
+      margin-bottom: var(--s-3);
+    }
+    .foot-qr-badge .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--brand);
+    }
+    .foot-qr-desc {
+      font-size: var(--t-sm);
+      color: var(--od-60);
+      line-height: 1.6;
+      max-width: 36ch;
+    }
+    .foot-contact-blocks { display: grid; gap: var(--s-5); }
+    .foot-contact-block {
+      padding-top: var(--s-4);
+      border-top: 1px solid var(--line-dark-soft);
+    }
+    .foot-contact-block:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+    .foot-contact-key {
+      display: block;
+      font-family: var(--ff-mono);
+      font-size: var(--t-mono);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--od-40);
+      margin-bottom: 8px;
+    }
+    .foot-contact-value {
+      font-size: var(--t-sm);
+      color: var(--od-80);
+      line-height: 1.55;
+    }
+
+    /* Wrap long banner text in meta bar */
+    .banner-text {
+      color: var(--od-80) !important;
+      letter-spacing: 0.04em !important;
+      text-transform: none !important;
+      font-family: var(--ff-body) !important;
+      font-size: 11px !important;
+    }
+
+    @media (max-width: 1024px) {
+      .modules-showcase { grid-template-columns: 1fr; }
+      .module-big { border-right: 0; border-bottom: 1px solid var(--line-dark); }
+      .module-big:last-child { border-bottom: 0; }
+      .matrix--pain { grid-template-columns: 1fr 1fr; }
+      .foot-contact { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .matrix--pain { grid-template-columns: 1fr; }
+      .foot-qr-row { grid-template-columns: 100px 1fr; }
+      .foot-qr { width: 100px; height: 100px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════
+       META BAR · 保留原 banner 文字 + 运营状态
+       ════════════════════════════════════════════════════════════ -->
+  <div class="meta-bar">
+    <div class="shell shell--wide">
+      <div class="meta-bar-inner">
+        <span class="meta-bar-item">
+          <span class="dot"></span> LIVE · OPERATIONAL
+        </span>
+        <span class="meta-bar-item hidden-sm">
+          <span class="banner-text">用 12 个月，建立企业用几年才能跑出来的品牌增长系统</span>
+        </span>
+        <span class="meta-bar-spacer"></span>
+        <span class="meta-bar-item hidden-sm">SHENZHEN</span>
+        <span class="meta-bar-item">2026.Q2</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       SITE NAV
+       ════════════════════════════════════════════════════════════ -->
+  <div class="site-nav">
+    <div class="shell shell--wide">
+      <div class="site-nav-inner">
+        <div class="site-nav-left">
+          <a href="./homepage-v2.html" class="wordmark wordmark--nav">
+            <span class="z">Z</span><span class="apex">APEX</span>
+          </a>
+        </div>
+
+        <nav class="site-nav-links">
+          <a class="site-nav-link is-current" href="./homepage-v2.html"><span class="idx">01</span>品牌首页</a>
+          <a class="site-nav-link" href="./system-and-modules.html"><span class="idx">02</span>系统与模块</a>
+          <a class="site-nav-link" href="./delivery-and-cases.html"><span class="idx">03</span>交付与案例</a>
+          <a class="site-nav-link" href="./assessment.html"><span class="idx">04</span>评估表</a>
+        </nav>
+
+        <div class="site-nav-right">
+          <a class="pill pill--stacked" href="./growth-forms.html"><span class="dot"></span><span class="pill-stack"><span class="pill-main">客户工作台</span><span class="pill-sub">飞书入口</span></span></a>
+          <a class="pill pill--primary" href="./contact-and-cta.html">预约诊断 <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ════════════════════════════════════════════════════════════
+         00 · HERO
+         ════════════════════════════════════════════════════════════ -->
+    <section class="hero hero--dark">
+      <div class="shell shell--wide">
+        <div class="hero-grid">
+
+          <div class="hero-idx">
+            00<br/>Introduction
+          </div>
+
+          <div>
+            <span class="hero-kicker">不是代运营，不是单次咨询</span>
+
+            <h1 class="hero-display">
+              我们交付的是<br/>
+              可验证 复制 沉淀的<br/>
+              <em>品牌增长系统</em>
+            </h1>
+
+            <div class="hero-body">
+              <p class="hero-lead">
+                <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span>
+                用品牌战略定方向，用增长引擎验证落地，帮助跨境企业把增长能力真正留在团队内部，而不是继续依赖碎片化执行
+              </p>
+              <div>
+                <div class="hero-actions">
+                  <a class="btn btn--primary" href="./contact-and-cta.html">预约增长诊断 <span class="arrow">→</span></a>
+                  <a class="btn btn--ghost-dark" href="./system-and-modules.html">进入系统结构</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         TICKER · 关键词跑马灯
+         ════════════════════════════════════════════════════════════ -->
+    <div class="ticker">
+      <div class="ticker-track">
+        <span>品牌战略<span class="ticker-sep"></span>增长引擎<span class="ticker-sep"></span>增长验证舱™<span class="ticker-sep"></span>品类切入<span class="ticker-sep"></span>营销 4P 方案<span class="ticker-sep"></span>数据底盘<span class="ticker-sep"></span>团队能力沉淀<span class="ticker-sep"></span>可复制增长模型<span class="ticker-sep"></span>品牌价值主张<span class="ticker-sep"></span>跨境出海<span class="ticker-sep"></span></span>
+        <span aria-hidden="true">品牌战略<span class="ticker-sep"></span>增长引擎<span class="ticker-sep"></span>增长验证舱™<span class="ticker-sep"></span>品类切入<span class="ticker-sep"></span>营销 4P 方案<span class="ticker-sep"></span>数据底盘<span class="ticker-sep"></span>团队能力沉淀<span class="ticker-sep"></span>可复制增长模型<span class="ticker-sep"></span>品牌价值主张<span class="ticker-sep"></span>跨境出海<span class="ticker-sep"></span></span>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════
+         01 · PROPOSITION · 我们是谁 Who We Are
+         ════════════════════════════════════════════════════════════ -->
+    <section class="section section--paper">
+      <div class="shell shell--wide">
+        <header class="section-head">
+          <span class="section-idx">01 / Proposition</span>
+          <div class="section-head-main">
+            <div>
+              <span class="section-kicker">我们是谁 · Who We Are</span>
+              <h2 class="section-title">峥锐 <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span><br/>品牌出海加速器</h2>
+            </div>
+            <p class="section-lead">
+              帮助中国跨境企业从"卖货"加速走向"品牌驱动增长"，建立可持续的全球品牌增长能力
+            </p>
+          </div>
+        </header>
+
+        <div class="feature-grid">
+          <div class="feature">
+            <div class="feature-glyph">01</div>
+            <h3 class="feature-title">既懂品牌战略<br/>又懂跨境增长</h3>
+            <p class="feature-body">不是只给漂亮 PPT 的咨询公司，也不是只会投流消耗的代运营——我们交付品牌战略 + 跑通的增长落地系统，战略和执行一起给</p>
+          </div>
+          <div class="feature">
+            <div class="feature-glyph">02</div>
+            <h3 class="feature-title">既交付实战模型<br/>又交付组织能力</h3>
+            <p class="feature-body">项目结束后，能力沉淀在企业内部，团队掌握品牌方法论，能自己做、能复制，不再依赖外部</p>
+          </div>
+          <div class="feature">
+            <div class="feature-glyph">03</div>
+            <h3 class="feature-title">既有方法论<br/>又有工具体系</h3>
+            <p class="feature-body">20 年品牌咨询 + 10 年跨境实战，形成可验证、可复制的完整工具和方法论体系，不是理论，是实战</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         02 · PAIN POINTS · 6 核心痛点（capability-matrix 改造 3×2）
+         ════════════════════════════════════════════════════════════ -->
+    <section class="section section--paper-1">
+      <div class="shell shell--wide">
+        <header class="section-head">
+          <span class="section-idx">02 / Diagnosis</span>
+          <div class="section-head-main">
+            <div>
+              <span class="section-kicker">核心痛点 · Pain Points</span>
+              <h2 class="section-title">90% 的跨境大卖家<br/>为什么做不出品牌？</h2>
+            </div>
+            <p class="section-lead">
+              如果你在以下六个问题中认出了自己的处境，说明你正处于品牌转型的关键时机
+            </p>
+          </div>
+        </header>
+
+        <div class="matrix matrix--pain">
+          <div class="matrix-cell">
+            <div class="matrix-idx">PAIN · 01</div>
+            <div class="matrix-title">不知道从哪里切入<br/>做品牌</div>
+            <p class="matrix-body">手里上百个 SKU，不知道哪个能做品牌，不知道选什么品类、从哪里启动</p>
+          </div>
+          <div class="matrix-cell">
+            <div class="matrix-idx">PAIN · 02</div>
+            <div class="matrix-title">做了很多单点动作<br/>没有品牌体系</div>
+            <p class="matrix-body">做了独立站、拍了视频、投了广告，但没有获得品牌溢价，品牌没有竞争力</p>
+          </div>
+          <div class="matrix-cell">
+            <div class="matrix-idx">PAIN · 03</div>
+            <div class="matrix-title">缺品牌战略<br/>落不了地</div>
+            <p class="matrix-body">找过咨询公司，拿了一堆漂亮的 PPT，团队看不懂，执行不了</p>
+          </div>
+          <div class="matrix-cell">
+            <div class="matrix-idx">PAIN · 04</div>
+            <div class="matrix-title">没有设计增长路径<br/>跑不通</div>
+            <p class="matrix-body">只会投流，不知道怎么从付费流量到品牌驱动，偶尔有爆品成功，无法稳定复制</p>
+          </div>
+          <div class="matrix-cell">
+            <div class="matrix-idx">PAIN · 05</div>
+            <div class="matrix-title">花钱<br/>看不到效果</div>
+            <p class="matrix-body">投了几百万做品牌，但完全不知道有没有用，无法评估品牌工作的成果</p>
+          </div>
+          <div class="matrix-cell">
+            <div class="matrix-idx">PAIN · 06</div>
+            <div class="matrix-title">时间窗口<br/>正在关闭</div>
+            <p class="matrix-body">竞争对手已经开始做品牌，用户心智饱和，流量成本持续上涨，再不做就晚了</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         03 · CORE MODULES · 两大核心模块（自定义 2-col 大卡片）
+         ════════════════════════════════════════════════════════════ -->
+    <section class="section section--dark">
+      <div class="shell shell--wide">
+        <header class="section-head">
+          <span class="section-idx">03 / Core Modules</span>
+          <div class="section-head-main">
+            <div>
+              <span class="section-kicker">核心模块 · Core Modules</span>
+              <h2 class="section-title">品牌战略 + 增长引擎<br/>两大模块构成完整交付</h2>
+            </div>
+            <p class="section-lead">
+              不是零散服务，不是单点能力——品牌战略模块定方向、建体系，增长引擎模块验证落地、沉淀团队能力，两模块缺一不可
+            </p>
+          </div>
+        </header>
+
+        <div class="modules-showcase">
+          <div class="module-big">
+            <span class="module-big-num">MODULE · 01</span>
+            <h3 class="module-big-title">
+              <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span>
+              品牌战略模块™
+            </h3>
+            <span class="module-big-keyline">定方向 · 建体系 · 落执行</span>
+            <p class="module-big-lead">
+              在战略层明确品牌核心价值、增长路径和市场判断，让所有执行动作服务于正确的方向
+            </p>
+            <div class="module-big-tags">
+              <span class="module-big-tag">品类切入分析</span>
+              <span class="module-big-tag">品牌价值主张</span>
+              <span class="module-big-tag">营销 4P 方案</span>
+              <span class="module-big-tag">品牌增长飞轮</span>
+            </div>
+          </div>
+
+          <div class="module-big">
+            <span class="module-big-num">MODULE · 02</span>
+            <h3 class="module-big-title">
+              <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span>
+              品牌增长引擎™
+            </h3>
+            <span class="module-big-keyline">验证 · 放大 · 复制</span>
+            <p class="module-big-lead">
+              在战略方向确定后，通过数据驱动的实验机制跑通增长模型，把增长能力真正沉淀在企业内部
+            </p>
+            <div class="module-big-tags">
+              <span class="module-big-tag">增长验证舱™</span>
+              <span class="module-big-tag">全链路数据追踪</span>
+              <span class="module-big-tag">可复制增长模型</span>
+              <span class="module-big-tag">团队能力沉淀</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-actions" style="margin-top: var(--s-8);">
+          <a class="btn btn--primary" href="./system-and-modules.html">进入系统与模块 <span class="arrow">→</span></a>
+          <a class="btn btn--ghost-dark" href="./delivery-and-cases.html">查看交付结构</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         04 · METHOD · 合作流程（4 阶段）
+         ════════════════════════════════════════════════════════════ -->
+    <section class="section section--paper">
+      <div class="shell shell--wide">
+        <header class="section-head">
+          <span class="section-idx">04 / Method</span>
+          <div class="section-head-main">
+            <div>
+              <span class="section-kicker">合作方式 · How We Work</span>
+              <h2 class="section-title">先诊断<br/>再决定是否进入系统合作</h2>
+            </div>
+            <p class="section-lead">
+              不确定是否适合？从 30 分钟品牌诊断开始——无论最后是否合作，这 30 分钟对你都有极大价值
+            </p>
+          </div>
+        </header>
+
+        <div class="method">
+          <div class="method-step">
+            <span class="method-num">PHASE 01 · 30 MIN</span>
+            <h3 class="method-title">品牌诊断</h3>
+            <p class="method-body">诊断品牌现状，梳理 SKU 和核心品类，识别现阶段核心卡点，判断是否到了做品牌的最佳时机，给出大致解决方案</p>
+            <ul class="method-list">
+              <li>— 品牌现状诊断</li>
+              <li>— SKU 品类梳理</li>
+              <li>— 时机判断</li>
+            </ul>
+          </div>
+          <div class="method-step">
+            <span class="method-num">PHASE 02 · 2 WEEKS</span>
+            <h3 class="method-title">启动准备</h3>
+            <p class="method-body">深度诊断：访谈团队、分析数据、输出诊断报告；对齐认知：品牌战略定位与增长方法论培训，统一团队判断基础</p>
+            <ul class="method-list">
+              <li>— 深度诊断报告</li>
+              <li>— 战略对齐工作坊</li>
+              <li>— 方法论培训</li>
+            </ul>
+          </div>
+          <div class="method-step">
+            <span class="method-num">PHASE 03 · 6 MONTHS</span>
+            <h3 class="method-title">战略 + 验证</h3>
+            <p class="method-body"><span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span> 品牌战略模块™ 确定战略方向、建立用户资产底盘；增长验证舱™ 建立数据底盘、验证增长模型</p>
+            <ul class="method-list">
+              <li>— 品牌战略模块™</li>
+              <li>— 增长验证舱™</li>
+              <li>— 用户资产底盘</li>
+            </ul>
+          </div>
+          <div class="method-step">
+            <span class="method-num">PHASE 04 · 6–12 MO</span>
+            <h3 class="method-title">规模化沉淀</h3>
+            <p class="method-body"><span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span> 品牌增长引擎™ 规模化复制，能力完全沉淀进团队内部——项目结束后企业可独立运转</p>
+            <ul class="method-list">
+              <li>— 品牌增长引擎™</li>
+              <li>— 团队能力沉淀</li>
+              <li>— 独立运转交付</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         05 · SIGNAL · 数据看板（占位，等客户补）
+         ════════════════════════════════════════════════════════════ -->
+    <section class="section section--dark">
+      <div class="shell shell--wide">
+        <header class="section-head">
+          <span class="section-idx">05 / Signal</span>
+          <div class="section-head-main">
+            <div>
+              <span class="section-kicker">结果指标 · Measured Outcomes</span>
+              <h2 class="section-title">[ 数据看板 / 等内容补充 ]</h2>
+            </div>
+            <p class="section-lead">
+              [ 这里放 3 个核心数据指标，用于承载平均表现 / 行业对比 / 客户样本量。待真实案例数据补充后上线 ]
+            </p>
+          </div>
+        </header>
+
+        <div class="metrics-xl">
+          <div class="metric-xl">
+            <div class="metric-xl-label">[ 指标 01 · METRIC ]</div>
+            <div class="metric-xl-value">[+xxx]<span class="unit">%</span></div>
+            <p class="metric-xl-caption">[ 指标说明：衡量内容、统计口径、样本规模 ]</p>
+          </div>
+          <div class="metric-xl">
+            <div class="metric-xl-label">[ 指标 02 · METRIC ]</div>
+            <div class="metric-xl-value">[x.x]<span class="unit">×</span></div>
+            <p class="metric-xl-caption">[ 指标说明：衡量内容、统计口径、样本规模 ]</p>
+          </div>
+          <div class="metric-xl">
+            <div class="metric-xl-label">[ 指标 03 · METRIC ]</div>
+            <div class="metric-xl-value">[xx]<span class="unit">mo</span></div>
+            <p class="metric-xl-caption">[ 指标说明：衡量内容、统计口径、样本规模 ]</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         06 · PRINCIPLE · 合作原则（pullquote 引用自 CTA 收口）
+         ════════════════════════════════════════════════════════════ -->
+    <section class="section section--paper-2 section--compact">
+      <div class="shell shell--wide">
+        <div class="quote-block">
+          <span class="quote-marker">"</span>
+          <div>
+            <p class="quote-text">第一次对话的目的只有一个——判断你的增长问题，是否在我们能系统性解决的范围内</p>
+            <div class="quote-attrib">
+              <span>— 合作原则 · ZAPEX Principle</span>
+              <span>不推销 · 不承诺 ROI · 只做结构性诊断</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         07 · CTA BAND · 从诊断开始，不从承诺开始
+         ════════════════════════════════════════════════════════════ -->
+    <section class="cta-band">
+      <div class="shell shell--wide">
+        <div class="cta-band-grid">
+          <h2 class="cta-band-title">从诊断开始，<br/>不从承诺开始</h2>
+          <div class="cta-band-actions">
+            <a class="btn btn--solid-ink" href="./contact-and-cta.html">预约增长诊断 <span class="arrow">→</span></a>
+            <a class="btn btn--ghost-dark" href="./assessment.html">查看评估骨架</a>
+            <p class="cta-band-note">RESPONSE · 2 BUSINESS DAYS / SHENZHEN · GMT+8</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════════════════════
+       FOOTER · 完整继承原档案组件（描述 + QR + 地址 + 联系）
+       ════════════════════════════════════════════════════════════ -->
+  <footer class="site-foot">
+    <div class="shell shell--wide">
+
+      <!-- 联系区块：QR + 地址 + 邮箱 -->
+      <div class="foot-contact">
+        <div class="foot-qr-row">
+          <div class="foot-qr">
+            <img src="./assets/qr-wechat-crop.png" alt="峥锐品牌出海小助手 微信二维码" />
+          </div>
+        </div>
+        <div class="foot-contact-blocks">
+          <div class="foot-contact-block">
+            <span class="foot-contact-key">Address · 地址</span>
+            <p class="foot-contact-value">深圳市龙华区龙华大道有品文化创意园 4 栋 201-1</p>
+          </div>
+          <div class="foot-contact-block">
+            <span class="foot-contact-key">Contact · 联系</span>
+            <p class="foot-contact-value">hello@zapex.io</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 四列导航 -->
+      <div class="foot-columns">
+        <div class="foot-col">
+          <span class="foot-col-head">Sitemap · 站点</span>
+          <a href="./homepage-v2.html">品牌首页</a>
+          <a href="./system-and-modules.html">系统与模块</a>
+          <a href="./delivery-and-cases.html">交付与案例</a>
+          <a href="./assessment.html">评估表</a>
+        </div>
+        <div class="foot-col">
+          <span class="foot-col-head">Services · 服务</span>
+          <span><span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span> 品牌战略模块™</span>
+          <span><span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span> 品牌增长引擎™</span>
+          <span>增长验证舱™</span>
+        </div>
+        <div class="foot-col">
+          <span class="foot-col-head">Portal · 客户</span>
+          <a href="./growth-forms.html">客户工作台</a>
+          <a href="./contact-and-cta.html">预约增长诊断</a>
+        </div>
+        <div class="foot-col">
+          <span class="foot-col-head">Legal · 合规</span>
+          <a href="./privacy.html">Privacy</a>
+          <a href="./terms.html">Terms</a>
+        </div>
+      </div>
+
+      <!-- 巨型 wordmark · 溢出底边 -->
+      <div class="foot-signature">
+        <span class="wordmark wordmark--mega">
+          <span class="z">Z</span><span class="apex">APEX</span>
+        </span>
+      </div>
+
+      <!-- 版权 meta -->
+      <div class="foot-meta">
+        <div class="foot-meta-left">
+          <span>© 2026 峥锐科技 · 深圳</span>
+          <span class="hidden-sm">ZAPEX™ 品牌出海加速器</span>
+        </div>
+        <div class="foot-meta-right">
+          <span class="hidden-sm">v2026.04 · build 0417</span>
+          <span>hello@zapex.io</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+</html>
