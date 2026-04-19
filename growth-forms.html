@@ -66,6 +66,25 @@
   }
   .app-logo .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand-primary); }
   .app-meta { font-size: 12px; color: var(--text-tertiary); margin-left: auto; }
+  .app-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .app-home-link:hover {
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+    background: var(--surface-2);
+  }
   .feishu-badge {
     font-size: 11px; font-weight: 500;
     padding: 3px 10px; border-radius: 20px;
@@ -347,6 +366,8 @@
 
   /* ── 响应式 ── */
   @media (max-width: 768px) {
+    .app-header { height: auto; padding: 12px 16px; flex-wrap: wrap; }
+    .app-meta { margin-left: 0; width: 100%; }
     .sidebar { display: none; }
     .main-content { padding: 16px; }
     .panel-header { flex-direction: column; }
@@ -374,6 +395,7 @@
   </div>
   <span id="feishu-badge" class="feishu-badge" style="display:none;">飞书已连接</span>
   <div class="app-meta" id="user-info">品牌出海加速器 · 90天增长引擎验证舱</div>
+  <a class="app-home-link" href="/" title="返回官网首页">← 返回官网</a>
   <button id="logout-btn" onclick="logout()" style="display:none;margin-left:12px;background:none;border:1px solid #E4E7EE;border-radius:6px;padding:4px 12px;font-size:12px;color:#5C6170;cursor:pointer;">退出登录</button>
 </header>
 
