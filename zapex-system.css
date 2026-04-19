@@ -1048,7 +1048,45 @@ ul, ol { list-style: none; }
 @media (max-width: 640px) {
   :root { --gutter: 20px; }
   .meta-bar-item + .meta-bar-item { display: none; }
-  .site-nav-links { display: none; }
+  .site-nav {
+    background: rgba(251, 249, 248, 0.96);
+  }
+  .site-nav-inner {
+    height: auto;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+    padding: 12px 0;
+  }
+  .site-nav-left {
+    flex: 1 1 auto;
+  }
+  .site-nav-right {
+    width: 100%;
+    justify-content: space-between;
+    gap: var(--s-2);
+  }
+  .site-nav-links {
+    display: flex;
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    gap: 0;
+    scrollbar-width: none;
+  }
+  .site-nav-links::-webkit-scrollbar { display: none; }
+  .site-nav-link {
+    flex: 0 0 auto;
+    padding: 8px 12px;
+    white-space: nowrap;
+  }
+  .pill {
+    padding: 0 12px;
+  }
+  .pill .pill-main,
+  .pill .pill-sub {
+    white-space: nowrap;
+  }
   .matrix,
   .method,
   .metrics-xl,
