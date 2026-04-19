@@ -192,24 +192,42 @@ ul, ol { list-style: none; }
 /* Wordmark · brand signature */
 .wordmark {
   display: inline-flex;
-  align-items: baseline;
-  font-family: var(--ff-body);
-  font-weight: 500;
-  letter-spacing: -0.08em;
-  text-transform: uppercase;
+  align-items: center;
+  gap: 10px;
   line-height: 1;
   user-select: none;
 }
+.wordmark .cn {
+  font-family: var(--ff-display);
+  font-size: 0.62em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  transform: translateY(1px);
+}
+.wordmark .wordmark-en {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+  font-family: var(--ff-body);
+  font-weight: 500;
+  letter-spacing: -0.08em;
+  line-height: 1;
+}
 .wordmark .z {
+  display: inline-block;
   font-weight: 900;
   letter-spacing: -0.06em;
   color: var(--brand);
+  transform: translateY(-0.02em);
 }
 .wordmark .apex {
+  display: inline-block;
   font-weight: 500;
   letter-spacing: -0.06em;
   color: var(--ink-60);
 }
+.wordmark.on-dark .cn,
 .wordmark.on-dark .apex { color: var(--od-40); }
 .wordmark--nav   { font-size: 22px; }
 .wordmark--foot  { font-size: 20px; }
@@ -1055,7 +1073,45 @@ ul, ol { list-style: none; }
 @media (max-width: 640px) {
   :root { --gutter: 20px; }
   .meta-bar-item + .meta-bar-item { display: none; }
-  .site-nav-links { display: none; }
+  .site-nav {
+    background: rgba(251, 249, 248, 0.96);
+  }
+  .site-nav-inner {
+    height: auto;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+    padding: 12px 0;
+  }
+  .site-nav-left {
+    flex: 1 1 auto;
+  }
+  .site-nav-right {
+    width: 100%;
+    justify-content: space-between;
+    gap: var(--s-2);
+  }
+  .site-nav-links {
+    display: flex;
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    gap: 0;
+    scrollbar-width: none;
+  }
+  .site-nav-links::-webkit-scrollbar { display: none; }
+  .site-nav-link {
+    flex: 0 0 auto;
+    padding: 8px 12px;
+    white-space: nowrap;
+  }
+  .pill {
+    padding: 0 12px;
+  }
+  .pill .pill-main,
+  .pill .pill-sub {
+    white-space: nowrap;
+  }
   .matrix,
   .method,
   .metrics-xl,
@@ -1219,6 +1275,47 @@ ul, ol { list-style: none; }
       line-height: 1.6;
     }
 
+    /* Value stack — 3 card grid for 不是一次性项目 */
+    .value-stack {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+    .value-stack-card {
+      padding: var(--s-7) var(--s-6);
+      border-right: 1px solid var(--line);
+    }
+    .value-stack-card:last-child { border-right: 0; }
+    .value-stack-idx {
+      display: block;
+      font-family: var(--ff-mono);
+      font-size: var(--t-mono);
+      letter-spacing: 0.14em;
+      color: var(--brand);
+      margin-bottom: var(--s-5);
+    }
+    .value-stack-title {
+      font-family: var(--ff-display);
+      font-size: var(--t-lg);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 0 0 var(--s-4);
+    }
+    .value-stack-body {
+      font-size: var(--t-sm);
+      line-height: 1.65;
+      color: var(--ink-80);
+    }
+
+    @media (max-width: 1024px) {
+      .value-stack { grid-template-columns: 1fr; }
+      .value-stack-card { border-right: 0; border-bottom: 1px solid var(--line); }
+      .value-stack-card:last-child { border-bottom: 0; }
+    }
+
     /* Tool system — 6 tools grid */
     .tools-matrix {
       display: grid;
@@ -1290,6 +1387,83 @@ ul, ol { list-style: none; }
       line-height: 1.6;
     }
 
+    /* Contact block — same as homepage */
+    .contact-block {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: var(--s-8);
+      padding-top: var(--s-7);
+      border-top: 1px solid var(--line-dark);
+    }
+    .contact-block-left {
+      display: grid;
+      gap: var(--s-6);
+    }
+    .contact-qr-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: var(--s-5);
+      align-items: start;
+    }
+    .contact-qr {
+      width: 160px;
+      height: 160px;
+      background: #fff;
+      padding: 10px;
+      display: grid;
+      place-items: center;
+    }
+    .contact-qr img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .contact-qr-label {
+      margin: 0 0 10px;
+      font-family: var(--ff-display);
+      font-size: var(--t-lg);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--od);
+    }
+    .contact-qr-desc {
+      margin: 0;
+      font-size: var(--t-sm);
+      line-height: 1.8;
+      color: var(--od-60);
+      max-width: 36ch;
+    }
+    .contact-info {
+      display: grid;
+      gap: 0;
+    }
+    .contact-info-row {
+      padding-top: var(--s-4);
+      border-top: 1px solid var(--line-dark-soft);
+    }
+    .contact-info-row:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+    .contact-info-key {
+      display: block;
+      font-family: var(--ff-mono);
+      font-size: var(--t-mono);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--od-40);
+      margin-bottom: 12px;
+    }
+    .contact-info-value {
+      margin: 0;
+      font-size: clamp(1.4rem, 2.2vw, 2rem);
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      color: var(--od);
+      font-weight: 500;
+    }
+
     /* Footer contact (same as homepage) */
     .foot-contact {
       display: grid;
@@ -1354,10 +1528,14 @@ ul, ol { list-style: none; }
       .sop-stats { grid-template-columns: 1fr; }
       .sop-stat { border-right: 0; border-bottom: 1px solid var(--line); }
       .sop-stat:last-child { border-bottom: 0; }
+      .contact-block { grid-template-columns: 1fr; }
       .foot-contact { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
       .tools-matrix { grid-template-columns: 1fr; }
+      .contact-qr-row { grid-template-columns: 120px 1fr; }
+      .contact-qr { width: 120px; height: 120px; }
+      .contact-info-value { font-size: var(--t-lg); }
       .foot-qr-row { grid-template-columns: 100px 1fr; }
       .foot-qr { width: 100px; height: 100px; }
     }
@@ -1393,20 +1571,19 @@ ul, ol { list-style: none; }
       <div class="site-nav-inner">
         <div class="site-nav-left">
           <a href="./homepage-v2.html" class="wordmark wordmark--nav">
-            <span class="z">Z</span><span class="apex">APEX</span>
+            <span class="cn">崢銳</span><span class="wordmark-en"><span class="z">Z</span><span class="apex">APEX</span></span>
           </a>
         </div>
 
         <nav class="site-nav-links">
           <a class="site-nav-link" href="./homepage-v2.html"><span class="idx">01</span>品牌首页</a>
           <a class="site-nav-link is-current" href="./system-and-modules-v2.html"><span class="idx">02</span>系统与模块</a>
-          <a class="site-nav-link" href="./delivery-and-cases.html"><span class="idx">03</span>交付与案例</a>
-          <a class="site-nav-link" href="./assessment.html"><span class="idx">04</span>评估表</a>
+          <a class="site-nav-link" href="./assessment-v2.html"><span class="idx">03</span>评估表</a>
         </nav>
 
         <div class="site-nav-right">
           <a class="pill pill--stacked" href="./growth-forms.html"><span class="dot"></span><span class="pill-stack"><span class="pill-main">客户工作台</span><span class="pill-sub">飞书入口</span></span></a>
-          <a class="pill pill--primary" href="./contact-and-cta.html">预约诊断 <span class="arrow">→</span></a>
+          <a class="pill pill--primary" href="./assessment-v2.html">预约品牌咨询评估 <span class="arrow">→</span></a>
         </div>
       </div>
     </div>
@@ -1441,8 +1618,8 @@ ul, ol { list-style: none; }
               </p>
               <div>
                 <div class="hero-actions">
-                  <a class="btn btn--primary" href="./delivery-and-cases.html">查看交付结构 <span class="arrow">→</span></a>
-                  <a class="btn btn--ghost-dark" href="./contact-and-cta.html">预约增长诊断</a>
+                  <a class="btn btn--primary" href="./assessment-v2.html">预约品牌咨询评估 <span class="arrow">→</span></a>
+                  <a class="btn btn--ghost-dark" href="./homepage-v2.html#cooperation-flow">查看 6 步合作流程</a>
                 </div>
               </div>
             </div>
@@ -1472,10 +1649,11 @@ ul, ol { list-style: none; }
           <div class="section-head-main">
             <div>
               <span class="section-kicker">核心模块 · Core Modules</span>
-              <h2 class="section-title">品牌战略 + 增长引擎<br/>两大模块构成完整交付</h2>
+              <h2 class="section-title">品牌战略 + 增长引擎<br/><em>双驱动</em></h2>
             </div>
             <p class="section-lead">
-              不是零散服务，不是单点能力——品牌战略模块定方向、建体系，增长引擎模块验证落地、沉淀团队能力，两模块缺一不可
+              只有品牌战略没有增长引擎，只是一堆无法落地的 PPT。<br/>
+              只有增长引擎没有战略，只能买流量建立不了品牌资产。
             </p>
           </div>
         </header>
@@ -1521,9 +1699,47 @@ ul, ol { list-style: none; }
     </section>
 
     <!-- ════════════════════════════════════════════════════════════
-         02 · MODULE 01 DEEP · 品牌战略模块展开
+         02 · VALUE STACK · 不是一次性项目
          ════════════════════════════════════════════════════════════ -->
     <section class="section section--paper">
+      <div class="shell shell--wide">
+        <header class="section-head">
+          <span class="section-idx">02 / Value Stack</span>
+          <div class="section-head-main">
+            <div>
+              <span class="section-kicker">长期价值 · Long-term Value</span>
+              <h2 class="section-title">峥锐 <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span> 不是一次性项目<br/>而是交付「品牌大脑」和「增长引擎」<br/>搭建出海品牌完整的增长结构</h2>
+            </div>
+            <p class="section-lead">
+              通过战略咨询 + 增长陪跑 + 系统工具交付，让企业具备不依赖外部的品牌增长能力
+            </p>
+          </div>
+        </header>
+
+        <div class="value-stack">
+          <article class="value-stack-card">
+            <span class="value-stack-idx">VALUE · 01</span>
+            <h3 class="value-stack-title">帮助企业<br/>从流量增长<br/>到品牌增长</h3>
+            <p class="value-stack-body">不是靠持续买量堆出来的 GMV，而是靠品牌资产驱动的复利增长——让增长不再依赖广告预算</p>
+          </article>
+          <article class="value-stack-card">
+            <span class="value-stack-idx">VALUE · 02</span>
+            <h3 class="value-stack-title">从单次项目交付<br/>到企业能力构建</h3>
+            <p class="value-stack-body">方法论、SOP、工具体系一起交付给团队，组织本身成为增长资产——项目结束后企业可独立运转</p>
+          </article>
+          <article class="value-stack-card">
+            <span class="value-stack-idx">VALUE · 03</span>
+            <h3 class="value-stack-title">构建数据化<br/>可长期增长的<br/>品牌资产</h3>
+            <p class="value-stack-body">从战略、验证、运营到沉淀，所有动作连成一条持续推进的路径——让品牌增长成为可复制的结构</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         (removed · module-split deep dives merged into 01 + 02)
+         ════════════════════════════════════════════════════════════ -->
+    <section class="section section--paper" hidden>
       <div class="shell shell--wide">
         <header class="section-head">
           <span class="section-idx">02 / Module 01</span>
@@ -1584,7 +1800,7 @@ ul, ol { list-style: none; }
     <!-- ════════════════════════════════════════════════════════════
          03 · MODULE 02 DEEP · 品牌增长引擎展开
          ════════════════════════════════════════════════════════════ -->
-    <section class="section section--paper-1">
+    <section class="section section--paper-1" hidden>
       <div class="shell shell--wide">
         <header class="section-head">
           <span class="section-idx">03 / Module 02</span>
@@ -1751,11 +1967,70 @@ ul, ol { list-style: none; }
     <section class="cta-band">
       <div class="shell shell--wide">
         <div class="cta-band-grid">
-          <h2 class="cta-band-title">看完系统结构，<br/>下一步是诊断</h2>
+          <h2 class="cta-band-title">看完系统结构，<br/>下一步是评估</h2>
           <div class="cta-band-actions">
-            <a class="btn btn--solid-ink" href="./contact-and-cta.html">预约增长诊断 <span class="arrow">→</span></a>
-            <a class="btn btn--ghost-dark" href="./delivery-and-cases.html">查看交付与案例</a>
+            <a class="btn btn--solid-ink" href="./assessment-v2.html">预约品牌咨询评估 <span class="arrow">→</span></a>
+            <a class="btn btn--ghost-dark" href="./homepage-v2.html#cooperation-flow">查看 6 步合作流程</a>
             <p class="cta-band-note">RESPONSE · 2 BUSINESS DAYS / SHENZHEN · GMT+8</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dark">
+      <div class="shell shell--wide">
+        <header class="section-head">
+          <span class="section-idx">08 / Contact</span>
+          <div class="section-head-main">
+            <div>
+              <span class="section-kicker">联系我们 · Get In Touch</span>
+              <h2 class="section-title">扫码添加小助手<br/>立刻预约 <em>30 分钟</em> 品牌咨询诊断</h2>
+            </div>
+            <p class="section-lead">
+              不论是否合作，诊断对公司都有极大价值——我们会在 1-2 个工作日内响应
+            </p>
+          </div>
+        </header>
+
+        <div class="contact-block">
+          <div class="contact-block-left">
+            <div class="contact-qr-row">
+              <div class="contact-qr">
+                <img src="./assets/qr-wechat-crop.png" alt="峥锐品牌出海小助手 微信二维码" />
+              </div>
+              <div>
+                <p class="contact-qr-label">小助手微信</p>
+                <p class="contact-qr-desc">扫码添加小助手，立刻预约 30 分钟品牌咨询诊断——快速判断你的品牌增长卡点</p>
+              </div>
+            </div>
+            <div class="contact-qr-row">
+              <div class="contact-qr">
+                <img src="./assets/qr-official.png" alt="峥锐 ZAPEX 官方公众号二维码" />
+              </div>
+              <div>
+                <p class="contact-qr-label">官方公众号</p>
+                <p class="contact-qr-desc">关注公众号，获取品牌出海案例深度解析、市场分析报告等免费工具</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-info">
+            <div class="contact-info-row">
+              <span class="contact-info-key">Phone · 客服电话</span>
+              <p class="contact-info-value">13316492740</p>
+            </div>
+            <div class="contact-info-row">
+              <span class="contact-info-key">Address · 地址</span>
+              <p class="contact-info-value">深圳市龙华区龙华大道<br/>优品文化创意园 4 栋 201-1</p>
+            </div>
+            <div class="contact-info-row">
+              <span class="contact-info-key">Email · 邮箱</span>
+              <p class="contact-info-value">hello@zapex.io</p>
+            </div>
+            <div class="contact-info-row">
+              <span class="contact-info-key">Response · 响应</span>
+              <p class="contact-info-value" style="font-size:var(--t-sm); color:var(--od-80);">Shenzhen · GMT+8 · 1-2 BUSINESS DAYS</p>
+            </div>
           </div>
         </div>
       </div>
@@ -1792,8 +2067,7 @@ ul, ol { list-style: none; }
           <span class="foot-col-head">Sitemap · 站点</span>
           <a href="./homepage-v2.html">品牌首页</a>
           <a href="./system-and-modules-v2.html">系统与模块</a>
-          <a href="./delivery-and-cases.html">交付与案例</a>
-          <a href="./assessment.html">评估表</a>
+          <a href="./assessment-v2.html">评估表</a>
         </div>
         <div class="foot-col">
           <span class="foot-col-head">Services · 服务</span>
@@ -1804,7 +2078,7 @@ ul, ol { list-style: none; }
         <div class="foot-col">
           <span class="foot-col-head">Portal · 客户</span>
           <a href="./growth-forms.html">客户工作台</a>
-          <a href="./contact-and-cta.html">预约增长诊断</a>
+          <a href="./assessment-v2.html">预约品牌咨询评估</a>
         </div>
         <div class="foot-col">
           <span class="foot-col-head">Legal · 合规</span>

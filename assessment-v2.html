@@ -6,66 +6,304 @@
   <title>ZAPEX｜品牌诊断评估表</title>
   <link rel="stylesheet" href="./zapex-system.css" />
   <style>
-    /* ═══════════════════════════════════════════════════════════
-       Assessment v2 · page-scoped form components
-       ═══════════════════════════════════════════════════════════ */
+    /* Assessment v2 · page scoped */
+    .banner-text {
+      color: var(--od-80) !important;
+      letter-spacing: 0.04em !important;
+      text-transform: none !important;
+      font-family: var(--ff-body) !important;
+      font-size: 11px !important;
+    }
 
-    /* Form shell — editorial split: left meta rail · right form */
-    .assess-shell {
+    .diagnosis-grid {
       display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: var(--s-8);
-      padding-top: var(--s-7);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
       border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
     }
-    .assess-rail {
-      position: sticky;
-      top: var(--s-7);
-      align-self: start;
+    .diagnosis-card {
+      padding: var(--s-6);
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+      min-height: 240px;
+      display: grid;
+      align-content: start;
+      gap: var(--s-4);
     }
-    .assess-rail-idx {
+    .diagnosis-card::before {
+      content: "";
+      display: block;
+      width: 48px;
+      height: 2px;
+      background: var(--brand);
+    }
+    .diagnosis-idx {
       font-family: var(--ff-mono);
       font-size: var(--t-mono);
       letter-spacing: 0.14em;
       color: var(--brand);
-      margin-bottom: var(--s-3);
-      display: block;
+      text-transform: uppercase;
     }
-    .assess-rail-title {
+    .diagnosis-title {
       font-family: var(--ff-display);
       font-size: var(--t-lg);
-      font-weight: 600;
+      line-height: 1.08;
       letter-spacing: -0.02em;
       color: var(--ink);
-      margin: 0 0 var(--s-5);
-    }
-    .assess-rail-list {
-      list-style: none;
-      padding: 0;
       margin: 0;
-      border-top: 1px solid var(--line);
     }
-    .assess-rail-list li {
-      padding: var(--s-3) 0;
-      border-bottom: 1px solid var(--line);
-      font-family: var(--ff-mono);
-      font-size: var(--t-sm);
+    .diagnosis-body {
+      margin: 0;
       color: var(--ink-60);
+      line-height: 1.7;
+      font-size: var(--t-sm);
+    }
+
+    .cta-report {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)),
+        var(--slate);
+      color: var(--paper);
+      border-top: 1px solid var(--line-dark);
+      border-bottom: 1px solid var(--line-dark);
+    }
+    .cta-report::before,
+    .cta-report::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .cta-report::before {
+      background:
+        linear-gradient(120deg, rgba(26,79,255,0.14), transparent 28%),
+        linear-gradient(300deg, rgba(26,79,255,0.12), transparent 32%);
+      mix-blend-mode: screen;
+    }
+    .cta-report::after {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.32;
+    }
+    .cta-report-grid {
+      position: relative;
+      z-index: 1;
       display: grid;
-      grid-template-columns: 32px 1fr;
+      grid-template-columns: minmax(300px, 0.95fr) minmax(0, 1.15fr);
+      gap: var(--s-7);
+      padding: var(--s-8) 0;
+      align-items: start;
+    }
+    .cta-report-side {
+      display: grid;
+      gap: var(--s-4);
+    }
+    .cta-report-card {
+      padding: var(--s-5);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .cta-report-card-head {
+      display: inline-flex;
+      align-items: center;
       gap: 10px;
+      margin-bottom: var(--s-3);
+      font-family: var(--ff-mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.6);
     }
-    .assess-rail-list li span {
-      color: var(--brand);
-      letter-spacing: 0.1em;
+    .cta-report-card-head::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: currentColor;
     }
-    .assess-rail-note {
-      margin-top: var(--s-5);
+    .cta-report-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+    .cta-report-list li {
+      position: relative;
+      padding-left: 18px;
+      color: rgba(255,255,255,0.8);
       font-size: var(--t-sm);
-      color: var(--ink-60);
       line-height: 1.65;
-      padding-top: var(--s-4);
-      border-top: 1px solid var(--line);
+    }
+    .cta-report-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--brand);
+      box-shadow: 0 0 0 5px rgba(26,79,255,0.14);
+      transform: translateY(-50%);
+    }
+    .cta-report-flow {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+    .cta-report-flow li {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 12px;
+      align-items: start;
+      color: rgba(255,255,255,0.8);
+      font-size: var(--t-sm);
+      line-height: 1.6;
+    }
+    .cta-report-step {
+      font-family: var(--ff-mono);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      color: var(--brand-soft);
+      text-transform: uppercase;
+    }
+    .cta-report-main {
+      display: grid;
+      gap: var(--s-5);
+      align-content: start;
+    }
+    .cta-report-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: var(--s-4);
+      font-family: var(--ff-mono);
+      font-size: var(--t-mono);
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.68);
+      text-transform: uppercase;
+    }
+    .cta-report-kicker::before {
+      content: "";
+      width: 40px;
+      height: 1px;
+      background: currentColor;
+    }
+    .cta-report-title {
+      margin: 0;
+      font-family: var(--ff-display);
+      font-size: clamp(34px, 4.2vw, 68px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--paper);
+    }
+    .cta-report-copy {
+      display: grid;
+      gap: var(--s-5);
+    }
+    .cta-report-copy p {
+      margin: 0;
+      color: rgba(255,255,255,0.78);
+      font-size: var(--t-md);
+      line-height: 1.7;
+    }
+    .cta-report-note {
+      font-family: var(--ff-mono);
+      font-size: var(--t-mono);
+      letter-spacing: 0.1em;
+      color: var(--brand-soft);
+      text-transform: uppercase;
+    }
+
+    .assessment-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: none;
+      align-items: stretch;
+      justify-content: center;
+      background: rgba(10, 14, 28, 0.84);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .assessment-modal.is-open {
+      display: flex;
+    }
+    .assessment-dialog {
+      width: min(1180px, calc(100vw - 48px));
+      max-height: calc(100vh - 48px);
+      margin: 24px;
+      background: #fbf9f8;
+      border: 1px solid rgba(15, 23, 42, 0.16);
+      box-shadow: 0 24px 80px rgba(15, 23, 42, 0.28);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+    }
+    .assessment-dialog-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: var(--s-5);
+      padding: var(--s-6) var(--s-6) var(--s-5);
+      border-bottom: 1px solid var(--line);
+      background: #fbf9f8;
+    }
+    .assessment-dialog-kicker {
+      display: block;
+      font-family: var(--ff-mono);
+      font-size: var(--t-mono);
+      letter-spacing: 0.14em;
+      color: var(--brand);
+      text-transform: uppercase;
+      margin-bottom: var(--s-3);
+    }
+    .assessment-dialog-title {
+      margin: 0 0 8px;
+      font-family: var(--ff-display);
+      font-size: var(--t-2xl);
+      letter-spacing: -0.03em;
+      color: var(--ink);
+    }
+    .assessment-dialog-lead {
+      margin: 0;
+      color: var(--ink-60);
+      line-height: 1.7;
+      max-width: 54ch;
+    }
+    .assessment-close {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 22px;
+      line-height: 1;
+      transition: border-color 0.16s, color 0.16s, transform 0.16s;
+      flex: 0 0 auto;
+    }
+    .assessment-close:hover {
+      border-color: var(--brand);
+      color: var(--brand);
+      transform: translateY(-1px);
+    }
+    .assessment-dialog-body {
+      overflow: auto;
+      padding: var(--s-6);
+      background: #fbf9f8;
     }
 
     .assess-form {
@@ -77,15 +315,17 @@
     .assess-form::before {
       content: "";
       position: absolute;
-      top: -1px; left: 0;
-      width: 56px; height: 2px;
+      top: -1px;
+      left: 0;
+      width: 56px;
+      height: 2px;
       background: var(--brand);
     }
-
     .assess-section-head {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
+      gap: var(--s-4);
       padding-bottom: var(--s-4);
       border-bottom: 1px solid var(--line);
       margin-bottom: var(--s-6);
@@ -103,7 +343,6 @@
       color: var(--ink);
       letter-spacing: -0.02em;
     }
-
     .form-grid-2 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -114,7 +353,9 @@
       gap: 8px;
       margin-bottom: var(--s-5);
     }
-    .form-group--full { grid-column: 1 / -1; }
+    .form-group--full {
+      grid-column: 1 / -1;
+    }
     .form-label {
       font-size: 13px;
       font-weight: 600;
@@ -122,14 +363,10 @@
       color: var(--ink);
       font-family: var(--ff-body);
     }
-    .form-required { color: var(--brand); margin-left: 2px; }
-    .form-hint {
-      font-family: var(--ff-mono);
-      font-size: 11px;
-      letter-spacing: 0.02em;
-      color: var(--ink-60);
+    .form-required {
+      color: var(--brand);
+      margin-left: 2px;
     }
-
     .form-input,
     .form-select,
     .form-textarea {
@@ -206,13 +443,11 @@
       background: rgba(26,79,255,0.08);
       color: var(--brand);
     }
-
     .form-divider {
       height: 1px;
       background: var(--line);
       margin: var(--s-7) 0 var(--s-6);
     }
-
     .form-footer {
       display: flex;
       align-items: center;
@@ -238,39 +473,89 @@
       font-size: 13px;
       margin-top: var(--s-4);
     }
-    .form-error-msg.visible { display: block; }
-
-    .form-success {
-      display: none;
-      text-align: center;
-      padding: var(--s-8) var(--s-6);
+    .form-error-msg.visible {
+      display: block;
     }
-    .form-success.visible { display: block; }
-    .form-success-icon {
+    .btn--loading {
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    .success-panel {
+      display: none;
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: var(--s-8);
+      position: relative;
+      overflow: hidden;
+    }
+    .success-panel::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 0;
       width: 56px;
-      height: 56px;
-      background: rgba(26,79,255,0.08);
-      border-radius: 50%;
+      height: 2px;
+      background: var(--brand);
+    }
+    .success-panel.visible {
+      display: grid;
+    }
+    .success-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: var(--s-7);
+      align-items: center;
+    }
+    .success-qr-shell {
+      padding: var(--s-4);
+      background: var(--od);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .success-qr-shell img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      background: #fff;
+    }
+    .success-kicker {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      margin-bottom: var(--s-5);
+      gap: 8px;
+      margin-bottom: var(--s-4);
+      font-family: var(--ff-mono);
+      font-size: var(--t-mono);
+      letter-spacing: 0.14em;
+      color: var(--brand);
+      text-transform: uppercase;
     }
-    .form-success-icon svg { width: 24px; height: 24px; stroke: var(--brand); }
-    .form-success h3 {
+    .success-kicker::before {
+      content: "";
+      width: 40px;
+      height: 1px;
+      background: currentColor;
+    }
+    .success-title {
+      margin: 0 0 var(--s-4);
       font-family: var(--ff-display);
-      font-size: var(--t-xl);
-      letter-spacing: -0.02em;
+      font-size: clamp(34px, 4vw, 56px);
+      line-height: 0.96;
+      letter-spacing: -0.04em;
       color: var(--ink);
-      margin: 0 0 var(--s-3);
     }
-    .form-success p {
+    .success-copy {
+      margin: 0 0 var(--s-5);
       color: var(--ink-60);
-      max-width: 420px;
-      margin: 0 auto;
-      line-height: 1.65;
+      line-height: 1.8;
+      font-size: var(--t-md);
+      max-width: 40ch;
     }
-    .btn--loading { opacity: 0.65; pointer-events: none; }
+    .success-actions {
+      display: flex;
+      gap: var(--s-3);
+      flex-wrap: wrap;
+    }
 
     /* Footer contact */
     .foot-contact {
@@ -280,24 +565,37 @@
       padding: var(--s-8) 0;
       border-bottom: 1px solid var(--line-dark);
     }
-    .foot-qr-row { display: grid; grid-template-columns: 140px 1fr; gap: var(--s-5); align-items: start; }
-    .foot-qr { width: 140px; height: 140px; background: var(--od); padding: 8px; display: grid; place-items: center; }
-    .foot-qr img { width: 100%; height: 100%; object-fit: contain; }
-    .foot-qr-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 12px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--line-dark);
-      border-radius: 999px;
-      font-size: var(--t-sm);
-      color: var(--od);
-      margin-bottom: var(--s-3);
+    .foot-qr-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: var(--s-5);
+      align-items: start;
     }
-    .foot-qr-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); }
-    .foot-qr-desc { font-size: var(--t-sm); color: var(--od-60); line-height: 1.6; max-width: 36ch; }
-    .foot-contact-blocks { display: grid; gap: var(--s-5); }
-    .foot-contact-block { padding-top: var(--s-4); border-top: 1px solid var(--line-dark-soft); }
-    .foot-contact-block:first-child { border-top: 0; padding-top: 0; }
+    .foot-qr {
+      width: 140px;
+      height: 140px;
+      background: var(--od);
+      padding: 8px;
+      display: grid;
+      place-items: center;
+    }
+    .foot-qr img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .foot-contact-blocks {
+      display: grid;
+      gap: var(--s-5);
+    }
+    .foot-contact-block {
+      padding-top: var(--s-4);
+      border-top: 1px solid var(--line-dark-soft);
+    }
+    .foot-contact-block:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
     .foot-contact-key {
       display: block;
       font-family: var(--ff-mono);
@@ -307,33 +605,80 @@
       color: var(--od-40);
       margin-bottom: 8px;
     }
-    .foot-contact-value { font-size: var(--t-sm); color: var(--od-80); line-height: 1.55; }
+    .foot-contact-value {
+      font-size: var(--t-sm);
+      color: var(--od-80);
+      line-height: 1.55;
+    }
 
-    .banner-text {
-      color: var(--od-80) !important;
-      letter-spacing: 0.04em !important;
-      text-transform: none !important;
-      font-family: var(--ff-body) !important;
-      font-size: 11px !important;
+    body.modal-open {
+      overflow: hidden;
     }
 
     @media (max-width: 1024px) {
-      .assess-shell { grid-template-columns: 1fr; gap: var(--s-6); }
-      .assess-rail { position: static; }
-      .foot-contact { grid-template-columns: 1fr; }
+      .diagnosis-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .cta-report-grid {
+        grid-template-columns: 1fr;
+      }
+      .success-grid {
+        grid-template-columns: 1fr;
+      }
+      .foot-contact {
+        grid-template-columns: 1fr;
+      }
     }
     @media (max-width: 640px) {
-      .form-grid-2 { grid-template-columns: 1fr; }
-      .assess-form { padding: var(--s-6) var(--s-5); }
-      .foot-qr-row { grid-template-columns: 100px 1fr; }
-      .foot-qr { width: 100px; height: 100px; }
+      .diagnosis-grid {
+        grid-template-columns: 1fr;
+      }
+      .diagnosis-card {
+        min-height: auto;
+        padding: var(--s-5);
+      }
+      .assessment-dialog {
+        width: 100vw;
+        max-height: 100vh;
+        height: 100vh;
+        margin: 0;
+      }
+      .assessment-dialog-head,
+      .assessment-dialog-body {
+        padding: var(--s-5);
+      }
+      .assessment-dialog-title {
+        font-size: var(--t-xl);
+      }
+      .assess-form,
+      .success-panel {
+        padding: var(--s-6) var(--s-5);
+      }
+      .form-grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .success-actions .btn,
+      .form-footer .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .foot-qr-row {
+        grid-template-columns: 100px 1fr;
+      }
+      .foot-qr {
+        width: 100px;
+        height: 100px;
+      }
+      .cta-report-flow li {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- META BAR -->
   <div class="meta-bar">
     <div class="shell shell--wide">
       <div class="meta-bar-inner">
@@ -348,24 +693,22 @@
     </div>
   </div>
 
-  <!-- NAV -->
   <div class="site-nav">
     <div class="shell shell--wide">
       <div class="site-nav-inner">
         <div class="site-nav-left">
           <a href="./homepage-v2.html" class="wordmark wordmark--nav">
-            <span class="z">Z</span><span class="apex">APEX</span>
+            <span class="cn">崢銳</span><span class="wordmark-en"><span class="z">Z</span><span class="apex">APEX</span></span>
           </a>
         </div>
         <nav class="site-nav-links">
           <a class="site-nav-link" href="./homepage-v2.html"><span class="idx">01</span>品牌首页</a>
           <a class="site-nav-link" href="./system-and-modules-v2.html"><span class="idx">02</span>系统与模块</a>
-          <a class="site-nav-link" href="./delivery-and-cases-v2.html"><span class="idx">03</span>交付与案例</a>
-          <a class="site-nav-link is-current" href="./assessment-v2.html"><span class="idx">04</span>评估表</a>
+          <a class="site-nav-link is-current" href="./assessment-v2.html"><span class="idx">03</span>评估表</a>
         </nav>
         <div class="site-nav-right">
           <a class="pill pill--stacked" href="./growth-forms.html"><span class="dot"></span><span class="pill-stack"><span class="pill-main">客户工作台</span><span class="pill-sub">飞书入口</span></span></a>
-          <a class="pill pill--primary" href="./assessment-v2.html">预约诊断 <span class="arrow">→</span></a>
+          <a class="pill pill--primary" href="#assessment-cta">预约品牌咨询评估 <span class="arrow">→</span></a>
         </div>
       </div>
     </div>
@@ -373,7 +716,6 @@
 
   <main>
 
-    <!-- 00 · HERO -->
     <section class="hero hero--dark">
       <div class="shell shell--wide">
         <div class="hero-grid">
@@ -386,9 +728,7 @@
             </h1>
             <div class="hero-body">
               <p class="hero-lead">
-                在进入系统合作之前，先用这套评估框架判断你的团队处于哪个阶段，以及当前增长断层最可能出现在哪里——
-                <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span>
-                不推销、不承诺 ROI，只做结构性诊断
+                在进入系统合作之前，先用这套评估框架判断你的团队处于哪个阶段，以及当前增长断层最可能出现在哪里
               </p>
             </div>
           </div>
@@ -396,321 +736,104 @@
       </div>
     </section>
 
-    <!-- 01 · FORM -->
     <section class="section section--paper">
       <div class="shell shell--wide">
         <header class="section-head">
-          <span class="section-idx">01 / Form</span>
+          <span class="section-idx">01 / Diagnosis</span>
           <div class="section-head-main">
             <div>
-              <span class="section-kicker">评估骨架 · Assessment Skeleton</span>
-              <h2 class="section-title">三段结构<br/>大约 3 分钟填完</h2>
+              <span class="section-kicker">核心痛点 · Pain Points</span>
+              <h2 class="section-title">90% 的跨境大卖家<br/>为什么做不出品牌？</h2>
             </div>
             <p class="section-lead">
-              基础信息 · 业务现状 · 增长卡点——这些信息会直接进入诊断准备，而不是销售跟进
+              如果你在以下六个问题中认出了自己的处境，说明你正处于品牌转型的关键时机
             </p>
           </div>
         </header>
 
-        <div class="assess-shell">
+        <div class="diagnosis-grid">
+          <article class="diagnosis-card">
+            <div class="diagnosis-idx">PAIN · 01</div>
+            <h3 class="diagnosis-title">不知道从哪里切入<br/>做品牌</h3>
+            <p class="diagnosis-body">手里上百个 SKU，不知道哪个能做品牌，不知道选什么品类、从哪里启动</p>
+          </article>
+          <article class="diagnosis-card">
+            <div class="diagnosis-idx">PAIN · 02</div>
+            <h3 class="diagnosis-title">做了很多单点动作<br/>没有品牌体系</h3>
+            <p class="diagnosis-body">做了独立站、拍了视频、投了广告，但没有获得品牌溢价，品牌没有竞争力</p>
+          </article>
+          <article class="diagnosis-card">
+            <div class="diagnosis-idx">PAIN · 03</div>
+            <h3 class="diagnosis-title">缺品牌战略<br/>落不了地</h3>
+            <p class="diagnosis-body">找过咨询公司，拿了一堆漂亮的 PPT，团队看不懂，执行不了</p>
+          </article>
+          <article class="diagnosis-card">
+            <div class="diagnosis-idx">PAIN · 04</div>
+            <h3 class="diagnosis-title">没有设计增长路径<br/>跑不通</h3>
+            <p class="diagnosis-body">只会投流，不知道怎么从付费流量到品牌驱动，偶尔有爆品成功，无法稳定复制</p>
+          </article>
+          <article class="diagnosis-card">
+            <div class="diagnosis-idx">PAIN · 05</div>
+            <h3 class="diagnosis-title">花钱<br/>看不到效果</h3>
+            <p class="diagnosis-body">投了几百万做品牌，但完全不知道有没有用，无法评估品牌工作的成果</p>
+          </article>
+          <article class="diagnosis-card">
+            <div class="diagnosis-idx">PAIN · 06</div>
+            <h3 class="diagnosis-title">时间窗口<br/>正在关闭</h3>
+            <p class="diagnosis-body">竞争对手已经开始做品牌，用户心智饱和，流量成本持续上涨，再不做就晚了</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-          <!-- 左侧 meta rail -->
-          <aside class="assess-rail">
-            <span class="assess-rail-idx">ASSESS · STRUCTURE</span>
-            <h3 class="assess-rail-title">评估骨架</h3>
-            <ol class="assess-rail-list">
-              <li><span>01</span>生意基本面 / Business Fundamentals</li>
-              <li><span>02</span>增长结构 / Growth Structure</li>
-              <li><span>03</span>产品与竞争 / Product Edge</li>
-              <li><span>04</span>品牌资产 / Brand Assets</li>
-              <li><span>05</span>痛点与意愿 / Readiness</li>
-              <li><span>06</span>联系方式 / Contact</li>
-            </ol>
-            <p class="assess-rail-note">
-              填写后，我们会与您联系，判断您的生意是否适合启动品牌化，以及下一步该做什么
-            </p>
-          </aside>
-
-          <!-- 右侧 form -->
-          <div class="assess-form">
-
-            <!-- 成功状态 -->
-            <div class="form-success" id="form-success">
-              <div class="form-success-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-              </div>
-              <h3>评估已提交</h3>
-              <p>我们会在 1–2 个工作日内通过你填写的联系方式与你确认诊断时间，感谢你的信任</p>
+    <section class="cta-report" id="assessment-cta">
+      <div class="shell shell--wide">
+        <div class="cta-report-grid">
+          <div class="cta-report-side">
+            <article class="cta-report-card">
+              <span class="cta-report-card-head">评估内容</span>
+              <ul class="cta-report-list">
+                <li>生意基本面：月销售额、利润率、SKU 结构与平台分布</li>
+                <li>增长结构：当前增长来源、广告占比、复购表现</li>
+                <li>产品与竞争：差异化、定价区间与用户购买原因</li>
+                <li>品牌资产：独立站、社媒、私域、内容与团队准备度</li>
+                <li>痛点与意愿：当前卡点、升级顾虑与品牌化投入意愿</li>
+                <li>联系方式：便于我们回传诊断结论并安排进一步沟通</li>
+              </ul>
+            </article>
+            <article class="cta-report-card">
+              <span class="cta-report-card-head">你将获得</span>
+              <ul class="cta-report-list">
+                <li>品牌建设现状判断：你目前处在哪个阶段</li>
+                <li>当前增长卡点识别：问题更偏战略、验证还是执行</li>
+                <li>品牌化适配判断：是否已经适合进入品牌化阶段</li>
+                <li>下一步建议动作：应该先诊断、先测试还是先系统启动</li>
+              </ul>
+            </article>
+            <article class="cta-report-card">
+              <span class="cta-report-card-head">诊断流程</span>
+              <ol class="cta-report-flow">
+                <li><span class="cta-report-step">01 / 填写</span><span>完成品牌咨询评估表，信息会直接进入飞书后台。</span></li>
+                <li><span class="cta-report-step">02 / 诊断</span><span>我们根据你的业务结构和品牌准备度做初步结构性判断。</span></li>
+                <li><span class="cta-report-step">03 / 联系</span><span>1-2 个工作日内响应，并安排后续品牌咨询诊断。</span></li>
+              </ol>
+            </article>
+          </div>
+          <div class="cta-report-main">
+            <div>
+              <span class="cta-report-kicker">品牌建设现状分析报告</span>
+              <h2 class="cta-report-title">如果您也有这样的问题<br/>点击按钮填表，获取免费的<em>品牌建设现状分析报告</em></h2>
             </div>
-
-            <form id="assessment-form" novalidate>
-
-              <div class="assess-section-head">
-                <span class="step">STEP · 01</span>
-                <span class="title">生意基本面</span>
-              </div>
-
-              <div class="form-grid-2">
-                <div class="form-group">
-                  <label class="form-label" for="monthly-sales">月销售额<span class="form-required">*</span></label>
-                  <select class="form-select" id="monthly-sales">
-                    <option value="" selected>请选择</option>
-                    <option>10万以下</option>
-                    <option>10-50万</option>
-                    <option>50-100万</option>
-                    <option>100-300万</option>
-                    <option>300-500万</option>
-                    <option>500万-1000万</option>
-                    <option>1000万以上</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="form-label" for="profit-rate">综合净利润率<span class="form-required">*</span></label>
-                  <select class="form-select" id="profit-rate">
-                    <option value="" selected>请选择</option>
-                    <option>亏损或接近0</option>
-                    <option>5%以下</option>
-                    <option>5-10%</option>
-                    <option>10-15%</option>
-                    <option>15-20%</option>
-                    <option>20%以上</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-grid-2">
-                <div class="form-group">
-                  <label class="form-label" for="sku-count">SKU数量<span class="form-required">*</span></label>
-                  <select class="form-select" id="sku-count">
-                    <option value="" selected>请选择</option>
-                    <option>1-5个</option>
-                    <option>6-15个</option>
-                    <option>16-50个</option>
-                    <option>50个以上</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="form-label" for="top3-ratio">Top 3 SKU销售占比<span class="form-required">*</span></label>
-                  <select class="form-select" id="top3-ratio">
-                    <option value="" selected>请选择</option>
-                    <option>不到30%</option>
-                    <option>30-50%</option>
-                    <option>50-70%</option>
-                    <option>70-85%</option>
-                    <option>85%以上</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group form-group--full">
-                <label class="form-label">主要销售平台<span class="form-required">*</span></label>
-                <div class="form-options">
-                  <label class="form-option"><input type="checkbox" name="primary-platform" value="Amazon（美国站）" /><span>Amazon（美国站）</span></label>
-                  <label class="form-option"><input type="checkbox" name="primary-platform" value="Amazon（欧洲站）" /><span>Amazon（欧洲站）</span></label>
-                  <label class="form-option"><input type="checkbox" name="primary-platform" value="Amazon（其他站点）" /><span>Amazon（其他站点）</span></label>
-                  <label class="form-option"><input type="checkbox" name="primary-platform" value="独立站（Shopify/WooCommerce等）" /><span>独立站（Shopify/WooCommerce等）</span></label>
-                  <label class="form-option"><input type="checkbox" name="primary-platform" value="TikTok Shop" /><span>TikTok Shop</span></label>
-                  <label class="form-option"><input type="checkbox" name="primary-platform" value="其他平台" /><span>其他平台</span></label>
-                </div>
-              </div>
-
-              <div class="form-group form-group--full">
-                <label class="form-label" for="other-platform">其他平台说明</label>
-                <input class="form-input" id="other-platform" type="text" placeholder="如选择了其他平台，请补充说明" />
-              </div>
-
-              <div class="form-divider"></div>
-
-              <div class="assess-section-head">
-                <span class="step">STEP · 02</span>
-                <span class="title">增长结构</span>
-              </div>
-
-              <div class="form-group form-group--full">
-                <label class="form-label">当前增长主要来源<span class="form-required">*</span></label>
-                <div class="form-options">
-                  <label class="form-option"><input type="checkbox" name="growth-source" value="不断上新SKU测款" /><span>不断上新SKU测款</span></label>
-                  <label class="form-option"><input type="checkbox" name="growth-source" value="加大广告投放" /><span>加大广告投放</span></label>
-                  <label class="form-option"><input type="checkbox" name="growth-source" value="自然流量增长" /><span>自然流量增长</span></label>
-                  <label class="form-option"><input type="checkbox" name="growth-source" value="KOL/达人/网红带货" /><span>KOL/达人/网红带货</span></label>
-                  <label class="form-option"><input type="checkbox" name="growth-source" value="老客户复购" /><span>老客户复购</span></label>
-                  <label class="form-option"><input type="checkbox" name="growth-source" value="不太清楚，比较随机" /><span>不太清楚，比较随机</span></label>
-                </div>
-              </div>
-
-              <div class="form-grid-2">
-                <div class="form-group">
-                  <label class="form-label" for="ad-ratio">广告费用占销售额比例<span class="form-required">*</span></label>
-                  <select class="form-select" id="ad-ratio">
-                    <option value="" selected>请选择</option>
-                    <option>不到10%</option>
-                    <option>10-20%</option>
-                    <option>20-30%</option>
-                    <option>30-40%</option>
-                    <option>40%以上</option>
-                    <option>不太清楚</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="form-label" for="repurchase">老客户复购情况<span class="form-required">*</span></label>
-                  <select class="form-select" id="repurchase">
-                    <option value="" selected>请选择</option>
-                    <option>几乎没有</option>
-                    <option>有一些，但很少</option>
-                    <option>有稳定复购（占比10%以内）</option>
-                    <option>复购比例较高（10-30%）</option>
-                    <option>复购占比很高（30%以上）</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-divider"></div>
-
-              <div class="assess-section-head">
-                <span class="step">STEP · 03</span>
-                <span class="title">产品与竞争</span>
-              </div>
-
-              <div class="form-group form-group--full">
-                <label class="form-label" for="difference">产品相对竞品的最大差别<span class="form-required">*</span></label>
-                <textarea class="form-textarea" id="difference" placeholder="请描述你们产品相对竞品最明显的差异点"></textarea>
-              </div>
-
-              <div class="form-grid-2">
-                <div class="form-group">
-                  <label class="form-label" for="pricing">产品定价相对竞品<span class="form-required">*</span></label>
-                  <select class="form-select" id="pricing">
-                    <option value="" selected>请选择</option>
-                    <option>明显更低（低10%以上）</option>
-                    <option>差不多</option>
-                    <option>略高一些（高10-20%）</option>
-                    <option>明显更高（高20-30%）</option>
-                    <option>高很多（高30%以上）</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="form-label" for="buy-reason">用户购买主要原因<span class="form-required">*</span></label>
-                  <select class="form-select" id="buy-reason">
-                    <option value="" selected>请选择</option>
-                    <option>价格便宜/性价比高</option>
-                    <option>解决了某个具体痛点</option>
-                    <option>设计好看/有品质感</option>
-                    <option>看到好评/别人推荐</option>
-                    <option>不太清楚，可能是广告吸引的</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-divider"></div>
-
-              <div class="assess-section-head">
-                <span class="step">STEP · 04</span>
-                <span class="title">品牌资产</span>
-              </div>
-
-              <div class="form-group form-group--full">
-                <label class="form-label">现有品牌资产<span class="form-required">*</span></label>
-                <div class="form-options">
-                  <label class="form-option"><input type="checkbox" name="brand-assets" value="注册了品牌商标" /><span>注册了品牌商标</span></label>
-                  <label class="form-option"><input type="checkbox" name="brand-assets" value="有独立站" /><span>有独立站</span></label>
-                  <label class="form-option"><input type="checkbox" name="brand-assets" value="有在运营的社交媒体账号" /><span>有在运营的社交媒体账号</span></label>
-                  <label class="form-option"><input type="checkbox" name="brand-assets" value="有用户邮件列表" /><span>有用户邮件列表</span></label>
-                  <label class="form-option"><input type="checkbox" name="brand-assets" value="有私域" /><span>有私域</span></label>
-                  <label class="form-option"><input type="checkbox" name="brand-assets" value="做过KOL/达人合作" /><span>做过KOL/达人合作</span></label>
-                  <label class="form-option"><input type="checkbox" name="brand-assets" value="产品包装有自己的品牌设计" /><span>产品包装有自己的品牌设计</span></label>
-                  <label class="form-option"><input type="checkbox" name="brand-assets" value="以上都没有" /><span>以上都没有</span></label>
-                </div>
-              </div>
-
-              <div class="form-group form-group--full">
-                <label class="form-label" for="brand-owner">是否有专人负责品牌/内容/社媒<span class="form-required">*</span></label>
-                <select class="form-select" id="brand-owner">
-                  <option value="" selected>请选择</option>
-                  <option>没有，老板自己或兼职做</option>
-                  <option>有人在做，但不是全职</option>
-                  <option>有专职人员负责</option>
-                </select>
-              </div>
-
-              <div class="form-divider"></div>
-
-              <div class="assess-section-head">
-                <span class="step">STEP · 05</span>
-                <span class="title">痛点与意愿</span>
-              </div>
-
-              <div class="form-group form-group--full">
-                <label class="form-label" for="biggest-problem">当前最头疼的问题<span class="form-required">*</span></label>
-                <textarea class="form-textarea" id="biggest-problem" placeholder="请直接写最影响你增长或品牌化推进的一件事"></textarea>
-              </div>
-
-              <div class="form-group form-group--full">
-                <label class="form-label">对品牌升级的主要担心<span class="form-required">*</span></label>
-                <div class="form-options">
-                  <label class="form-option"><input type="checkbox" name="brand-concern" value="不知道从哪开始" /><span>不知道从哪开始</span></label>
-                  <label class="form-option"><input type="checkbox" name="brand-concern" value="担心投入太大、回报不确定" /><span>担心投入太大、回报不确定</span></label>
-                  <label class="form-option"><input type="checkbox" name="brand-concern" value="不确定产品适不适合做品牌" /><span>不确定产品适不适合做品牌</span></label>
-                  <label class="form-option"><input type="checkbox" name="brand-concern" value="担心做了也没效果、浪费时间" /><span>担心做了也没效果、浪费时间</span></label>
-                  <label class="form-option"><input type="checkbox" name="brand-concern" value="担心团队能力不够" /><span>担心团队能力不够</span></label>
-                  <label class="form-option"><input type="checkbox" name="brand-concern" value="目前没有太多担心，想尽快启动" /><span>目前没有太多担心，想尽快启动</span></label>
-                </div>
-              </div>
-
-              <div class="form-group form-group--full">
-                <label class="form-label" for="brand-intent">品牌化投入意愿<span class="form-required">*</span></label>
-                <select class="form-select" id="brand-intent">
-                  <option value="" selected>请选择</option>
-                  <option>暂时不考虑，只是先了解一下</option>
-                  <option>可以小规模尝试</option>
-                  <option>已经准备好投入，就是缺方法和方向</option>
-                </select>
-              </div>
-
-              <div class="form-divider"></div>
-
-              <div class="assess-section-head">
-                <span class="step">STEP · 06</span>
-                <span class="title">联系方式</span>
-              </div>
-
-              <div class="form-grid-2">
-                <div class="form-group">
-                  <label class="form-label" for="name">姓名<span class="form-required">*</span></label>
-                  <input class="form-input" id="name" type="text" placeholder="请输入姓名" autocomplete="name" />
-                </div>
-                <div class="form-group">
-                  <label class="form-label" for="wechat">微信/WhatsApp<span class="form-required">*</span></label>
-                  <input class="form-input" id="wechat" type="text" placeholder="请输入微信号或 WhatsApp" />
-                </div>
-              </div>
-
-              <div class="form-grid-2">
-                <div class="form-group">
-                  <label class="form-label" for="email">邮箱</label>
-                  <input class="form-input" id="email" type="email" placeholder="如方便，也可以留下邮箱" autocomplete="email" />
-                </div>
-                <div class="form-group">
-                  <label class="form-label" for="contact-time">方便联系时间段</label>
-                  <input class="form-input" id="contact-time" type="text" placeholder="例如：工作日 14:00-18:00" />
-                </div>
-              </div>
-
-              <div class="form-error-msg" id="form-error"></div>
-
-              <div class="form-footer">
-                <button class="btn btn--primary" type="submit" id="submit-btn">提交评估表 <span class="arrow">→</span></button>
-                <p class="form-note">SUBMIT · INTO FEISHU MAIN TABLE<br/>提交成功后，我们会尽快与您联系</p>
-              </div>
-
-            </form>
+            <div class="cta-report-copy">
+              <p>我们会基于你的业务基本面、增长结构和品牌准备度，判断下一步该怎么启动——不推销、不承诺 ROI，只做结构性诊断。</p>
+              <button class="btn btn--primary" type="button" id="open-assessment-modal">填写品牌咨询评估表 <span class="arrow">→</span></button>
+              <span class="cta-report-note">FREE REPORT · INTO FEISHU MAIN TABLE · RESPONSE IN 1–2 BUSINESS DAYS</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 02 · PRINCIPLE -->
     <section class="section section--paper-2 section--compact">
       <div class="shell shell--wide">
         <div class="quote-block">
@@ -728,10 +851,8 @@
 
   </main>
 
-  <!-- FOOTER -->
   <footer class="site-foot">
     <div class="shell shell--wide">
-
       <div class="foot-contact">
         <div class="foot-qr-row">
           <div class="foot-qr"><img src="./assets/qr-wechat-crop.png" alt="峥锐品牌出海小助手 微信二维码" /></div>
@@ -753,7 +874,6 @@
           <span class="foot-col-head">Sitemap · 站点</span>
           <a href="./homepage-v2.html">品牌首页</a>
           <a href="./system-and-modules-v2.html">系统与模块</a>
-          <a href="./delivery-and-cases-v2.html">交付与案例</a>
           <a href="./assessment-v2.html">评估表</a>
         </div>
         <div class="foot-col">
@@ -790,16 +910,324 @@
           <span>hello@zapex.io</span>
         </div>
       </div>
-
     </div>
   </footer>
 
+  <div class="assessment-modal" id="assessment-modal" aria-hidden="true">
+    <div class="assessment-dialog" role="dialog" aria-modal="true" aria-labelledby="assessment-modal-title">
+      <div class="assessment-dialog-head">
+        <div>
+          <span class="assessment-dialog-kicker">Assessment · Detailed Form</span>
+          <h2 class="assessment-dialog-title" id="assessment-modal-title">填写详细信息，方便我们向您发送诊断报告</h2>
+          <p class="assessment-dialog-lead">请完成以下信息，我们会基于你的业务情况给出品牌建设分析建议，并同步进入飞书后台准备后续诊断。</p>
+        </div>
+        <button class="assessment-close" type="button" id="close-assessment-modal" aria-label="关闭评估表">×</button>
+      </div>
+      <div class="assessment-dialog-body">
+        <div class="success-panel" id="success-panel">
+          <div class="success-grid">
+            <div class="success-qr-shell">
+              <img src="./assets/qr-wechat-crop.png" alt="扫码添加小助手，立刻预约30分钟品牌咨询诊断" />
+            </div>
+            <div>
+              <span class="success-kicker">Assessment Submitted</span>
+              <h3 class="success-title">扫码添加小助手<br/>立刻预约30分钟品牌咨询诊断</h3>
+              <p class="success-copy">评估信息已成功进入飞书后台。扫描二维码后，我们会基于你的问卷内容安排后续沟通，并向你发送诊断相关建议。</p>
+              <div class="success-actions">
+                <a class="btn btn--primary" href="./homepage-v2.html">返回首页 <span class="arrow">→</span></a>
+                <button class="btn btn--ghost-dark" type="button" id="close-success-modal">继续留在此页</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="assess-form" id="assessment-form-shell">
+          <form id="assessment-form" novalidate>
+            <div class="assess-section-head">
+              <span class="step">STEP · 01</span>
+              <span class="title">生意基本面</span>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="monthly-sales">月销售额<span class="form-required">*</span></label>
+                <select class="form-select" id="monthly-sales">
+                  <option value="" selected>请选择</option>
+                  <option>10万以下</option>
+                  <option>10-50万</option>
+                  <option>50-100万</option>
+                  <option>100-300万</option>
+                  <option>300-500万</option>
+                  <option>500万-1000万</option>
+                  <option>1000万以上</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="profit-rate">综合净利润率<span class="form-required">*</span></label>
+                <select class="form-select" id="profit-rate">
+                  <option value="" selected>请选择</option>
+                  <option>亏损或接近0</option>
+                  <option>5%以下</option>
+                  <option>5-10%</option>
+                  <option>10-15%</option>
+                  <option>15-20%</option>
+                  <option>20%以上</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="sku-count">SKU数量<span class="form-required">*</span></label>
+                <select class="form-select" id="sku-count">
+                  <option value="" selected>请选择</option>
+                  <option>1-5个</option>
+                  <option>6-15个</option>
+                  <option>16-50个</option>
+                  <option>50个以上</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="top3-ratio">Top 3 SKU销售占比<span class="form-required">*</span></label>
+                <select class="form-select" id="top3-ratio">
+                  <option value="" selected>请选择</option>
+                  <option>不到30%</option>
+                  <option>30-50%</option>
+                  <option>50-70%</option>
+                  <option>70-85%</option>
+                  <option>85%以上</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="form-label">主要销售平台<span class="form-required">*</span></label>
+              <div class="form-options">
+                <label class="form-option"><input type="checkbox" name="primary-platform" value="Amazon（美国站）" /><span>Amazon（美国站）</span></label>
+                <label class="form-option"><input type="checkbox" name="primary-platform" value="Amazon（欧洲站）" /><span>Amazon（欧洲站）</span></label>
+                <label class="form-option"><input type="checkbox" name="primary-platform" value="Amazon（其他站点）" /><span>Amazon（其他站点）</span></label>
+                <label class="form-option"><input type="checkbox" name="primary-platform" value="独立站（Shopify/WooCommerce等）" /><span>独立站（Shopify/WooCommerce等）</span></label>
+                <label class="form-option"><input type="checkbox" name="primary-platform" value="TikTok Shop" /><span>TikTok Shop</span></label>
+                <label class="form-option"><input type="checkbox" name="primary-platform" value="其他平台" /><span>其他平台</span></label>
+              </div>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="form-label" for="other-platform">其他平台说明</label>
+              <input class="form-input" id="other-platform" type="text" placeholder="如选择了其他平台，请补充说明" />
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="assess-section-head">
+              <span class="step">STEP · 02</span>
+              <span class="title">增长结构</span>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="form-label">当前增长主要来源<span class="form-required">*</span></label>
+              <div class="form-options">
+                <label class="form-option"><input type="checkbox" name="growth-source" value="不断上新SKU测款" /><span>不断上新SKU测款</span></label>
+                <label class="form-option"><input type="checkbox" name="growth-source" value="加大广告投放" /><span>加大广告投放</span></label>
+                <label class="form-option"><input type="checkbox" name="growth-source" value="自然流量增长" /><span>自然流量增长</span></label>
+                <label class="form-option"><input type="checkbox" name="growth-source" value="KOL/达人/网红带货" /><span>KOL/达人/网红带货</span></label>
+                <label class="form-option"><input type="checkbox" name="growth-source" value="老客户复购" /><span>老客户复购</span></label>
+                <label class="form-option"><input type="checkbox" name="growth-source" value="不太清楚，比较随机" /><span>不太清楚，比较随机</span></label>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="ad-ratio">广告费用占销售额比例<span class="form-required">*</span></label>
+                <select class="form-select" id="ad-ratio">
+                  <option value="" selected>请选择</option>
+                  <option>不到10%</option>
+                  <option>10-20%</option>
+                  <option>20-30%</option>
+                  <option>30-40%</option>
+                  <option>40%以上</option>
+                  <option>不太清楚</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="repurchase">老客户复购情况<span class="form-required">*</span></label>
+                <select class="form-select" id="repurchase">
+                  <option value="" selected>请选择</option>
+                  <option>几乎没有</option>
+                  <option>有一些，但很少</option>
+                  <option>有稳定复购（占比10%以内）</option>
+                  <option>复购比例较高（10-30%）</option>
+                  <option>复购占比很高（30%以上）</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="assess-section-head">
+              <span class="step">STEP · 03</span>
+              <span class="title">产品与竞争</span>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="form-label" for="difference">产品相对竞品的最大差别<span class="form-required">*</span></label>
+              <textarea class="form-textarea" id="difference" placeholder="请描述你们产品相对竞品最明显的差异点"></textarea>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="pricing">产品定价相对竞品<span class="form-required">*</span></label>
+                <select class="form-select" id="pricing">
+                  <option value="" selected>请选择</option>
+                  <option>明显更低（低10%以上）</option>
+                  <option>差不多</option>
+                  <option>略高一些（高10-20%）</option>
+                  <option>明显更高（高20-30%）</option>
+                  <option>高很多（高30%以上）</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="buy-reason">用户购买主要原因<span class="form-required">*</span></label>
+                <select class="form-select" id="buy-reason">
+                  <option value="" selected>请选择</option>
+                  <option>价格便宜/性价比高</option>
+                  <option>解决了某个具体痛点</option>
+                  <option>设计好看/有品质感</option>
+                  <option>看到好评/别人推荐</option>
+                  <option>不太清楚，可能是广告吸引的</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="assess-section-head">
+              <span class="step">STEP · 04</span>
+              <span class="title">品牌资产</span>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="form-label">现有品牌资产<span class="form-required">*</span></label>
+              <div class="form-options">
+                <label class="form-option"><input type="checkbox" name="brand-assets" value="注册了品牌商标" /><span>注册了品牌商标</span></label>
+                <label class="form-option"><input type="checkbox" name="brand-assets" value="有独立站" /><span>有独立站</span></label>
+                <label class="form-option"><input type="checkbox" name="brand-assets" value="有在运营的社交媒体账号" /><span>有在运营的社交媒体账号</span></label>
+                <label class="form-option"><input type="checkbox" name="brand-assets" value="有用户邮件列表" /><span>有用户邮件列表</span></label>
+                <label class="form-option"><input type="checkbox" name="brand-assets" value="有私域" /><span>有私域</span></label>
+                <label class="form-option"><input type="checkbox" name="brand-assets" value="做过KOL/达人合作" /><span>做过KOL/达人合作</span></label>
+                <label class="form-option"><input type="checkbox" name="brand-assets" value="产品包装有自己的品牌设计" /><span>产品包装有自己的品牌设计</span></label>
+                <label class="form-option"><input type="checkbox" name="brand-assets" value="以上都没有" /><span>以上都没有</span></label>
+              </div>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="form-label" for="brand-owner">是否有专人负责品牌/内容/社媒<span class="form-required">*</span></label>
+              <select class="form-select" id="brand-owner">
+                <option value="" selected>请选择</option>
+                <option>没有，老板自己或兼职做</option>
+                <option>有人在做，但不是全职</option>
+                <option>有专职人员负责</option>
+              </select>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="assess-section-head">
+              <span class="step">STEP · 05</span>
+              <span class="title">痛点与意愿</span>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="form-label" for="biggest-problem">当前最头疼的问题<span class="form-required">*</span></label>
+              <textarea class="form-textarea" id="biggest-problem" placeholder="请直接写最影响你增长或品牌化推进的一件事"></textarea>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="form-label">对品牌升级的主要担心<span class="form-required">*</span></label>
+              <div class="form-options">
+                <label class="form-option"><input type="checkbox" name="brand-concern" value="不知道从哪开始" /><span>不知道从哪开始</span></label>
+                <label class="form-option"><input type="checkbox" name="brand-concern" value="担心投入太大、回报不确定" /><span>担心投入太大、回报不确定</span></label>
+                <label class="form-option"><input type="checkbox" name="brand-concern" value="不确定产品适不适合做品牌" /><span>不确定产品适不适合做品牌</span></label>
+                <label class="form-option"><input type="checkbox" name="brand-concern" value="担心做了也没效果、浪费时间" /><span>担心做了也没效果、浪费时间</span></label>
+                <label class="form-option"><input type="checkbox" name="brand-concern" value="担心团队能力不够" /><span>担心团队能力不够</span></label>
+                <label class="form-option"><input type="checkbox" name="brand-concern" value="目前没有太多担心，想尽快启动" /><span>目前没有太多担心，想尽快启动</span></label>
+              </div>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="form-label" for="brand-intent">品牌化投入意愿<span class="form-required">*</span></label>
+              <select class="form-select" id="brand-intent">
+                <option value="" selected>请选择</option>
+                <option>暂时不考虑，只是先了解一下</option>
+                <option>可以小规模尝试</option>
+                <option>已经准备好投入，就是缺方法和方向</option>
+              </select>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="assess-section-head">
+              <span class="step">STEP · 06</span>
+              <span class="title">联系方式</span>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="name">姓名<span class="form-required">*</span></label>
+                <input class="form-input" id="name" type="text" placeholder="请输入姓名" autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="wechat">微信/WhatsApp<span class="form-required">*</span></label>
+                <input class="form-input" id="wechat" type="text" placeholder="请输入微信号或 WhatsApp" />
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="email">邮箱</label>
+                <input class="form-input" id="email" type="email" placeholder="如方便，也可以留下邮箱" autocomplete="email" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="contact-time">方便联系时间段</label>
+                <input class="form-input" id="contact-time" type="text" placeholder="例如：工作日 14:00-18:00" />
+              </div>
+            </div>
+
+            <div class="form-error-msg" id="form-error"></div>
+
+            <div class="form-footer">
+              <button class="btn btn--primary" type="submit" id="submit-btn">提交评估表 <span class="arrow">→</span></button>
+              <p class="form-note">SUBMIT · INTO FEISHU MAIN TABLE<br/>提交成功后，我们会尽快与您联系</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     (function () {
+      var modal = document.getElementById('assessment-modal');
+      var openBtn = document.getElementById('open-assessment-modal');
+      var closeBtn = document.getElementById('close-assessment-modal');
+      var closeSuccessBtn = document.getElementById('close-success-modal');
       var form = document.getElementById('assessment-form');
+      var formShell = document.getElementById('assessment-form-shell');
       var submitBtn = document.getElementById('submit-btn');
       var errorEl = document.getElementById('form-error');
-      var successEl = document.getElementById('form-success');
+      var successPanel = document.getElementById('success-panel');
+
+      function openModal() {
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+      }
+
+      function closeModal() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+      }
 
       function getCheckedValues(name) {
         return Array.prototype.slice.call(
@@ -813,7 +1241,29 @@
         submitBtn.classList.remove('btn--loading');
         submitBtn.innerHTML = '提交评估表 <span class="arrow">→</span>';
       }
-      function clearError() { errorEl.classList.remove('visible'); }
+
+      function clearError() {
+        errorEl.classList.remove('visible');
+      }
+
+      function showSuccessState() {
+        formShell.style.display = 'none';
+        successPanel.classList.add('visible');
+      }
+
+      openBtn.addEventListener('click', openModal);
+      closeBtn.addEventListener('click', closeModal);
+      closeSuccessBtn.addEventListener('click', closeModal);
+
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) closeModal();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+          closeModal();
+        }
+      });
 
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
@@ -874,10 +1324,7 @@
           }
         }
 
-        if (
-          fields['主要销售平台'].indexOf('其他平台') >= 0 &&
-          !fields['其他平台说明']
-        ) {
+        if (fields['主要销售平台'].indexOf('其他平台') >= 0 && !fields['其他平台说明']) {
           showError('选择“其他平台”后，请补充其他平台说明');
           return;
         }
@@ -894,9 +1341,7 @@
           var data = await res.json();
 
           if (res.ok && data.ok) {
-            form.style.display = 'none';
-            successEl.classList.add('visible');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            showSuccessState();
           } else {
             showError(data.error || '提交失败，请稍后重试');
           }

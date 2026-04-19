@@ -10,12 +10,45 @@
        Homepage v2 · page-scoped components
        ═══════════════════════════════════════════════════════════ */
 
-    /* Pain matrix — 3-col without axis column */
-    .matrix--pain {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* Hero wordmark bilingual stack */
+    .hero-wordmark-stack {
+      display: grid;
+      gap: var(--s-3);
+      margin-bottom: var(--s-5);
+    }
+    .hero-wordmark-cn {
+      font-family: var(--ff-display);
+      font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--od);
+      line-height: 1.05;
+    }
+    .hero-wordmark-en {
+      font-family: var(--ff-display);
+      font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+      font-weight: 500;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--od-60);
     }
 
-    /* Core modules showcase — 2-col big cards on dark */
+    /* Dual-drive emphasis band (brand blue) */
+    .hero-band {
+      display: inline-block;
+      margin: var(--s-5) 0 var(--s-6);
+      padding: 10px 18px;
+      background: var(--brand);
+      color: #fff;
+      font-family: var(--ff-display);
+      font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+      border-radius: 2px;
+    }
+
+    /* Core modules showcase — 2-col big cards on dark (copied from system page) */
     .modules-showcase {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -70,11 +103,7 @@
       padding-bottom: var(--s-5);
       border-bottom: 1px solid var(--line-dark-soft);
     }
-    .module-big-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
+    .module-big-tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .module-big-tag {
       font-family: var(--ff-mono);
       font-size: var(--t-mono);
@@ -85,65 +114,178 @@
       border-radius: var(--r-sm);
     }
 
-    /* Footer contact section (QR + address + email) */
-    .foot-contact {
+    /* Why ZAPEX — 4 stat columns */
+    .why-stats {
       display: grid;
-      grid-template-columns: 1.3fr 1fr;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line);
+    }
+    .why-stat {
+      padding: var(--s-7) var(--s-5);
+      border-right: 1px solid var(--line);
+    }
+    .why-stat:last-child { border-right: 0; }
+    .why-stat-num {
+      font-family: var(--ff-display);
+      font-size: clamp(2.6rem, 4.4vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--brand);
+      margin-bottom: var(--s-3);
+    }
+    .why-stat-num .unit {
+      font-size: 0.38em;
+      color: var(--ink-60);
+      letter-spacing: 0;
+      margin-left: 6px;
+      font-weight: 500;
+    }
+    .why-stat-label {
+      display: block;
+      font-family: var(--ff-mono);
+      font-size: var(--t-mono);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-60);
+      margin-bottom: var(--s-3);
+    }
+    .why-stat-desc {
+      font-size: var(--t-sm);
+      line-height: 1.6;
+      color: var(--ink-80);
+    }
+
+    /* Cooperation flow — 6 steps */
+    .process-flow {
+      display: grid;
+      gap: var(--s-6);
+      margin-top: var(--s-7);
+    }
+    .flow-note {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      padding: 10px 16px;
+      border: 1px solid rgba(31, 233, 255, 0.16);
+      background: rgba(18, 42, 76, 0.72);
+      border-radius: 999px;
+      color: #53f2ff;
+      font-size: var(--t-sm);
+      line-height: 1.5;
+    }
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--s-6);
+    }
+    .flow-step {
+      display: grid;
+      gap: var(--s-4);
+      padding: var(--s-5);
+      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(16, 31, 65, 0.94), rgba(8, 17, 39, 0.98));
+    }
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      min-height: 96px;
+      padding: 0 var(--s-6) 0 var(--s-5);
+      clip-path: polygon(0 0, calc(100% - 44px) 0, 100% 50%, calc(100% - 44px) 100%, 0 100%);
+      color: var(--slate-0);
+      font-family: var(--ff-display);
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      background: linear-gradient(90deg, #11ecf8, #179bf6);
+    }
+    .flow-arrow.is-deep {
+      background: linear-gradient(90deg, #2f7bff, #4f56ff);
+      color: var(--od);
+    }
+    .flow-step-title {
+      font-family: var(--ff-display);
+      font-size: var(--t-md);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--od);
+    }
+    .flow-step-kicker {
+      font-size: var(--t-lead);
+      color: #33eaff;
+      font-weight: 600;
+    }
+    .flow-step-list {
+      display: grid;
+      gap: 8px;
+      padding-left: 18px;
+      list-style: disc;
+      color: var(--od-80);
+      font-size: var(--t-lead);
+      line-height: 1.65;
+    }
+    .flow-cta-row {
+      margin-top: var(--s-7);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s-4);
+      align-items: center;
+    }
+
+    /* Contact / QR footer section (dark, dedicated) */
+    .contact-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: var(--s-8);
       padding: var(--s-8) 0;
-      border-bottom: 1px solid var(--line-dark);
     }
-    .foot-qr-row {
+    .contact-block-left {
       display: grid;
-      grid-template-columns: 140px 1fr;
+      gap: var(--s-5);
+    }
+    .contact-qr-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
       gap: var(--s-5);
       align-items: start;
     }
-    .foot-qr {
-      width: 140px;
-      height: 140px;
-      background: var(--od);
-      padding: 6px;
+    .contact-qr {
+      width: 160px;
+      height: 160px;
+      background: #fff;
+      padding: 10px;
       display: grid;
       place-items: center;
     }
-    .foot-qr img {
-      width: 100%;
-      height: 100%;
+    .contact-qr img {
+      width: 100%; height: 100%;
       object-fit: contain;
     }
-    .foot-qr-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--line-dark);
-      border-radius: 999px;
-      font-size: var(--t-sm);
+    .contact-qr-label {
+      font-family: var(--ff-display);
+      font-size: var(--t-md);
+      font-weight: 600;
       color: var(--od);
+      line-height: 1.35;
       margin-bottom: var(--s-3);
     }
-    .foot-qr-badge .dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--brand);
-    }
-    .foot-qr-desc {
+    .contact-qr-desc {
       font-size: var(--t-sm);
       color: var(--od-60);
       line-height: 1.6;
-      max-width: 36ch;
     }
-    .foot-contact-blocks { display: grid; gap: var(--s-5); }
-    .foot-contact-block {
+    .contact-info {
+      display: grid;
+      gap: var(--s-5);
+      align-content: start;
+    }
+    .contact-info-row {
       padding-top: var(--s-4);
       border-top: 1px solid var(--line-dark-soft);
     }
-    .foot-contact-block:first-child {
-      border-top: 0;
-      padding-top: 0;
-    }
-    .foot-contact-key {
+    .contact-info-row:first-child { border-top: 0; padding-top: 0; }
+    .contact-info-key {
       display: block;
       font-family: var(--ff-mono);
       font-size: var(--t-mono);
@@ -152,10 +294,11 @@
       color: var(--od-40);
       margin-bottom: 8px;
     }
-    .foot-contact-value {
-      font-size: var(--t-sm);
-      color: var(--od-80);
+    .contact-info-value {
+      font-size: var(--t-md);
+      color: var(--od);
       line-height: 1.55;
+      font-weight: 500;
     }
 
     /* Wrap long banner text in meta bar */
@@ -171,28 +314,28 @@
       .modules-showcase { grid-template-columns: 1fr; }
       .module-big { border-right: 0; border-bottom: 1px solid var(--line-dark); }
       .module-big:last-child { border-bottom: 0; }
-      .matrix--pain { grid-template-columns: 1fr 1fr; }
-      .foot-contact { grid-template-columns: 1fr; }
+      .why-stats { grid-template-columns: repeat(2, 1fr); }
+      .why-stat { border-right: 0; border-bottom: 1px solid var(--line); }
+      .why-stat:nth-child(2n) { border-right: 0; }
+      .flow-grid { grid-template-columns: 1fr 1fr; }
+      .contact-block { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
-      .matrix--pain { grid-template-columns: 1fr; }
-      .foot-qr-row { grid-template-columns: 100px 1fr; }
-      .foot-qr { width: 100px; height: 100px; }
+      .flow-grid { grid-template-columns: 1fr; }
+      .why-stats { grid-template-columns: 1fr; }
+      .contact-qr-row { grid-template-columns: 120px 1fr; }
+      .contact-qr { width: 120px; height: 120px; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ════════════════════════════════════════════════════════════
-       META BAR · 保留原 banner 文字 + 运营状态
-       ════════════════════════════════════════════════════════════ -->
+  <!-- META BAR -->
   <div class="meta-bar">
     <div class="shell shell--wide">
       <div class="meta-bar-inner">
-        <span class="meta-bar-item">
-          <span class="dot"></span> LIVE · OPERATIONAL
-        </span>
+        <span class="meta-bar-item"><span class="dot"></span> LIVE · OPERATIONAL</span>
         <span class="meta-bar-item hidden-sm">
           <span class="banner-text">用 12 个月，建立企业用几年才能跑出来的品牌增长系统</span>
         </span>
@@ -203,28 +346,25 @@
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════════════════════
-       SITE NAV
-       ════════════════════════════════════════════════════════════ -->
+  <!-- SITE NAV -->
   <div class="site-nav">
     <div class="shell shell--wide">
       <div class="site-nav-inner">
         <div class="site-nav-left">
           <a href="./homepage-v2.html" class="wordmark wordmark--nav">
-            <span class="z">Z</span><span class="apex">APEX</span>
+            <span class="cn">崢銳</span><span class="wordmark-en"><span class="z">Z</span><span class="apex">APEX</span></span>
           </a>
         </div>
 
         <nav class="site-nav-links">
           <a class="site-nav-link is-current" href="./homepage-v2.html"><span class="idx">01</span>品牌首页</a>
           <a class="site-nav-link" href="./system-and-modules-v2.html"><span class="idx">02</span>系统与模块</a>
-          <a class="site-nav-link" href="./delivery-and-cases-v2.html"><span class="idx">03</span>交付与案例</a>
-          <a class="site-nav-link" href="./assessment-v2.html"><span class="idx">04</span>评估表</a>
+          <a class="site-nav-link" href="./assessment-v2.html"><span class="idx">03</span>评估表</a>
         </nav>
 
         <div class="site-nav-right">
           <a class="pill pill--stacked" href="./growth-forms.html"><span class="dot"></span><span class="pill-stack"><span class="pill-main">客户工作台</span><span class="pill-sub">飞书入口</span></span></a>
-          <a class="pill pill--primary" href="./assessment-v2.html">预约诊断 <span class="arrow">→</span></a>
+          <a class="pill pill--primary" href="./assessment-v2.html">预约品牌咨询评估 <span class="arrow">→</span></a>
         </div>
       </div>
     </div>
@@ -232,9 +372,9 @@
 
   <main>
 
-    <!-- ════════════════════════════════════════════════════════════
-         00 · HERO
-         ════════════════════════════════════════════════════════════ -->
+    <!-- ══════════════════════════════════════════════════════════════
+         00 · HERO · 首屏品牌识别（中英双语）
+         ══════════════════════════════════════════════════════════════ -->
     <section class="hero hero--dark">
       <div class="shell shell--wide">
         <div class="hero-grid">
@@ -244,24 +384,27 @@
           </div>
 
           <div>
-            <span class="hero-kicker">不是代运营，不是单次咨询</span>
+            <span class="hero-kicker">品牌出海加速器 · Brand Growth Accelerator</span>
+
+            <div class="hero-wordmark-stack">
+              <span class="hero-wordmark-cn">峥锐 <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span> 品牌出海加速器</span>
+              <span class="hero-wordmark-en">ZAPEX · Brand Outbound Accelerator</span>
+            </div>
 
             <h1 class="hero-display">
-              我们交付的是<br/>
-              可验证 复制 沉淀的<br/>
-              <em>品牌增长系统</em>
+              为中国出海品牌<br/>
+              构建全球<em>增长引擎</em>
             </h1>
+
+            <span class="hero-band">品牌战略 + 增长引擎双驱动</span>
 
             <div class="hero-body">
               <p class="hero-lead">
-                <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span>
-                用品牌战略定方向，用增长引擎验证落地，帮助跨境企业把增长能力真正留在团队内部，而不是继续依赖碎片化执行
+                用 12 个月，建立企业用几年才能跑出来的品牌增长系统——品牌战略定方向，增长引擎验证落地，把增长能力真正留在团队内部
               </p>
-              <div>
-                <div class="hero-actions">
-                  <a class="btn btn--primary" href="./assessment-v2.html">预约增长诊断 <span class="arrow">→</span></a>
-                  <a class="btn btn--ghost-dark" href="./system-and-modules-v2.html">进入系统结构</a>
-                </div>
+              <div class="hero-actions">
+                <a class="btn btn--primary" href="./assessment-v2.html">预约品牌咨询评估 <span class="arrow">→</span></a>
+                <a class="btn btn--ghost-dark" href="./system-and-modules-v2.html">进入系统结构</a>
               </div>
             </div>
           </div>
@@ -270,9 +413,7 @@
       </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════════
-         TICKER · 关键词跑马灯
-         ════════════════════════════════════════════════════════════ -->
+    <!-- TICKER -->
     <div class="ticker">
       <div class="ticker-track">
         <span>品牌战略<span class="ticker-sep"></span>增长引擎<span class="ticker-sep"></span>增长验证舱™<span class="ticker-sep"></span>品类切入<span class="ticker-sep"></span>营销 4P 方案<span class="ticker-sep"></span>数据底盘<span class="ticker-sep"></span>团队能力沉淀<span class="ticker-sep"></span>可复制增长模型<span class="ticker-sep"></span>品牌价值主张<span class="ticker-sep"></span>跨境出海<span class="ticker-sep"></span></span>
@@ -280,16 +421,16 @@
       </div>
     </div>
 
-    <!-- ════════════════════════════════════════════════════════════
-         01 · PROPOSITION · 我们是谁 Who We Are
-         ════════════════════════════════════════════════════════════ -->
+    <!-- ══════════════════════════════════════════════════════════════
+         01 · 使命 / 定位 / 价值
+         ══════════════════════════════════════════════════════════════ -->
     <section class="section section--paper">
       <div class="shell shell--wide">
         <header class="section-head">
-          <span class="section-idx">01 / Proposition</span>
+          <span class="section-idx">01 / Mission</span>
           <div class="section-head-main">
             <div>
-              <span class="section-kicker">我们是谁 · Who We Are</span>
+              <span class="section-kicker">使命 · 定位 · 价值</span>
               <h2 class="section-title">峥锐 <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span><br/>品牌出海加速器</h2>
             </div>
             <p class="section-lead">
@@ -318,100 +459,207 @@
       </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════════
-         02 · PAIN POINTS · 6 核心痛点（capability-matrix 改造 3×2）
-         ════════════════════════════════════════════════════════════ -->
-    <section class="section section--paper-1">
-      <div class="shell shell--wide">
-        <header class="section-head">
-          <span class="section-idx">02 / Diagnosis</span>
-          <div class="section-head-main">
-            <div>
-              <span class="section-kicker">核心痛点 · Pain Points</span>
-              <h2 class="section-title">90% 的跨境大卖家<br/>为什么做不出品牌？</h2>
-            </div>
-            <p class="section-lead">
-              如果你在以下六个问题中认出了自己的处境，说明你正处于品牌转型的关键时机
-            </p>
-          </div>
-        </header>
-
-        <div class="matrix matrix--pain">
-          <div class="matrix-cell">
-            <div class="matrix-idx">PAIN · 01</div>
-            <div class="matrix-title">不知道从哪里切入<br/>做品牌</div>
-            <p class="matrix-body">手里上百个 SKU，不知道哪个能做品牌，不知道选什么品类、从哪里启动</p>
-          </div>
-          <div class="matrix-cell">
-            <div class="matrix-idx">PAIN · 02</div>
-            <div class="matrix-title">做了很多单点动作<br/>没有品牌体系</div>
-            <p class="matrix-body">做了独立站、拍了视频、投了广告，但没有获得品牌溢价，品牌没有竞争力</p>
-          </div>
-          <div class="matrix-cell">
-            <div class="matrix-idx">PAIN · 03</div>
-            <div class="matrix-title">缺品牌战略<br/>落不了地</div>
-            <p class="matrix-body">找过咨询公司，拿了一堆漂亮的 PPT，团队看不懂，执行不了</p>
-          </div>
-          <div class="matrix-cell">
-            <div class="matrix-idx">PAIN · 04</div>
-            <div class="matrix-title">没有设计增长路径<br/>跑不通</div>
-            <p class="matrix-body">只会投流，不知道怎么从付费流量到品牌驱动，偶尔有爆品成功，无法稳定复制</p>
-          </div>
-          <div class="matrix-cell">
-            <div class="matrix-idx">PAIN · 05</div>
-            <div class="matrix-title">花钱<br/>看不到效果</div>
-            <p class="matrix-body">投了几百万做品牌，但完全不知道有没有用，无法评估品牌工作的成果</p>
-          </div>
-          <div class="matrix-cell">
-            <div class="matrix-idx">PAIN · 06</div>
-            <div class="matrix-title">时间窗口<br/>正在关闭</div>
-            <p class="matrix-body">竞争对手已经开始做品牌，用户心智饱和，流量成本持续上涨，再不做就晚了</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════════════════════════════════════════════════════════════
-         03 · SIGNAL · 数据看板（占位，等客户补）
-         ════════════════════════════════════════════════════════════ -->
+    <!-- ══════════════════════════════════════════════════════════════
+         02 · DUAL DRIVE · 品牌战略 + 增长引擎 双驱动
+         ══════════════════════════════════════════════════════════════ -->
     <section class="section section--dark">
       <div class="shell shell--wide">
         <header class="section-head">
-          <span class="section-idx">03 / Signal</span>
+          <span class="section-idx">02 / Dual Drive</span>
           <div class="section-head-main">
             <div>
-              <span class="section-kicker">结果指标 · Measured Outcomes</span>
-              <h2 class="section-title">[ 数据看板 / 等内容补充 ]</h2>
+              <span class="section-kicker">双驱动 · Dual Drive</span>
+              <h2 class="section-title">品牌战略 + 增长引擎<br/><em>双驱动</em></h2>
             </div>
             <p class="section-lead">
-              [ 这里放 3 个核心数据指标，用于承载平均表现 / 行业对比 / 客户样本量。待真实案例数据补充后上线 ]
+              品牌战略定方向 + 增长引擎验证落地 → 战略定了 · 跑通了 · 能复制 · 增长可放大
             </p>
           </div>
         </header>
 
-        <div class="metrics-xl">
-          <div class="metric-xl">
-            <div class="metric-xl-label">[ 指标 01 · METRIC ]</div>
-            <div class="metric-xl-value">[+xxx]<span class="unit">%</span></div>
-            <p class="metric-xl-caption">[ 指标说明：衡量内容、统计口径、样本规模 ]</p>
+        <div class="modules-showcase">
+          <div class="module-big">
+            <span class="module-big-num">MODULE · 01</span>
+            <h3 class="module-big-title">
+              <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span>
+              品牌战略模块™
+            </h3>
+            <span class="module-big-keyline">定方向 · 建体系 · 落执行</span>
+            <p class="module-big-lead">
+              在战略层明确品牌核心价值、增长路径和市场判断，让所有执行动作服务于正确的方向
+            </p>
+            <div class="module-big-tags">
+              <span class="module-big-tag">品类切入分析</span>
+              <span class="module-big-tag">品牌价值主张</span>
+              <span class="module-big-tag">营销 4P 方案</span>
+              <span class="module-big-tag">品牌增长飞轮</span>
+            </div>
           </div>
-          <div class="metric-xl">
-            <div class="metric-xl-label">[ 指标 02 · METRIC ]</div>
-            <div class="metric-xl-value">[x.x]<span class="unit">×</span></div>
-            <p class="metric-xl-caption">[ 指标说明：衡量内容、统计口径、样本规模 ]</p>
-          </div>
-          <div class="metric-xl">
-            <div class="metric-xl-label">[ 指标 03 · METRIC ]</div>
-            <div class="metric-xl-value">[xx]<span class="unit">mo</span></div>
-            <p class="metric-xl-caption">[ 指标说明：衡量内容、统计口径、样本规模 ]</p>
+
+          <div class="module-big">
+            <span class="module-big-num">MODULE · 02</span>
+            <h3 class="module-big-title">
+              <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span>
+              品牌增长引擎™
+            </h3>
+            <span class="module-big-keyline">验证 · 放大 · 复制</span>
+            <p class="module-big-lead">
+              在战略方向确定后，通过数据驱动的实验机制跑通增长模型，把增长能力真正沉淀在企业内部
+            </p>
+            <div class="module-big-tags">
+              <span class="module-big-tag">增长验证舱™</span>
+              <span class="module-big-tag">全链路数据追踪</span>
+              <span class="module-big-tag">可复制增长模型</span>
+              <span class="module-big-tag">团队能力沉淀</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════════
-         04 · PRINCIPLE · 合作原则（pullquote 引用自 CTA 收口）
-         ════════════════════════════════════════════════════════════ -->
+    <!-- ══════════════════════════════════════════════════════════════
+         03 · WHY ZAPEX · 为什么选择峥锐 ZAPEX
+         ══════════════════════════════════════════════════════════════ -->
+    <section class="section section--paper-1">
+      <div class="shell shell--wide">
+        <header class="section-head">
+          <span class="section-idx">03 / Why ZAPEX</span>
+          <div class="section-head-main">
+            <div>
+              <span class="section-kicker">为什么选择 · Why ZAPEX</span>
+              <h2 class="section-title">为什么选择<br/>峥锐 <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span></h2>
+            </div>
+            <p class="section-lead">
+              可交付、可验证、可沉淀——时间、经验、专注度和案例，四个维度看我们的确定性
+            </p>
+          </div>
+        </header>
+
+        <div class="why-stats">
+          <div class="why-stat">
+            <span class="why-stat-label">Delivery Cycle</span>
+            <div class="why-stat-num">12<span class="unit">个月</span></div>
+            <p class="why-stat-desc">建立企业用几年才能跑出来的品牌增长系统</p>
+          </div>
+          <div class="why-stat">
+            <span class="why-stat-label">Brand Experience</span>
+            <div class="why-stat-num">20+<span class="unit">年</span></div>
+            <p class="why-stat-desc">品牌战略与咨询经验，横跨国内与全球头部品牌实战</p>
+          </div>
+          <div class="why-stat">
+            <span class="why-stat-label">Cross-border</span>
+            <div class="why-stat-num">10+<span class="unit">年</span></div>
+            <p class="why-stat-desc">跨境电商与品牌增长一线实战，懂流量也懂品牌资产</p>
+          </div>
+          <div class="why-stat">
+            <span class="why-stat-label">Brand Cases</span>
+            <div class="why-stat-num">50+<span class="unit">个</span></div>
+            <p class="why-stat-desc">品牌出海合作案例沉淀，覆盖多品类与多市场</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         04 · COOPERATION FLOW · 6 步合作流程
+         ══════════════════════════════════════════════════════════════ -->
+    <section class="section section--dark" id="cooperation-flow">
+      <div class="shell shell--wide">
+        <header class="section-head">
+          <span class="section-idx">04 / Flow</span>
+          <div class="section-head-main">
+            <div>
+              <span class="section-kicker">如何开展合作 · Cooperation Flow</span>
+              <h2 class="section-title">6 个阶段完成<br/>品牌诊断到增长沉淀</h2>
+            </div>
+            <p class="section-lead">
+              流程从判断品牌现状开始，不靠一次性方案收尾，而是把战略、验证和团队沉淀连接成一条持续推进的路径
+            </p>
+          </div>
+        </header>
+
+        <div class="process-flow">
+          <div class="flow-note">不论是否合作，诊断对公司都有极大价值</div>
+
+          <div class="flow-grid">
+            <article class="flow-step">
+              <div class="flow-arrow">01</div>
+              <h3 class="flow-step-title">品牌初步诊断（30Min）</h3>
+              <ul class="flow-step-list">
+                <li>诊断你的品牌现状</li>
+                <li>SKU 和核心品类梳理</li>
+                <li>识别现阶段核心卡点</li>
+                <li>给出大致解决方案</li>
+              </ul>
+            </article>
+
+            <article class="flow-step">
+              <div class="flow-arrow">02</div>
+              <h3 class="flow-step-title">启动准备（2 周）</h3>
+              <div class="flow-step-kicker">深度诊断：</div>
+              <ul class="flow-step-list">
+                <li>访谈团队、分析数据</li>
+                <li>输出诊断报告</li>
+                <li>市场 / 竞品分析</li>
+              </ul>
+            </article>
+
+            <article class="flow-step">
+              <div class="flow-arrow">03</div>
+              <h3 class="flow-step-title">认知对齐（2 周）</h3>
+              <div class="flow-step-kicker">培训和工作坊：</div>
+              <ul class="flow-step-list">
+                <li>品牌战略定位</li>
+                <li>增长方法论培训</li>
+                <li>统一团队认知</li>
+              </ul>
+            </article>
+
+            <article class="flow-step">
+              <div class="flow-arrow is-deep">04</div>
+              <h3 class="flow-step-title">制定品牌战略（1–6 个月）</h3>
+              <div class="flow-step-kicker">ZAPEX 品牌战略模块™</div>
+              <ul class="flow-step-list">
+                <li>完成品牌切入与定位</li>
+                <li>建立 4P 与增长飞轮</li>
+                <li>明确后续执行方向</li>
+              </ul>
+            </article>
+
+            <article class="flow-step">
+              <div class="flow-arrow is-deep">05</div>
+              <h3 class="flow-step-title">战略落地验证（6–9 个月）</h3>
+              <div class="flow-step-kicker">ZAPEX 品牌增长验证舱™</div>
+              <ul class="flow-step-list">
+                <li>建立验证节奏</li>
+                <li>跑通增长实验模型</li>
+                <li>沉淀数据底盘</li>
+              </ul>
+            </article>
+
+            <article class="flow-step">
+              <div class="flow-arrow is-deep">06</div>
+              <h3 class="flow-step-title">品牌增长引擎（9 个月–长期）</h3>
+              <div class="flow-step-kicker">ZAPEX 品牌增长引擎™</div>
+              <ul class="flow-step-list">
+                <li>规模化复制有效模型</li>
+                <li>持续优化资产与复盘</li>
+                <li>让团队具备独立运转能力</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="flow-cta-row">
+            <a class="btn btn--primary" href="./assessment-v2.html">立刻预约品牌化诊断 <span class="arrow">→</span></a>
+            <span style="color:var(--od-60); font-size:var(--t-sm);">30 分钟 · 免费 · 可沉淀为分析报告</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         05 · PRINCIPLE · 合作原则
+         ══════════════════════════════════════════════════════════════ -->
     <section class="section section--paper-2 section--compact">
       <div class="shell shell--wide">
         <div class="quote-block">
@@ -427,15 +675,15 @@
       </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════════
-         07 · CTA BAND · 从诊断开始，不从承诺开始
-         ════════════════════════════════════════════════════════════ -->
+    <!-- ══════════════════════════════════════════════════════════════
+         06 · CTA BAND
+         ══════════════════════════════════════════════════════════════ -->
     <section class="cta-band">
       <div class="shell shell--wide">
         <div class="cta-band-grid">
           <h2 class="cta-band-title">从诊断开始，<br/>不从承诺开始</h2>
           <div class="cta-band-actions">
-            <a class="btn btn--solid-ink" href="./assessment-v2.html">预约增长诊断 <span class="arrow">→</span></a>
+            <a class="btn btn--solid-ink" href="./assessment-v2.html">预约品牌咨询评估 <span class="arrow">→</span></a>
             <a class="btn btn--ghost-dark" href="./system-and-modules-v2.html">查看系统与模块</a>
             <p class="cta-band-note">RESPONSE · 2 BUSINESS DAYS / SHENZHEN · GMT+8</p>
           </div>
@@ -443,40 +691,79 @@
       </div>
     </section>
 
-  </main>
-
-  <!-- ════════════════════════════════════════════════════════════
-       FOOTER · 完整继承原档案组件（描述 + QR + 地址 + 联系）
-       ════════════════════════════════════════════════════════════ -->
-  <footer class="site-foot">
-    <div class="shell shell--wide">
-
-      <!-- 联系区块：QR + 地址 + 邮箱 -->
-      <div class="foot-contact">
-        <div class="foot-qr-row">
-          <div class="foot-qr">
-            <img src="./assets/qr-wechat-crop.png" alt="峥锐品牌出海小助手 微信二维码" />
+    <!-- ══════════════════════════════════════════════════════════════
+         07 · CONTACT BLOCK · 扫码 + 地址 + 电话 + 公众号（独立 section）
+         ══════════════════════════════════════════════════════════════ -->
+    <section class="section section--dark">
+      <div class="shell shell--wide">
+        <header class="section-head">
+          <span class="section-idx">07 / Contact</span>
+          <div class="section-head-main">
+            <div>
+              <span class="section-kicker">联系我们 · Get In Touch</span>
+              <h2 class="section-title">扫码添加小助手<br/>立刻预约 <em>30 分钟</em> 品牌咨询诊断</h2>
+            </div>
+            <p class="section-lead">
+              不论是否合作，诊断对公司都有极大价值——我们会在 1-2 个工作日内响应
+            </p>
           </div>
-        </div>
-        <div class="foot-contact-blocks">
-          <div class="foot-contact-block">
-            <span class="foot-contact-key">Address · 地址</span>
-            <p class="foot-contact-value">深圳市龙华区龙华大道有品文化创意园 4 栋 201-1</p>
+        </header>
+
+        <div class="contact-block">
+          <div class="contact-block-left">
+            <div class="contact-qr-row">
+              <div class="contact-qr">
+                <img src="./assets/qr-wechat-crop.png" alt="峥锐品牌出海小助手 微信二维码" />
+              </div>
+              <div>
+                <p class="contact-qr-label">小助手微信</p>
+                <p class="contact-qr-desc">扫码添加小助手，立刻预约 30 分钟品牌咨询诊断——快速判断你的品牌增长卡点</p>
+              </div>
+            </div>
+            <div class="contact-qr-row">
+              <div class="contact-qr">
+                <img src="./assets/qr-official.png" alt="峥锐 ZAPEX 官方公众号二维码" />
+              </div>
+              <div>
+                <p class="contact-qr-label">官方公众号</p>
+                <p class="contact-qr-desc">关注公众号，获取品牌出海案例深度解析、市场分析报告等免费工具</p>
+              </div>
+            </div>
           </div>
-          <div class="foot-contact-block">
-            <span class="foot-contact-key">Contact · 联系</span>
-            <p class="foot-contact-value">hello@zapex.io</p>
+
+          <div class="contact-info">
+            <div class="contact-info-row">
+              <span class="contact-info-key">Phone · 客服电话</span>
+              <p class="contact-info-value">13316492740</p>
+            </div>
+            <div class="contact-info-row">
+              <span class="contact-info-key">Address · 地址</span>
+              <p class="contact-info-value">深圳市龙华区龙华大道<br/>优品文化创意园 4 栋 201-1</p>
+            </div>
+            <div class="contact-info-row">
+              <span class="contact-info-key">Email · 邮箱</span>
+              <p class="contact-info-value">hello@zapex.io</p>
+            </div>
+            <div class="contact-info-row">
+              <span class="contact-info-key">Response · 响应</span>
+              <p class="contact-info-value" style="font-size:var(--t-sm); color:var(--od-80);">Shenzhen · GMT+8 · 1-2 BUSINESS DAYS</p>
+            </div>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- 四列导航 -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-foot">
+    <div class="shell shell--wide">
+
       <div class="foot-columns">
         <div class="foot-col">
           <span class="foot-col-head">Sitemap · 站点</span>
           <a href="./homepage-v2.html">品牌首页</a>
           <a href="./system-and-modules-v2.html">系统与模块</a>
-          <a href="./delivery-and-cases-v2.html">交付与案例</a>
           <a href="./assessment-v2.html">评估表</a>
         </div>
         <div class="foot-col">
@@ -488,7 +775,7 @@
         <div class="foot-col">
           <span class="foot-col-head">Portal · 客户</span>
           <a href="./growth-forms.html">客户工作台</a>
-          <a href="./assessment-v2.html">预约增长诊断</a>
+          <a href="./assessment-v2.html">预约品牌咨询评估</a>
         </div>
         <div class="foot-col">
           <span class="foot-col-head">Legal · 合规</span>
@@ -497,21 +784,19 @@
         </div>
       </div>
 
-      <!-- 巨型 wordmark · 溢出底边 -->
       <div class="foot-signature">
         <span class="wordmark wordmark--mega">
           <span class="z">Z</span><span class="apex">APEX</span>
         </span>
       </div>
 
-      <!-- 版权 meta -->
       <div class="foot-meta">
         <div class="foot-meta-left">
           <span>© 2026 峥锐科技 · 深圳</span>
           <span class="hidden-sm">ZAPEX™ 品牌出海加速器</span>
         </div>
         <div class="foot-meta-right">
-          <span class="hidden-sm">v2026.04 · build 0417</span>
+          <span class="hidden-sm">v2026.04 · build 0419</span>
           <span>hello@zapex.io</span>
         </div>
       </div>
