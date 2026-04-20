@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>test</title>
+  <meta name="description" content="test" />
+  <link rel="stylesheet" href="../zapex-system.css" />
+  <style>
+    .article-shell { max-width: 980px; margin: 0 auto; padding: var(--s-8) var(--s-5) var(--s-9); }
+    .article-topbar { margin-bottom: var(--s-7); }
+    .article-back { font-family: var(--ff-mono); font-size: var(--t-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-60); text-decoration: none; }
+    .article-back:hover { color: var(--brand); }
+    .article-meta { display:flex; flex-wrap:wrap; gap: var(--s-3); font-family: var(--ff-mono); font-size: var(--t-mono); color: var(--ink-60); letter-spacing: 0.08em; margin-bottom: var(--s-4); text-transform: uppercase; }
+    .article-title { font-family: var(--ff-display); font-size: clamp(2.2rem, 5vw, 4.4rem); line-height: 1.06; letter-spacing: -0.04em; margin: 0 0 var(--s-5); }
+    .article-summary { font-size: var(--t-lead); line-height: 1.7; color: var(--ink-80); margin-bottom: var(--s-6); }
+    .article-hero-cover { margin-bottom: var(--s-7); border: 1px solid var(--line); background: var(--surface); overflow: hidden; }
+    .article-hero-cover img { display:block; width:100%; height:auto; }
+    .article-body { font-size: 18px; line-height: 1.9; color: var(--ink); }
+    .article-body h1, .article-body h2, .article-body h3 { font-family: var(--ff-display); line-height: 1.18; letter-spacing: -0.03em; margin: var(--s-7) 0 var(--s-4); }
+    .article-body h1 { font-size: 2.4rem; }
+    .article-body h2 { font-size: 1.9rem; }
+    .article-body h3 { font-size: 1.4rem; }
+    .article-body p, .article-body ul, .article-body ol, .article-body blockquote, .article-body figure, .article-body hr { margin: 0 0 var(--s-5); }
+    .article-body ul, .article-body ol { padding-left: 1.5em; }
+    .article-body blockquote { padding-left: var(--s-5); border-left: 2px solid var(--brand); color: var(--ink-80); }
+    .article-body figure img { max-width: 100%; border: 1px solid var(--line); }
+    .article-body figcaption { margin-top: var(--s-2); font-size: var(--t-sm); color: var(--ink-60); }
+    .news-callout { padding: var(--s-4) var(--s-5); background: rgba(26,79,255,0.05); border: 1px solid rgba(26,79,255,0.12); }
+    @media (max-width: 640px) {
+      .article-shell {
+        padding: var(--s-6) var(--s-4) var(--s-8);
+      }
+      .article-topbar {
+        margin-bottom: var(--s-5);
+      }
+      .article-title {
+        font-size: clamp(1.35rem, 8vw, 1.8rem);
+        line-height: 1.2;
+      }
+      .article-summary {
+        font-size: var(--t-sm);
+        line-height: 1.72;
+      }
+      .article-body {
+        font-size: 13px;
+        line-height: 1.82;
+      }
+      .article-body h1 {
+        font-size: 1.35rem;
+      }
+      .article-body h2 {
+        font-size: 1.12rem;
+      }
+      .article-body h3 {
+        font-size: 1rem;
+      }
+      .article-body blockquote,
+      .news-callout {
+        padding-left: var(--s-4);
+        padding-right: var(--s-4);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-nav">
+    <div class="shell shell--wide">
+      <div class="site-nav-inner">
+        <div class="site-nav-left">
+          <a href="../homepage-v2.html" class="wordmark wordmark--nav">
+            <span class="cn">崢銳</span><span class="wordmark-en"><span class="z">Z</span><span class="apex">APEX</span></span>
+          </a>
+        </div>
+        <nav class="site-nav-links">
+          <a class="site-nav-link" href="../homepage-v2.html"><span class="idx">01</span>品牌首页</a>
+          <a class="site-nav-link" href="../system-and-modules-v2.html"><span class="idx">02</span>系统与模块</a>
+          <a class="site-nav-link is-current" href="../news-and-cases-v2.html"><span class="idx">03</span>新闻&案例</a>
+          <a class="site-nav-link" href="../assessment-v2.html"><span class="idx">04</span>评估表</a>
+        </nav>
+        <div class="site-nav-right">
+          <a class="pill pill--stacked" href="../growth-forms.html"><span class="dot"></span><span class="pill-stack"><span class="pill-main">客户工作台</span><span class="pill-sub">飞书入口</span></span></a>
+          <a class="pill pill--primary" href="../assessment-v2.html">预约品牌咨询评估 <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="article-shell">
+    <div class="article-topbar">
+      <a class="article-back" href="../news-and-cases-v2.html">← 返回新闻列表</a>
+    </div>
+    <div class="article-meta">
+      <span>公告</span>
+      <span>2026.04.20</span>
+      <span>JO爱懂AI </span>
+      
+    </div>
+    <h1 class="article-title">test</h1>
+    <p class="article-summary">test</p>
+    
+    <article class="article-body">
+      <h1>这是一篇测试文章</h1>
+<p>这是正文第一段，用来测试 Notion CMS 是否能被网站正确读取。</p>
+<h2>小标题</h2>
+<p>这里放第二段内容。</p>
+    </article>
+  </main>
+</body>
+</html>

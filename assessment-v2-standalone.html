@@ -1071,46 +1071,187 @@ ul, ol { list-style: none; }
   .case-row { grid-template-columns: 100px 1fr auto; }
 }
 @media (max-width: 640px) {
-  :root { --gutter: 20px; }
+  :root {
+    --gutter: 16px;
+    --t-mono: 0.5625rem;
+    --t-xs: 0.625rem;
+    --t-sm: 0.6875rem;
+    --t-base: 0.625rem;
+    --t-lead: 0.75rem;
+    --t-md: 0.875rem;
+    --t-lg: 1rem;
+    --t-xl: 1.2rem;
+    --t-2xl: 1.45rem;
+    --t-4xl: clamp(1.9rem, 13vw, 3.2rem);
+  }
+  .shell,
+  .shell--wide {
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+  }
+  body {
+    font-size: var(--t-base);
+    line-height: 1.65;
+  }
+  .meta-bar-inner {
+    gap: var(--s-4);
+    height: 30px;
+  }
   .meta-bar-item + .meta-bar-item { display: none; }
   .site-nav {
     background: rgba(251, 249, 248, 0.96);
   }
   .site-nav-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
     height: auto;
-    flex-wrap: wrap;
     gap: var(--s-3);
-    padding: 12px 0;
+    padding: 12px 0 10px;
   }
   .site-nav-left {
-    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .wordmark.wordmark--nav { font-size: 20px; }
+  .wordmark .cn {
+    font-size: 0.42em;
+    letter-spacing: 0.06em;
   }
   .site-nav-right {
+    grid-column: 1 / -1;
     width: 100%;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
     gap: var(--s-2);
   }
   .site-nav-links {
     display: flex;
-    order: 3;
+    grid-column: 1 / -1;
     width: 100%;
     overflow-x: auto;
     padding-bottom: 4px;
-    gap: 0;
+    gap: 2px;
     scrollbar-width: none;
   }
   .site-nav-links::-webkit-scrollbar { display: none; }
   .site-nav-link {
     flex: 0 0 auto;
-    padding: 8px 12px;
+    padding: 8px 9px;
     white-space: nowrap;
+    font-size: 0.7rem;
   }
   .pill {
-    padding: 0 12px;
+    min-height: 44px;
+    padding: 0 10px;
+    font-size: 0.72rem;
   }
+  .pill--stacked,
+  .pill--primary {
+    justify-content: center;
+    min-width: 0;
+  }
+  .pill--primary {
+    text-align: center;
+  }
+  .pill .arrow { margin-left: 4px; }
   .pill .pill-main,
   .pill .pill-sub {
     white-space: nowrap;
+  }
+  .section {
+    padding: var(--s-8) 0;
+  }
+  .section-head {
+    gap: var(--s-4);
+    margin-bottom: var(--s-7);
+    padding-bottom: var(--s-5);
+  }
+  .section-kicker {
+    margin-bottom: var(--s-4);
+  }
+  .section-title {
+    max-width: none;
+    font-size: clamp(1.3rem, 8.5vw, 1.7rem);
+    line-height: 1.12;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    text-wrap: balance;
+  }
+  .section-lead {
+    font-size: var(--t-base);
+    line-height: 1.75;
+    padding-top: var(--s-2);
+  }
+  .hero {
+    padding: var(--s-8) 0 var(--s-7);
+  }
+  .hero-kicker {
+    margin-bottom: var(--s-4);
+  }
+  .hero-display {
+    max-width: none;
+    font-size: clamp(2rem, 13vw, 3.2rem);
+    line-height: 1.02;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+  .hero-body {
+    margin-top: var(--s-6);
+    padding-top: var(--s-5);
+    gap: var(--s-5);
+  }
+  .hero-lead {
+    font-size: var(--t-base);
+    line-height: 1.75;
+  }
+  .metric-xl {
+    padding: var(--s-6) var(--s-4) var(--s-5);
+  }
+  .metric-xl-value {
+    font-size: clamp(2rem, 12vw, 3rem);
+  }
+  .case-title,
+  .quote-text,
+  .feature-title,
+  .foot-statement {
+    font-size: 0.95rem;
+    line-height: 1.34;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    text-wrap: balance;
+  }
+  .case-body,
+  .feature-body,
+  .metric-xl-caption,
+  .foot-contact-value {
+    font-size: var(--t-sm);
+    line-height: 1.7;
+  }
+  .cta-band {
+    padding: var(--s-8) 0;
+  }
+  .cta-band-grid {
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+    text-align: center;
+    align-items: start;
+  }
+  .cta-band-title {
+    font-size: clamp(1.3rem, 8.5vw, 1.8rem);
+    line-height: 1.12;
+    margin: 0 auto;
+  }
+  .cta-band-actions {
+    align-items: center;
+    width: 100%;
+  }
+  .cta-band-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .cta-band-note {
+    max-width: none;
+    text-align: center;
   }
   .matrix,
   .method,
@@ -1123,8 +1264,6 @@ ul, ol { list-style: none; }
   .feature { border-right: 0; border-bottom: 1px solid var(--line); }
   .case-row { grid-template-columns: 1fr auto; }
   .case-meta { display: none; }
-  .hero { padding: var(--s-10) 0 var(--s-9); }
-  .section { padding: var(--s-9) 0; }
 }
 
 </style>
@@ -1328,6 +1467,9 @@ ul, ol { list-style: none; }
       line-height: 1;
       letter-spacing: -0.04em;
       color: var(--paper);
+      word-break: keep-all;
+      overflow-wrap: normal;
+      text-wrap: balance;
     }
     .cta-report-copy {
       display: grid;
@@ -1666,6 +1808,9 @@ ul, ol { list-style: none; }
       line-height: 0.96;
       letter-spacing: -0.04em;
       color: var(--ink);
+      word-break: keep-all;
+      overflow-wrap: normal;
+      text-wrap: balance;
     }
     .success-copy {
       margin: 0 0 var(--s-5);
@@ -1680,46 +1825,66 @@ ul, ol { list-style: none; }
       flex-wrap: wrap;
     }
 
-    /* Footer contact */
-    .foot-contact {
+    /* Contact block (same as homepage/system/news) */
+    .contact-block {
       display: grid;
-      grid-template-columns: 1.3fr 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: var(--s-8);
       padding: var(--s-8) 0;
       border-bottom: 1px solid var(--line-dark);
     }
-    .foot-qr-row {
+    .contact-block-left {
       display: grid;
-      grid-template-columns: 140px 1fr;
+      gap: var(--s-5);
+    }
+    .contact-qr-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
       gap: var(--s-5);
       align-items: start;
     }
-    .foot-qr {
-      width: 140px;
-      height: 140px;
-      background: var(--od);
-      padding: 8px;
+    .contact-qr {
+      width: 160px;
+      height: 160px;
+      background: #fff;
+      padding: 10px;
       display: grid;
       place-items: center;
+      overflow: hidden;
     }
-    .foot-qr img {
+    .contact-qr img {
       width: 100%;
       height: 100%;
       object-fit: contain;
+      display: block;
     }
-    .foot-contact-blocks {
+    .contact-qr-label {
+      font-family: var(--ff-display);
+      font-size: var(--t-md);
+      font-weight: 600;
+      color: var(--od);
+      line-height: 1.35;
+      margin-bottom: var(--s-3);
+    }
+    .contact-qr-desc {
+      font-size: var(--t-sm);
+      color: var(--od-60);
+      line-height: 1.6;
+    }
+    .contact-info {
       display: grid;
       gap: var(--s-5);
+      align-content: start;
     }
-    .foot-contact-block {
+    .contact-info-row {
       padding-top: var(--s-4);
       border-top: 1px solid var(--line-dark-soft);
     }
-    .foot-contact-block:first-child {
+    .contact-info-row:first-child {
       border-top: 0;
       padding-top: 0;
     }
-    .foot-contact-key {
+    .contact-info-key {
       display: block;
       font-family: var(--ff-mono);
       font-size: var(--t-mono);
@@ -1728,10 +1893,11 @@ ul, ol { list-style: none; }
       color: var(--od-40);
       margin-bottom: 8px;
     }
-    .foot-contact-value {
-      font-size: var(--t-sm);
-      color: var(--od-80);
+    .contact-info-value {
+      font-size: var(--t-md);
+      color: var(--od);
       line-height: 1.55;
+      font-weight: 500;
     }
 
     body.modal-open {
@@ -1758,7 +1924,24 @@ ul, ol { list-style: none; }
       }
       .diagnosis-card {
         min-height: auto;
-        padding: var(--s-5);
+        padding: var(--s-4);
+      }
+      .diagnosis-title { font-size: 1rem; line-height: 1.3; }
+      .diagnosis-body { font-size: var(--t-sm); line-height: 1.72; }
+      .cta-report-grid {
+        gap: var(--s-5);
+        padding: var(--s-5) 0;
+      }
+      .cta-report-card {
+        padding: var(--s-4);
+      }
+      .cta-report-title {
+        font-size: clamp(0.95rem, 6vw, 1.2rem);
+        line-height: 1.18;
+      }
+      .cta-report-copy p {
+        font-size: var(--t-sm);
+        line-height: 1.72;
       }
       .assessment-dialog {
         width: 100vw;
@@ -1766,32 +1949,84 @@ ul, ol { list-style: none; }
         height: 100vh;
         margin: 0;
       }
+      .assessment-dialog-head {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .assessment-close {
+        align-self: flex-end;
+      }
       .assessment-dialog-head,
       .assessment-dialog-body {
-        padding: var(--s-5);
+        padding: var(--s-4);
       }
       .assessment-dialog-title {
-        font-size: var(--t-xl);
+        font-size: 1rem;
+        line-height: 1.35;
       }
+      .assessment-dialog-lead { font-size: var(--t-sm); line-height: 1.72; }
       .assess-form,
       .success-panel {
-        padding: var(--s-6) var(--s-5);
+        padding: var(--s-5) var(--s-4);
+      }
+      .assess-section-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--s-2);
       }
       .form-grid-2 {
         grid-template-columns: 1fr;
       }
+      .form-options {
+        gap: 8px;
+      }
+      .form-option {
+        width: 100%;
+      }
+      .form-option span {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .form-label,
+      .form-input,
+      .form-select,
+      .form-textarea,
+      .form-option span,
+      .form-note,
+      .foot-contact-value { font-size: var(--t-sm); }
       .success-actions .btn,
       .form-footer .btn {
         width: 100%;
         justify-content: center;
       }
-      .foot-qr-row {
-        grid-template-columns: 100px 1fr;
+      .success-grid {
+        gap: var(--s-5);
       }
-      .foot-qr {
-        width: 100px;
-        height: 100px;
+      .success-qr-shell {
+        max-width: 240px;
       }
+      .success-title {
+        font-size: clamp(0.95rem, 6vw, 1.2rem);
+        line-height: 1.2;
+      }
+      .success-copy { font-size: var(--t-sm); line-height: 1.72; }
+      .contact-block {
+        gap: var(--s-6);
+      }
+      .contact-qr-row {
+        grid-template-columns: 1fr;
+        gap: var(--s-4);
+      }
+      .contact-qr { width: 120px; height: 120px; }
+      .contact-qr-label { font-size: 0.95rem; }
+      .contact-qr-desc,
+      .contact-info-value,
+      .form-label,
+      .form-input,
+      .form-select,
+      .form-textarea,
+      .form-option span,
+      .form-note { font-size: var(--t-sm); }
       .cta-report-flow li {
         grid-template-columns: 1fr;
         gap: 4px;
@@ -1977,18 +2212,45 @@ ul, ol { list-style: none; }
 
   <footer class="site-foot">
     <div class="shell shell--wide">
-      <div class="foot-contact">
-        <div class="foot-qr-row">
-          <div class="foot-qr"><img src="./assets/qr-wechat-crop.png" alt="峥锐品牌出海小助手 微信二维码" /></div>
-        </div>
-        <div class="foot-contact-blocks">
-          <div class="foot-contact-block">
-            <span class="foot-contact-key">Address · 地址</span>
-            <p class="foot-contact-value">深圳市龙华区龙华大道有品文化创意园 4 栋 201-1</p>
+      <div class="contact-block">
+        <div class="contact-block-left">
+          <div class="contact-qr-row">
+            <div class="contact-qr">
+              <img src="./assets/qr-wechat-crop.png" alt="峥锐品牌出海小助手 微信二维码" />
+            </div>
+            <div>
+              <p class="contact-qr-label">小助手微信</p>
+              <p class="contact-qr-desc">扫码添加小助手，立刻预约 30 分钟品牌咨询诊断——快速判断你的品牌增长卡点</p>
+            </div>
           </div>
-          <div class="foot-contact-block">
-            <span class="foot-contact-key">Contact · 联系</span>
-            <p class="foot-contact-value">hello@zapex.io</p>
+
+          <div class="contact-qr-row">
+            <div class="contact-qr">
+              <img src="./qr-official.png" alt="峥锐 ZAPEX 官方公众号二维码" />
+            </div>
+            <div>
+              <p class="contact-qr-label">官方公众号</p>
+              <p class="contact-qr-desc">关注公众号，获取品牌出海案例深度解析、市场分析报告等免费工具</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-info">
+          <div class="contact-info-row">
+            <span class="contact-info-key">Phone · 客服电话</span>
+            <p class="contact-info-value">13316492740</p>
+          </div>
+          <div class="contact-info-row">
+            <span class="contact-info-key">Address · 地址</span>
+            <p class="contact-info-value">深圳市龙华区龙华大道<br/>优品文化创意园 4 栋 201-1</p>
+          </div>
+          <div class="contact-info-row">
+            <span class="contact-info-key">Email · 邮箱</span>
+            <p class="contact-info-value">hello@zapex.io</p>
+          </div>
+          <div class="contact-info-row">
+            <span class="contact-info-key">Response · 响应</span>
+            <p class="contact-info-value">Shenzhen · GMT+8 · 1-2 BUSINESS DAYS</p>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import syncNotionNews from './sync-notion-news.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -54,7 +55,20 @@ async function copyIntoDist(relativePath) {
   await cp(sourcePath, targetPath, { recursive: true });
 }
 
+async function safeCopyIntoDist(relativePath) {
+  const sourcePath = path.join(rootDir, relativePath);
+  try {
+    const targetPath = path.join(distDir, relativePath);
+    await mkdir(path.dirname(targetPath), { recursive: true });
+    await cp(sourcePath, targetPath, { recursive: true });
+  } catch (error) {
+    if (error?.code !== 'ENOENT') throw error;
+  }
+}
+
 async function main() {
+  await syncNotionNews({ rootDir });
+
   const css = await readFile(cssPath, 'utf8');
 
   for (const [sourceName, standaloneName] of standalonePairs) {
@@ -69,6 +83,8 @@ async function main() {
   }
 
   await copyIntoDist('assets');
+  await safeCopyIntoDist('data');
+  await safeCopyIntoDist('news');
   await copyIntoDist('archive');
   await writeFile(
     path.join(distDir, '_redirects'),

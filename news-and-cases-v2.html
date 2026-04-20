@@ -119,6 +119,9 @@
       font-weight: 700;
       color: var(--ink);
       margin: 0;
+      word-break: keep-all;
+      overflow-wrap: normal;
+      text-wrap: balance;
     }
     .featured-lead {
       font-size: var(--t-lead);
@@ -210,6 +213,9 @@
       font-weight: 700;
       color: var(--ink);
       margin: 0;
+      word-break: keep-all;
+      overflow-wrap: normal;
+      text-wrap: balance;
     }
     .article-excerpt {
       font-size: var(--t-sm);
@@ -350,6 +356,8 @@
       letter-spacing: -0.02em;
       font-weight: 700;
       margin-bottom: var(--s-4);
+      word-break: normal;
+      overflow-wrap: anywhere;
     }
     .editor-cta-body {
       font-size: var(--t-lead);
@@ -371,6 +379,80 @@
       text-transform: uppercase;
     }
 
+    /* ---------- Contact block (same system as homepage) ---------- */
+    .contact-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s-8);
+      padding: var(--s-8) 0;
+    }
+    .contact-block-left {
+      display: grid;
+      gap: var(--s-5);
+    }
+    .contact-qr-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: var(--s-5);
+      align-items: start;
+    }
+    .contact-qr {
+      width: 160px;
+      height: 160px;
+      background: #fff;
+      padding: 10px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    .contact-qr img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .contact-qr-label {
+      font-family: var(--ff-display);
+      font-size: var(--t-md);
+      font-weight: 600;
+      color: var(--od);
+      line-height: 1.35;
+      margin-bottom: var(--s-3);
+    }
+    .contact-qr-desc {
+      font-size: var(--t-sm);
+      color: var(--od-60);
+      line-height: 1.6;
+    }
+    .contact-info {
+      display: grid;
+      gap: var(--s-5);
+      align-content: start;
+    }
+    .contact-info-row {
+      padding-top: var(--s-4);
+      border-top: 1px solid var(--line-dark-soft);
+    }
+    .contact-info-row:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+    .contact-info-key {
+      display: block;
+      font-family: var(--ff-mono);
+      font-size: var(--t-mono);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--od-40);
+      margin-bottom: 8px;
+    }
+    .contact-info-value {
+      font-size: var(--t-md);
+      color: var(--od);
+      line-height: 1.55;
+      font-weight: 500;
+    }
+
     /* Responsive */
     @media (max-width: 1024px) {
       .featured-post { grid-template-columns: 1fr; }
@@ -381,9 +463,77 @@
       .case-cell { border-right: 0; border-bottom: 1px solid var(--line); }
       .case-cell:last-child { border-bottom: 0; }
       .editor-cta { grid-template-columns: 1fr; }
+      .contact-block { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
+      .filter-bar {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: var(--s-4) 0;
+        margin: 0 calc(var(--gutter) * -1) var(--s-6);
+        padding-left: var(--gutter);
+        padding-right: var(--gutter);
+        scrollbar-width: none;
+      }
+      .filter-bar::-webkit-scrollbar { display: none; }
+      .filter-chip {
+        flex: 0 0 auto;
+        padding: 7px 12px;
+        font-size: 0.62rem;
+      }
+      .featured-post {
+        gap: var(--s-5);
+        padding: var(--s-5) 0;
+      }
+      .featured-cover-title {
+        font-size: clamp(1rem, 6.5vw, 1.35rem);
+      }
+      .featured-title {
+        font-size: clamp(1.15rem, 7vw, 1.5rem);
+      }
+      .featured-lead {
+        font-size: var(--t-sm);
+        line-height: 1.72;
+      }
       .article-grid { grid-template-columns: 1fr; }
+      .article-card { padding: var(--s-4); }
+      .article-title { font-size: 1rem; line-height: 1.45; }
+      .article-excerpt,
+      .article-foot { font-size: var(--t-sm); }
+      .news-item {
+        grid-template-columns: 1fr;
+        gap: var(--s-2);
+        padding: var(--s-4);
+      }
+      .news-item-title { font-size: 0.95rem; line-height: 1.45; }
+      .news-item-excerpt,
+      .news-item-date,
+      .news-item-cat { font-size: var(--t-sm); }
+      .case-cell { padding: var(--s-5) var(--s-4); }
+      .case-cell-metric { font-size: clamp(1.8rem, 10vw, 2.4rem); }
+      .case-cell-body { font-size: var(--t-sm); line-height: 1.72; }
+      .news-item-cat {
+        margin-top: var(--s-2);
+      }
+      .editor-cta {
+        gap: var(--s-5);
+        padding: var(--s-5) var(--s-4);
+      }
+      .editor-cta-title {
+        font-size: clamp(0.95rem, 6vw, 1.2rem);
+        line-height: 1.35;
+      }
+      .editor-cta-body,
+      .editor-cta-small { font-size: 0.68rem; line-height: 1.72; }
+      .editor-cta-actions .btn {
+        width: 100%;
+      }
+      .contact-block { gap: var(--s-6); }
+      .contact-qr-row { grid-template-columns: 1fr; gap: var(--s-4); }
+      .contact-qr { width: 120px; height: 120px; }
+      .contact-qr-label { font-size: 0.95rem; }
+      .contact-qr-desc,
+      .contact-info-value { font-size: var(--t-sm); }
     }
   </style>
 </head>
@@ -491,7 +641,7 @@
           </div>
         </header>
 
-        <div class="filter-bar" role="tablist" aria-label="内容分类筛选">
+        <div class="filter-bar" id="news-filter-bar" role="tablist" aria-label="内容分类筛选">
           <button class="filter-chip is-active" type="button">全部 <span class="count">/ 12</span></button>
           <button class="filter-chip" type="button">行业观察 <span class="count">/ 4</span></button>
           <button class="filter-chip" type="button">出海案例 <span class="count">/ 5</span></button>
@@ -499,24 +649,24 @@
           <button class="filter-chip" type="button">公告 <span class="count">/ 1</span></button>
         </div>
 
-        <article class="featured-post">
-          <div class="featured-cover" aria-hidden="true">
-            <span class="featured-cover-label">CASE · 出海案例</span>
-            <span class="featured-cover-title">某国产美妆品牌<br/>北美市场从 0 到 $3M 的 18 个月</span>
+        <article class="featured-post" id="featured-post">
+          <div class="featured-cover" id="featured-cover" aria-hidden="true">
+            <span class="featured-cover-label" id="featured-cover-label">CASE · 出海案例</span>
+            <span class="featured-cover-title" id="featured-cover-title">某国产美妆品牌<br/>北美市场从 0 到 $3M 的 18 个月</span>
           </div>
           <div class="featured-meta">
-            <span class="featured-kicker">DEEP DIVE · 深度复盘</span>
-            <h3 class="featured-title">不靠投流堆量：我们如何用 4 个增长实验，把一个国内美妆品牌推到北美 DTC 头部</h3>
-            <p class="featured-lead">
+            <span class="featured-kicker" id="featured-kicker">DEEP DIVE · 深度复盘</span>
+            <h3 class="featured-title" id="featured-title">不靠投流堆量：我们如何用 4 个增长实验，把一个国内美妆品牌推到北美 DTC 头部</h3>
+            <p class="featured-lead" id="featured-lead">
               这篇文章公开一个真实项目：从品类切入到增长飞轮搭建，复盘 4 个关键增长实验的设计、数据结构、踩过的坑，以及从第 7 个月开始跑通的可复制路径
             </p>
-            <div class="featured-byline">
+            <div class="featured-byline" id="featured-byline">
               <span>2026.04.14</span>
               <span>ZAPEX 项目组</span>
               <span>阅读 12 分钟</span>
               <span>7,300 字</span>
             </div>
-            <a class="featured-cta" href="#article-01">阅读全文 <span>→</span></a>
+            <a class="featured-cta" id="featured-cta" href="#article-01">阅读全文 <span>→</span></a>
           </div>
         </article>
       </div>
@@ -540,7 +690,7 @@
           </div>
         </header>
 
-        <div class="article-grid">
+        <div class="article-grid" id="article-grid">
 
           <a class="article-card" href="#article-02" id="article-01">
             <div class="article-card-head">
@@ -654,7 +804,7 @@
           </div>
         </header>
 
-        <div class="news-ticker">
+        <div class="news-ticker" id="news-ticker">
 
           <a class="news-item" href="#news-01">
             <span class="news-item-date">04.18</span>
@@ -878,6 +1028,113 @@
 
     </div>
   </footer>
+
+  <script>
+    (function () {
+      const dataUrl = './data/notion-news.json';
+
+      function escapeHtml(text) {
+        return String(text || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function articleHref(article) {
+        return article && article.slug ? `./news/${article.slug}.html` : '#';
+      }
+
+      function featuredCoverMarkup(article) {
+        if (!article || !article.cover) return '';
+        return `background-image: linear-gradient(rgba(11,17,32,0.18), rgba(11,17,32,0.18)), url('${article.cover}'); background-size: cover; background-position: center;`;
+      }
+
+      function renderFilters(filters) {
+        const root = document.getElementById('news-filter-bar');
+        if (!root || !Array.isArray(filters) || !filters.length) return;
+        root.innerHTML = filters.map((filter, index) => (
+          `<button class="filter-chip${index === 0 ? ' is-active' : ''}" type="button" data-filter="${escapeHtml(filter.key)}">${escapeHtml(filter.label)} <span class="count">/ ${filter.count}</span></button>`
+        )).join('');
+      }
+
+      function renderFeatured(article) {
+        if (!article) return;
+
+        const cover = document.getElementById('featured-cover');
+        const coverLabel = document.getElementById('featured-cover-label');
+        const coverTitle = document.getElementById('featured-cover-title');
+        const kicker = document.getElementById('featured-kicker');
+        const title = document.getElementById('featured-title');
+        const lead = document.getElementById('featured-lead');
+        const byline = document.getElementById('featured-byline');
+        const cta = document.getElementById('featured-cta');
+
+        if (cover) cover.style.cssText = featuredCoverMarkup(article);
+        if (coverLabel) coverLabel.textContent = `${article.category || 'ARTICLE'} · ${article.category || '文章'}`;
+        if (coverTitle) coverTitle.innerHTML = escapeHtml(article.title).replace(/\n/g, '<br/>');
+        if (kicker) kicker.textContent = article.featured ? 'FEATURED · 精选文章' : 'LATEST · 最新文章';
+        if (title) title.textContent = article.title || '';
+        if (lead) lead.textContent = article.summary || '';
+        if (byline) {
+          const parts = [article.dateLabel, article.author, article.readTime ? `阅读 ${article.readTime} 分钟` : '']
+            .filter(Boolean)
+            .map((part) => `<span>${escapeHtml(part)}</span>`);
+          byline.innerHTML = parts.join('');
+        }
+        if (cta) cta.setAttribute('href', articleHref(article));
+      }
+
+      function renderArticleGrid(articles) {
+        const root = document.getElementById('article-grid');
+        if (!root || !Array.isArray(articles) || !articles.length) return;
+
+        root.innerHTML = articles.map((article) => `
+          <a class="article-card" href="${articleHref(article)}">
+            <div class="article-card-head">
+              <span class="article-tag article-tag--${article.category === '公告' ? 'news' : article.category === '出海案例' ? 'case' : 'insight'}">${escapeHtml(article.category || '文章')}</span>
+              <span class="article-date">${escapeHtml(article.dateLabel || '')}</span>
+            </div>
+            <h3 class="article-title">${escapeHtml(article.title || '')}</h3>
+            <p class="article-excerpt">${escapeHtml(article.summary || '')}</p>
+            <div class="article-foot">
+              <span>${article.readTime ? `阅读 ${article.readTime} 分钟` : '阅读全文'}</span>
+              <span class="article-foot-arrow">阅读 →</span>
+            </div>
+          </a>
+        `).join('');
+      }
+
+      function renderTicker(items) {
+        const root = document.getElementById('news-ticker');
+        if (!root || !Array.isArray(items) || !items.length) return;
+
+        root.innerHTML = items.map((article) => `
+          <a class="news-item" href="${articleHref(article)}">
+            <span class="news-item-date">${escapeHtml((article.dateLabel || '').slice(5) || article.dateLabel || '')}</span>
+            <div class="news-item-body">
+              <h4 class="news-item-title">${escapeHtml(article.title || '')}</h4>
+              <p class="news-item-excerpt">${escapeHtml(article.summary || '')}</p>
+            </div>
+            <span class="news-item-cat">${escapeHtml(article.category || '文章')}</span>
+          </a>
+        `).join('');
+      }
+
+      fetch(dataUrl)
+        .then((response) => response.ok ? response.json() : null)
+        .then((data) => {
+          if (!data) return;
+          renderFilters(data.filters || []);
+          renderFeatured(data.featured);
+          renderArticleGrid(data.articles || []);
+          renderTicker(data.ticker || []);
+        })
+        .catch(() => {
+          /* fall back to baked-in content */
+        });
+    })();
+  </script>
 
 </body>
 </html>

@@ -46,6 +46,9 @@
       font-weight: 600;
       margin-bottom: var(--s-4);
       color: var(--od);
+      word-break: keep-all;
+      overflow-wrap: normal;
+      text-wrap: balance;
     }
     .module-big-keyline {
       display: inline-block;
@@ -180,6 +183,9 @@
       font-weight: 700;
       color: var(--ink);
       margin: 0 0 var(--s-4);
+      word-break: keep-all;
+      overflow-wrap: normal;
+      text-wrap: balance;
     }
     .value-stack-body {
       font-size: var(--t-sm);
@@ -409,12 +415,55 @@
       .foot-contact { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
+      .module-big {
+        padding: var(--s-5) var(--s-4);
+      }
+      .module-big-title {
+        font-size: clamp(0.95rem, 6vw, 1.15rem);
+      }
+      .module-big-lead { font-size: var(--t-sm); line-height: 1.72; }
+      .module-split {
+        gap: var(--s-5);
+        padding: var(--s-5) 0;
+      }
+      .module-split-left h3 {
+        font-size: clamp(0.95rem, 6vw, 1.15rem);
+      }
+      .module-split-left .module-lead,
+      .module-capability-desc,
+      .value-stack-body { font-size: var(--t-sm); line-height: 1.72; }
+      .module-capability {
+        grid-template-columns: 1fr;
+        gap: var(--s-3);
+        padding: var(--s-4) 0;
+      }
+      .value-stack-card {
+        padding: var(--s-5) var(--s-4);
+      }
+      .value-stack-title,
+      .tool-cell-title {
+        font-size: 0.86rem;
+      }
+      .sop-stat {
+        padding: var(--s-5) var(--s-4);
+      }
+      .sop-stat-num {
+        font-size: clamp(1.5rem, 8.5vw, 2rem);
+      }
       .tools-matrix { grid-template-columns: 1fr; }
-      .contact-qr-row { grid-template-columns: 120px 1fr; }
+      .contact-block,
+      .foot-contact {
+        gap: var(--s-6);
+      }
+      .contact-qr-row { grid-template-columns: 1fr; gap: var(--s-4); }
       .contact-qr { width: 120px; height: 120px; }
-      .contact-info-value { font-size: var(--t-lg); }
-      .foot-qr-row { grid-template-columns: 100px 1fr; }
+      .contact-qr-label { font-size: 0.95rem; }
+      .contact-info-value,
+      .foot-contact-value,
+      .foot-qr-desc { font-size: var(--t-sm); }
+      .foot-qr-row { grid-template-columns: 1fr; gap: var(--s-4); }
       .foot-qr { width: 100px; height: 100px; }
+      .foot-contact-blocks { gap: var(--s-4); }
     }
   </style>
 </head>
@@ -586,7 +635,7 @@
           <div class="section-head-main">
             <div>
               <span class="section-kicker">长期价值 · Long-term Value</span>
-              <h2 class="section-title">峥锐 <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span> 不是一次性项目<br/>而是交付「品牌大脑」和「增长引擎」<br/>搭建出海品牌完整的增长结构</h2>
+              <h2 class="section-title">不是一次性项目<br/>而是交付「品牌大脑」和「增长引擎」<br/>搭建出海品牌完整的<br/>增长结构</h2>
             </div>
             <p class="section-lead">
               通过战略咨询 + 增长陪跑 + 系统工具交付，让企业具备不依赖外部的品牌增长能力

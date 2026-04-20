@@ -1,0 +1,80 @@
+{
+  "generatedAt": "2026-04-20T18:34:16.634Z",
+  "total": 1,
+  "filters": [
+    {
+      "key": "全部",
+      "label": "全部",
+      "count": 1
+    },
+    {
+      "key": "公告",
+      "label": "公告",
+      "count": 1
+    }
+  ],
+  "featured": {
+    "id": "348111f3-874b-806b-9859-cb33e9a65d52",
+    "title": "test",
+    "slug": "test001",
+    "status": "已发布",
+    "date": "2026-04-20",
+    "dateLabel": "2026.04.20",
+    "category": "公告",
+    "summary": "test",
+    "author": "JO爱懂AI ",
+    "featured": false,
+    "showOnHome": false,
+    "sortWeight": 0,
+    "readTime": null,
+    "seoTitle": "",
+    "seoDescription": "",
+    "cover": null,
+    "notionUrl": "https://www.notion.so/test-348111f3874b806b9859cb33e9a65d52",
+    "bodyHtml": "<h1>这是一篇测试文章</h1>\n<p>这是正文第一段，用来测试 Notion CMS 是否能被网站正确读取。</p>\n<h2>小标题</h2>\n<p>这里放第二段内容。</p>"
+  },
+  "articles": [
+    {
+      "id": "348111f3-874b-806b-9859-cb33e9a65d52",
+      "title": "test",
+      "slug": "test001",
+      "status": "已发布",
+      "date": "2026-04-20",
+      "dateLabel": "2026.04.20",
+      "category": "公告",
+      "summary": "test",
+      "author": "JO爱懂AI ",
+      "featured": false,
+      "showOnHome": false,
+      "sortWeight": 0,
+      "readTime": null,
+      "seoTitle": "",
+      "seoDescription": "",
+      "cover": null,
+      "notionUrl": "https://www.notion.so/test-348111f3874b806b9859cb33e9a65d52",
+      "bodyHtml": "<h1>这是一篇测试文章</h1>\n<p>这是正文第一段，用来测试 Notion CMS 是否能被网站正确读取。</p>\n<h2>小标题</h2>\n<p>这里放第二段内容。</p>"
+    }
+  ],
+  "ticker": [
+    {
+      "id": "348111f3-874b-806b-9859-cb33e9a65d52",
+      "title": "test",
+      "slug": "test001",
+      "status": "已发布",
+      "date": "2026-04-20",
+      "dateLabel": "2026.04.20",
+      "category": "公告",
+      "summary": "test",
+      "author": "JO爱懂AI ",
+      "featured": false,
+      "showOnHome": false,
+      "sortWeight": 0,
+      "readTime": null,
+      "seoTitle": "",
+      "seoDescription": "",
+      "cover": null,
+      "notionUrl": "https://www.notion.so/test-348111f3874b806b9859cb33e9a65d52",
+      "bodyHtml": "<h1>这是一篇测试文章</h1>\n<p>这是正文第一段，用来测试 Notion CMS 是否能被网站正确读取。</p>\n<h2>小标题</h2>\n<p>这里放第二段内容。</p>"
+    }
+  ]
+}

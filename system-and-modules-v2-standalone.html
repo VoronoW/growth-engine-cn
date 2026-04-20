@@ -1071,46 +1071,187 @@ ul, ol { list-style: none; }
   .case-row { grid-template-columns: 100px 1fr auto; }
 }
 @media (max-width: 640px) {
-  :root { --gutter: 20px; }
+  :root {
+    --gutter: 16px;
+    --t-mono: 0.5625rem;
+    --t-xs: 0.625rem;
+    --t-sm: 0.6875rem;
+    --t-base: 0.625rem;
+    --t-lead: 0.75rem;
+    --t-md: 0.875rem;
+    --t-lg: 1rem;
+    --t-xl: 1.2rem;
+    --t-2xl: 1.45rem;
+    --t-4xl: clamp(1.9rem, 13vw, 3.2rem);
+  }
+  .shell,
+  .shell--wide {
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+  }
+  body {
+    font-size: var(--t-base);
+    line-height: 1.65;
+  }
+  .meta-bar-inner {
+    gap: var(--s-4);
+    height: 30px;
+  }
   .meta-bar-item + .meta-bar-item { display: none; }
   .site-nav {
     background: rgba(251, 249, 248, 0.96);
   }
   .site-nav-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
     height: auto;
-    flex-wrap: wrap;
     gap: var(--s-3);
-    padding: 12px 0;
+    padding: 12px 0 10px;
   }
   .site-nav-left {
-    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .wordmark.wordmark--nav { font-size: 20px; }
+  .wordmark .cn {
+    font-size: 0.42em;
+    letter-spacing: 0.06em;
   }
   .site-nav-right {
+    grid-column: 1 / -1;
     width: 100%;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
     gap: var(--s-2);
   }
   .site-nav-links {
     display: flex;
-    order: 3;
+    grid-column: 1 / -1;
     width: 100%;
     overflow-x: auto;
     padding-bottom: 4px;
-    gap: 0;
+    gap: 2px;
     scrollbar-width: none;
   }
   .site-nav-links::-webkit-scrollbar { display: none; }
   .site-nav-link {
     flex: 0 0 auto;
-    padding: 8px 12px;
+    padding: 8px 9px;
     white-space: nowrap;
+    font-size: 0.7rem;
   }
   .pill {
-    padding: 0 12px;
+    min-height: 44px;
+    padding: 0 10px;
+    font-size: 0.72rem;
   }
+  .pill--stacked,
+  .pill--primary {
+    justify-content: center;
+    min-width: 0;
+  }
+  .pill--primary {
+    text-align: center;
+  }
+  .pill .arrow { margin-left: 4px; }
   .pill .pill-main,
   .pill .pill-sub {
     white-space: nowrap;
+  }
+  .section {
+    padding: var(--s-8) 0;
+  }
+  .section-head {
+    gap: var(--s-4);
+    margin-bottom: var(--s-7);
+    padding-bottom: var(--s-5);
+  }
+  .section-kicker {
+    margin-bottom: var(--s-4);
+  }
+  .section-title {
+    max-width: none;
+    font-size: clamp(1.3rem, 8.5vw, 1.7rem);
+    line-height: 1.12;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    text-wrap: balance;
+  }
+  .section-lead {
+    font-size: var(--t-base);
+    line-height: 1.75;
+    padding-top: var(--s-2);
+  }
+  .hero {
+    padding: var(--s-8) 0 var(--s-7);
+  }
+  .hero-kicker {
+    margin-bottom: var(--s-4);
+  }
+  .hero-display {
+    max-width: none;
+    font-size: clamp(2rem, 13vw, 3.2rem);
+    line-height: 1.02;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+  .hero-body {
+    margin-top: var(--s-6);
+    padding-top: var(--s-5);
+    gap: var(--s-5);
+  }
+  .hero-lead {
+    font-size: var(--t-base);
+    line-height: 1.75;
+  }
+  .metric-xl {
+    padding: var(--s-6) var(--s-4) var(--s-5);
+  }
+  .metric-xl-value {
+    font-size: clamp(2rem, 12vw, 3rem);
+  }
+  .case-title,
+  .quote-text,
+  .feature-title,
+  .foot-statement {
+    font-size: 0.95rem;
+    line-height: 1.34;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    text-wrap: balance;
+  }
+  .case-body,
+  .feature-body,
+  .metric-xl-caption,
+  .foot-contact-value {
+    font-size: var(--t-sm);
+    line-height: 1.7;
+  }
+  .cta-band {
+    padding: var(--s-8) 0;
+  }
+  .cta-band-grid {
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+    text-align: center;
+    align-items: start;
+  }
+  .cta-band-title {
+    font-size: clamp(1.3rem, 8.5vw, 1.8rem);
+    line-height: 1.12;
+    margin: 0 auto;
+  }
+  .cta-band-actions {
+    align-items: center;
+    width: 100%;
+  }
+  .cta-band-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .cta-band-note {
+    max-width: none;
+    text-align: center;
   }
   .matrix,
   .method,
@@ -1123,8 +1264,6 @@ ul, ol { list-style: none; }
   .feature { border-right: 0; border-bottom: 1px solid var(--line); }
   .case-row { grid-template-columns: 1fr auto; }
   .case-meta { display: none; }
-  .hero { padding: var(--s-10) 0 var(--s-9); }
-  .section { padding: var(--s-9) 0; }
 }
 
 </style>
@@ -1169,6 +1308,9 @@ ul, ol { list-style: none; }
       font-weight: 600;
       margin-bottom: var(--s-4);
       color: var(--od);
+      word-break: keep-all;
+      overflow-wrap: normal;
+      text-wrap: balance;
     }
     .module-big-keyline {
       display: inline-block;
@@ -1303,6 +1445,9 @@ ul, ol { list-style: none; }
       font-weight: 700;
       color: var(--ink);
       margin: 0 0 var(--s-4);
+      word-break: keep-all;
+      overflow-wrap: normal;
+      text-wrap: balance;
     }
     .value-stack-body {
       font-size: var(--t-sm);
@@ -1532,12 +1677,55 @@ ul, ol { list-style: none; }
       .foot-contact { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
+      .module-big {
+        padding: var(--s-5) var(--s-4);
+      }
+      .module-big-title {
+        font-size: clamp(0.95rem, 6vw, 1.15rem);
+      }
+      .module-big-lead { font-size: var(--t-sm); line-height: 1.72; }
+      .module-split {
+        gap: var(--s-5);
+        padding: var(--s-5) 0;
+      }
+      .module-split-left h3 {
+        font-size: clamp(0.95rem, 6vw, 1.15rem);
+      }
+      .module-split-left .module-lead,
+      .module-capability-desc,
+      .value-stack-body { font-size: var(--t-sm); line-height: 1.72; }
+      .module-capability {
+        grid-template-columns: 1fr;
+        gap: var(--s-3);
+        padding: var(--s-4) 0;
+      }
+      .value-stack-card {
+        padding: var(--s-5) var(--s-4);
+      }
+      .value-stack-title,
+      .tool-cell-title {
+        font-size: 0.86rem;
+      }
+      .sop-stat {
+        padding: var(--s-5) var(--s-4);
+      }
+      .sop-stat-num {
+        font-size: clamp(1.5rem, 8.5vw, 2rem);
+      }
       .tools-matrix { grid-template-columns: 1fr; }
-      .contact-qr-row { grid-template-columns: 120px 1fr; }
+      .contact-block,
+      .foot-contact {
+        gap: var(--s-6);
+      }
+      .contact-qr-row { grid-template-columns: 1fr; gap: var(--s-4); }
       .contact-qr { width: 120px; height: 120px; }
-      .contact-info-value { font-size: var(--t-lg); }
-      .foot-qr-row { grid-template-columns: 100px 1fr; }
+      .contact-qr-label { font-size: 0.95rem; }
+      .contact-info-value,
+      .foot-contact-value,
+      .foot-qr-desc { font-size: var(--t-sm); }
+      .foot-qr-row { grid-template-columns: 1fr; gap: var(--s-4); }
       .foot-qr { width: 100px; height: 100px; }
+      .foot-contact-blocks { gap: var(--s-4); }
     }
   </style>
 </head>
@@ -1709,7 +1897,7 @@ ul, ol { list-style: none; }
           <div class="section-head-main">
             <div>
               <span class="section-kicker">长期价值 · Long-term Value</span>
-              <h2 class="section-title">峥锐 <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span> 不是一次性项目<br/>而是交付「品牌大脑」和「增长引擎」<br/>搭建出海品牌完整的增长结构</h2>
+              <h2 class="section-title">不是一次性项目<br/>而是交付「品牌大脑」和「增长引擎」<br/>搭建出海品牌完整的<br/>增长结构</h2>
             </div>
             <p class="section-lead">
               通过战略咨询 + 增长陪跑 + 系统工具交付，让企业具备不依赖外部的品牌增长能力

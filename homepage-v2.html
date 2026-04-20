@@ -17,6 +17,8 @@
       margin-bottom: var(--s-5);
     }
     .hero-wordmark-cn {
+      display: grid;
+      gap: 2px;
       font-family: var(--ff-display);
       font-size: clamp(2.2rem, 4.4vw, 3.6rem);
       font-weight: 700;
@@ -24,13 +26,14 @@
       color: var(--od);
       line-height: 1.05;
     }
-    .hero-wordmark-en {
-      font-family: var(--ff-display);
-      font-size: clamp(1.1rem, 1.6vw, 1.4rem);
-      font-weight: 500;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--od-60);
+    .hero-wordmark-brand {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.22em;
+      flex-wrap: wrap;
+    }
+    .hero-wordmark-service {
+      display: inline-block;
     }
 
     /* Dual-drive emphasis band (brand blue) */
@@ -321,10 +324,80 @@
       .contact-block { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
+      .hero-wordmark-stack { gap: var(--s-2); }
+      .hero-wordmark-cn {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.18em;
+        font-size: 1rem;
+        line-height: 1.25;
+      }
+      .hero-wordmark-brand { display: inline-flex; }
+      .hero-wordmark-service {
+        display: inline;
+        max-width: none;
+      }
+      .hero-band {
+        margin: var(--s-3) 0 var(--s-4);
+        padding: 8px 12px;
+        font-size: clamp(0.68rem, 4.1vw, 0.85rem);
+      }
+      .module-big {
+        padding: var(--s-5) var(--s-4);
+      }
+      .module-big-title {
+        font-size: clamp(0.95rem, 6vw, 1.15rem);
+      }
+      .module-big-lead { font-size: var(--t-sm); line-height: 1.72; }
+      .why-stat {
+        padding: var(--s-5) var(--s-4);
+      }
+      .why-stat-num {
+        font-size: clamp(1.45rem, 8vw, 1.9rem);
+      }
       .flow-grid { grid-template-columns: 1fr; }
+      .flow-step { padding: var(--s-4); }
+      .flow-arrow {
+        min-height: 56px;
+        padding: 0 var(--s-4);
+        font-size: clamp(1.2rem, 8vw, 1.7rem);
+      }
+      .flow-step-title { font-size: 0.82rem; }
+      .flow-step-kicker,
+      .flow-step-list { font-size: var(--t-sm); }
       .why-stats { grid-template-columns: 1fr; }
-      .contact-qr-row { grid-template-columns: 120px 1fr; }
+      .flow-cta-row .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .feature,
+      .feature:not(:first-child) {
+        padding: var(--s-5) 0;
+      }
+      .feature-glyph {
+        margin-bottom: var(--s-4);
+      }
+      .feature-title {
+        font-size: 1rem;
+        line-height: 1.35;
+        word-break: keep-all;
+        overflow-wrap: normal;
+      }
+      .feature-body {
+        font-size: var(--t-sm);
+        line-height: 1.72;
+      }
+      .contact-block { gap: var(--s-6); }
+      .contact-qr-row { grid-template-columns: 1fr; gap: var(--s-4); }
       .contact-qr { width: 120px; height: 120px; }
+      .contact-qr-label { font-size: 0.95rem; }
+      .contact-qr-desc,
+      .contact-info-value { font-size: var(--t-sm); }
+      .hero-display {
+        font-size: clamp(1.45rem, 9.8vw, 2.3rem);
+        line-height: 1.08;
+      }
     }
   </style>
 </head>
@@ -388,8 +461,10 @@
             <span class="hero-kicker">品牌出海加速器 · Brand Growth Accelerator</span>
 
             <div class="hero-wordmark-stack">
-              <span class="hero-wordmark-cn">峥锐 <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span> 品牌出海加速器</span>
-              <span class="hero-wordmark-en">ZAPEX · Brand Outbound Accelerator</span>
+              <span class="hero-wordmark-cn">
+                <span class="hero-wordmark-brand">峥锐 <span class="zapex-word"><span class="z">Z</span><span class="apex">APEX</span></span></span>
+                <span class="hero-wordmark-service">品牌出海加速器</span>
+              </span>
             </div>
 
             <h1 class="hero-display">
