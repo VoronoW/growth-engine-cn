@@ -12,6 +12,7 @@ const standalonePairs = [
   ['homepage-v2.html', 'homepage-v2-standalone.html'],
   ['system-and-modules-v2.html', 'system-and-modules-v2-standalone.html'],
   ['delivery-and-cases-v2.html', 'delivery-and-cases-v2-standalone.html'],
+  ['news-and-cases-v2.html', 'news-and-cases-v2-standalone.html'],
   ['assessment-v2.html', 'assessment-v2-standalone.html'],
 ];
 
@@ -23,6 +24,8 @@ const rootFiles = [
   'system-and-modules-v2-standalone.html',
   'delivery-and-cases-v2.html',
   'delivery-and-cases-v2-standalone.html',
+  'news-and-cases-v2.html',
+  'news-and-cases-v2-standalone.html',
   'assessment-v2.html',
   'assessment-v2-standalone.html',
   'privacy.html',
