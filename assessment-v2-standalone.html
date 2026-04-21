@@ -1463,13 +1463,18 @@ ul, ol { list-style: none; }
     .cta-report-title {
       margin: 0;
       font-family: var(--ff-display);
-      font-size: clamp(34px, 4.2vw, 68px);
-      line-height: 1;
+      font-size: clamp(30px, 3.6vw, 58px);
+      line-height: 1.02;
       letter-spacing: -0.04em;
       color: var(--paper);
-      word-break: keep-all;
-      overflow-wrap: normal;
-      text-wrap: balance;
+      max-width: 10ch;
+      word-break: normal;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+    .cta-report-title-line {
+      display: block;
+      white-space: nowrap;
     }
     .cta-report-copy {
       display: grid;
@@ -1914,7 +1919,7 @@ ul, ol { list-style: none; }
       .success-grid {
         grid-template-columns: 1fr;
       }
-      .foot-contact {
+      .contact-block {
         grid-template-columns: 1fr;
       }
     }
@@ -1992,8 +1997,7 @@ ul, ol { list-style: none; }
       .form-select,
       .form-textarea,
       .form-option span,
-      .form-note,
-      .foot-contact-value { font-size: var(--t-sm); }
+      .form-note { font-size: var(--t-sm); }
       .success-actions .btn,
       .form-footer .btn {
         width: 100%;
@@ -2181,7 +2185,12 @@ ul, ol { list-style: none; }
           <div class="cta-report-main">
             <div>
               <span class="cta-report-kicker">品牌建设现状分析报告</span>
-              <h2 class="cta-report-title">如果您也有这样的问题<br/>点击按钮填表，获取免费的<em>品牌建设现状分析报告</em></h2>
+              <h2 class="cta-report-title">
+                <span class="cta-report-title-line">如果您也有这样的问题</span>
+                <span class="cta-report-title-line">点击按钮填表</span>
+                <span class="cta-report-title-line">获取免费的</span>
+                <span class="cta-report-title-line"><em>品牌建设现状分析报告</em></span>
+              </h2>
             </div>
             <div class="cta-report-copy">
               <p>我们会基于你的业务基本面、增长结构和品牌准备度，判断下一步该怎么启动——不推销、不承诺 ROI，只做结构性诊断。</p>
@@ -2226,7 +2235,7 @@ ul, ol { list-style: none; }
 
           <div class="contact-qr-row">
             <div class="contact-qr">
-              <img src="./qr-official.png" alt="峥锐 ZAPEX 官方公众号二维码" />
+              <img src="./assets/qr-official.png?v=0421" alt="峥锐 ZAPEX 官方公众号二维码" />
             </div>
             <div>
               <p class="contact-qr-label">官方公众号</p>

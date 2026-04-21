@@ -2,6 +2,19 @@ import { mkdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const NOTION_VERSION = '2022-06-28';
+const CATEGORY_DISPLAY_MAP = {
+  '行业观察': '行业趋势',
+  '出海案例': '出海案例',
+  '方法论': '增长方法',
+  '公告': 'AI增长',
+  '行业趋势': '行业趋势',
+  '增长方法': '增长方法',
+  'AI增长': 'AI增长',
+};
+
+function displayCategory(value = '') {
+  return CATEGORY_DISPLAY_MAP[value] || value || '新闻';
+}
 
 function richTextPlain(richText = []) {
   return richText.map((item) => item.plain_text || '').join('').trim();
@@ -200,7 +213,7 @@ async function blocksToHtml(blocks, token, assetDir, assetBase) {
 function pageTemplate(article) {
   const metaDescription = escapeHtml(article.seoDescription || article.summary || '');
   const title = escapeHtml(article.seoTitle || article.title);
-  const category = escapeHtml(article.category || '新闻');
+  const category = escapeHtml(displayCategory(article.category));
   const author = escapeHtml(article.author || 'ZAPEX 编辑部');
   const date = escapeHtml(article.dateLabel || '');
   const readTime = article.readTime ? `${article.readTime} 分钟阅读` : '';
@@ -375,7 +388,7 @@ async function fetchPublishedArticles(token, databaseId, assetDir) {
       status,
       date: props['发布日期']?.date?.start || '',
       dateLabel: toDateLabel(props['发布日期']?.date?.start || ''),
-      category: getSelectName(props['分类']),
+      category: displayCategory(getSelectName(props['分类'])),
       summary: richTextPlain(props['摘要']?.rich_text),
       author: props['作者']?.people?.map((person) => person.name).join(', ') || '',
       featured: Boolean(props['是否精选']?.checkbox),
@@ -409,7 +422,10 @@ function buildPayload(articles) {
     total: articles.length,
     filters: [
       { key: '全部', label: '全部', count: articles.length },
-      ...Object.entries(counts).map(([key, count]) => ({ key, label: key, count })),
+      { key: '行业趋势', label: '行业趋势', count: counts['行业趋势'] || 0 },
+      { key: '出海案例', label: '出海案例', count: counts['出海案例'] || 0 },
+      { key: '增长方法', label: '增长方法', count: counts['增长方法'] || 0 },
+      { key: 'AI增长', label: 'AI增长', count: counts['AI增长'] || 0 },
     ],
     featured,
     articles: articleCards,

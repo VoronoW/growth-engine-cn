@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZAPEX｜新闻 & 案例</title>
-  <meta name="description" content="ZAPEX 峥锐 · 品牌出海加速器 · 行业观察、出海案例深度解析与品牌增长方法论文章。" />
+  <meta name="description" content="ZAPEX 峥锐 · 品牌出海加速器 · 行业趋势、出海案例、增长方法与 AI增长内容更新。" />
   <style>
 /* ==================================================================
    ZAPEX OS · Website Framework v2
@@ -1325,7 +1325,7 @@ ul, ol { list-style: none; }
       align-items: center;
     }
     .featured-cover {
-      aspect-ratio: 5 / 4;
+      aspect-ratio: 5 / 2.2;
       background: linear-gradient(135deg, #0b1120 0%, #1a4fff 100%);
       position: relative;
       overflow: hidden;
@@ -1384,6 +1384,9 @@ ul, ol { list-style: none; }
       word-break: keep-all;
       overflow-wrap: normal;
       text-wrap: balance;
+    }
+    .nowrap {
+      white-space: nowrap;
     }
     .featured-lead {
       font-size: var(--t-lead);
@@ -1747,8 +1750,20 @@ ul, ol { list-style: none; }
         gap: var(--s-5);
         padding: var(--s-5) 0;
       }
+      .featured-cover {
+        aspect-ratio: 5 / 3;
+      }
+      .featured-cover-label {
+        top: var(--s-4);
+        left: var(--s-4);
+        font-size: 0.56rem;
+      }
       .featured-cover-title {
-        font-size: clamp(1rem, 6.5vw, 1.35rem);
+        left: var(--s-4);
+        right: var(--s-4);
+        bottom: var(--s-4);
+        font-size: clamp(0.72rem, 4.8vw, 0.95rem);
+        line-height: 1.22;
       }
       .featured-title {
         font-size: clamp(1.15rem, 7vw, 1.5rem);
@@ -1812,7 +1827,7 @@ ul, ol { list-style: none; }
           <span class="dot"></span> LIVE · EDITORIAL
         </span>
         <span class="meta-bar-item hidden-sm">
-          <span class="banner-text">行业观察 · 出海案例深度复盘 · 品牌增长方法论持续更新</span>
+          <span class="banner-text">行业趋势 · 出海案例复盘 · 增长方法与 AI增长持续更新</span>
         </span>
         <span class="meta-bar-spacer"></span>
         <span class="meta-bar-item hidden-sm">SHENZHEN</span>
@@ -1865,11 +1880,11 @@ ul, ol { list-style: none; }
           <div class="hero-main">
             <span class="hero-kicker">新闻 & 案例 · News &amp; Cases</span>
             <h1 class="hero-title">
-              行业观察 · 出海案例 ·<br/>
-              <em>品牌增长方法论</em>
+              行业趋势 · 出海案例 ·<br/>
+              <em>增长方法 · AI增长</em>
             </h1>
             <p class="hero-lead">
-              我们不做信息搬运，只写经过验证的判断。所有文章都来自真实项目、一线数据，以及我们对品牌出海结构性问题的持续研究
+              我们不做信息搬运，只写经过验证的判断，以及我们对品牌出海结构性问题的持续研究
             </p>
             <div class="hero-meta-row">
               <span class="hero-meta-key">UPDATED</span>
@@ -1877,7 +1892,7 @@ ul, ol { list-style: none; }
             </div>
             <div class="hero-meta-row">
               <span class="hero-meta-key">CATEGORY</span>
-              <span class="hero-meta-value">行业观察 / 出海案例 / 方法论 / 公告</span>
+              <span class="hero-meta-value">行业趋势 / 出海案例 / 增长方法 / AI增长</span>
             </div>
           </div>
 
@@ -1897,36 +1912,33 @@ ul, ol { list-style: none; }
               <span class="section-kicker">头条精选 · Editor's Pick</span>
               <h2 class="section-title">本期重点阅读</h2>
             </div>
-            <p class="section-lead">
-              由主编挑选、项目组复盘、数据团队校验——我们把最值得看的一篇放在这里
-            </p>
           </div>
         </header>
 
         <div class="filter-bar" id="news-filter-bar" role="tablist" aria-label="内容分类筛选">
           <button class="filter-chip is-active" type="button">全部 <span class="count">/ 12</span></button>
-          <button class="filter-chip" type="button">行业观察 <span class="count">/ 4</span></button>
+          <button class="filter-chip" type="button">行业趋势 <span class="count">/ 4</span></button>
           <button class="filter-chip" type="button">出海案例 <span class="count">/ 5</span></button>
-          <button class="filter-chip" type="button">方法论 <span class="count">/ 2</span></button>
-          <button class="filter-chip" type="button">公告 <span class="count">/ 1</span></button>
+          <button class="filter-chip" type="button">增长方法 <span class="count">/ 2</span></button>
+          <button class="filter-chip" type="button">AI增长 <span class="count">/ 1</span></button>
         </div>
 
         <article class="featured-post" id="featured-post">
           <div class="featured-cover" id="featured-cover" aria-hidden="true">
-            <span class="featured-cover-label" id="featured-cover-label">CASE · 出海案例</span>
+            <span class="featured-cover-label" id="featured-cover-label">AI GROWTH · AI增长</span>
             <span class="featured-cover-title" id="featured-cover-title">某国产美妆品牌<br/>北美市场从 0 到 $3M 的 18 个月</span>
           </div>
           <div class="featured-meta">
-            <span class="featured-kicker" id="featured-kicker">DEEP DIVE · 深度复盘</span>
-            <h3 class="featured-title" id="featured-title">不靠投流堆量：我们如何用 4 个增长实验，把一个国内美妆品牌推到北美 DTC 头部</h3>
+            <span class="featured-kicker" id="featured-kicker">AI GROWTH · 最新动向</span>
+            <h3 class="featured-title" id="featured-title">AI 增长正在重构品牌出海决策：从工具尝鲜到结构性能力搭建</h3>
             <p class="featured-lead" id="featured-lead">
-              这篇文章公开一个真实项目：从品类切入到增长飞轮搭建，复盘 4 个关键增长实验的设计、数据结构、踩过的坑，以及从第 7 个月开始跑通的可复制路径
+              聚焦 AI 工具、自动化流程与品牌增长结构的最新变化，梳理哪些新能力已经开始真实影响跨境品牌的判断与执行
             </p>
             <div class="featured-byline" id="featured-byline">
-              <span>2026.04.14</span>
-              <span>ZAPEX 项目组</span>
-              <span>阅读 12 分钟</span>
-              <span>7,300 字</span>
+              <span>2026.04.21</span>
+              <span>ZAPEX 编辑部</span>
+              <span>阅读 6 分钟</span>
+              <span>AI增长</span>
             </div>
             <a class="featured-cta" id="featured-cta" href="#article-01">阅读全文 <span>→</span></a>
           </div>
@@ -1944,11 +1956,8 @@ ul, ol { list-style: none; }
           <div class="section-head-main">
             <div>
               <span class="section-kicker">最新文章 · Latest</span>
-              <h2 class="section-title">行业观察 · 案例复盘 · 方法论</h2>
+              <h2 class="section-title">行业趋势 · 案例复盘 · <span class="nowrap">增长方法</span> · <span class="nowrap">AI增长</span></h2>
             </div>
-            <p class="section-lead">
-              每一篇都对应一个真实项目或一次可验证的判断——不做信息汇总，不写通用科普
-            </p>
           </div>
         </header>
 
@@ -1956,7 +1965,7 @@ ul, ol { list-style: none; }
 
           <a class="article-card" href="#article-02" id="article-01">
             <div class="article-card-head">
-              <span class="article-tag article-tag--insight">行业观察</span>
+              <span class="article-tag article-tag--insight">行业趋势</span>
               <span class="article-date">2026.04.11</span>
             </div>
             <h3 class="article-title">2026 Q2 跨境电商趋势：流量红利结束后，品牌 DTC 如何继续增长</h3>
@@ -1986,7 +1995,7 @@ ul, ol { list-style: none; }
 
           <a class="article-card" href="#article-04">
             <div class="article-card-head">
-              <span class="article-tag article-tag--news">公告</span>
+              <span class="article-tag article-tag--news">AI增长</span>
               <span class="article-date">2026.04.02</span>
             </div>
             <h3 class="article-title">峥锐 ZAPEX 官网 v2 全新升级：更清晰的系统、更严谨的流程</h3>
@@ -2001,7 +2010,7 @@ ul, ol { list-style: none; }
 
           <a class="article-card" href="#article-05">
             <div class="article-card-head">
-              <span class="article-tag article-tag--insight">方法论</span>
+              <span class="article-tag article-tag--insight">增长方法</span>
               <span class="article-date">2026.03.28</span>
             </div>
             <h3 class="article-title">增长验证舱™ 工作原理：4 周跑完一个增长假设的完整结构</h3>
@@ -2031,7 +2040,7 @@ ul, ol { list-style: none; }
 
           <a class="article-card" href="#article-07">
             <div class="article-card-head">
-              <span class="article-tag article-tag--insight">行业观察</span>
+              <span class="article-tag article-tag--insight">行业趋势</span>
               <span class="article-date">2026.03.15</span>
             </div>
             <h3 class="article-title">当「品效合一」失效：为什么越来越多 DTC 品牌开始重新做品牌战略</h3>
@@ -2058,10 +2067,10 @@ ul, ol { list-style: none; }
           <div class="section-head-main">
             <div>
               <span class="section-kicker">时事快讯 · Industry Pulse</span>
-              <h2 class="section-title">当周行业动态</h2>
+              <h2 class="section-title">ZAPEX全球出海机会周报</h2>
             </div>
             <p class="section-lead">
-              筛选过的信息——只选对品牌出海决策可能产生影响的政策、平台、数据变化
+              全球市场关键趋势与市场信号的每周整理，聚焦对品牌出海产生影响的政策、产业、平台、AI 技术的最新动向
             </p>
           </div>
         </header>
@@ -2294,6 +2303,26 @@ ul, ol { list-style: none; }
   <script>
     (function () {
       const dataUrl = './data/notion-news.json';
+      const categoryDisplayMap = {
+        '行业观察': '行业趋势',
+        '出海案例': '出海案例',
+        '方法论': '增长方法',
+        '公告': 'AI增长',
+        '行业趋势': '行业趋势',
+        '增长方法': '增长方法',
+        'AI增长': 'AI增长'
+      };
+
+      function displayCategory(value) {
+        return categoryDisplayMap[value] || value || '文章';
+      }
+
+      function categoryTone(value) {
+        const label = displayCategory(value);
+        if (label === '出海案例') return 'case';
+        if (label === 'AI增长') return 'news';
+        return 'insight';
+      }
 
       function escapeHtml(text) {
         return String(text || '')
@@ -2314,8 +2343,20 @@ ul, ol { list-style: none; }
 
       function renderFilters(filters) {
         const root = document.getElementById('news-filter-bar');
-        if (!root || !Array.isArray(filters) || !filters.length) return;
-        root.innerHTML = filters.map((filter, index) => (
+        if (!root) return;
+        const baseFilters = [
+          { key: '全部', label: '全部', count: 0 },
+          { key: '行业趋势', label: '行业趋势', count: 0 },
+          { key: '出海案例', label: '出海案例', count: 0 },
+          { key: '增长方法', label: '增长方法', count: 0 },
+          { key: 'AI增长', label: 'AI增长', count: 0 }
+        ];
+        const counts = new Map(Array.isArray(filters) ? filters.map((filter) => [filter.label, filter.count]) : []);
+        const mergedFilters = baseFilters.map((filter) => ({
+          ...filter,
+          count: counts.get(filter.label) ?? filter.count
+        }));
+        root.innerHTML = mergedFilters.map((filter, index) => (
           `<button class="filter-chip${index === 0 ? ' is-active' : ''}" type="button" data-filter="${escapeHtml(filter.key)}">${escapeHtml(filter.label)} <span class="count">/ ${filter.count}</span></button>`
         )).join('');
       }
@@ -2331,9 +2372,10 @@ ul, ol { list-style: none; }
         const lead = document.getElementById('featured-lead');
         const byline = document.getElementById('featured-byline');
         const cta = document.getElementById('featured-cta');
+        const displayLabel = displayCategory(article.category);
 
         if (cover) cover.style.cssText = featuredCoverMarkup(article);
-        if (coverLabel) coverLabel.textContent = `${article.category || 'ARTICLE'} · ${article.category || '文章'}`;
+        if (coverLabel) coverLabel.textContent = `${displayLabel} · ${displayLabel}`;
         if (coverTitle) coverTitle.innerHTML = escapeHtml(article.title).replace(/\n/g, '<br/>');
         if (kicker) kicker.textContent = article.featured ? 'FEATURED · 精选文章' : 'LATEST · 最新文章';
         if (title) title.textContent = article.title || '';
@@ -2354,7 +2396,7 @@ ul, ol { list-style: none; }
         root.innerHTML = articles.map((article) => `
           <a class="article-card" href="${articleHref(article)}">
             <div class="article-card-head">
-              <span class="article-tag article-tag--${article.category === '公告' ? 'news' : article.category === '出海案例' ? 'case' : 'insight'}">${escapeHtml(article.category || '文章')}</span>
+              <span class="article-tag article-tag--${categoryTone(article.category)}">${escapeHtml(displayCategory(article.category))}</span>
               <span class="article-date">${escapeHtml(article.dateLabel || '')}</span>
             </div>
             <h3 class="article-title">${escapeHtml(article.title || '')}</h3>
@@ -2378,7 +2420,7 @@ ul, ol { list-style: none; }
               <h4 class="news-item-title">${escapeHtml(article.title || '')}</h4>
               <p class="news-item-excerpt">${escapeHtml(article.summary || '')}</p>
             </div>
-            <span class="news-item-cat">${escapeHtml(article.category || '文章')}</span>
+            <span class="news-item-cat">${escapeHtml(displayCategory(article.category))}</span>
           </a>
         `).join('');
       }
