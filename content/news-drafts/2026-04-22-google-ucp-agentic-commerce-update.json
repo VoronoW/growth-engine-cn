@@ -1,0 +1,15 @@
+{
+  "title": "Google 更新 UCP：AI 购物开始从“推荐商品”走向“直接帮你完成购买动作”",
+  "slug": "google-ucp-agentic-commerce-update",
+  "status": "草稿",
+  "publishDate": "2026-04-22",
+  "category": "AI增长",
+  "summary": "Google 更新 Universal Commerce Protocol，让 AI 购物代理可读取实时价格与库存，并支持加入购物车。对出海品牌来说，AI 不再只是流量入口，而开始影响商品表达、库存同步与转化链路设计。",
+  "sortWeight": 30,
+  "showOnHome": true,
+  "featured": false,
+  "readTime": 5,
+  "seoTitle": "Google UCP 更新：AI 购物代理开始影响品牌出海转化链路",
+  "seoDescription": "Google 更新 Universal Commerce Protocol，AI 购物代理可读取实时价格与库存并直接加入购物车。品牌出海团队需要重新设计商品数据结构与转化入口。",
+  "body": "# Google 更新 UCP：AI 购物开始从“推荐商品”走向“直接帮你完成购买动作”\n\nGoogle 在 2026 年 3 月更新了 Universal Commerce Protocol（UCP）。这次更新最值得关注的，不是“AI 会推荐商品”这件事，而是 AI 开始具备更明确的交易执行能力。\n\n根据 Google 官方说明，新的 UCP 能让购物代理读取更实时的商品信息，包括价格、库存等关键字段；同时还增加了 Cart 能力，让代理可以把同一商店的多个商品加入购物车。这意味着 AI 不再只是把流量导给电商页面，而是在逐步接管“挑选—比较—加入购物车”的前半段购物动作。\n\n## 对出海品牌的三个现实变化\n\n- 商品数据结构的重要性大幅上升。标题、价格、库存、变体、权益说明这些字段会变成新的“可见层”。\n- 独立站和商品目录不只是给人看，也要适合被 AI 理解和读取。\n- 购物入口会继续前移。用户还没进入你的官网，就可能已经在 AI 助手里完成了大部分比较动作。\n\n## 现在应该先做什么\n\n品牌可以先检查三件事：商品目录是否结构化、价格与库存同步是否稳定、商品卖点是否足够清晰到能被机器读懂。\n\n这不是单纯的技术升级，而是下一轮购物入口重构的前奏。"
+}

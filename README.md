@@ -44,6 +44,49 @@ npm run dev
 npm run build
 ```
 
+## Notion News CMS
+
+- 网站构建时会自动读取已发布文章并生成新闻页与详情页
+- 本地草稿可通过脚本自动写入 Notion 数据库
+
+```bash
+npm run notion:news:push
+```
+
+如果要一条命令完成“写入 Notion 草稿 + 同步已发布文章到网站”：
+
+```bash
+npm run notion:news:auto
+```
+
+默认会读取 `content/news-drafts/*.json`。
+
+所需环境变量：
+
+- `NOTION_TOKEN`
+- `NOTION_DATABASE_ID`
+- `NETLIFY_BUILD_HOOK_URL`
+- `NOTION_WEBHOOK_SIGNING_SECRET`（可选，配置 Notion Webhook 签名后启用）
+
+### Notion 发布后自动更新网站
+
+网站现在支持：
+
+- Notion 中将文章改成 `已发布`
+- Notion Webhook 调用 `/.netlify/functions/notion-news-webhook`
+- Netlify 自动触发一次新的构建
+- 构建时重新同步 Notion 已发布文章到前端
+
+需要在 Netlify 环境变量中补齐：
+
+- `NOTION_TOKEN`
+- `NOTION_DATABASE_ID`
+- `NETLIFY_BUILD_HOOK_URL`
+
+Webhook 接收地址：
+
+- `https://你的站点域名/.netlify/functions/notion-news-webhook`
+
 ## Netlify
 
 - Build command: `npm run build`

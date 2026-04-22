@@ -38,21 +38,39 @@ function notionHeaders(token) {
   };
 }
 
-async function notionFetch(url, token, init = {}) {
-  const response = await fetch(url, {
-    ...init,
-    headers: {
-      ...notionHeaders(token),
-      ...(init.headers || {}),
-    },
-  });
+async function withRetry(task, { retries = 3, delayMs = 800 } = {}) {
+  let lastError;
 
-  if (!response.ok) {
-    const errorBody = await response.text();
-    throw new Error(`Notion request failed (${response.status}) ${url}\n${errorBody}`);
+  for (let attempt = 1; attempt <= retries; attempt += 1) {
+    try {
+      return await task();
+    } catch (error) {
+      lastError = error;
+      if (attempt === retries) break;
+      await new Promise((resolve) => setTimeout(resolve, delayMs * attempt));
+    }
   }
 
-  return response.json();
+  throw lastError;
+}
+
+async function notionFetch(url, token, init = {}) {
+  return withRetry(async () => {
+    const response = await fetch(url, {
+      ...init,
+      headers: {
+        ...notionHeaders(token),
+        ...(init.headers || {}),
+      },
+    });
+
+    if (!response.ok) {
+      const errorBody = await response.text();
+      throw new Error(`Notion request failed (${response.status}) ${url}\n${errorBody}`);
+    }
+
+    return response.json();
+  });
 }
 
 function getFileExtension(url, contentType = '') {
@@ -67,17 +85,19 @@ function getFileExtension(url, contentType = '') {
 }
 
 async function downloadAsset(url, targetDir, targetBaseName) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Failed to download asset (${response.status}) ${url}`);
-  }
+  return withRetry(async () => {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to download asset (${response.status}) ${url}`);
+    }
 
-  const contentType = response.headers.get('content-type') || '';
-  const ext = getFileExtension(url, contentType);
-  const fileName = `${targetBaseName}${ext}`;
-  const buffer = Buffer.from(await response.arrayBuffer());
-  await writeFile(path.join(targetDir, fileName), buffer);
-  return `./assets/notion-news/${fileName}`;
+    const contentType = response.headers.get('content-type') || '';
+    const ext = getFileExtension(url, contentType);
+    const fileName = `${targetBaseName}${ext}`;
+    const buffer = Buffer.from(await response.arrayBuffer());
+    await writeFile(path.join(targetDir, fileName), buffer);
+    return `./assets/notion-news/${fileName}`;
+  });
 }
 
 function renderRichText(richText = []) {

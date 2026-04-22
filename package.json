@@ -8,7 +8,9 @@
     "build": "node scripts/build-static-site.mjs",
     "build:app": "tsc -b && vite build",
     "build:static": "node scripts/build-static-site.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "notion:news:push": "node scripts/notion-news-write.mjs",
+    "notion:news:auto": "npm run notion:news:push && npm run build"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

@@ -1,0 +1,15 @@
+{
+  "title": "文章标题",
+  "slug": "article-slug",
+  "status": "草稿",
+  "publishDate": "2026-04-22",
+  "category": "行业趋势",
+  "summary": "这里写摘要。",
+  "sortWeight": 0,
+  "showOnHome": true,
+  "featured": false,
+  "readTime": 5,
+  "seoTitle": "SEO 标题",
+  "seoDescription": "SEO 描述",
+  "body": "# 主标题\n\n正文第一段。\n\n## 小标题\n\n- 要点 1\n- 要点 2"
+}
