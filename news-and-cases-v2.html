@@ -184,6 +184,7 @@
       text-decoration: none;
       color: inherit;
       transition: background 0.18s ease;
+      min-width: 0;
     }
     .article-card:hover { background: rgba(26, 79, 255, 0.02); }
     .article-card-head {
@@ -210,20 +211,24 @@
     }
     .article-title {
       font-family: var(--ff-display);
-      font-size: var(--t-lg);
-      line-height: 1.25;
+      font-size: clamp(1.7rem, 1.95vw, 2.5rem);
+      line-height: 1.18;
       letter-spacing: -0.02em;
       font-weight: 700;
       color: var(--ink);
       margin: 0;
-      word-break: keep-all;
-      overflow-wrap: normal;
-      text-wrap: balance;
+      max-width: 100%;
+      min-width: 0;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      hyphens: auto;
+      text-wrap: pretty;
     }
     .article-excerpt {
       font-size: var(--t-sm);
       line-height: 1.6;
       color: var(--ink-80);
+      min-width: 0;
     }
     .article-foot {
       display: flex;
@@ -371,8 +376,51 @@
       display: grid;
       gap: var(--s-3);
     }
-    .editor-cta-actions .btn {
+    .editor-signup-form {
+      display: grid;
+      gap: var(--s-3);
+    }
+    .editor-signup-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--s-3);
+      align-items: stretch;
+    }
+    .editor-email-input {
+      width: 100%;
+      min-width: 0;
+      min-height: 58px;
+      padding: 0 var(--s-4);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--od);
+      font-size: var(--t-body);
+      outline: none;
+      transition: border-color 0.18s ease, background 0.18s ease;
+    }
+    .editor-email-input::placeholder {
+      color: var(--od-60);
+    }
+    .editor-email-input:focus {
+      border-color: rgba(26, 79, 255, 0.95);
+      background: rgba(255, 255, 255, 0.07);
+    }
+    .editor-signup-submit {
+      min-height: 58px;
+      min-width: 168px;
       justify-content: center;
+    }
+    .editor-signup-feedback {
+      min-height: 1.6em;
+      font-size: var(--t-sm);
+      line-height: 1.6;
+      color: var(--od-80);
+    }
+    .editor-signup-feedback.is-error {
+      color: #ff9d8f;
+    }
+    .editor-signup-feedback.is-success {
+      color: #9de4b0;
     }
     .editor-cta-small {
       font-family: var(--ff-mono);
@@ -540,7 +588,10 @@
       }
       .editor-cta-body,
       .editor-cta-small { font-size: 0.68rem; line-height: 1.72; }
-      .editor-cta-actions .btn {
+      .editor-signup-row {
+        grid-template-columns: 1fr;
+      }
+      .editor-signup-submit {
         width: 100%;
       }
       .contact-block { gap: var(--s-6); }
@@ -928,15 +979,24 @@
         <div class="editor-cta">
           <div>
             <span class="editor-cta-small">SUBSCRIBE · RSS &amp; NEWSLETTER</span>
-            <h2 class="editor-cta-title">每周一封邮件<br/>只发一篇经过验证的品牌出海判断</h2>
-            <p class="editor-cta-body">
-              不转发、不摘抄，只写我们自己在项目里验证过的东西。订阅人群当前以跨境品牌创始人、增长负责人、投资人为主
-            </p>
+            <h2 class="editor-cta-title">订阅 ZAPEX 全球出海机会周报</h2>
           </div>
           <div class="editor-cta-actions">
-            <a class="btn btn--primary" href="./assessment-v2.html">预约品牌咨询评估 <span class="arrow">→</span></a>
-            <a class="btn btn--ghost-dark" href="./growth-forms.html">进入客户工作台 <span class="arrow">→</span></a>
-            <span class="editor-cta-small" style="margin-top:var(--s-3);">或扫右侧小助手微信加入订阅名单</span>
+            <form class="editor-signup-form" id="editor-signup-form">
+              <div class="editor-signup-row">
+                <input
+                  class="editor-email-input"
+                  id="editor-signup-email"
+                  type="email"
+                  name="email"
+                  placeholder="输入你的邮箱"
+                  autocomplete="email"
+                  required
+                />
+                <button class="btn btn--primary editor-signup-submit" type="submit">提交邮箱 <span class="arrow">→</span></button>
+              </div>
+              <div class="editor-signup-feedback" id="editor-signup-feedback">提交后会记录到飞书并提醒处理，暂不进入完整电子报自动化。</div>
+            </form>
           </div>
         </div>
       </div>
@@ -1111,10 +1171,21 @@
         const byline = document.getElementById('featured-byline');
         const cta = document.getElementById('featured-cta');
         const displayLabel = displayCategory(article.category);
+        const overlayTitle = article.useShortCoverTitle && article.coverShortTitle
+          ? article.coverShortTitle
+          : article.title;
 
         if (cover) cover.style.cssText = featuredCoverMarkup(article);
         if (coverLabel) coverLabel.textContent = `${displayLabel} · ${displayLabel}`;
-        if (coverTitle) coverTitle.innerHTML = escapeHtml(article.title).replace(/\n/g, '<br/>');
+        if (coverTitle) {
+          if (article.hideCoverTitle) {
+            coverTitle.innerHTML = '';
+            coverTitle.style.display = 'none';
+          } else {
+            coverTitle.style.display = '';
+            coverTitle.innerHTML = escapeHtml(overlayTitle || '').replace(/\n/g, '<br/>');
+          }
+        }
         if (kicker) kicker.textContent = article.featured ? 'FEATURED · 精选文章' : 'LATEST · 最新文章';
         if (title) title.textContent = article.title || '';
         if (lead) lead.textContent = article.summary || '';
@@ -1163,6 +1234,54 @@
         `).join('');
       }
 
+      function bindSignupForm() {
+        const form = document.getElementById('editor-signup-form');
+        const email = document.getElementById('editor-signup-email');
+        const feedback = document.getElementById('editor-signup-feedback');
+        if (!form || !email || !feedback) return;
+
+        const setFeedback = (message, state) => {
+          feedback.textContent = message;
+          feedback.classList.remove('is-error', 'is-success');
+          if (state) feedback.classList.add(state);
+        };
+
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const value = String(email.value || '').trim();
+          if (!value) {
+            setFeedback('请先填写邮箱地址。', 'is-error');
+            return;
+          }
+
+          const button = form.querySelector('button[type="submit"]');
+          if (button) button.disabled = true;
+          setFeedback('正在提交，请稍候…');
+
+          try {
+            const response = await fetch('/.netlify/functions/feishu-news-signup', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                邮箱: value,
+                来源页面: '新闻与案例',
+                提交来源: '官网订阅表单',
+              }),
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok || !result.ok) {
+              throw new Error(result.error || '提交失败，请稍后再试');
+            }
+            form.reset();
+            setFeedback('邮箱已提交，我们会在飞书里收到提醒。', 'is-success');
+          } catch (error) {
+            setFeedback(error.message || '提交失败，请稍后再试。', 'is-error');
+          } finally {
+            if (button) button.disabled = false;
+          }
+        });
+      }
+
       fetch(dataUrl)
         .then((response) => response.ok ? response.json() : null)
         .then((data) => {
@@ -1175,6 +1294,7 @@
         .catch(() => {
           /* fall back to baked-in content */
         });
+      bindSignupForm();
     })();
   </script>
 

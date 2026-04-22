@@ -100,6 +100,11 @@ async function downloadAsset(url, targetDir, targetBaseName) {
   });
 }
 
+function toArticleAssetSrc(src = '') {
+  if (src.startsWith('./assets/')) return src.replace('./assets/', '../assets/');
+  return src;
+}
+
 function renderRichText(richText = []) {
   return richText
     .map((item) => {
@@ -216,7 +221,7 @@ async function blocksToHtml(blocks, token, assetDir, assetBase) {
             : src;
           const caption = renderRichText(value.caption || []);
           html.push(
-            `<figure><img src="${localSrc}" alt="${escapeHtml(caption || 'article image')}" />${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>`,
+            `<figure><img src="${toArticleAssetSrc(localSrc)}" alt="${escapeHtml(caption || 'article image')}" />${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>`,
           );
         }
         break;
@@ -237,7 +242,7 @@ function pageTemplate(article) {
   const author = escapeHtml(article.author || 'ZAPEX 编辑部');
   const date = escapeHtml(article.dateLabel || '');
   const readTime = article.readTime ? `${article.readTime} 分钟阅读` : '';
-  const coverHtml = article.cover ? `<div class="article-hero-cover"><img src="${article.cover}" alt="${escapeHtml(article.title)}" /></div>` : '';
+  const coverHtml = article.cover ? `<div class="article-hero-cover"><img src="${toArticleAssetSrc(article.cover)}" alt="${escapeHtml(article.title)}" /></div>` : '';
 
   return `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -417,6 +422,9 @@ async function fetchPublishedArticles(token, databaseId, assetDir) {
       readTime: props['阅读时长']?.number ?? null,
       seoTitle: richTextPlain(props['SEO标题']?.rich_text),
       seoDescription: richTextPlain(props['SEO描述']?.rich_text),
+      hideCoverTitle: Boolean(props['隐藏封面标题']?.checkbox),
+      useShortCoverTitle: Boolean(props['核取封面短标题']?.checkbox),
+      coverShortTitle: richTextPlain(props['封面短标题']?.rich_text),
       cover,
       notionUrl: page.url,
       bodyHtml,
