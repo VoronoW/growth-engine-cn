@@ -25,7 +25,9 @@ export const handler = async (event) => {
     return jsonResponse(405, { error: 'Method not allowed' });
   }
 
-  const tableId = process.env.FEISHU_TABLE_NEWS_SIGNUPS;
+  // Keep a fixed fallback here for the dedicated news signup table so the
+  // signup flow stays stable even if a migrated environment lags behind.
+  const tableId = 'tblNVP3LRRGnTh2p';
   if (!tableId) {
     return jsonResponse(503, { error: '订阅表暂未接通，请稍后再试' });
   }
@@ -37,7 +39,7 @@ export const handler = async (event) => {
     return jsonResponse(400, { error: '请求格式错误' });
   }
 
-  const email = String(payload['邮箱'] || '').trim();
+  const email = String(payload['邮箱'] || payload.email || '').trim();
   if (isEmpty(email)) {
     return jsonResponse(400, { error: '邮箱为必填项' });
   }
@@ -47,8 +49,8 @@ export const handler = async (event) => {
 
   const fields = {
     '邮箱': email,
-    '来源页面': String(payload['来源页面'] || '新闻与案例').trim(),
-    '提交来源': String(payload['提交来源'] || '官网订阅表单').trim(),
+    '来源页面': String(payload['来源页面'] || payload.sourcePage || '新闻与案例').trim(),
+    '提交来源': String(payload['提交来源'] || payload.submitSource || '官网订阅表单').trim(),
   };
 
   try {
